@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}Start a Project | Andreea Sandu{% endblock %}
+
+{% block content %}
+
+<section class="pt-32 pb-24 relative overflow-hidden">
+    <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-600/5 blur-[120px] rounded-full -z-10"></div>
+
+    <div class="max-w-3xl mx-auto px-6">
+
+        <div class="mb-14 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 gradient-text">
+                Let’s Build Your System
+            </h1>
+
+            <p class="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto">
+                If your business relies on manual processes or spreadsheets, we can build something better.
+                Fill out the technical brief below to get started.
+            </p>
+        </div>
+
+        {% if success %}
+            <div class="mb-8 p-5 rounded-2xl border border-green-500/30 bg-green-500/10 text-green-400 text-center animate-pulse">
+                <span class="font-bold">Inquiry Received!</span> I’ll analyze your requirements and respond within 24 hours.
+            </div>
+        {% endif %}
+
+        <div class="glass p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl relative">
+            <div class="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
+
+            <form method="POST" class="space-y-10">
+                {% csrf_token %}
+
+                <div class="space-y-6">
+                    <h3 class="text-sm uppercase tracking-widest text-indigo-400 font-bold flex items-center gap-2">
+                        <span class="w-1 h-4 bg-indigo-500 rounded-full"></span> 01. Identification
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-semibold text-slate-500 uppercase">Your Name</label>
+                            {{ form.name }}
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-xs font-semibold text-slate-500 uppercase">Email Address</label>
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase">Industry / Niche</label>
+                        {{ form.industry }}
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <h3 class="text-sm uppercase tracking-widest text-indigo-400 font-bold flex items-center gap-2">
+                        <span class="w-1 h-4 bg-indigo-500 rounded-full"></span> 02. Project Scope
+                    </h3>
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase">Project Description & Goals</label>
+                        {{ form.project_description }}
+                        <p class="text-[11px] text-slate-500">Describe the current manual process you want to automate.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <h3 class="text-sm uppercase tracking-widest text-indigo-400 font-bold flex items-center gap-2">
+                        <span class="w-1 h-4 bg-indigo-500 rounded-full"></span> 03. Technical Requirements
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-semibold text-slate-500 uppercase">Hosting & Domain</label>
+                            {{ form.hosting_info }}
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-xs font-semibold text-slate-500 uppercase">Deadline / Urgency</label>
+                            {{ form.deadline_communication }}
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 pt-4">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase">Required Features</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-300 custom-checkboxes">
+                            {{ form.required_features }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-6">
+                    <button type="submit"
+                        class="btn-primary w-full py-5 rounded-2xl font-black text-white uppercase tracking-[0.2em] shadow-xl shadow-indigo-600/20 transform hover:scale-[1.01] transition-all">
+                        Initialize Project
+                    </button>
+                    <p class="text-center text-slate-500 text-xs mt-6">
+                        By clicking "Initialize Project", you agree to the structured development process.
+                    </p>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Stil pentru checkboxes randate de Django */
+    .custom-checkboxes ul {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    @media (min-width: 640px) {
+        .custom-checkboxes ul { grid-template-columns: 1fr 1fr; }
+    }
+    .custom-checkboxes li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255,255,255,0.03);
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.05);
+        transition: all 0.3s;
+    }
+    .custom-checkboxes li:hover {
+        background: rgba(255,255,255,0.07);
+        border-color: rgba(99, 102, 241, 0.3);
+    }
+    .custom-checkboxes input[type="checkbox"] {
+        accent-color: #6366f1;
+        width: 18px;
+        height: 18px;
+    }
+</style>
+
+{% endblock %}

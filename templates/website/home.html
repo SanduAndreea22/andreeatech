@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Acasă | Andreea Sandu{% endblock %}
+
+{% block content %}
+<section class="min-h-screen flex items-center pt-28 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+        <div>
+            <div class="mb-6 inline-block px-4 py-2 text-xs tracking-widest uppercase glass rounded-full text-blue-400 border border-blue-500/20">
+                Django • Automation • Business Systems
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6 text-white">
+                I Build <span class="gradient-text">Custom Software</span><br>
+                That Replaces Chaos With Structure.
+            </h1>
+            <p class="text-slate-400 text-lg leading-relaxed mb-10 max-w-xl">
+                I design Django platforms that automate workflows, manage financial and operational data,
+                and eliminate manual processes — giving businesses systems they can actually rely on.
+            </p>
+            <div class="flex gap-5">
+                <a href="{% url 'services' %}" class="btn-primary px-8 py-4 rounded-xl text-white font-medium shadow-lg shadow-blue-500/20 transition-all duration-300">
+                    View Services
+                </a>
+                <a href="{% url 'projects' %}"
+                   class="px-8 py-4 rounded-xl border border-slate-700 text-white hover:bg-slate-800 transition-all duration-300">
+                    See Projects
+                </a>
+            </div>
+        </div>
+
+        <div class="relative">
+            <img src="{% static 'website/hero.jpeg' %}"
+                 alt="Andreea Sandu - Django Developer"
+                 class="rounded-3xl shadow-2xl border border-slate-800 relative z-10 w-full object-cover">
+            <div class="absolute -inset-6 rounded-3xl blur-3xl bg-blue-500/20 -z-0"></div>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 border-y border-slate-800/50 bg-slate-950/40 backdrop-blur-sm">
+    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-3 text-center gap-10">
+        <div class="p-4">
+            <h3 class="text-4xl font-bold gradient-text">Logic-Driven</h3>
+            <p class="text-slate-400 text-sm mt-2">Accounting background → structured architecture</p>
+        </div>
+        <div class="p-4 border-x border-slate-800/50">
+            <h3 class="text-4xl font-bold gradient-text">Custom Built</h3>
+            <p class="text-slate-400 text-sm mt-2">No templates. Every workflow is unique.</p>
+        </div>
+        <div class="p-4">
+            <h3 class="text-4xl font-bold gradient-text">Scalable</h3>
+            <p class="text-slate-400 text-sm mt-2">Systems designed to grow with your business</p>
+        </div>
+    </div>
+</section>
+
+<section class="py-24">
+    <div class="max-w-6xl mx-auto px-6 text-center mb-16">
+        <h2 class="text-4xl font-bold mb-4 text-white">Solutions I Deliver</h2>
+        <p class="text-slate-400">Real tools for operations — not just websites.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+
+        <div class="group relative p-8 rounded-2xl glass border border-white/5 transition-all duration-500 hover:-translate-y-3 hover:scale-[1.02] hover:border-blue-500/50 cursor-default overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <h3 class="text-xl font-semibold mb-4 text-blue-400 relative z-10">Business Dashboards</h3>
+            <p class="text-slate-400 text-sm leading-relaxed relative z-10">
+                Centralized platforms for tracking finances, analytics, and internal operations.
+            </p>
+        </div>
+
+        <div class="group relative p-8 rounded-2xl glass border border-white/5 transition-all duration-500 hover:-translate-y-3 hover:scale-[1.02] hover:border-indigo-500/50 cursor-default overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <h3 class="text-xl font-semibold mb-4 text-blue-400 relative z-10">Workflow Automation</h3>
+            <p class="text-slate-400 text-sm leading-relaxed relative z-10">
+                Replace spreadsheets and emails with structured, trackable systems.
+            </p>
+        </div>
+
+        <div class="group relative p-8 rounded-2xl glass border border-white/5 transition-all duration-500 hover:-translate-y-3 hover:scale-[1.02] hover:border-cyan-500/50 cursor-default overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-cyan-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <h3 class="text-xl font-semibold mb-4 text-blue-400 relative z-10">Custom Platforms</h3>
+            <p class="text-slate-400 text-sm leading-relaxed relative z-10">
+                Tailor-made applications aligned to your business logic and processes.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="py-24 bg-[#020617] border-t border-slate-800/50 text-center relative overflow-hidden">
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white">
+            Let’s Turn Your Workflow Into Software.
+        </h2>
+        <p class="text-slate-400 mb-10 text-lg">
+            If your business relies on manual processes, we can build something better.
+        </p>
+        <a href="{% url 'contact' %}" class="btn-primary px-12 py-5 rounded-xl text-white font-bold text-lg shadow-xl shadow-blue-500/10">
+            Start a Conversation
+        </a>
+    </div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+</section>
+{% endblock %}

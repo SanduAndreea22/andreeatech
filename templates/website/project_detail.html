@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} | Case Study{% endblock %}
+
+{% block content %}
+<section class="pt-28 pb-24 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/5 blur-[120px] rounded-full -z-10"></div>
+
+    <div class="max-w-4xl mx-auto px-6">
+
+        <a href="{% url 'projects' %}" class="inline-flex items-center text-sm text-slate-500 hover:text-blue-400 transition mb-10 group">
+            <span class="mr-2 transition-transform group-hover:-translate-x-1">←</span> Back to Projects
+        </a>
+
+        <header class="mb-12">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                {{ project.title }}
+            </h1>
+            <p class="text-slate-400 text-xl leading-relaxed max-w-2xl">
+                {{ project.short_description }}
+            </p>
+        </header>
+
+        {% if project.image %}
+        <div class="mb-16 group">
+            <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                <img
+                    src="{{ project.image.url }}"
+                    alt="{{ project.title }}"
+                    class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                >
+                <div class="absolute inset-0 bg-gradient-to-t from-[#020617]/50 to-transparent"></div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="grid gap-12">
+
+            <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1 h-full bg-red-500/50"></div>
+                <h2 class="text-sm uppercase tracking-[0.2em] text-red-400 font-bold mb-6">The Challenge</h2>
+                <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
+                    {{ project.problem|safe }}
+                </div>
+            </div>
+
+            <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1 h-full bg-blue-500/50"></div>
+                <h2 class="text-sm uppercase tracking-[0.2em] text-blue-400 font-bold mb-6">The Solution</h2>
+                <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
+                    {{ project.solution|safe }}
+                </div>
+            </div>
+
+            <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1 h-full bg-green-500/50"></div>
+                <h2 class="text-sm uppercase tracking-[0.2em] text-green-400 font-bold mb-6">The Result</h2>
+                <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
+                    {{ project.outcome|safe }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-10">
+            <div>
+                <span class="text-xs uppercase tracking-widest text-slate-500 font-bold">
+                    Engineered with
+                </span>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    {% for tech in project.tech_list %}
+                        <span class="px-4 py-1.5 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-blue-300 backdrop-blur-sm">
+                            {{ tech }}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="flex-shrink-0">
+                <a href="{% url 'contact' %}" class="btn-primary px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-wider">
+                    Build Something Similar
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    .prose p { margin-bottom: 1.5rem; }
+    .prose strong { color: #fff; font-weight: 600; }
+    .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #94a3b8; }
+</style>
+
+{% endblock %}

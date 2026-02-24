@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Portofoliu | Proiecte Django{% endblock %}
+
+{% block content %}
+
+<section class="pt-32 pb-20 text-center relative overflow-hidden">
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
+            Production-Ready <span class="gradient-text">Systems</span>
+        </h1>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+            Scalable backend architectures and custom Django platforms built to automate
+            complex business workflows and structure operational data.
+        </p>
+    </div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-blue-600/5 blur-[120px] rounded-full -z-10"></div>
+</section>
+
+{% if featured %}
+<section class="pb-24">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="group relative glass rounded-3xl p-1 md:p-1.5 border border-white/10 overflow-hidden shadow-2xl">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+            <div class="relative bg-[#020617]/40 rounded-[calc(1.5rem-2px)] p-8 md:p-12 grid md:grid-cols-2 gap-12 items-center">
+                <div class="order-2 md:order-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                        <span class="text-xs font-bold tracking-[0.2em] text-blue-400 uppercase">Featured Case Study</span>
+                    </div>
+
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+                        {{ featured.title }}
+                    </h2>
+
+                    <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                        {{ featured.short_description }}
+                    </p>
+
+                    <div class="flex flex-wrap gap-6 items-center">
+                        <a href="{% url 'project_detail' featured.slug %}"
+                           class="btn-primary px-8 py-3 rounded-xl font-bold text-sm tracking-wide">
+                            VIEW CASE STUDY
+                        </a>
+
+                        {% if featured.link %}
+                        <a href="{{ featured.link }}"
+                           target="_blank"
+                           class="text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2">
+                            <span>Live Preview</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if featured.image %}
+                <div class="order-1 md:order-2 overflow-hidden rounded-2xl border border-white/5 shadow-2xl">
+                    <img src="{{ featured.image.url }}"
+                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                         alt="{{ featured.title }}">
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="pb-28">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        {% for project in projects %}
+        <div class="glass p-8 rounded-2xl card-hover border border-white/5 flex flex-col justify-between group">
+            <div>
+                <div class="h-1 w-12 bg-blue-500/30 mb-6 group-hover:w-full transition-all duration-500"></div>
+                <h3 class="text-xl font-bold mb-4 text-white">
+                    {{ project.title }}
+                </h3>
+
+                <p class="text-slate-400 text-sm mb-8 leading-relaxed">
+                    {{ project.short_description }}
+                </p>
+            </div>
+
+            <div class="flex justify-between items-center mt-auto pt-6 border-t border-white/5">
+                <a href="{% url 'project_detail' project.slug %}"
+                   class="text-blue-400 text-sm font-bold hover:text-blue-300 transition flex items-center gap-1">
+                    View Case <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+
+                {% if project.link %}
+                <a href="{{ project.link }}"
+                   class="p-2 bg-white/5 rounded-lg hover:bg-white/10 transition">
+                   <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+{% endblock %}

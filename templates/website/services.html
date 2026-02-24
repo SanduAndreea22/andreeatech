@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Services | Custom Business Systems{% endblock %}
+
+{% block content %}
+
+<section class="pt-32 pb-20 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 text-white">
+            Custom Business <span class="gradient-text">Systems</span> Built with Django
+        </h1>
+
+        <p class="text-slate-400 max-w-2xl mx-auto mb-10 text-lg leading-relaxed">
+            I design and develop structured backend platforms that automate workflows,
+            process payments, and give businesses operational clarity.
+        </p>
+
+        <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 animate-pulse">
+            <span class="w-2 h-2 bg-indigo-400 rounded-full"></span>
+            Founder Offer – Reduced pricing available for the first 10 projects
+        </div>
+    </div>
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/5 blur-[120px] rounded-full -z-10"></div>
+</section>
+
+<section class="pb-20 starter-section">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-12 text-center text-white/90 underline decoration-blue-500/30 underline-offset-8">
+            Starter Solutions
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-10">
+            <div class="group glass p-8 rounded-2xl border border-white/5 transition-all duration-500 hover:-translate-y-3 hover:border-blue-500/30 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+                <h3 class="text-xl font-semibold mb-4 text-white relative z-10">Landing Page Pro</h3>
+                <div class="text-2xl font-bold mb-6 gradient-text price relative z-10">Starting at €70</div>
+
+                <ul class="space-y-3 text-slate-400 mb-8 relative z-10">
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> 1 responsive landing page</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Modern UI layout</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Contact form integration</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Basic SEO setup</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Deployment guidance</li>
+                </ul>
+
+                <div class="text-xs font-bold text-slate-500 uppercase tracking-widest pt-4 border-t border-white/5 relative z-10">
+                    Timeline: 3–4 days
+                </div>
+            </div>
+
+            <div class="group glass p-8 rounded-2xl border border-white/5 transition-all duration-500 hover:-translate-y-3 hover:border-blue-500/30 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+                <h3 class="text-xl font-semibold mb-4 text-white relative z-10">Mini Admin System</h3>
+                <div class="text-2xl font-bold mb-6 gradient-text price relative z-10">Starting at €120</div>
+
+                <ul class="space-y-3 text-slate-400 mb-8 relative z-10">
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Simple data model</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Django admin customization</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Basic CRUD functionality</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Up to 2 user roles</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Form validation</li>
+                </ul>
+
+                <div class="text-xs font-bold text-slate-500 uppercase tracking-widest pt-4 border-t border-white/5 relative z-10">
+                    Timeline: 5–7 days
+                </div>
+            </div>
+
+            <div class="group glass p-8 rounded-2xl border border-white/5 transition-all duration-500 hover:-translate-y-3 hover:border-blue-500/30 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+                <h3 class="text-xl font-semibold mb-4 text-white relative z-10">Basic Dashboard Setup</h3>
+                <div class="text-2xl font-bold mb-6 gradient-text price relative z-10">Starting at €180</div>
+
+                <ul class="space-y-3 text-slate-400 mb-8 relative z-10">
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Structured data model</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> 3–4 key metrics display</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Simple chart integration</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> Data filtering</li>
+                    <li class="flex items-center gap-2"> <span class="text-blue-500">✔</span> CSV export</li>
+                </ul>
+
+                <div class="text-xs font-bold text-slate-500 uppercase tracking-widest pt-4 border-t border-white/5 relative z-10">
+                    Timeline: 1–2 weeks
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pb-28 advanced-section bg-[#020617]/30 py-20">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-12 text-center text-white/90 underline decoration-indigo-500/30 underline-offset-8">
+            Advanced & Enterprise Solutions
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-10">
+            <div class="group glass p-10 rounded-3xl border border-white/5 transition-all duration-500 hover:border-indigo-500/40">
+                <h3 class="text-2xl font-bold mb-4 text-white">Custom Business Platforms</h3>
+                <div class="text-3xl font-black mb-6 gradient-text price">Starting at €850</div>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-400 mb-8">
+                    <li>• Custom database architecture</li>
+                    <li>• User auth & role management</li>
+                    <li>• Admin dashboard</li>
+                    <li>• Workflow automation logic</li>
+                    <li>• Responsive UI</li>
+                    <li>• Deployment guidance</li>
+                </ul>
+                <div class="flex items-center justify-between pt-6 border-t border-white/5 text-xs font-bold text-slate-500 uppercase tracking-widest">
+                    <span>Timeline: 2–4 weeks</span>
+                    <a href="{% url 'contact' %}" class="text-indigo-400 hover:text-indigo-300">Inquire →</a>
+                </div>
+            </div>
+
+            <div class="group glass p-10 rounded-3xl border border-white/5 transition-all duration-500 hover:border-indigo-500/40">
+                <h3 class="text-2xl font-bold mb-4 text-white">Data Dashboards & Tracking</h3>
+                <div class="text-3xl font-black mb-6 gradient-text price">Starting at €650</div>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-400 mb-8">
+                    <li>• Structured data models</li>
+                    <li>• KPI & reporting logic</li>
+                    <li>• Analytics dashboards</li>
+                    <li>• Data export functionality</li>
+                    <li>• Performance optimization</li>
+                </ul>
+                <div class="flex items-center justify-between pt-6 border-t border-white/5 text-xs font-bold text-slate-500 uppercase tracking-widest">
+                    <span>Timeline: 2–3 weeks</span>
+                    <a href="{% url 'contact' %}" class="text-indigo-400 hover:text-indigo-300">Inquire →</a>
+                </div>
+            </div>
+
+            <div class="group glass p-10 rounded-3xl border border-white/5 transition-all duration-500 hover:border-indigo-500/40">
+                <h3 class="text-2xl font-bold mb-4 text-white">Payment & Transaction Platforms</h3>
+                <div class="text-3xl font-black mb-6 gradient-text price">Starting at €1,050</div>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-400 mb-8">
+                    <li>• Stripe integration</li>
+                    <li>• Secure checkout flow</li>
+                    <li>• Order lifecycle management</li>
+                    <li>• Email confirmations</li>
+                    <li>• Admin payment overview</li>
+                </ul>
+                <div class="flex items-center justify-between pt-6 border-t border-white/5 text-xs font-bold text-slate-500 uppercase tracking-widest">
+                    <span>Timeline: 3–5 weeks</span>
+                    <a href="{% url 'contact' %}" class="text-indigo-400 hover:text-indigo-300">Inquire →</a>
+                </div>
+            </div>
+
+            <div class="group glass p-10 rounded-3xl border border-white/5 transition-all duration-500 hover:border-indigo-500/40">
+                <h3 class="text-2xl font-bold mb-4 text-white">BDD Automation Framework</h3>
+                <div class="text-3xl font-black mb-6 gradient-text price">Starting at €600</div>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-400 mb-8">
+                    <li>• Pytest + BDD configuration</li>
+                    <li>• Page Object Model (POM)</li>
+                    <li>• End-to-end flow automation</li>
+                    <li>• Structured HTML reports</li>
+                    <li>• CI/CD ready integration</li>
+                    <li>• Technical documentation</li>
+                </ul>
+                <div class="flex items-center justify-between pt-6 border-t border-white/5 text-xs font-bold text-slate-500 uppercase tracking-widest">
+                    <span>Timeline: 1–2 weeks</span>
+                    <a href="{% url 'contact' %}" class="text-indigo-400 hover:text-indigo-300">Inquire →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pb-28 pt-20">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="glass p-10 rounded-3xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-blue-500/50"></div>
+
+            <h3 class="text-2xl font-bold mb-6 text-white flex items-center gap-3">
+                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                Infrastructure Costs (Not Included)
+            </h3>
+
+            <p class="text-slate-400 mb-8 leading-relaxed">
+                Domain, hosting, and deployment are billed separately depending on provider,
+                traffic requirements, and scaling strategy.
+            </p>
+
+            <div class="space-y-4">
+                <div class="flex justify-between items-center p-4 bg-white/5 rounded-xl border border-white/5">
+                    <span class="text-slate-300">• Domain registration</span>
+                    <span class="font-bold text-white">~€10–15 / year</span>
+                </div>
+                <div class="flex justify-between items-center p-4 bg-white/5 rounded-xl border border-white/5">
+                    <span class="text-slate-300">• Cloud hosting (Render / VPS)</span>
+                    <span class="font-bold text-white">~€7–25 / month</span>
+                </div>
+                <div class="flex justify-between items-center p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                    <span class="text-blue-300">• Production deployment & configuration</span>
+                    <span class="font-bold text-blue-400">€25 one-time setup</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pb-28 text-center">
+    <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-extrabold mb-8 text-white">
+            Let’s build something <span class="text-blue-500">structured</span>, scalable, and reliable.
+        </h2>
+        <a href="{% url 'contact' %}"
+           class="btn-primary inline-flex items-center gap-3 px-12 py-5 rounded-2xl font-bold text-lg shadow-xl shadow-blue-500/20 transition-all duration-300 hover:scale-105">
+            Request a Project Estimate
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </a>
+    </div>
+</section>
+
+{% endblock %}

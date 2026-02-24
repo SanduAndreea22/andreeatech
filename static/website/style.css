@@ -1,0 +1,180 @@
+/* =========================================
+   GLOBAL CORE – DARK ONLY
+========================================= */
+
+:root {
+    --radius: 14px;
+    --transition: all .3s ease;
+}
+
+/* Reset refinement */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #020617;
+    color: #f1f5f9;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient background – refined */
+.bg-noise {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 15% 10%, rgba(37,99,235,.25) 0%, transparent 50%),
+        radial-gradient(circle at 85% 40%, rgba(14,165,233,.2) 0%, transparent 50%);
+    opacity: .15;
+    filter: blur(120px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Gradient text */
+.gradient-text {
+    background: linear-gradient(90deg,#60a5fa,#22d3ee);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Glass base – premium depth */
+.glass {
+    background: rgba(15,23,42,.75);
+    backdrop-filter: blur(22px);
+    border: 1px solid rgba(255,255,255,.05);
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    border-radius: var(--radius);
+}
+
+/* Cards */
+.card-hover,
+.service-card,
+.project-card,
+.pricing-card {
+    transition: var(--transition);
+    border-radius: var(--radius);
+}
+
+.card-hover:hover,
+.service-card:hover,
+.project-card:hover,
+.pricing-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(59,130,246,.3);
+    box-shadow: 0 30px 80px rgba(0,0,0,.6);
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg,#2563eb,#38bdf8);
+    transition: transform .25s ease, box-shadow .25s ease;
+    border-radius: 10px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(37,99,235,.35);
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    z-index: 9999;
+    transition: all .4s ease;
+}
+
+.navbar.scrolled {
+    background: rgba(2,6,23,.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,.04);
+}
+
+.navbar a {
+    transition: var(--transition);
+}
+
+/* Active link underline */
+.navbar a.active {
+    position: relative;
+}
+
+.navbar a.active::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #3b82f6;
+}
+
+/* Body offset for fixed navbar */
+body {
+    padding-top: 75px;
+}
+
+/* =========================================
+   FORMS
+========================================= */
+
+input,
+textarea,
+select {
+    background: #0f172a;
+    border: 1px solid rgba(255,255,255,.08);
+    color: #f1f5f9;
+    padding: 12px 14px;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,.2);
+    outline: none;
+}
+
+/* Custom select arrow */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.2em;
+    padding-right: 2.5rem;
+}
+
+/* =========================================
+   PRICING
+========================================= */
+
+.price-tag {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg,#60a5fa,#22d3ee);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.most-popular {
+    border: 1px solid rgba(59,130,246,.4);
+    box-shadow:
+        0 0 0 1px rgba(59,130,246,.15),
+        0 30px 90px rgba(0,0,0,.7);
+    transform: scale(1.02);
+}

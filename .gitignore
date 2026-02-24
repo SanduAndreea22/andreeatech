@@ -1,0 +1,17 @@
+# 🔐 Secrets
+.env
+
+# 🐍 Python
+__pycache__/
+*.pyc
+
+# 🗄 Database
+*.sqlite3
+
+# 🧪 Virtual env
+venv/
+
+# 🧰 Editors / OS
+.idea/
+.vscode/
+.DS_Store
