@@ -40,12 +40,8 @@ class Project(models.Model):
 class ContactMessage(models.Model):
 
     INDUSTRY_CHOICES = [
-        ("3d_design", "3D Design"),
-        ("ecommerce", "E-commerce"),
-        ("accounting", "Accounting"),
-        ("marketing", "Marketing"),
-        ("saas", "SaaS"),
-        ("other", "Other"),
+        ("hospitality", "Restaurant"),
+        ("service_business", "Afacere bazată pe programări"),
     ]
 
     name = models.CharField(max_length=150)
@@ -97,11 +93,11 @@ from django.db import models
 class Review(models.Model):
 
     RATING_CHOICES = [
-        (1, "1 Star"),
-        (2, "2 Stars"),
-        (3, "3 Stars"),
-        (4, "4 Stars"),
-        (5, "5 Stars"),
+        (1, "1 stea"),
+        (2, "2 stele"),
+        (3, "3 stele"),
+        (4, "4 stele"),
+        (5, "5 stele"),
     ]
 
     name = models.CharField(max_length=120)

@@ -4,7 +4,7 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv()
+load_dotenv(BASE_DIR / ".env")
 import os
 AUTH_USER_MODEL = 'auth.User'
 SUPER_USER = os.getenv('DJANGO_SUPERUSER_NAME')
@@ -14,7 +14,7 @@ SUPER_EMAIL = os.getenv('DJANGO_SUPERUSER_EMAIL')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ['andreeatech.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['andreeastech.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -118,7 +118,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
-CSRF_TRUSTED_ORIGINS = ['https://andreeatech.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://andreeastech.pythonanywhere.com']
 
 
 STATIC_URL = "/static/"
@@ -129,8 +129,27 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# PythonAnywhere terminates TLS in front of the app and forwards requests
+# over plain HTTP, signaling the original scheme via this header. Keep the
+# local development server (DEBUG=True) on HTTP: `runserver` has no TLS.
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
+
+# Email
+# Defaults to printing to the console so local dev never needs real SMTP
+# credentials. Set EMAIL_BACKEND (and the SMTP vars below) in .env on the
+# PythonAnywhere deployment to actually deliver lead notifications.
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True") == "True"
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+
+# Where lead notifications (contact / start-project / review) are sent.
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", EMAIL_HOST_USER)

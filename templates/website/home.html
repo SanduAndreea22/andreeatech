@@ -1,106 +1,100 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}Acasă | Andreea Sandu{% endblock %}
+
+{% block title %}Andreea Sandu | Full-Stack Developer — Django & Python{% endblock %}
 
 {% block content %}
-<section class="min-h-screen flex items-center pt-28 relative z-10">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+<section class="relative overflow-hidden pt-20 pb-24 md:pt-28 md:pb-32">
+    <div class="absolute top-0 right-0 h-[520px] w-[520px] rounded-full bg-blue-500/10 blur-[130px]"></div>
+    <div class="absolute bottom-0 left-0 h-[360px] w-[360px] rounded-full bg-cyan-500/5 blur-[120px]"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-[1.05fr_.95fr] gap-16 items-center">
         <div>
-            <div class="mb-6 inline-block px-4 py-2 text-xs tracking-widest uppercase glass rounded-full text-blue-400 border border-blue-500/20">
-                Django • Automation • Business Systems
+            <div class="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-300 mb-7">
+                <span class="w-2 h-2 rounded-full bg-cyan-300 animate-pulse"></span>
+                Django · Python · Sisteme personalizate
             </div>
-            <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6 text-white">
-                I Build <span class="gradient-text">Custom Software</span><br>
-                That Replaces Chaos With Structure.
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-white mb-7">
+                Full-Stack Developer <span class="gradient-text">Django & Python.</span>
             </h1>
-            <p class="text-slate-400 text-lg leading-relaxed mb-10 max-w-xl">
-                I design Django platforms that automate workflows, manage financial and operational data,
-                and eliminate manual processes — giving businesses systems they can actually rely on.
+            <p class="max-w-2xl text-lg md:text-xl leading-relaxed text-slate-400 mb-9">
+                Construiesc sisteme web pentru restaurante și afaceri bazate pe programări — de la website-uri la sisteme de rezervări și management.
             </p>
-            <div class="flex gap-5">
-                <a href="{% url 'services' %}" class="btn-primary px-8 py-4 rounded-xl text-white font-medium shadow-lg shadow-blue-500/20 transition-all duration-300">
-                    View Services
-                </a>
-                <a href="{% url 'projects' %}"
-                   class="px-8 py-4 rounded-xl border border-slate-700 text-white hover:bg-slate-800 transition-all duration-300">
-                    See Projects
-                </a>
+            <div class="flex flex-wrap gap-4 mb-10">
+                <a href="{% url 'services' %}" class="btn-primary px-7 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Vezi serviciile</a>
+                <a href="{% url 'projects' %}" class="px-7 py-4 rounded-xl border border-slate-700 bg-slate-900/40 text-white font-semibold hover:bg-slate-800 transition">Vezi portofoliul</a>
+            </div>
+            <div class="flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-400">
+                <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> Dezvoltare Django personalizată</span>
+                <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> Construit în jurul fluxului tău real</span>
+                <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> De la idee la lansare</span>
             </div>
         </div>
 
-        <div class="relative">
-            <img src="{% static 'website/hero.jpeg' %}"
-                 alt="Andreea Sandu - Django Developer"
-                 class="rounded-3xl shadow-2xl border border-slate-800 relative z-10 w-full object-cover">
-            <div class="absolute -inset-6 rounded-3xl blur-3xl bg-blue-500/20 -z-0"></div>
+        <div class="relative lg:pl-5">
+            <div class="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-blue-500/20 via-transparent to-cyan-400/10 blur-2xl"></div>
+            <div class="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-900/80 shadow-2xl shadow-black/40 backdrop-blur-xl">
+                <div class="flex items-center justify-between border-b border-white/5 px-6 py-4 bg-white/[0.02]">
+                    <div class="flex gap-2"><span class="w-2.5 h-2.5 rounded-full bg-rose-400/70"></span><span class="w-2.5 h-2.5 rounded-full bg-amber-300/70"></span><span class="w-2.5 h-2.5 rounded-full bg-emerald-400/70"></span></div>
+                    <span class="text-xs font-medium tracking-widest uppercase text-slate-500">Prezentare generală</span>
+                </div>
+                <div class="p-6 sm:p-8">
+                    <div class="flex items-end justify-between mb-8"><div><p class="text-sm text-slate-400 mb-1">Pe scurt, astăzi</p><h2 class="text-2xl font-bold text-white">Totul într-un singur loc.</h2></div><div class="rounded-xl bg-emerald-400/10 px-3 py-2 text-xs font-semibold text-emerald-300">Sistem activ</div></div>
+                    <div class="grid grid-cols-3 gap-3 mb-6">
+                        <div class="rounded-2xl border border-white/5 bg-white/[0.035] p-4"><p class="text-xs text-slate-500">Rezervări</p><p class="mt-2 text-2xl font-bold text-white">24</p><p class="mt-1 text-xs text-emerald-300">+12% săptămâna asta</p></div>
+                        <div class="rounded-2xl border border-white/5 bg-white/[0.035] p-4"><p class="text-xs text-slate-500">Clienți</p><p class="mt-2 text-2xl font-bold text-white">186</p><p class="mt-1 text-xs text-blue-300">Evidență sincronizată</p></div>
+                        <div class="rounded-2xl border border-white/5 bg-white/[0.035] p-4"><p class="text-xs text-slate-500">Sarcini</p><p class="mt-2 text-2xl font-bold text-white">08</p><p class="mt-1 text-xs text-cyan-300">Priorități clare</p></div>
+                    </div>
+                    <div class="rounded-2xl border border-white/5 bg-slate-950/50 p-5">
+                        <div class="flex items-center justify-between mb-5"><p class="font-semibold text-white">Activitate săptămânală</p><p class="text-xs text-slate-500">Ultimele 7 zile</p></div>
+                        <div class="h-28 flex items-end gap-3"><span class="flex-1 h-[42%] rounded-t bg-blue-500/30"></span><span class="flex-1 h-[62%] rounded-t bg-blue-500/40"></span><span class="flex-1 h-[48%] rounded-t bg-blue-500/40"></span><span class="flex-1 h-[82%] rounded-t bg-cyan-400/70"></span><span class="flex-1 h-[68%] rounded-t bg-blue-500/50"></span><span class="flex-1 h-[90%] rounded-t bg-cyan-300"></span><span class="flex-1 h-[74%] rounded-t bg-blue-400/70"></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute -bottom-5 -left-5 rounded-2xl border border-white/10 bg-slate-900/95 p-4 shadow-xl backdrop-blur-md"><p class="text-xs text-slate-500">Construit pentru</p><p class="mt-1 text-sm font-semibold text-white">Ospitalitate & programări</p></div>
         </div>
     </div>
 </section>
 
-<section class="py-20 border-y border-slate-800/50 bg-slate-950/40 backdrop-blur-sm">
-    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-3 text-center gap-10">
-        <div class="p-4">
-            <h3 class="text-4xl font-bold gradient-text">Logic-Driven</h3>
-            <p class="text-slate-400 text-sm mt-2">Accounting background → structured architecture</p>
+<section class="border-y border-white/5 bg-slate-950/40 py-16">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-6">
+        <div class="rounded-2xl border border-white/5 bg-white/[0.025] p-8">
+            <p class="text-3xl mb-4">🍽️</p>
+            <h2 class="text-2xl font-bold text-white mb-3">Pentru restaurante</h2>
+            <p class="text-slate-400 leading-relaxed mb-6">Website-uri și sisteme de rezervări care înlocuiesc hârtia și telefonul — meniul tău, clar și la un click distanță pentru clienți.</p>
+            <a href="{% url 'services_restaurants' %}" class="text-blue-400 text-sm font-bold hover:text-blue-300 transition">Vezi detalii →</a>
         </div>
-        <div class="p-4 border-x border-slate-800/50">
-            <h3 class="text-4xl font-bold gradient-text">Custom Built</h3>
-            <p class="text-slate-400 text-sm mt-2">No templates. Every workflow is unique.</p>
-        </div>
-        <div class="p-4">
-            <h3 class="text-4xl font-bold gradient-text">Scalable</h3>
-            <p class="text-slate-400 text-sm mt-2">Systems designed to grow with your business</p>
+        <div class="rounded-2xl border border-white/5 bg-white/[0.025] p-8">
+            <p class="text-3xl mb-4">📅</p>
+            <h2 class="text-2xl font-bold text-white mb-3">Pentru afaceri bazate pe programări</h2>
+            <p class="text-slate-400 leading-relaxed mb-6">Sisteme care preiau programările automat, fără suprapuneri și fără mesaje pierdute — tu te ocupi de clienți, sistemul face restul.</p>
+            <a href="{% url 'services_appointments' %}" class="text-blue-400 text-sm font-bold hover:text-blue-300 transition">Vezi detalii →</a>
         </div>
     </div>
 </section>
 
 <section class="py-24">
-    <div class="max-w-6xl mx-auto px-6 text-center mb-16">
-        <h2 class="text-4xl font-bold mb-4 text-white">Solutions I Deliver</h2>
-        <p class="text-slate-400">Real tools for operations — not just websites.</p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
-
-        <div class="group relative p-8 rounded-2xl glass border border-white/5 transition-all duration-500 hover:-translate-y-3 hover:scale-[1.02] hover:border-blue-500/50 cursor-default overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <h3 class="text-xl font-semibold mb-4 text-blue-400 relative z-10">Business Dashboards</h3>
-            <p class="text-slate-400 text-sm leading-relaxed relative z-10">
-                Centralized platforms for tracking finances, analytics, and internal operations.
-            </p>
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <div class="glass rounded-3xl border border-white/10 p-10 md:p-14">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-5">Produse proprii</h2>
+            <p class="max-w-2xl mx-auto text-lg text-slate-400 leading-relaxed mb-8">Pe lângă proiectele pentru clienți, construiesc și produse proprii — aplicații gândite să rezolve probleme reale, nu doar demo-uri de portofoliu.</p>
+            <a href="{% url 'products' %}" class="btn-primary inline-block px-8 py-4 rounded-xl font-semibold">Vezi produsele →</a>
         </div>
-
-        <div class="group relative p-8 rounded-2xl glass border border-white/5 transition-all duration-500 hover:-translate-y-3 hover:scale-[1.02] hover:border-indigo-500/50 cursor-default overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <h3 class="text-xl font-semibold mb-4 text-blue-400 relative z-10">Workflow Automation</h3>
-            <p class="text-slate-400 text-sm leading-relaxed relative z-10">
-                Replace spreadsheets and emails with structured, trackable systems.
-            </p>
-        </div>
-
-        <div class="group relative p-8 rounded-2xl glass border border-white/5 transition-all duration-500 hover:-translate-y-3 hover:scale-[1.02] hover:border-cyan-500/50 cursor-default overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-cyan-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <h3 class="text-xl font-semibold mb-4 text-blue-400 relative z-10">Custom Platforms</h3>
-            <p class="text-slate-400 text-sm leading-relaxed relative z-10">
-                Tailor-made applications aligned to your business logic and processes.
-            </p>
-        </div>
-
     </div>
 </section>
 
-<section class="py-24 bg-[#020617] border-t border-slate-800/50 text-center relative overflow-hidden">
-    <div class="max-w-4xl mx-auto px-6 relative z-10">
-        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white">
-            Let’s Turn Your Workflow Into Software.
-        </h2>
-        <p class="text-slate-400 mb-10 text-lg">
-            If your business relies on manual processes, we can build something better.
+<section class="py-20 border-t border-white/5">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+        <p class="text-blue-400 text-sm font-semibold uppercase tracking-[0.22em] mb-5">Notă personală</p>
+        <p class="text-lg text-slate-400 leading-relaxed">
+            Nu sunt doar developer pentru clienți — construiesc și produse proprii, pornind de la probleme reale pe care le-am trăit eu însămi (vezi Emotional Planner). Aceeași atenție la detalii o aduc în fiecare sistem pe care îl construiesc.
         </p>
-        <a href="{% url 'contact' %}" class="btn-primary px-12 py-5 rounded-xl text-white font-bold text-lg shadow-xl shadow-blue-500/10">
-            Start a Conversation
-        </a>
     </div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+</section>
+
+<section class="py-24 md:py-32">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ai un proiect în minte? Hai să vorbim.</h2>
+        <a href="{% url 'contact' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Contactează-mă</a>
+    </div>
 </section>
 {% endblock %}

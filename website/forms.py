@@ -5,10 +5,10 @@ from .models import ContactMessage
 class StartProjectForm(forms.ModelForm):
 
     FEATURE_CHOICES = [
-        ("stripe", "Stripe Payment Integration"),
-        ("charts", "Interactive Charts / Data Visualization"),
-        ("custom_admin", "Custom Admin Panel Management"),
-        ("none", "None of the above"),
+        ("booking", "Sistem de rezervări / programări"),
+        ("dashboard", "Dashboard de administrare"),
+        ("website", "Website de prezentare"),
+        ("automation", "Automatizare procese"),
     ]
 
     required_features = forms.MultipleChoiceField(
@@ -16,6 +16,10 @@ class StartProjectForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=False,
     )
+
+    # Honeypot: real visitors never see or fill this field, bots that
+    # auto-fill every input do. Checked (not saved) in the view.
+    website = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = ContactMessage
@@ -34,6 +38,10 @@ from .models import ContactMessageSimple
 
 
 class ContactForm(forms.ModelForm):
+    # Honeypot: real visitors never see or fill this field, bots that
+    # auto-fill every input do. Checked (not saved) in the view.
+    website = forms.CharField(required=False, widget=forms.HiddenInput())
+
     class Meta:
         model = ContactMessageSimple
         fields = ["name", "email", "message"]
@@ -56,6 +64,10 @@ from .models import Review
 
 
 class ReviewForm(forms.ModelForm):
+    # Honeypot: real visitors never see or fill this field, bots that
+    # auto-fill every input do. Checked (not saved) in the view.
+    website = forms.CharField(required=False, widget=forms.HiddenInput())
+
     class Meta:
         model = Review
         fields = ["name", "company", "rating", "message"]

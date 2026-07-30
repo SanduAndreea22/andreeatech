@@ -1,4 +1,12 @@
 from django.shortcuts import render
+from django.conf import settings
+from django.core.mail import send_mail
+
+
+def _notify_admin(subject, message):
+    if settings.ADMIN_EMAIL:
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [settings.ADMIN_EMAIL], fail_silently=True)
+
 
 def home(request):
     return render(request, 'website/home.html')
@@ -6,13 +14,35 @@ def home(request):
 def services(request):
     return render(request, 'website/services.html')
 
+
+def services_restaurants(request):
+    return render(request, 'website/services_restaurants.html')
+
+
+def services_appointments(request):
+    return render(request, 'website/services_appointments.html')
+
+
+def products(request):
+    return render(request, 'website/products.html')
+
+
+def planner_product(request):
+    return render(request, 'website/planner_product.html')
+
+
+def budget_product(request):
+    return render(request, 'website/budget_product.html')
+
 from django.shortcuts import render, get_object_or_404
 from .models import Project
 
 
 def projects_list(request):
-    featured = Project.objects.filter(is_featured=True).first()
-    projects = Project.objects.filter(is_featured=False)
+    featured = Project.objects.filter(is_featured=True).order_by("order", "-created_at").first()
+    # Show the selected project prominently, then show every remaining project.
+    # Previously, additional projects marked as featured were hidden completely.
+    projects = Project.objects.exclude(pk=featured.pk).order_by("order", "-created_at") if featured else Project.objects.all().order_by("order", "-created_at")
     return render(request, "website/projects_list.html", {
         "featured": featured,
         "projects": projects
@@ -25,16 +55,19 @@ def project_detail(request, slug):
         "project": project
     })
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from .forms import StartProjectForm
 
 
 def start_project(request):
-    success = False
-
     if request.method == "POST":
         form = StartProjectForm(request.POST)
         if form.is_valid():
+            if form.cleaned_data.get("website"):
+                # Honeypot tripped — pretend success, save nothing.
+                return redirect("start_project")
+
             obj = form.save(commit=False)
 
             # convert list to comma-separated string
@@ -42,35 +75,44 @@ def start_project(request):
             obj.required_features = ", ".join(features)
 
             obj.save()
-            success = True
-            form = StartProjectForm()
+            _notify_admin(
+                "Brief nou de proiect — andreeatech",
+                f"Nume: {obj.name}\nEmail: {obj.email}\nDomeniu: {obj.get_industry_display()}\n\n{obj.project_description}"
+            )
+            messages.success(request, "Cerere primită! Îți analizez brief-ul și îți răspund în 24 de ore.")
+            return redirect("start_project")
     else:
         form = StartProjectForm()
 
     return render(request, "website/start_project.html", {
-        "form": form,
-        "success": success
+        "form": form
     })
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from .forms import ContactForm
 
 
 def contact(request):
-    success = False
-
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
-            success = True
-            form = ContactForm()
+            if form.cleaned_data.get("website"):
+                # Honeypot tripped — pretend success, save nothing.
+                return redirect("contact")
+
+            obj = form.save()
+            _notify_admin(
+                "Mesaj nou de contact — andreeatech",
+                f"De la: {obj.name} ({obj.email})\n\n{obj.message}"
+            )
+            messages.success(request, "Mesajul tău a fost trimis cu succes.")
+            return redirect("contact")
     else:
         form = ContactForm()
 
     return render(request, "website/contact.html", {
-        "form": form,
-        "success": success
+        "form": form
     })
 
 
@@ -91,7 +133,15 @@ def reviews(request):
     if request.method == "POST":
         form = ReviewForm(request.POST)
         if form.is_valid():
-            form.save()
+            if form.cleaned_data.get("website"):
+                # Honeypot tripped — pretend success, save nothing.
+                return redirect("reviews")
+
+            obj = form.save()
+            _notify_admin(
+                "Recenzie nouă (în așteptare aprobare) — andreeatech",
+                f"{obj.name} ({obj.company or 'fără companie'}) - {obj.rating} stele\n\n{obj.message}"
+            )
             return redirect("reviews")
 
     return render(request, "website/reviews.html", {

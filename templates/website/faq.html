@@ -4,9 +4,9 @@
 <section class="max-w-6xl mx-auto px-6 py-20">
 
   <div class="text-center mb-16">
-    <h1 class="text-4xl md:text-6xl font-extrabold gradient-text mb-6">System FAQ Assistant</h1>
+    <h1 class="text-4xl md:text-6xl font-extrabold gradient-text mb-6">Întrebări frecvente</h1>
     <p class="text-slate-400 text-lg max-w-2xl mx-auto">
-      Structured answers. No fluff. Select a question and the system will respond.
+      Răspunsuri clare înainte să începem. Alege o întrebare ca să afli mai multe.
     </p>
   </div>
 
@@ -15,43 +15,59 @@
     <div class="space-y-4">
       <h3 class="text-xl font-semibold mb-6 text-white flex items-center gap-2">
           <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-          Ask the System
+          Întrebări despre proiect
       </h3>
 
       <div class="flex flex-col gap-3">
           <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="content">
-            <span class="text-slate-300 group-hover:text-white">Do I need to provide the content?</span>
+            <span class="text-slate-300 group-hover:text-white">De ce ai nevoie de la mine?</span>
           </button>
 
           <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="domain">
-            <span class="text-slate-300 group-hover:text-white">Is domain & hosting included?</span>
+            <span class="text-slate-300 group-hover:text-white">Construiești sisteme de rezervări?</span>
+          </button>
+
+          <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="price">
+            <span class="text-slate-300 group-hover:text-white">Cât costă un proiect?</span>
+          </button>
+
+          <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="duration">
+            <span class="text-slate-300 group-hover:text-white">Cât durează un proiect?</span>
           </button>
 
           <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="payments">
-            <span class="text-slate-300 group-hover:text-white">Can you integrate payment gateways?</span>
+            <span class="text-slate-300 group-hover:text-white">Poți integra plăți online?</span>
           </button>
 
           <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="django">
-            <span class="text-slate-300 group-hover:text-white">Why Django?</span>
+            <span class="text-slate-300 group-hover:text-white">De ce Django?</span>
           </button>
 
           <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="custom">
-            <span class="text-slate-300 group-hover:text-white">Can I request custom features?</span>
+            <span class="text-slate-300 group-hover:text-white">Pot cere funcționalități personalizate?</span>
+          </button>
+
+          <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="copywriting">
+            <span class="text-slate-300 group-hover:text-white">Oferi și copywriting pentru texte?</span>
+          </button>
+
+          <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="portfolio">
+            <span class="text-slate-300 group-hover:text-white">Care e diferența dintre Portofoliu și Products?</span>
           </button>
 
           <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="support">
-            <span class="text-slate-300 group-hover:text-white">Do you offer ongoing support?</span>
+            <span class="text-slate-300 group-hover:text-white">Oferi suport după lansare?</span>
           </button>
       </div>
 
       <a href="{% url 'contact' %}" class="inline-block mt-6 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">
-        Still have questions? Start a conversation →
+        Mai ai întrebări? Începe o conversație →
       </a>
     </div>
 
     <div class="glass flex flex-col h-[550px] border border-white/10 shadow-2xl relative overflow-hidden">
       <div class="p-5 border-b border-white/5 bg-white/5 backdrop-blur-md flex items-center justify-between">
-        <span class="font-semibold text-sm tracking-wide uppercase text-slate-300">Digital System Assistant</span>
+        <span class="font-semibold text-sm tracking-wide uppercase text-slate-300">Asistent de proiect</span>
         <div class="flex gap-1.5">
             <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
@@ -61,7 +77,7 @@
 
       <div class="flex-1 p-6 overflow-y-auto space-y-6 custom-scrollbar" id="chatBody">
         <div class="bg-white/5 p-4 rounded-2xl rounded-tl-none max-w-[85%] text-slate-300 border border-white/5 leading-relaxed">
-          Hello! Select a question from the panel to receive structured technical information.
+          Bună! Alege o întrebare ca să primești informații despre proiect.
         </div>
       </div>
     </div>
@@ -117,12 +133,16 @@
 
 <script>
 const answers = {
-  content: "In most cases, yes. You provide the core business information and branding direction. I structure the content architecture and can integrate professional copywriting if required.",
-  domain: "Domain and hosting are external recurring services paid directly to providers. I guide you toward infrastructure optimized for Django-based systems.",
-  payments: "Yes. Secure integrations include Stripe, PayPal, and regional providers. All payment flows follow backend validation and security best practices.",
-  django: "Django is a secure and scalable Python framework engineered for long-term digital systems. It offers structured architecture and operational efficiency.",
-  custom: "Every system is built around business logic. Custom workflows, dashboards, or automation can be engineered according to your operational needs.",
-  support: "Each project includes a structured post-launch stabilization period. Long-term maintenance and feature evolution can be managed under a dedicated agreement."
+  content: "Îmi oferi contextul afacerii tale, fluxul actual de lucru, obiectivele și orice materiale existente. Eu transform asta într-un plan tehnic clar.",
+  domain: "Da. Fluxurile de rezervare pot fi construite în jurul serviciilor tale, al regulilor de disponibilitate și al modului în care lucrează echipa ta.",
+  price: "Fiecare linie de servicii are pachete cu prețuri clare — de la €74 pentru un sistem simplu de programări, până la €460 pentru o platformă completă de restaurant. Toate pachetele sunt detaliate pe paginile de Servicii.",
+  duration: "În funcție de pachetul ales, un proiect durează între 7 și 21 de zile. Termenul exact e specificat la fiecare pachet, pe paginile dedicate de Servicii.",
+  payments: "Da. Integrările de plăți securizate pot include Stripe, PayPal și alți furnizori potriviți pentru regiunea ta.",
+  django: "Django este un framework Python sigur și scalabil, potrivit mai ales pentru sisteme de business bazate pe date și fluxuri personalizate.",
+  custom: "Absolut. Fiecare proiect poate fi construit în jurul procesului tău real de afaceri, nu forțat într-un instrument generic.",
+  copywriting: "Da, dar doar ca add-on opțional pe lângă un pachet de website — nu ofer copywriting ca serviciu separat.",
+  portfolio: "Proiectele din Portofoliu (Al Noir, Platform Tickets, Bookora, Django E-Commerce) sunt dovadă de capabilitate tehnică, nu produse de vânzare. Emotional Planner și Budget Planner, din secțiunea Products, sunt produsele mele proprii, oferite direct.",
+  support: "Fiecare proiect include o perioadă de stabilizare după lansare. Mentenanță continuă poate fi stabilită separat, atunci când e nevoie."
 };
 
 const buttons = document.querySelectorAll(".faq-btn");
