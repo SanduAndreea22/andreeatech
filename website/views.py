@@ -76,10 +76,10 @@ def start_project(request):
 
             obj.save()
             _notify_admin(
-                "Brief nou de proiect — andreeatech",
-                f"Nume: {obj.name}\nEmail: {obj.email}\nDomeniu: {obj.get_industry_display()}\n\n{obj.project_description}"
+                "New project brief — andreeatech",
+                f"Name: {obj.name}\nEmail: {obj.email}\nIndustry: {obj.get_industry_display()}\n\n{obj.project_description}"
             )
-            messages.success(request, "Cerere primită! Îți analizez brief-ul și îți răspund în 24 de ore.")
+            messages.success(request, "Request received! I'll review your brief and get back to you within 24 hours.")
             return redirect("start_project")
     else:
         form = StartProjectForm()
@@ -103,10 +103,10 @@ def contact(request):
 
             obj = form.save()
             _notify_admin(
-                "Mesaj nou de contact — andreeatech",
-                f"De la: {obj.name} ({obj.email})\n\n{obj.message}"
+                "New contact message — andreeatech",
+                f"From: {obj.name} ({obj.email})\n\n{obj.message}"
             )
-            messages.success(request, "Mesajul tău a fost trimis cu succes.")
+            messages.success(request, "Your message has been sent successfully.")
             return redirect("contact")
     else:
         form = ContactForm()
@@ -139,8 +139,8 @@ def reviews(request):
 
             obj = form.save()
             _notify_admin(
-                "Recenzie nouă (în așteptare aprobare) — andreeatech",
-                f"{obj.name} ({obj.company or 'fără companie'}) - {obj.rating} stele\n\n{obj.message}"
+                "New review (pending approval) — andreeatech",
+                f"{obj.name} ({obj.company or 'no company'}) - {obj.rating} stars\n\n{obj.message}"
             )
             return redirect("reviews")
 

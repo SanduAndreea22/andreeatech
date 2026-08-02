@@ -5,10 +5,10 @@ from .models import ContactMessage
 class StartProjectForm(forms.ModelForm):
 
     FEATURE_CHOICES = [
-        ("booking", "Sistem de rezervări / programări"),
-        ("dashboard", "Dashboard de administrare"),
-        ("website", "Website de prezentare"),
-        ("automation", "Automatizare procese"),
+        ("booking", "Booking / appointment system"),
+        ("dashboard", "Admin dashboard"),
+        ("website", "Showcase website"),
+        ("automation", "Process automation"),
     ]
 
     required_features = forms.MultipleChoiceField(

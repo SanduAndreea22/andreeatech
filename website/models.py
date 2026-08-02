@@ -41,7 +41,7 @@ class ContactMessage(models.Model):
 
     INDUSTRY_CHOICES = [
         ("hospitality", "Restaurant"),
-        ("service_business", "Afacere bazată pe programări"),
+        ("service_business", "Appointment-based business"),
     ]
 
     name = models.CharField(max_length=150)
@@ -93,11 +93,11 @@ from django.db import models
 class Review(models.Model):
 
     RATING_CHOICES = [
-        (1, "1 stea"),
-        (2, "2 stele"),
-        (3, "3 stele"),
-        (4, "4 stele"),
-        (5, "5 stele"),
+        (1, "1 star"),
+        (2, "2 stars"),
+        (3, "3 stars"),
+        (4, "4 stars"),
+        (5, "5 stars"),
     ]
 
     name = models.CharField(max_length=120)

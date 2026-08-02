@@ -7,12 +7,12 @@
 
         <div class="mb-12 text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">
-                Începe o conversație
+                Start a conversation
             </h1>
 
             <p class="text-slate-400 text-lg leading-relaxed">
-                Spune-mi despre restaurantul sau afacerea ta și ce ți-ar ușura munca.
-                Îți răspund cu cel mai bun pas următor.
+                Tell me about your restaurant or business and what would make your work easier.
+                I'll get back to you with the best next step.
             </p>
         </div>
 
@@ -30,7 +30,7 @@
                 <div style="position:absolute; left:-9999px;" aria-hidden="true">{{ form.website }}</div>
 
                 <div>
-                    <label class="block mb-2 text-sm text-slate-400">Nume</label>
+                    <label class="block mb-2 text-sm text-slate-400">Name</label>
                     {{ form.name }}
                 </div>
 
@@ -40,29 +40,29 @@
                 </div>
 
                 <div>
-                    <label class="block mb-2 text-sm text-slate-400">Mesaj</label>
+                    <label class="block mb-2 text-sm text-slate-400">Message</label>
                     {{ form.message }}
                 </div>
 
                 <button type="submit"
                     class="btn-primary w-full py-4 rounded-xl font-bold text-white uppercase tracking-wider shadow-lg shadow-blue-500/20">
-                    Trimite mesajul
+                    Send message
                 </button>
             </form>
         </div>
 
         <div class="border-t border-slate-800 pt-12 text-center">
             <h2 class="text-2xl font-semibold mb-4 text-white">
-                Cauți mai mult decât o întrebare rapidă?
+                Looking for more than a quick question?
             </h2>
 
             <p class="text-slate-400 mb-8 leading-relaxed max-w-md mx-auto">
-                Dacă ai nevoie de un website, un flux de rezervări sau un instrument de management personalizat, spune-mi câteva detalii în brief-ul de proiect.
+                If you need a website, a booking flow, or a custom management tool, share a few details in the project brief.
             </p>
 
             <a href="{% url 'start_project' %}"
                class="inline-block px-10 py-4 rounded-xl border border-slate-700 text-white hover:bg-slate-800 transition-all duration-300 font-semibold">
-                Începe un proiect →
+                Start a project →
             </a>
         </div>
 

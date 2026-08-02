@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ project.title }} | Studiu de caz{% endblock %}
+{% block title %}{{ project.title }} | Case Study{% endblock %}
 
 {% block content %}
 <section class="pt-28 pb-24 relative overflow-hidden">
@@ -8,7 +8,7 @@
     <div class="max-w-4xl mx-auto px-6">
 
         <a href="{% url 'projects' %}" class="inline-flex items-center text-sm text-slate-500 hover:text-blue-400 transition mb-10 group">
-            <span class="mr-2 transition-transform group-hover:-translate-x-1">←</span> Înapoi la portofoliu
+            <span class="mr-2 transition-transform group-hover:-translate-x-1">←</span> Back to portfolio
         </a>
 
         <header class="mb-12">
@@ -37,7 +37,7 @@
 
             <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-1 h-full bg-red-500/50"></div>
-                <h2 class="text-sm uppercase tracking-[0.2em] text-red-400 font-bold mb-6">Provocarea</h2>
+                <h2 class="text-sm uppercase tracking-[0.2em] text-red-400 font-bold mb-6">The Challenge</h2>
                 <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
                     {{ project.problem|safe }}
                 </div>
@@ -45,7 +45,7 @@
 
             <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-1 h-full bg-blue-500/50"></div>
-                <h2 class="text-sm uppercase tracking-[0.2em] text-blue-400 font-bold mb-6">Soluția</h2>
+                <h2 class="text-sm uppercase tracking-[0.2em] text-blue-400 font-bold mb-6">The Solution</h2>
                 <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
                     {{ project.solution|safe }}
                 </div>
@@ -53,7 +53,7 @@
 
             <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-1 h-full bg-green-500/50"></div>
-                <h2 class="text-sm uppercase tracking-[0.2em] text-green-400 font-bold mb-6">Rezultatul</h2>
+                <h2 class="text-sm uppercase tracking-[0.2em] text-green-400 font-bold mb-6">The Outcome</h2>
                 <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
                     {{ project.outcome|safe }}
                 </div>
@@ -64,7 +64,7 @@
         <div class="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-10">
             <div>
                 <span class="text-xs uppercase tracking-widest text-slate-500 font-bold">
-                    Construit cu
+                    Built with
                 </span>
                 <div class="mt-4 flex flex-wrap gap-3">
                     {% for tech in project.tech_list %}
@@ -77,7 +77,7 @@
 
             <div class="flex-shrink-0">
                 <a href="{% url 'contact' %}" class="btn-primary px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-wider">
-                    Construim ceva similar
+                    Let's build something similar
                 </a>
             </div>
         </div>

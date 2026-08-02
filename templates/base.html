@@ -17,7 +17,7 @@
         .gradient-text { background: linear-gradient(90deg, #60a5fa, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .btn-primary { background: linear-gradient(135deg, #2563eb, #38bdf8); color: white !important; transition: all 0.3s ease; border: none; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4); }
-        /* Stiluri forțate pentru formularele Django */
+        /* Forced styles for Django forms */
         input, textarea, select { background: rgba(15, 23, 42, 0.9) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; color: white !important; padding: 12px; border-radius: 10px; width: 100%; outline: none; margin-bottom: 10px; }
         input:focus { border-color: var(--accent) !important; }
         .navbar { height: 70px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -37,35 +37,35 @@
     </div>
 </a>
             <div class="hidden md:flex gap-7 text-sm font-medium items-center text-slate-300">
-                <a href="{% url 'home' %}" class="hover:text-blue-400 transition">Acasă</a>
-                <a href="{% url 'services' %}" class="hover:text-blue-400 transition">Servicii</a>
-                <a href="{% url 'products' %}" class="hover:text-blue-400 transition">Produse</a>
-                <a href="{% url 'projects' %}" class="hover:text-blue-400 transition">Portofoliu</a>
-                <a href="{% url 'faq' %}" class="hover:text-blue-400 transition">Întrebări frecvente</a>
-                <a href="{% url 'reviews' %}" class="hover:text-blue-400 transition">Recenzii</a>
+                <a href="{% url 'home' %}" class="hover:text-blue-400 transition">Home</a>
+                <a href="{% url 'services' %}" class="hover:text-blue-400 transition">Services</a>
+                <a href="{% url 'products' %}" class="hover:text-blue-400 transition">Products</a>
+                <a href="{% url 'projects' %}" class="hover:text-blue-400 transition">Portfolio</a>
+                <a href="{% url 'faq' %}" class="hover:text-blue-400 transition">FAQ</a>
+                <a href="{% url 'reviews' %}" class="hover:text-blue-400 transition">Reviews</a>
                 <a href="{% url 'contact' %}" class="btn-primary px-5 py-2 rounded-lg">Contact</a>
             </div>
             <details class="relative md:hidden text-sm font-medium text-slate-300">
-                <summary class="cursor-pointer rounded-lg border border-slate-700 px-4 py-2 hover:border-blue-400">Meniu</summary>
+                <summary class="cursor-pointer rounded-lg border border-slate-700 px-4 py-2 hover:border-blue-400">Menu</summary>
                 <div class="absolute right-0 mt-3 w-48 glass p-3 shadow-2xl flex flex-col gap-3">
-                    <a href="{% url 'home' %}" class="hover:text-blue-400">Acasă</a>
-                    <a href="{% url 'services' %}" class="hover:text-blue-400">Servicii</a>
-                    <a href="{% url 'products' %}" class="hover:text-blue-400">Produse</a>
-                    <a href="{% url 'projects' %}" class="hover:text-blue-400">Portofoliu</a>
-                    <a href="{% url 'faq' %}" class="hover:text-blue-400">Întrebări frecvente</a>
-                    <a href="{% url 'reviews' %}" class="hover:text-blue-400">Recenzii</a>
+                    <a href="{% url 'home' %}" class="hover:text-blue-400">Home</a>
+                    <a href="{% url 'services' %}" class="hover:text-blue-400">Services</a>
+                    <a href="{% url 'products' %}" class="hover:text-blue-400">Products</a>
+                    <a href="{% url 'projects' %}" class="hover:text-blue-400">Portfolio</a>
+                    <a href="{% url 'faq' %}" class="hover:text-blue-400">FAQ</a>
+                    <a href="{% url 'reviews' %}" class="hover:text-blue-400">Reviews</a>
                     <a href="{% url 'contact' %}" class="text-blue-400">Contact</a>
                 </div>
             </details>
         </div>
     </nav>
- 
+
     <main class="relative z-10 pt-24 flex-grow">
         {% block content %}{% endblock %}
     </main>
- 
+
     <footer class="py-10 border-t border-white/5 text-center mt-20 opacity-50 text-sm">
-        © 2026 Andreea Sandu — Sisteme web Django
+        © 2026 Andreea Sandu — Django Web Systems
     </footer>
 </body>
 </html>

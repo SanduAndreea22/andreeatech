@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Începe un proiect | Andreea Sandu{% endblock %}
+{% block title %}Start a Project | Andreea Sandu{% endblock %}
 
 {% block content %}
 
@@ -10,11 +10,11 @@
 
         <div class="mb-14 text-center">
             <h1 class="text-4xl md:text-6xl font-extrabold mb-6 gradient-text">
-                Hai să construim sistemul tău
+                Let's build your system
             </h1>
 
             <p class="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto">
-                Spune-mi despre afacerea ta și fluxul de lucru pe care vrei să-l îmbunătățești. Completează brief-ul de mai jos ca să începem.
+                Tell me about your business and the workflow you want to improve. Fill out the brief below so we can get started.
             </p>
         </div>
 
@@ -35,52 +35,52 @@
 
                 <div class="space-y-6">
                     <h3 class="text-sm uppercase tracking-widest text-indigo-400 font-bold flex items-center gap-2">
-                        <span class="w-1 h-4 bg-indigo-500 rounded-full"></span> 01. Identificare
+                        <span class="w-1 h-4 bg-indigo-500 rounded-full"></span> 01. Identification
                     </h3>
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase">Numele tău</label>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase">Your name</label>
                             {{ form.name }}
                         </div>
                         <div class="space-y-2">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase">Adresă de email</label>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase">Email address</label>
                             {{ form.email }}
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-xs font-semibold text-slate-500 uppercase">Domeniu / Nișă</label>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase">Industry / Niche</label>
                         {{ form.industry }}
                     </div>
                 </div>
 
                 <div class="space-y-6">
                     <h3 class="text-sm uppercase tracking-widest text-indigo-400 font-bold flex items-center gap-2">
-                        <span class="w-1 h-4 bg-indigo-500 rounded-full"></span> 02. Scopul proiectului
+                        <span class="w-1 h-4 bg-indigo-500 rounded-full"></span> 02. Project scope
                     </h3>
                     <div class="space-y-2">
-                        <label class="block text-xs font-semibold text-slate-500 uppercase">Descrierea proiectului și obiective</label>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase">Project description and goals</label>
                         {{ form.project_description }}
-                        <p class="text-[11px] text-slate-500">Descrie website-ul, fluxul de rezervări sau procesul intern de care ai nevoie.</p>
+                        <p class="text-[11px] text-slate-500">Describe the website, booking flow, or internal process you need.</p>
                     </div>
                 </div>
 
                 <div class="space-y-6">
                     <h3 class="text-sm uppercase tracking-widest text-indigo-400 font-bold flex items-center gap-2">
-                        <span class="w-1 h-4 bg-indigo-500 rounded-full"></span> 03. Cerințe tehnice
+                        <span class="w-1 h-4 bg-indigo-500 rounded-full"></span> 03. Technical requirements
                     </h3>
                     <div class="grid md:grid-cols-2 gap-8">
                         <div class="space-y-2">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase">Hosting & domeniu</label>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase">Hosting & domain</label>
                             {{ form.hosting_info }}
                         </div>
                         <div class="space-y-2">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase">Termen / urgență</label>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase">Timeline / urgency</label>
                             {{ form.deadline_communication }}
                         </div>
                     </div>
 
                     <div class="space-y-4 pt-4">
-                        <label class="block text-xs font-semibold text-slate-500 uppercase">Funcționalități necesare</label>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase">Required features</label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-300 custom-checkboxes">
                             {{ form.required_features }}
                         </div>
@@ -90,10 +90,10 @@
                 <div class="pt-6">
                     <button type="submit"
                         class="btn-primary w-full py-5 rounded-2xl font-black text-white uppercase tracking-[0.2em] shadow-xl shadow-indigo-600/20 transform hover:scale-[1.01] transition-all">
-                        Trimite proiectul
+                        Submit project
                     </button>
                     <p class="text-center text-slate-500 text-xs mt-6">
-                        Apăsând „Trimite proiectul”, ești de acord cu procesul structurat de dezvoltare.
+                        By clicking "Submit project," you agree to the structured development process.
                     </p>
                 </div>
             </form>
@@ -103,7 +103,7 @@
 </section>
 
 <style>
-    /* Stil pentru checkboxes randate de Django */
+    /* Style for checkboxes rendered by Django */
     .custom-checkboxes ul {
         display: grid;
         grid-template-columns: 1fr;

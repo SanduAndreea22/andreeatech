@@ -6,7 +6,7 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('website.urls')),  # leagă site-ul tău
+    path('', include('website.urls')),  # links your site
 ]
 
 urlpatterns += [
