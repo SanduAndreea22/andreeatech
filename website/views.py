@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.core.mail import send_mail
+from django.http import HttpResponse
 
 
 def _notify_admin(subject, message):
@@ -10,6 +11,15 @@ def _notify_admin(subject, message):
 
 def home(request):
     return render(request, 'website/home.html')
+
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
 
 def services(request):
     return render(request, 'website/services.html')
@@ -118,6 +128,10 @@ def contact(request):
 
 def faq(request):
     return render(request, "website/faq.html")
+
+
+def privacy_policy(request):
+    return render(request, "website/privacy_policy.html")
 
 from django.shortcuts import render, redirect
 from .models import Review

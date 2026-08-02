@@ -6,6 +6,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Andreea Sandu | Full-Stack Developer — Django & Python{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Full-stack Django & Python developer building web systems for restaurants and appointment-based businesses — websites, booking flows, and management tools.{% endblock %}">
+
+    <link rel="icon" type="image/svg+xml" href="{% static 'website/favicon.svg' %}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Andreea Sandu">
+    <meta property="og:title" content="{% block og_title %}Andreea Sandu | Full-Stack Developer — Django & Python{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Full-stack Django & Python developer building web systems for restaurants and appointment-based businesses — websites, booking flows, and management tools.{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/hero.jpeg' %}{% endblock %}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Andreea Sandu | Full-Stack Developer — Django & Python{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Full-stack Django & Python developer building web systems for restaurants and appointment-based businesses — websites, booking flows, and management tools.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/hero.jpeg' %}{% endblock %}">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
  
@@ -64,8 +80,13 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="py-10 border-t border-white/5 text-center mt-20 opacity-50 text-sm">
-        © 2026 Andreea Sandu — Django Web Systems
+    <footer class="py-10 border-t border-white/5 text-center mt-20 text-sm">
+        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 opacity-70 mb-3">
+            <a href="mailto:andreea.tech@outlook.com" class="hover:text-blue-400 transition">andreea.tech@outlook.com</a>
+            <a href="https://www.linkedin.com/in/andreeasandu22" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition">LinkedIn</a>
+            <a href="{% url 'privacy_policy' %}" class="hover:text-blue-400 transition">Privacy Policy</a>
+        </div>
+        <p class="opacity-50">© 2026 Andreea Sandu — Django Web Systems</p>
     </footer>
 </body>
 </html>

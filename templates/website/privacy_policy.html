@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Privacy Policy | Andreea Sandu{% endblock %}
+{% block meta_description %}How Andreea Sandu collects, uses, and protects the personal data submitted through the Contact, Start a Project, and Reviews forms on this site.{% endblock %}
+
+{% block content %}
+<section class="pt-28 pb-24">
+    <div class="max-w-3xl mx-auto px-6">
+
+        <div class="mb-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">Privacy Policy</h1>
+            <p class="text-slate-400 text-lg leading-relaxed">
+                This page explains what data this site collects, why, and how it's handled.
+            </p>
+        </div>
+
+        <div class="glass p-8 md:p-10 space-y-10 border border-white/5 shadow-2xl text-slate-300 leading-relaxed">
+
+            <div>
+                <h2 class="text-xl font-semibold text-white mb-3">Who this applies to</h2>
+                <p>This site (andreeastech.pythonanywhere.com) is operated by Andreea Sandu. This policy covers the personal data submitted through the Contact, Start a Project, and Reviews forms.</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-semibold text-white mb-3">What data is collected</h2>
+                <ul class="list-disc list-inside space-y-2">
+                    <li><strong class="text-white">Contact form:</strong> name, email address, and message.</li>
+                    <li><strong class="text-white">Start a Project form:</strong> name, email address, industry, project description, hosting details, timeline, and requested features.</li>
+                    <li><strong class="text-white">Reviews form:</strong> name, company (optional), rating, and review message.</li>
+                </ul>
+                <p class="mt-3">No payment, financial, or government ID data is collected through this site.</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-semibold text-white mb-3">Why it's collected</h2>
+                <p>Submitted data is used only to respond to your inquiry, evaluate a project brief, or — for reviews — to consider it for publication on the Reviews page. It is not used for advertising and is not sold or shared with third parties, other than the email service used to deliver notifications to the site owner.</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-semibold text-white mb-3">Published reviews</h2>
+                <p>Reviews are private until manually approved. Once approved, the name, company (if provided), rating, and message you submitted are displayed publicly on the Reviews page.</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-semibold text-white mb-3">Cookies</h2>
+                <p>This site uses only the cookies strictly necessary for it to function — a session cookie and a CSRF-protection cookie. No analytics or advertising cookies are used.</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-semibold text-white mb-3">How long data is kept</h2>
+                <p>Submitted data is kept for as long as needed to respond to your request, or until you ask for it to be deleted.</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-semibold text-white mb-3">Your rights</h2>
+                <p>You can ask to see, correct, or delete the data you've submitted at any time. To do so, get in touch through the <a href="{% url 'contact' %}" class="text-blue-400 hover:text-blue-300 transition">Contact page</a>.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
