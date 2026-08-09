@@ -1,7 +1,11 @@
-from django.shortcuts import render
 from django.conf import settings
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+
+from .forms import ContactForm, ReviewForm, StartProjectForm
+from .models import Project, Review
 
 
 def _notify_admin(subject, message):
@@ -20,6 +24,7 @@ def robots_txt(request):
         f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
+
 
 def services(request):
     return render(request, 'website/services.html')
@@ -44,9 +49,6 @@ def planner_product(request):
 def budget_product(request):
     return render(request, 'website/budget_product.html')
 
-from django.shortcuts import render, get_object_or_404
-from .models import Project
-
 
 def projects_list(request):
     featured = Project.objects.filter(is_featured=True).order_by("order", "-created_at").first()
@@ -64,10 +66,6 @@ def project_detail(request, slug):
     return render(request, "website/project_detail.html", {
         "project": project
     })
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import StartProjectForm
 
 
 def start_project(request):
@@ -97,10 +95,6 @@ def start_project(request):
     return render(request, "website/start_project.html", {
         "form": form
     })
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import ContactForm
 
 
 def contact(request):
@@ -132,10 +126,6 @@ def faq(request):
 
 def privacy_policy(request):
     return render(request, "website/privacy_policy.html")
-
-from django.shortcuts import render, redirect
-from .models import Review
-from .forms import ReviewForm
 
 
 def reviews(request):

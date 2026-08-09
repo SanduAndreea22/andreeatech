@@ -1,5 +1,6 @@
 from django import forms
-from .models import ContactMessage
+
+from .models import ContactMessage, ContactMessageSimple, Review
 
 
 class StartProjectForm(forms.ModelForm):
@@ -33,9 +34,6 @@ class StartProjectForm(forms.ModelForm):
             "required_features",
         ]
 
-from django import forms
-from .models import ContactMessageSimple
-
 
 class ContactForm(forms.ModelForm):
     # Honeypot: real visitors never see or fill this field, bots that
@@ -58,9 +56,6 @@ class ContactForm(forms.ModelForm):
                 "class": "w-full p-3 rounded-lg bg-slate-800 border border-slate-700 text-white"
             }),
         }
-
-from django import forms
-from .models import Review
 
 
 class ReviewForm(forms.ModelForm):

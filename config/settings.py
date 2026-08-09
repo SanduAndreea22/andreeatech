@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
@@ -67,7 +68,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
-if DATABASE_URL:
+# `manage.py test` never touches the remote Postgres instance: creating/
+# dropping a "test_<db>" database there requires elevated permissions we
+# don't have on Neon and risks colliding with other sessions. Tests always
+# run against local sqlite instead.
+if DATABASE_URL and "test" not in sys.argv:
 
     DATABASES = {
         "default": dj_database_url.parse(
