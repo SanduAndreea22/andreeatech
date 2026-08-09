@@ -9,7 +9,7 @@ class StartProjectForm(forms.ModelForm):
         ("booking", "Sistem de rezervări / programări"),
         ("dashboard", "Dashboard de administrare"),
         ("website", "Website de prezentare"),
-        ("automation", "Automatizare procese"),
+        ("ai_automation", "Automatizare AI (telefon/WhatsApp)"),
     ]
 
     required_features = forms.MultipleChoiceField(

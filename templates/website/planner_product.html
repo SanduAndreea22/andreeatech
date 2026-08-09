@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Planner de Echilibru Personal & Productivitate{% endblock %}
 {% block meta_description %}Emotional Planner — un planner de echilibru personal și productivitate, construit ca să-ți urmărești starea, obiceiurile și obiectivele într-un singur loc.{% endblock %}
 
@@ -12,6 +12,14 @@
         <a href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block px-10 py-5 rounded-xl font-bold text-lg">Începe prima lună gratuită</a>
     </div>
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/15 blur-[140px] rounded-full -z-10"></div>
+</section>
+
+<section class="pb-20">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <img src="{% static 'website/planner-preview.jpg' %}" alt="Emotional Planner — ecranul de start" class="w-full h-auto">
+        </div>
+    </div>
 </section>
 
 <section class="py-24 border-y border-white/5 bg-slate-950/30">

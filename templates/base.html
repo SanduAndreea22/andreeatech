@@ -15,12 +15,12 @@
     <meta property="og:title" content="{% block og_title %}Andreea Sandu | Full-Stack Developer — Django & Python{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Dezvoltator full-stack Django & Python — construiesc sisteme web pentru restaurante și afaceri bazate pe programări: website-uri, fluxuri de rezervări și instrumente de administrare.{% endblock %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/hero.jpeg' %}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/cover_me.jpg' %}{% endblock %}">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% block twitter_title %}Andreea Sandu | Full-Stack Developer — Django & Python{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}Dezvoltator full-stack Django & Python — construiesc sisteme web pentru restaurante și afaceri bazate pe programări: website-uri, fluxuri de rezervări și instrumente de administrare.{% endblock %}">
-    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/hero.jpeg' %}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/cover_me.jpg' %}{% endblock %}">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,10 +54,10 @@
 </a>
             <div class="hidden md:flex gap-7 text-sm font-medium items-center text-slate-300">
                 <a href="{% url 'home' %}" class="hover:text-blue-400 transition">Acasă</a>
+                <a href="{% url 'about' %}" class="hover:text-blue-400 transition">Despre mine</a>
                 <a href="{% url 'services' %}" class="hover:text-blue-400 transition">Servicii</a>
                 <a href="{% url 'products' %}" class="hover:text-blue-400 transition">Produse</a>
                 <a href="{% url 'projects' %}" class="hover:text-blue-400 transition">Portofoliu</a>
-                <a href="{% url 'about' %}" class="hover:text-blue-400 transition">Despre mine</a>
                 <a href="{% url 'faq' %}" class="hover:text-blue-400 transition">Întrebări frecvente</a>
                 <a href="{% url 'reviews' %}" class="hover:text-blue-400 transition">Recenzii</a>
                 <a href="{% url 'contact' %}" class="btn-primary px-5 py-2 rounded-lg">Contact</a>
@@ -66,10 +66,10 @@
                 <summary class="cursor-pointer rounded-lg border border-slate-700 px-4 py-2 hover:border-blue-400">Meniu</summary>
                 <div class="absolute right-0 mt-3 w-48 glass p-3 shadow-2xl flex flex-col gap-3">
                     <a href="{% url 'home' %}" class="hover:text-blue-400">Acasă</a>
+                    <a href="{% url 'about' %}" class="hover:text-blue-400">Despre mine</a>
                     <a href="{% url 'services' %}" class="hover:text-blue-400">Servicii</a>
                     <a href="{% url 'products' %}" class="hover:text-blue-400">Produse</a>
                     <a href="{% url 'projects' %}" class="hover:text-blue-400">Portofoliu</a>
-                    <a href="{% url 'about' %}" class="hover:text-blue-400">Despre mine</a>
                     <a href="{% url 'faq' %}" class="hover:text-blue-400">Întrebări frecvente</a>
                     <a href="{% url 'reviews' %}" class="hover:text-blue-400">Recenzii</a>
                     <a href="{% url 'contact' %}" class="text-blue-400">Contact</a>

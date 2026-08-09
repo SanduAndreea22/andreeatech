@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Despre mine | Andreea Sandu{% endblock %}
 {% block meta_description %}Dezvoltator full-stack Django & Python — background, focus și certificările din spatele sistemelor construite pentru restaurante, afaceri bazate pe programări și produse proprii.{% endblock %}
 
@@ -17,7 +18,12 @@
 </section>
 
 <section class="pb-20">
-    <div class="max-w-3xl mx-auto px-6">
+    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-[280px_1fr] gap-8 items-start">
+        <div class="mx-auto md:mx-0 w-56 md:w-full">
+            <div class="rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                <img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" class="w-full h-full object-cover">
+            </div>
+        </div>
         <div class="glass rounded-3xl border border-white/10 p-8 md:p-12 space-y-6 text-slate-400 leading-relaxed">
             <p>
                 Sunt Andreea — dezvoltator full-stack, construiesc sisteme web pentru restaurante și afaceri bazate

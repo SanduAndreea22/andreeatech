@@ -8,50 +8,25 @@
     <div class="absolute top-0 right-0 h-[520px] w-[520px] rounded-full bg-blue-500/10 blur-[130px]"></div>
     <div class="absolute bottom-0 left-0 h-[360px] w-[360px] rounded-full bg-cyan-500/5 blur-[120px]"></div>
 
-    <div class="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-[1.05fr_.95fr] gap-16 items-center">
-        <div>
-            <div class="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-300 mb-7">
-                <span class="w-2 h-2 rounded-full bg-cyan-300 animate-pulse"></span>
-                Django · Python · Sisteme personalizate
-            </div>
-            <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-white mb-7">
-                Full-Stack Developer <span class="gradient-text">Django & Python.</span>
-            </h1>
-            <p class="max-w-2xl text-lg md:text-xl leading-relaxed text-slate-400 mb-9">
-                Construiesc sisteme web pentru restaurante și afaceri bazate pe programări — de la website-uri la sisteme de rezervări și management.
-            </p>
-            <div class="flex flex-wrap gap-4 mb-10">
-                <a href="{% url 'services' %}" class="btn-primary px-7 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Vezi serviciile</a>
-                <a href="{% url 'projects' %}" class="px-7 py-4 rounded-xl border border-slate-700 bg-slate-900/40 text-white font-semibold hover:bg-slate-800 transition">Vezi portofoliul</a>
-            </div>
-            <div class="flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-400">
-                <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> Dezvoltare Django personalizată</span>
-                <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> Gândit pentru fluxul tău real de lucru</span>
-                <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> De la idee la lansare</span>
-            </div>
+    <div class="relative max-w-4xl mx-auto px-6 text-center">
+        <div class="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-300 mb-7">
+            <span class="w-2 h-2 rounded-full bg-cyan-300 animate-pulse"></span>
+            Django · Python · Sisteme personalizate
         </div>
-
-        <div class="relative lg:pl-5">
-            <div class="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-blue-500/20 via-transparent to-cyan-400/10 blur-2xl"></div>
-            <div class="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-900/80 shadow-2xl shadow-black/40 backdrop-blur-xl">
-                <div class="flex items-center justify-between border-b border-white/5 px-6 py-4 bg-white/[0.02]">
-                    <div class="flex gap-2"><span class="w-2.5 h-2.5 rounded-full bg-rose-400/70"></span><span class="w-2.5 h-2.5 rounded-full bg-amber-300/70"></span><span class="w-2.5 h-2.5 rounded-full bg-emerald-400/70"></span></div>
-                    <span class="text-xs font-medium tracking-widest uppercase text-slate-500">Prezentare generală</span>
-                </div>
-                <div class="p-6 sm:p-8">
-                    <div class="flex items-end justify-between mb-8"><div><p class="text-sm text-slate-400 mb-1">Pe scurt, azi</p><h2 class="text-2xl font-bold text-white">Totul într-un singur loc.</h2></div><div class="rounded-xl bg-emerald-400/10 px-3 py-2 text-xs font-semibold text-emerald-300">Sistem activ</div></div>
-                    <div class="grid grid-cols-3 gap-3 mb-6">
-                        <div class="rounded-2xl border border-white/5 bg-white/[0.035] p-4"><p class="text-xs text-slate-500">Rezervări</p><p class="mt-2 text-2xl font-bold text-white">24</p><p class="mt-1 text-xs text-emerald-300">+12% săptămâna asta</p></div>
-                        <div class="rounded-2xl border border-white/5 bg-white/[0.035] p-4"><p class="text-xs text-slate-500">Clienți</p><p class="mt-2 text-2xl font-bold text-white">186</p><p class="mt-1 text-xs text-blue-300">Înregistrări sincronizate</p></div>
-                        <div class="rounded-2xl border border-white/5 bg-white/[0.035] p-4"><p class="text-xs text-slate-500">Sarcini</p><p class="mt-2 text-2xl font-bold text-white">08</p><p class="mt-1 text-xs text-cyan-300">Priorități clare</p></div>
-                    </div>
-                    <div class="rounded-2xl border border-white/5 bg-slate-950/50 p-5">
-                        <div class="flex items-center justify-between mb-5"><p class="font-semibold text-white">Activitate săptămânală</p><p class="text-xs text-slate-500">Ultimele 7 zile</p></div>
-                        <div class="h-28 flex items-end gap-3"><span class="flex-1 h-[42%] rounded-t bg-blue-500/30"></span><span class="flex-1 h-[62%] rounded-t bg-blue-500/40"></span><span class="flex-1 h-[48%] rounded-t bg-blue-500/40"></span><span class="flex-1 h-[82%] rounded-t bg-cyan-400/70"></span><span class="flex-1 h-[68%] rounded-t bg-blue-500/50"></span><span class="flex-1 h-[90%] rounded-t bg-cyan-300"></span><span class="flex-1 h-[74%] rounded-t bg-blue-400/70"></span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="absolute -bottom-5 -left-5 rounded-2xl border border-white/10 bg-slate-900/95 p-4 shadow-xl backdrop-blur-md"><p class="text-xs text-slate-500">Construit pentru</p><p class="mt-1 text-sm font-semibold text-white">Ospitalitate & programări</p></div>
+        <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-white mb-7">
+            Full-Stack Developer <span class="gradient-text">Django & Python.</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed text-slate-400 mb-9">
+            Construiesc sisteme web pentru restaurante și afaceri bazate pe programări — de la website-uri la sisteme de rezervări și management.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 mb-10">
+            <a href="{% url 'services' %}" class="btn-primary px-7 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Vezi serviciile</a>
+            <a href="{% url 'projects' %}" class="px-7 py-4 rounded-xl border border-slate-700 bg-slate-900/40 text-white font-semibold hover:bg-slate-800 transition">Vezi portofoliul</a>
+        </div>
+        <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-slate-400">
+            <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> Dezvoltare Django personalizată</span>
+            <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> Gândit pentru fluxul tău real de lucru</span>
+            <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> De la idee la lansare</span>
         </div>
     </div>
 </section>
