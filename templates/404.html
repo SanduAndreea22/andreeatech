@@ -1,18 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Page Not Found | Andreea Sandu{% endblock %}
-{% block meta_description %}This page doesn't exist. Head back home or browse the portfolio and services.{% endblock %}
+{% block title %}Pagină negăsită | Andreea Sandu{% endblock %}
+{% block meta_description %}Această pagină nu există. Mergi înapoi acasă sau răsfoiește portofoliul și serviciile.{% endblock %}
 
 {% block content %}
 <section class="pt-32 pb-24">
     <div class="max-w-2xl mx-auto px-6 text-center">
-        <p class="text-sm font-semibold uppercase tracking-[0.22em] text-blue-400 mb-5">Error 404</p>
-        <h1 class="text-4xl md:text-6xl font-extrabold gradient-text mb-6">Page not found</h1>
+        <p class="text-sm font-semibold uppercase tracking-[0.22em] text-blue-400 mb-5">Eroare 404</p>
+        <h1 class="text-4xl md:text-6xl font-extrabold gradient-text mb-6">Pagină negăsită</h1>
         <p class="text-slate-400 text-lg leading-relaxed mb-10">
-            The page you're looking for doesn't exist or may have moved.
+            Pagina pe care o cauți nu există sau s-a mutat.
         </p>
         <div class="flex flex-wrap justify-center gap-4">
-            <a href="{% url 'home' %}" class="btn-primary px-7 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Back to home</a>
-            <a href="{% url 'projects' %}" class="px-7 py-4 rounded-xl border border-slate-700 bg-slate-900/40 text-white font-semibold hover:bg-slate-800 transition">View portfolio</a>
+            <a href="{% url 'home' %}" class="btn-primary px-7 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Înapoi acasă</a>
+            <a href="{% url 'projects' %}" class="px-7 py-4 rounded-xl border border-slate-700 bg-slate-900/40 text-white font-semibold hover:bg-slate-800 transition">Vezi portofoliul</a>
         </div>
     </div>
 </section>

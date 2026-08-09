@@ -87,7 +87,7 @@ def start_project(request):
                 "New project brief — andreeatech",
                 f"Name: {obj.name}\nEmail: {obj.email}\nIndustry: {obj.get_industry_display()}\n\n{obj.project_description}"
             )
-            messages.success(request, "Request received! I'll review your brief and get back to you within 24 hours.")
+            messages.success(request, "Cerere primită! Îți analizez brief-ul și revin cu un răspuns în maximum 24 de ore.")
             return redirect("start_project")
     else:
         form = StartProjectForm()
@@ -110,7 +110,7 @@ def contact(request):
                 "New contact message — andreeatech",
                 f"From: {obj.name} ({obj.email})\n\n{obj.message}"
             )
-            messages.success(request, "Your message has been sent successfully.")
+            messages.success(request, "Mesajul tău a fost trimis cu succes.")
             return redirect("contact")
     else:
         form = ContactForm()

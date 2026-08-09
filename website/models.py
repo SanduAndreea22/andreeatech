@@ -16,7 +16,7 @@ class Project(models.Model):
 
     tech_stack = models.CharField(
         max_length=300,
-        help_text="Separate technologies with comma. Example: Django, PostgreSQL, Redis"
+        help_text="Separă tehnologiile prin virgulă. Exemplu: Django, PostgreSQL, Redis"
     )
 
     image = models.ImageField(upload_to="projects/", blank=True, null=True)
@@ -47,7 +47,7 @@ class ContactMessage(models.Model):
 
     INDUSTRY_CHOICES = [
         ("hospitality", "Restaurant"),
-        ("service_business", "Appointment-based business"),
+        ("service_business", "Afacere bazată pe programări"),
     ]
 
     name = models.CharField(max_length=150)
@@ -97,11 +97,11 @@ class ContactMessageSimple(models.Model):
 class Review(models.Model):
 
     RATING_CHOICES = [
-        (1, "1 star"),
-        (2, "2 stars"),
-        (3, "3 stars"),
-        (4, "4 stars"),
-        (5, "5 stars"),
+        (1, "1 stea"),
+        (2, "2 stele"),
+        (3, "3 stele"),
+        (4, "4 stele"),
+        (5, "5 stele"),
     ]
 
     name = models.CharField(max_length=120)
@@ -124,7 +124,7 @@ class Certification(models.Model):
     title = models.CharField(max_length=200)
     issuer = models.CharField(max_length=150, blank=True)
     issue_date = models.DateField(blank=True, null=True)
-    credential_url = models.URLField(blank=True, help_text="Link to verify the credential (optional).")
+    credential_url = models.URLField(blank=True, help_text="Link de verificare a certificatului (opțional).")
 
     image = models.ImageField(upload_to="certifications/")
 

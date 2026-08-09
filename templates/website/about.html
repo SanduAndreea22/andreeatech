@@ -1,13 +1,13 @@
 {% extends "base.html" %}
-{% block title %}About | Andreea Sandu{% endblock %}
-{% block meta_description %}Full-stack Django & Python developer — background, focus, and certifications behind the systems built for restaurants, appointment-based businesses, and personal products.{% endblock %}
+{% block title %}Despre mine | Andreea Sandu{% endblock %}
+{% block meta_description %}Dezvoltator full-stack Django & Python — background, focus și certificările din spatele sistemelor construite pentru restaurante, afaceri bazate pe programări și produse proprii.{% endblock %}
 
 {% block content %}
 
 <section class="pt-32 pb-16 text-center relative overflow-hidden">
     <div class="max-w-3xl mx-auto px-6 relative z-10">
         <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
-            About <span class="gradient-text">me</span>
+            Despre <span class="gradient-text">mine</span>
         </h1>
         <p class="text-slate-400 text-lg leading-relaxed">
             Full-Stack Developer | Django & Python
@@ -20,20 +20,21 @@
     <div class="max-w-3xl mx-auto px-6">
         <div class="glass rounded-3xl border border-white/10 p-8 md:p-12 space-y-6 text-slate-400 leading-relaxed">
             <p>
-                I'm Andreea — a full-stack developer building web systems for restaurants and appointment-based
-                businesses, from booking flows to admin dashboards. I care about the same thing on every project:
-                a system that actually holds up once real customers start using it, not just a demo that looks good
-                in a screenshot.
+                Sunt Andreea — dezvoltator full-stack, construiesc sisteme web pentru restaurante și afaceri bazate
+                pe programări, de la fluxuri de rezervări la dashboard-uri de administrare. Îmi pasă de același
+                lucru la fiecare proiect: un sistem care chiar rezistă când încep să-l folosească clienți reali,
+                nu un demo care arată bine doar într-un screenshot.
             </p>
             <p>
-                I'm not just a developer for hire — I also build my own products, starting from real problems I've
-                lived through myself (see Emotional Planner and Budget Planner in
-                <a href="{% url 'products' %}" class="text-blue-400 hover:text-blue-300 transition">Products</a>).
-                I bring the same attention to detail to every system I build, whether it's for a client or for me.
+                Nu sunt doar developer pentru clienți — construiesc și produse proprii, pornind de la probleme
+                reale pe care le-am trăit eu însămi (vezi Emotional Planner și Budget Planner în
+                <a href="{% url 'products' %}" class="text-blue-400 hover:text-blue-300 transition">Produse</a>).
+                Aceeași atenție la detalii o aduc în fiecare sistem pe care îl construiesc, fie că e pentru un
+                client sau pentru mine.
             </p>
             <p>
-                Outside of client work, I keep learning — the certifications below are the formal side of that;
-                the rest shows up in the <a href="{% url 'projects' %}" class="text-blue-400 hover:text-blue-300 transition">Portfolio</a>.
+                Dincolo de proiectele pentru clienți, continui să învăț — certificările de mai jos sunt partea
+                formală a asta; restul se vede în <a href="{% url 'projects' %}" class="text-blue-400 hover:text-blue-300 transition">Portofoliu</a>.
             </p>
         </div>
     </div>
@@ -42,8 +43,8 @@
 <section class="pb-28">
     <div class="max-w-6xl mx-auto px-6">
         <div class="text-center mb-14">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Diplomas & Certifications</h2>
-            <p class="text-slate-400 max-w-xl mx-auto">Courses and certifications completed along the way.</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Diplome & Certificări</h2>
+            <p class="text-slate-400 max-w-xl mx-auto">Cursuri și certificări finalizate pe parcurs.</p>
         </div>
 
         {% if certifications %}
@@ -66,7 +67,7 @@
                     {% if cert.credential_url %}
                     <a href="{{ cert.credential_url }}" target="_blank" rel="noopener noreferrer"
                        class="text-blue-400 text-sm font-bold hover:text-blue-300 transition flex items-center gap-1">
-                        View credential <span class="group-hover:translate-x-1 transition-transform">→</span>
+                        Vezi certificatul <span class="group-hover:translate-x-1 transition-transform">→</span>
                     </a>
                     {% endif %}
                 </div>
@@ -74,15 +75,15 @@
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-center text-slate-500">Certifications coming soon.</p>
+        <p class="text-center text-slate-500">Certificările vin în curând.</p>
         {% endif %}
     </div>
 </section>
 
 <section class="py-24 md:py-32 border-t border-white/5">
     <div class="max-w-5xl mx-auto px-6 text-center">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Have a project in mind? Let's talk.</h2>
-        <a href="{% url 'contact' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Contact me</a>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ai un proiect în minte? Hai să vorbim.</h2>
+        <a href="{% url 'contact' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Contactează-mă</a>
     </div>
 </section>
 

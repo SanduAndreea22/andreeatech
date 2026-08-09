@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Contact | Andreea Sandu{% endblock %}
-{% block meta_description %}Get in touch to talk about your restaurant or appointment-based business and the workflow you want to improve.{% endblock %}
+{% block meta_description %}Contactează-mă ca să vorbim despre restaurantul sau afacerea ta bazată pe programări și despre fluxul de lucru pe care vrei să-l îmbunătățești.{% endblock %}
 {% block content %}
 
 <section class="pt-28 pb-24">
@@ -8,16 +8,16 @@
 
         <div class="mb-12 text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">
-                Start a conversation
+                Începe o conversație
             </h1>
 
             <p class="text-slate-400 text-lg leading-relaxed">
-                Tell me about your restaurant or business and what would make your work easier.
-                I'll get back to you with the best next step.
+                Spune-mi despre restaurantul sau afacerea ta și ce ți-ar ușura munca.
+                Îți răspund cu cel mai bun pas următor.
             </p>
 
             <p class="text-slate-500 text-sm mt-5">
-                Prefer to reach out directly?
+                Preferi să mă contactezi direct?
                 <a href="mailto:andreea.tech@outlook.com" class="text-blue-400 hover:text-blue-300 transition">andreea.tech@outlook.com</a>
                 ·
                 <a href="https://www.linkedin.com/in/andreeasandu22" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition">LinkedIn</a>
@@ -38,7 +38,7 @@
                 <div style="position:absolute; left:-9999px;" aria-hidden="true">{{ form.website }}</div>
 
                 <div>
-                    <label class="block mb-2 text-sm text-slate-400">Name</label>
+                    <label class="block mb-2 text-sm text-slate-400">Nume</label>
                     {{ form.name }}
                 </div>
 
@@ -48,29 +48,29 @@
                 </div>
 
                 <div>
-                    <label class="block mb-2 text-sm text-slate-400">Message</label>
+                    <label class="block mb-2 text-sm text-slate-400">Mesaj</label>
                     {{ form.message }}
                 </div>
 
                 <button type="submit"
                     class="btn-primary w-full py-4 rounded-xl font-bold text-white uppercase tracking-wider shadow-lg shadow-blue-500/20">
-                    Send message
+                    Trimite mesajul
                 </button>
             </form>
         </div>
 
         <div class="border-t border-slate-800 pt-12 text-center">
             <h2 class="text-2xl font-semibold mb-4 text-white">
-                Looking for more than a quick question?
+                Cauți mai mult decât o întrebare rapidă?
             </h2>
 
             <p class="text-slate-400 mb-8 leading-relaxed max-w-md mx-auto">
-                If you need a website, a booking flow, or a custom management tool, share a few details in the project brief.
+                Dacă ai nevoie de un website, un flux de rezervări sau un instrument de administrare personalizat, dă-mi câteva detalii în brief-ul de proiect.
             </p>
 
             <a href="{% url 'start_project' %}"
                class="inline-block px-10 py-4 rounded-xl border border-slate-700 text-white hover:bg-slate-800 transition-all duration-300 font-semibold">
-                Start a project →
+                Începe un proiect →
             </a>
         </div>
 
