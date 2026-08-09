@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}About | Andreea Sandu{% endblock %}
+{% block meta_description %}Full-stack Django & Python developer — background, focus, and certifications behind the systems built for restaurants, appointment-based businesses, and personal products.{% endblock %}
+
+{% block content %}
+
+<section class="pt-32 pb-16 text-center relative overflow-hidden">
+    <div class="max-w-3xl mx-auto px-6 relative z-10">
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
+            About <span class="gradient-text">me</span>
+        </h1>
+        <p class="text-slate-400 text-lg leading-relaxed">
+            Full-Stack Developer | Django & Python
+        </p>
+    </div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-blue-600/5 blur-[120px] rounded-full -z-10"></div>
+</section>
+
+<section class="pb-20">
+    <div class="max-w-3xl mx-auto px-6">
+        <div class="glass rounded-3xl border border-white/10 p-8 md:p-12 space-y-6 text-slate-400 leading-relaxed">
+            <p>
+                I'm Andreea — a full-stack developer building web systems for restaurants and appointment-based
+                businesses, from booking flows to admin dashboards. I care about the same thing on every project:
+                a system that actually holds up once real customers start using it, not just a demo that looks good
+                in a screenshot.
+            </p>
+            <p>
+                I'm not just a developer for hire — I also build my own products, starting from real problems I've
+                lived through myself (see Emotional Planner and Budget Planner in
+                <a href="{% url 'products' %}" class="text-blue-400 hover:text-blue-300 transition">Products</a>).
+                I bring the same attention to detail to every system I build, whether it's for a client or for me.
+            </p>
+            <p>
+                Outside of client work, I keep learning — the certifications below are the formal side of that;
+                the rest shows up in the <a href="{% url 'projects' %}" class="text-blue-400 hover:text-blue-300 transition">Portfolio</a>.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="pb-28">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Diplomas & Certifications</h2>
+            <p class="text-slate-400 max-w-xl mx-auto">Courses and certifications completed along the way.</p>
+        </div>
+
+        {% if certifications %}
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for cert in certifications %}
+            <div class="glass rounded-2xl border border-white/5 overflow-hidden card-hover group">
+                <div class="bg-white/5 aspect-[4/3] overflow-hidden">
+                    <img src="{{ cert.image.url }}"
+                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                         alt="{{ cert.title }}">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-white mb-1">{{ cert.title }}</h3>
+                    {% if cert.issuer %}
+                    <p class="text-sm text-slate-400 mb-1">{{ cert.issuer }}</p>
+                    {% endif %}
+                    {% if cert.issue_date %}
+                    <p class="text-xs text-slate-500 mb-4">{{ cert.issue_date|date:"F Y" }}</p>
+                    {% endif %}
+                    {% if cert.credential_url %}
+                    <a href="{{ cert.credential_url }}" target="_blank" rel="noopener noreferrer"
+                       class="text-blue-400 text-sm font-bold hover:text-blue-300 transition flex items-center gap-1">
+                        View credential <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-center text-slate-500">Certifications coming soon.</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="py-24 md:py-32 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Have a project in mind? Let's talk.</h2>
+        <a href="{% url 'contact' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Contact me</a>
+    </div>
+</section>
+
+{% endblock %}

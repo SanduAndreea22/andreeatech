@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ContactForm, ReviewForm, StartProjectForm
-from .models import Project, Review
+from .models import Certification, Project, Review
 
 
 def _notify_admin(subject, message):
@@ -117,6 +117,13 @@ def contact(request):
 
     return render(request, "website/contact.html", {
         "form": form
+    })
+
+
+def about(request):
+    certifications = Certification.objects.all()
+    return render(request, "website/about.html", {
+        "certifications": certifications
     })
 
 

@@ -118,3 +118,21 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.rating}⭐"
+
+
+class Certification(models.Model):
+    title = models.CharField(max_length=200)
+    issuer = models.CharField(max_length=150, blank=True)
+    issue_date = models.DateField(blank=True, null=True)
+    credential_url = models.URLField(blank=True, help_text="Link to verify the credential (optional).")
+
+    image = models.ImageField(upload_to="certifications/")
+
+    order = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["order", "-issue_date"]
+
+    def __str__(self):
+        return self.title

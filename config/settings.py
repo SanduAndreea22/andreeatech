@@ -136,6 +136,13 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Tests that create model instances with an uploaded file (e.g. Certification)
+# would otherwise write real files into the project's media/ folder. Redirect
+# those writes to a throwaway temp directory instead.
+if "test" in sys.argv:
+    import tempfile
+    MEDIA_ROOT = tempfile.mkdtemp()
+
 # PythonAnywhere terminates TLS in front of the app and forwards requests
 # over plain HTTP, signaling the original scheme via this header. Keep the
 # local development server (DEBUG=True) on HTTP: `runserver` has no TLS.

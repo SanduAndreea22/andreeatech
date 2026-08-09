@@ -1,7 +1,29 @@
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import Project, ContactMessage, ContactMessageSimple, Review
+from .models import Certification, Project, ContactMessage, ContactMessageSimple, Review
+
+# 1x1 transparent PNG, used wherever a test needs a real image file.
+TEST_PNG = SimpleUploadedFile(
+    "test.png",
+    bytes.fromhex(
+        "89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4"
+        "890000000a49444154789c6360000002000100ffff03000006000557bfabd400"
+        "0000004945454e44ae426082"
+    ),
+    content_type="image/png",
+)
+
+
+def make_certification(**overrides):
+    defaults = {
+        "title": "Django for Professionals",
+        "issuer": "Test Academy",
+        "image": TEST_PNG,
+    }
+    defaults.update(overrides)
+    return Certification.objects.create(**defaults)
 
 
 def make_project(**overrides):
@@ -67,6 +89,25 @@ class ReviewModelTests(TestCase):
         self.assertIn("5", str(obj))
 
 
+class CertificationModelTests(TestCase):
+
+    def test_str_returns_title(self):
+        cert = make_certification(title="Django for Professionals")
+        self.assertEqual(str(cert), "Django for Professionals")
+
+
+class AboutViewTests(TestCase):
+
+    def test_about_returns_200(self):
+        response = self.client.get(reverse("about"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_about_lists_certifications(self):
+        cert = make_certification()
+        response = self.client.get(reverse("about"))
+        self.assertIn(cert, response.context["certifications"])
+
+
 class StaticPageViewTests(TestCase):
     """Every page that takes no arguments should render without error."""
 
@@ -80,6 +121,7 @@ class StaticPageViewTests(TestCase):
             "planner_product",
             "budget_product",
             "projects",
+            "about",
             "faq",
             "reviews",
             "contact",
