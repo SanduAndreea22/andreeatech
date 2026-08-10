@@ -62,6 +62,29 @@
           </button>
       </div>
 
+      <h3 class="text-xl font-semibold mb-6 mt-10 text-white flex items-center gap-2">
+          <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+          Întrebări despre automatizare AI
+      </h3>
+
+      <div class="flex flex-col gap-3">
+          <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="automation_what">
+            <span class="text-slate-300 group-hover:text-white">Ce face mai exact automatizarea AI?</span>
+          </button>
+
+          <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="automation_replace">
+            <span class="text-slate-300 group-hover:text-white">Îmi înlocuiește complet telefonul?</span>
+          </button>
+
+          <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="automation_price">
+            <span class="text-slate-300 group-hover:text-white">De ce e preț lunar, separat de pachet?</span>
+          </button>
+
+          <button class="faq-btn glass w-full text-left p-5 border border-white/5 hover:border-blue-500/50 hover:translate-x-2 transition-all duration-300 group" data-answer="automation_who">
+            <span class="text-slate-300 group-hover:text-white">Se adaugă peste orice pachet?</span>
+          </button>
+      </div>
+
       <a href="{% url 'contact' %}" class="inline-block mt-6 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">
         Mai ai întrebări? Începe o conversație →
       </a>
@@ -144,7 +167,11 @@ const answers = {
   custom: "Absolut. Fiecare proiect poate fi construit în jurul procesului real al afacerii tale, nu forțat într-un instrument generic.",
   copywriting: "Da, dar doar ca add-on opțional alături de un pachet de website — nu ofer copywriting ca serviciu de sine stătător.",
   portfolio: "Proiectele din Portofoliu (Al Noir, Platform Tickets, Bookora, Django E-Commerce) sunt dovadă de capabilitate tehnică, nu produse de vânzare. Emotional Planner și Budget Planner, din secțiunea Produse, sunt produsele mele proprii, oferite direct.",
-  support: "Fiecare proiect include o perioadă de stabilizare după lansare. Mentenanța continuă poate fi stabilită separat, atunci când e nevoie."
+  support: "Fiecare proiect include o perioadă de stabilizare după lansare. Mentenanța continuă poate fi stabilită separat, atunci când e nevoie.",
+  automation_what: "Un agent AI care preia telefonul și WhatsApp-ul afacerii tale: răspunde la întrebări despre servicii, prețuri și program, preia rezervări sau programări și le confirmă automat, non-stop.",
+  automation_replace: "Nu — preia partea repetitivă, ca tu să nu ridici telefonul între doi clienți. Rămâi disponibilă pentru situațiile care chiar au nevoie de tine, iar sistemul se integrează cu calendarul din pachetul ales.",
+  automation_price: "De la €25/lună + €50 configurare inițială. Spre deosebire de restul pachetelor (plată unică, la livrare), agentul AI rulează continuu — prețul lunar acoperă costurile de funcționare, nu doar configurarea inițială.",
+  automation_who: "Da. Automatizarea AI e un add-on opțional care se adaugă peste orice pachet, de restaurant sau de programări, indiferent de nivelul ales."
 };
 
 const buttons = document.querySelectorAll(".faq-btn");

@@ -5,21 +5,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Andreea Sandu | Full-Stack Developer — Django & Python{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}Dezvoltator full-stack Django & Python — construiesc sisteme web pentru restaurante și afaceri bazate pe programări: website-uri, fluxuri de rezervări și instrumente de administrare.{% endblock %}">
+    <title>{% block title %}Andreea Sandu | Full-Stack Developer & AI Automation{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Dezvoltator full-stack & automatizare AI — construiesc sisteme web pentru restaurante și afaceri bazate pe programări: website-uri, fluxuri de rezervări, instrumente de administrare și automatizări AI.{% endblock %}">
 
     <link rel="icon" type="image/svg+xml" href="{% static 'website/favicon.svg' %}">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Andreea Sandu">
-    <meta property="og:title" content="{% block og_title %}Andreea Sandu | Full-Stack Developer — Django & Python{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}Dezvoltator full-stack Django & Python — construiesc sisteme web pentru restaurante și afaceri bazate pe programări: website-uri, fluxuri de rezervări și instrumente de administrare.{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Andreea Sandu | Full-Stack Developer & AI Automation{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Dezvoltator full-stack & automatizare AI — construiesc sisteme web pentru restaurante și afaceri bazate pe programări: website-uri, fluxuri de rezervări, instrumente de administrare și automatizări AI.{% endblock %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/poza_me.JPG' %}{% endblock %}">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{% block twitter_title %}Andreea Sandu | Full-Stack Developer — Django & Python{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}Dezvoltator full-stack Django & Python — construiesc sisteme web pentru restaurante și afaceri bazate pe programări: website-uri, fluxuri de rezervări și instrumente de administrare.{% endblock %}">
+    <meta name="twitter:title" content="{% block twitter_title %}Andreea Sandu | Full-Stack Developer & AI Automation{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Dezvoltator full-stack & automatizare AI — construiesc sisteme web pentru restaurante și afaceri bazate pe programări: website-uri, fluxuri de rezervări, instrumente de administrare și automatizări AI.{% endblock %}">
     <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/poza_me.JPG' %}{% endblock %}">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -59,7 +59,7 @@
                 <a href="{% url 'products' %}" class="hover:text-blue-400 transition">Produse</a>
                 <a href="{% url 'projects' %}" class="hover:text-blue-400 transition">Portofoliu</a>
                 <a href="{% url 'faq' %}" class="hover:text-blue-400 transition">Întrebări frecvente</a>
-                <a href="{% url 'reviews' %}" class="hover:text-blue-400 transition">Recenzii</a>
+                <a href="{% url 'reviews' %}" class="hover:text-blue-400 transition">Ce spun clienții</a>
                 <a href="{% url 'contact' %}" class="btn-primary px-5 py-2 rounded-lg">Contact</a>
             </div>
             <details class="relative md:hidden text-sm font-medium text-slate-300">
@@ -71,7 +71,7 @@
                     <a href="{% url 'products' %}" class="hover:text-blue-400">Produse</a>
                     <a href="{% url 'projects' %}" class="hover:text-blue-400">Portofoliu</a>
                     <a href="{% url 'faq' %}" class="hover:text-blue-400">Întrebări frecvente</a>
-                    <a href="{% url 'reviews' %}" class="hover:text-blue-400">Recenzii</a>
+                    <a href="{% url 'reviews' %}" class="hover:text-blue-400">Ce spun clienții</a>
                     <a href="{% url 'contact' %}" class="text-blue-400">Contact</a>
                 </div>
             </details>
