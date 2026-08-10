@@ -63,9 +63,40 @@ body {
 .service-card:hover,
 .project-card:hover,
 .pricing-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-6px) scale(1.015);
     border-color: rgba(59,130,246,.3);
     box-shadow: 0 30px 80px rgba(0,0,0,.6);
+}
+
+/* Any rounded glass panel gets a subtle lift on hover, site-wide */
+.glass[class*="rounded-"] {
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+
+.glass[class*="rounded-"]:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59,130,246,.25);
+    box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 40px rgba(37,99,235,.08);
+}
+
+/* Scroll reveal */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s ease, transform .7s ease;
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-on-scroll {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }
 
 /* Buttons */

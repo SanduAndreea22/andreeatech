@@ -90,5 +90,29 @@
         </div>
         <p class="opacity-50">© 2026 Andreea Sandu — Sisteme Web Django</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const sections = document.querySelectorAll('main > section');
+            if (!sections.length) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+            sections.forEach((section, index) => {
+                if (index === 0) return;
+                section.classList.add('reveal-on-scroll');
+                observer.observe(section);
+            });
+        });
+    </script>
 </body>
 </html>
