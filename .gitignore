@@ -18,3 +18,9 @@ venv/
 
 # 📦 Collected static files (regenerated via `collectstatic` on deploy)
 staticfiles/
+
+# 📝 Internal working notes (audits, context, planning) — not site code
+CLAUDE.md
+andreeatech-site-context.md
+audit-*.md
+digital-products-experiences.md
