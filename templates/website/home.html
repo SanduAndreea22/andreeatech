@@ -65,9 +65,15 @@
     <div class="max-w-4xl mx-auto px-6">
         <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">De ce eu</p>
         <div class="glass rounded-3xl border border-white/10 p-8 md:p-12 grid md:grid-cols-[auto_1fr] gap-8 items-start">
-            <img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" class="w-24 h-24 md:w-28 md:h-28 rounded-2xl object-cover border border-white/10 mx-auto md:mx-0">
+            <div class="flex flex-col items-center md:items-start gap-3">
+                <img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" class="w-24 h-24 md:w-28 md:h-28 rounded-2xl object-cover border border-white/10">
+                <div class="text-center md:text-left">
+                    <p class="text-2xl font-extrabold gradient-text leading-none">5</p>
+                    <p class="text-[11px] text-slate-500 uppercase tracking-widest mt-1">sisteme construite</p>
+                </div>
+            </div>
             <div class="space-y-6 text-slate-400 leading-relaxed">
-                <p>Nu construiesc produse doar pentru clienți — le construiesc și pentru mine. Am câteva produse proprii, construite din nevoi reale, nu dintr-un brief: un planner personal (Emotional Planner), un tracker de buget (Budget Planner), o platformă de ticketing (Ticket) și sisteme complete pentru clienți precum Al Noir și Bookora.</p>
+                <p>Nu construiesc produse doar pentru clienți — le construiesc și pentru mine. Am două produse proprii, construite din nevoi reale, nu dintr-un brief: un planner personal (Emotional Planner) și un tracker de buget (Budget Planner). Pe lângă ele, am construit și sisteme complete — o platformă de ticketing (Platform Tickets) și sisteme pentru clienți precum Al Noir și Bookora.</p>
                 <p>De-asta nu pornesc de la un stack tehnic. Pornesc de la problemă — de ce are nevoie omul care folosește produsul. Uneori soluția e un website. Alteori e un sistem de rezervări, o platformă de ticketing, o automatizare, sau un agent AI care poate executa efectiv o parte din flux.</p>
                 <div class="flex flex-wrap gap-x-8 gap-y-2 pt-2">
                     <a href="{% url 'project_detail' 'al-noir-restaurant-management-system' %}" class="text-blue-400 font-semibold hover:text-blue-300 transition">Vezi cum arată un sistem complet construit de mine → (Al Noir)</a>
@@ -145,8 +151,8 @@
         <h2 class="text-3xl md:text-5xl font-bold text-white mb-14 text-center">Alege nivelul potrivit pentru business-ul tău.</h2>
         <div class="grid md:grid-cols-3 gap-6">
             {% for pkg in packages %}
-            <article class="glass p-8 rounded-3xl border {% if pkg.popular %}border-blue-500/40 shadow-xl shadow-blue-500/10{% else %}border-white/10{% endif %} flex flex-col relative overflow-hidden">
-                {% if pkg.popular %}<div class="absolute top-4 right-4 rounded-full bg-blue-500/15 text-blue-300 px-3 py-1 text-xs font-bold">Popular</div>{% endif %}
+            <article class="glass p-8 rounded-3xl border {% if pkg.popular %}border-amber-400/40 shadow-xl shadow-amber-500/10{% else %}border-white/10{% endif %} flex flex-col relative overflow-hidden">
+                {% if pkg.popular %}<div class="absolute top-4 right-4 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30 px-3 py-1 text-xs font-bold">Popular</div>{% endif %}
                 <p class="text-3xl mb-4">{{ pkg.emoji }}</p>
                 <h3 class="text-xl font-bold text-white mb-1">{{ pkg.name }}</h3>
                 <p class="text-sm text-slate-500 mb-4">{{ pkg.tagline }}</p>
@@ -169,28 +175,43 @@
         <div class="glass rounded-3xl border border-blue-500/20 p-8 md:p-12">
             <p class="text-3xl mb-4">🤖</p>
             <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-3">Agenți AI & Automatizări</p>
-            <p class="text-slate-300 leading-relaxed mb-8">
+            <p class="text-slate-300 leading-relaxed mb-6">
                 Construiesc automatizări simple pentru task-uri repetitive și agenți AI pentru conversații și cereri mai complexe — separat, sau peste orice pachet de mai sus, dacă ai deja un website. Nu orice business are nevoie de amândouă — depinde ce se repetă la tine: un pas simplu de proces (automatizare) sau o conversație cu clientul (agent).
             </p>
+            <div class="flex flex-wrap items-center gap-3 mb-8">
+                <span class="text-xs uppercase tracking-widest text-slate-500 font-semibold mr-1">Se integrează cu</span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 text-xs font-semibold">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-6l-4 4v-4z"></path></svg>
+                    WhatsApp
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-400/20 text-violet-300 text-xs font-semibold">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"></path></svg>
+                    Stripe
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-300 text-xs font-semibold">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    Google Calendar
+                </span>
+            </div>
             <div class="grid md:grid-cols-2 gap-8 mb-8">
                 <div>
                     <h3 class="text-white font-bold mb-4">Exemple de automatizări</h3>
                     <ul class="space-y-3 text-sm text-slate-300">
-                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Când cineva face o programare, primește automat un email sau SMS de confirmare — nu trebuie să-i scrii tu</li>
-                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Cu o zi înainte de programare, clientul primește automat un mesaj de reamintire, ca să vină mai puțini oameni care uită</li>
-                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Când o oră se ocupă, dispare automat din calendar, ca să nu se suprapună două programări din greșeală</li>
-                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Dacă cineva trimite o cerere și nu apuci să-i răspunzi în câteva zile, primește automat un mesaj de revenire</li>
-                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Facturile sau confirmările de plată se trimit automat, fără să le faci tu manual de fiecare dată</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Când cineva face o programare, primește automat un email sau SMS de confirmare — nu trebuie să-i scrii tu</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Cu o zi înainte de programare, clientul primește automat un mesaj de reamintire, ca să vină mai puțini oameni care uită</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Când o oră se ocupă, dispare automat din calendar, ca să nu se suprapună două programări din greșeală</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg> Dacă cineva trimite o cerere și nu apuci să-i răspunzi în câteva zile, primește automat un mesaj de revenire</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2z"></path></svg> Facturile sau confirmările de plată se trimit automat, fără să le faci tu manual de fiecare dată</li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-white font-bold mb-4">Exemple de agenți</h3>
                     <ul class="space-y-3 text-sm text-slate-300">
-                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Agent care răspunde non-stop la întrebări frecvente pe site sau WhatsApp</li>
-                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Agent care preia o cerere prin telefon sau chat și o structurează (nume, dată, serviciu dorit)</li>
-                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Agent care triază cererile primite și le semnalează pe cele urgente</li>
-                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Agent care confirmă sau propune reprogramare, în funcție de disponibilitatea reală</li>
-                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Agent care pregătește un răspuns personalizat pentru fiecare mesaj, gata să-l trimiți sau să-l ajustezi</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-6l-4 4v-4z"></path></svg> Agent care răspunde non-stop la întrebări frecvente pe site sau WhatsApp</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> Agent care preia o cerere prin telefon sau chat și o structurează (nume, dată, serviciu dorit)</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v18h18M8 17l4-4 3 3 5-6"></path></svg> Agent care triază cererile primite și le semnalează pe cele urgente</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Agent care confirmă sau propune reprogramare, în funcție de disponibilitatea reală</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg> Agent care pregătește un răspuns personalizat pentru fiecare mesaj, gata să-l trimiți sau să-l ajustezi</li>
                     </ul>
                 </div>
             </div>

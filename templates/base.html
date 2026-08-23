@@ -47,11 +47,10 @@
 
     <nav class="navbar fixed w-full z-50 bg-[#020617]/80 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
-            <a href="{% url 'home' %}" class="hover:opacity-80 transition-opacity">
-    <div class="text-xl font-bold">
-        Andreea<span class="text-blue-500">S.</span>
-    </div>
-</a>
+            <a href="{% url 'home' %}" class="hover:opacity-80 transition-opacity flex items-center gap-2.5">
+                <img src="{% static 'website/logo.jpeg' %}" alt="Andreea Tech" class="w-9 h-9 rounded-full object-cover border border-amber-400/30">
+                <span class="text-xl font-bold text-white">Andreea <span class="text-amber-400">Tech</span></span>
+            </a>
             <div class="hidden md:flex gap-7 text-sm font-medium items-center text-slate-300">
                 <a href="{% url 'home' %}" class="hover:text-blue-400 transition">Acasă</a>
                 <a href="{% url 'about' %}" class="hover:text-blue-400 transition">Despre mine</a>
