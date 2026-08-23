@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ContactForm, ReviewForm, StartProjectForm
 from .models import Certification, ContactMessage, Project, Review
+from .packages import PACKAGES
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +31,14 @@ def _client_ip(request):
 
 def _rate_limited(request, form_name, limit=5, window_seconds=3600):
     """Simple per-IP submission cap for public forms. Returns True if the
-    caller has already hit the limit and the submission should be dropped."""
+    caller has already hit the limit and the submission should be dropped.
+
+    Uses Django's default in-memory cache, which lives inside a single
+    process — correct as long as the app runs on one worker (true today on
+    PythonAnywhere's free tier). If this ever moves to a multi-process/
+    multi-server setup, switch CACHES to a shared backend (Redis/Memcached)
+    or the limit won't be enforced consistently across workers.
+    """
     key = f"ratelimit:{form_name}:{_client_ip(request)}"
     count = cache.get(key, 0)
     if count >= limit:
@@ -40,7 +48,7 @@ def _rate_limited(request, form_name, limit=5, window_seconds=3600):
 
 
 def home(request):
-    return render(request, 'website/home.html')
+    return render(request, 'website/home.html', {"packages": PACKAGES})
 
 
 def robots_txt(request):

@@ -35,8 +35,8 @@ class ContactMessageAdmin(admin.ModelAdmin):
         "is_read",
         "created_at",
     )
-    list_filter = ("industry", "selected_package", "is_read")
-    search_fields = ("name", "email")
+    list_filter = ("selected_package", "is_read")
+    search_fields = ("name", "email", "industry")
     list_editable = ("is_read",)
 
 

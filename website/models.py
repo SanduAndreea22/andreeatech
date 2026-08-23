@@ -2,6 +2,8 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
 
+from .packages import NOT_SURE_KEY, NOT_SURE_LABEL, PACKAGES
+
 
 class Project(models.Model):
     title = models.CharField(max_length=200)
@@ -46,11 +48,8 @@ class Project(models.Model):
 class ContactMessage(models.Model):
 
     PACKAGE_CHOICES = [
-        ("digital_presence", "Digital Presence — €150"),
-        ("full_experience", "Full Experience — €380"),
-        ("premium_system", "Premium System — de la €850"),
-        ("not_sure", "Nu sunt sigur/ă, hai să discutăm"),
-    ]
+        (p["key"], f'{p["name"]} — {p["price"]}') for p in PACKAGES
+    ] + [(NOT_SURE_KEY, NOT_SURE_LABEL)]
 
     name = models.CharField(max_length=150)
     email = models.EmailField()

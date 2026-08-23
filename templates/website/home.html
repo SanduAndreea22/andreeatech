@@ -144,51 +144,21 @@
         <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">Pachete</p>
         <h2 class="text-3xl md:text-5xl font-bold text-white mb-14 text-center">Alege nivelul potrivit pentru business-ul tău.</h2>
         <div class="grid md:grid-cols-3 gap-6">
-            <article class="glass p-8 rounded-3xl border border-white/10 flex flex-col">
-                <p class="text-3xl mb-4">🥉</p>
-                <h3 class="text-xl font-bold text-white mb-1">Digital Presence</h3>
-                <p class="text-sm text-slate-500 mb-4">Website simplu — prezența ta online</p>
-                <p class="text-2xl font-extrabold gradient-text mb-5">€150</p>
+            {% for pkg in packages %}
+            <article class="glass p-8 rounded-3xl border {% if pkg.popular %}border-blue-500/40 shadow-xl shadow-blue-500/10{% else %}border-white/10{% endif %} flex flex-col relative overflow-hidden">
+                {% if pkg.popular %}<div class="absolute top-4 right-4 rounded-full bg-blue-500/15 text-blue-300 px-3 py-1 text-xs font-bold">Popular</div>{% endif %}
+                <p class="text-3xl mb-4">{{ pkg.emoji }}</p>
+                <h3 class="text-xl font-bold text-white mb-1">{{ pkg.name }}</h3>
+                <p class="text-sm text-slate-500 mb-4">{{ pkg.tagline }}</p>
+                <p class="text-2xl font-extrabold gradient-text mb-5">{{ pkg.price }}</p>
                 <ul class="space-y-2 text-sm text-slate-300 mb-6 flex-grow">
-                    <li>Website funcțional</li>
-                    <li>Prezentare și galerie</li>
-                    <li>Formular de contact</li>
+                    {% for feature in pkg.features %}<li>{{ feature }}</li>{% endfor %}
                 </ul>
-                <p class="text-xs text-slate-400 mb-4">Ai un loc unde clienții te găsesc, înțeleg ce faci și te pot contacta — fără să te bazezi doar pe rețele sociale sau recomandări.</p>
-                <p class="text-xs text-slate-500 pt-4 border-t border-white/5 mb-4">7 zile</p>
-                <a href="{% url 'start_project' %}?pachet=digital_presence" class="text-blue-400 text-sm font-bold hover:text-blue-300 transition">Alege Digital Presence →</a>
+                <p class="text-xs text-slate-400 mb-4">{{ pkg.description }}</p>
+                <p class="text-xs text-slate-500 pt-4 border-t border-white/5 mb-4">{{ pkg.duration }}</p>
+                <a href="{% url 'start_project' %}?pachet={{ pkg.key }}" class="text-blue-400 text-sm font-bold hover:text-blue-300 transition">Alege {{ pkg.name }} →</a>
             </article>
-            <article class="glass p-8 rounded-3xl border border-blue-500/40 shadow-xl shadow-blue-500/10 flex flex-col relative overflow-hidden">
-                <div class="absolute top-4 right-4 rounded-full bg-blue-500/15 text-blue-300 px-3 py-1 text-xs font-bold">Popular</div>
-                <p class="text-3xl mb-4">🥈</p>
-                <h3 class="text-xl font-bold text-white mb-1">Full Experience</h3>
-                <p class="text-sm text-slate-500 mb-4">Sistem digital personalizat — prezența plus funcționalitate</p>
-                <p class="text-2xl font-extrabold gradient-text mb-5">€380</p>
-                <ul class="space-y-2 text-sm text-slate-300 mb-6 flex-grow">
-                    <li>Site complet</li>
-                    <li>Flux automat integrat</li>
-                    <li>Recenzii clienți</li>
-                    <li>Dashboard admin</li>
-                </ul>
-                <p class="text-xs text-slate-400 mb-4">Clienții pot acționa direct pe site — trimit o cerere sau o programare — iar tu vezi totul într-un singur loc, fără să mai gestionezi manual fiecare pas.</p>
-                <p class="text-xs text-slate-500 pt-4 border-t border-white/5 mb-4">14 zile</p>
-                <a href="{% url 'start_project' %}?pachet=full_experience" class="text-blue-400 text-sm font-bold hover:text-blue-300 transition">Alege Full Experience →</a>
-            </article>
-            <article class="glass p-8 rounded-3xl border border-white/10 flex flex-col">
-                <p class="text-3xl mb-4">🥇</p>
-                <h3 class="text-xl font-bold text-white mb-1">Premium System</h3>
-                <p class="text-sm text-slate-500 mb-4">Sistem digital personalizat — platformă completă</p>
-                <p class="text-2xl font-extrabold gradient-text mb-5">de la €850</p>
-                <ul class="space-y-2 text-sm text-slate-300 mb-6 flex-grow">
-                    <li>Platformă completă</li>
-                    <li>Plăți online</li>
-                    <li>Sistem și dashboard</li>
-                    <li>Personalizare în funcție de fluxul business-ului</li>
-                </ul>
-                <p class="text-xs text-slate-400 mb-4">Întregul flux — de la cerere la plată — se întâmplă în sistemul tău, construit pe fluxul real al business-ului tău, nu pe un șablon generic.</p>
-                <p class="text-xs text-slate-500 pt-4 border-t border-white/5 mb-4">21 zile · 5 revizuiri</p>
-                <a href="{% url 'start_project' %}?pachet=premium_system" class="text-blue-400 text-sm font-bold hover:text-blue-300 transition">Alege Premium System →</a>
-            </article>
+            {% endfor %}
         </div>
         <p class="text-center text-slate-500 text-sm mt-6">Costurile de domeniu (~10-15€/an) și hosting (~5-10€/lună) sunt separate de prețul pachetului.</p>
     </div>
