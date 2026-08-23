@@ -1,61 +1,258 @@
 {% extends "base.html" %}
 
-{% block title %}Andreea Sandu | Full-Stack Developer & AI Automation{% endblock %}
-{% block meta_description %}Construiesc sisteme web pentru restaurante și afaceri bazate pe programări — de la website-uri la sisteme de rezervări și management, gândite pentru fluxul tău real de lucru.{% endblock %}
+{% block title %}Andreea Sandu | Digital Products & Experiences{% endblock %}
+{% block meta_description %}Construiesc produsul digital din spatele experienței clienților tăi — website, sistem, automatizare — orice e nevoie ca să funcționeze corect.{% endblock %}
 
 {% block content %}
-<section class="relative overflow-hidden pt-20 pb-24 md:pt-28 md:pb-32">
+<section class="relative overflow-hidden pt-32 pb-24 md:pt-36 md:pb-32">
     <div class="absolute top-0 right-0 h-[520px] w-[520px] rounded-full bg-blue-500/10 blur-[130px]"></div>
     <div class="absolute bottom-0 left-0 h-[360px] w-[360px] rounded-full bg-cyan-500/5 blur-[120px]"></div>
 
     <div class="relative max-w-4xl mx-auto px-6 text-center">
-        <div class="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-300 mb-7">
-            <span class="w-2 h-2 rounded-full bg-cyan-300 animate-pulse"></span>
-            Django · Python · Automatizare AI
-        </div>
-        <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-white mb-7">
-            Full-Stack Developer <span class="gradient-text">& AI Automation.</span>
+        <p class="text-blue-400 text-sm uppercase tracking-[0.25em] font-semibold mb-6">Pentru antreprenorii care vor să-și ducă business-ul la următorul nivel</p>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] text-white mb-7">
+            De la o interacțiune obișnuită, la <span class="gradient-text">o experiență de care oamenii își amintesc.</span>
         </h1>
-        <p class="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed text-slate-400 mb-9">
-            Construiesc sisteme web pentru restaurante și afaceri bazate pe programări — de la website-uri la sisteme de rezervări și management.
+        <p class="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed text-slate-400 mb-10">
+            Construiesc produsul digital din spatele ei — website, sistem, automatizare — orice e nevoie ca să funcționeze corect.
         </p>
-        <div class="flex flex-wrap justify-center gap-4 mb-10">
-            <a href="{% url 'services' %}" class="btn-primary px-7 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Vezi serviciile</a>
-            <a href="{% url 'projects' %}" class="px-7 py-4 rounded-xl border border-slate-700 bg-slate-900/40 text-white font-semibold hover:bg-slate-800 transition">Vezi portofoliul</a>
-        </div>
-        <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-slate-400">
-            <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> Dezvoltare Django</span>
-            <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> Automatizare cu AI</span>
-            <span class="flex items-center gap-2"><span class="text-cyan-300">✦</span> De la idee la lansare</span>
-        </div>
+        <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Hai să discutăm proiectul tău</a>
     </div>
 </section>
 
-<section class="py-24">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-        <div class="glass rounded-3xl border border-white/10 p-10 md:p-14">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-5">Produse proprii</h2>
-            <p class="max-w-2xl mx-auto text-lg text-slate-400 leading-relaxed mb-8">Pe lângă proiectele pentru clienți, construiesc și produse proprii — aplicații gândite să rezolve probleme reale, nu doar demo-uri de portofoliu.</p>
-            <a href="{% url 'products' %}" class="btn-primary inline-block px-8 py-4 rounded-xl font-semibold">Vezi produsele →</a>
-        </div>
+<section class="py-24 border-t border-white/5">
+    <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center">Nu poți construi o experiență bună dacă ești ocupată mereu cu lucruri mărunte</h2>
+        <p class="text-slate-400 leading-relaxed mb-6">
+            Dacă vrei să-ți dezvolți business-ul și să nu mai irosești o mare parte din timp pe task-uri repetitive, ești în locul potrivit.
+        </p>
+        <p class="text-slate-400 leading-relaxed mb-8">
+            De ce să pierzi ore în fiecare săptămână răspunzând manual la aceleași întrebări, notând cereri pe hârtie sau în capul tău, când timpul ăla ar putea merge spre partea din business care chiar contează — relația cu oamenii care aleg să lucreze cu tine?
+        </p>
+        <p class="text-slate-300 leading-relaxed mb-4">Dacă vrei să folosești orele astea ca să:</p>
+        <ul class="space-y-2 text-slate-300 mb-8">
+            <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> găsești și păstrezi mai mulți clienți</li>
+            <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> construiești o experiență de care oamenii își amintesc</li>
+            <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> te ocupi de partea din business care chiar contează</li>
+        </ul>
+        <p class="text-slate-400 leading-relaxed mb-4">atunci citește în continuare.</p>
+        <p class="text-slate-300 leading-relaxed mb-4">Singurul lucru pe care ți-l promit e că vei scăpa de întrebările care te macină lunar:</p>
+        <ul class="space-y-2 text-slate-400 italic">
+            <li>„Am răspuns la toate mesajele?"</li>
+            <li>„Am uitat vreo cerere?"</li>
+            <li>„De ce clientul ăla n-a mai revenit?"</li>
+        </ul>
     </div>
 </section>
 
-<section class="py-20 border-t border-white/5">
+<section class="py-20 border-t border-white/5 bg-slate-950/30">
     <div class="max-w-3xl mx-auto px-6 text-center">
-        <p class="text-blue-400 text-sm font-semibold uppercase tracking-[0.22em] mb-5">Notă personală</p>
-        <p class="text-lg text-slate-400 leading-relaxed">
-            Nu sunt doar developer pentru clienți — construiesc și produse proprii, pornind de la probleme reale pe care le-am trăit eu însămi. Emotional Planner rezolvă o problemă personală. SM Writer, agentul meu de social media, scrie postări cât eu fac altceva.
+        <p class="text-lg text-slate-300 leading-relaxed">
+            Aici pot ajuta — printr-un site gândit corect, un sistem care ține pasul cu fluxul tău real, și, unde are sens, o automatizare care preia partea repetitivă. Nu automatizarea e scopul. <span class="text-white font-semibold">Experiența pe care o are omul de partea cealaltă e scopul.</span>
         </p>
     </div>
 </section>
 
-<section class="py-24 md:py-32">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ai un proiect în minte? Hai să vorbim.</h2>
-        <div class="flex flex-wrap justify-center gap-4">
-            <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Descrie-mi afacerea</a>
-            <a href="{% url 'contact' %}" class="inline-block px-9 py-4 rounded-xl border border-slate-700 bg-slate-900/40 text-white font-semibold hover:bg-slate-800 transition">Ai întrebări?</a>
+<section class="py-24 border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-6">
+        <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">De ce eu</p>
+        <div class="glass rounded-3xl border border-white/10 p-8 md:p-12 space-y-6 text-slate-400 leading-relaxed">
+            <p>Nu construiesc produse doar pentru clienți — le construiesc și pentru mine. Emotional Planner, Budget Planner, Ticket, Al Noir, Bookora — fiecare a pornit dintr-un moment real, nu dintr-un brief.</p>
+            <p>De-asta nu pornesc de la un stack tehnic. Pornesc de la problemă — de ce are nevoie omul care folosește produsul. Uneori soluția e un website. Alteori e un sistem de rezervări, o platformă de ticketing, o automatizare, sau un agent AI care poate executa efectiv o parte din flux.</p>
+            <div class="flex flex-wrap gap-x-8 gap-y-2 pt-2">
+                <a href="{% url 'project_detail' 'al-noir-restaurant-management-system' %}" class="text-blue-400 font-semibold hover:text-blue-300 transition">Vezi cum arată un sistem complet construit de mine → (Al Noir)</a>
+                <a href="{% url 'about' %}" class="text-blue-400 font-semibold hover:text-blue-300 transition">Despre mine →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 border-t border-white/5 bg-slate-950/30">
+    <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center">Cum arată experiența înainte și după</h2>
+        <div class="grid md:grid-cols-2 gap-6 mb-14">
+            <div class="glass rounded-3xl border border-white/10 p-8">
+                <p class="text-red-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4">Înainte</p>
+                <p class="text-slate-400 leading-relaxed mb-4">Un client scrie și așteaptă. Nu știe dacă ai primit mesajul, nu știe când primește un răspuns. Tu vezi cererea mai târziu, printre altele, într-o zi în care ai avut o mie de alte lucruri de ținut minte — și încerci să-ți amintești ce mai era de făcut cu ea.</p>
+                <p class="text-slate-400 leading-relaxed">Depinde de ziua ta cum arată experiența lui. Bună, dacă ai avut timp. Neglijentă, dacă n-ai avut.</p>
+            </div>
+            <div class="glass rounded-3xl border border-blue-500/30 p-8">
+                <p class="text-cyan-300 text-sm uppercase tracking-[0.2em] font-semibold mb-4">După</p>
+                <p class="text-slate-300 leading-relaxed mb-4">Clientul primește un răspuns sau o confirmare la timp, indiferent cât de plină e ziua ta. Tu vezi totul într-un dashboard simplu, într-un singur loc — nu mai reconstitui din memorie ce a rămas nerezolvat.</p>
+                <p class="text-slate-300 leading-relaxed">Experiența lui nu mai depinde de cât de ocupată ești tu în ziua aia. E aceeași, de fiecare dată.</p>
+            </div>
+        </div>
+        <p class="max-w-3xl mx-auto text-center text-slate-400 leading-relaxed mb-14">
+            Iar timpul pe care-l recuperezi din task-urile care se repeteau identic, săptămână de săptămână, se duce înapoi spre partea din business care chiar contează — relația cu oamenii care te aleg. Aia nu poate fi automatizată, și nici n-ar trebui.
+        </p>
+        <div class="max-w-2xl mx-auto space-y-6 mb-12">
+            <div class="glass rounded-2xl border border-white/5 p-6">
+                <p class="text-white font-semibold mb-2">Î: Cât timp economisesc concret?</p>
+                <p class="text-slate-400 leading-relaxed">R: Depinde de volumul de cereri și task-uri repetitive din business-ul tău — discutăm exact la consultație, pe situația ta reală, nu pe o estimare generică.</p>
+            </div>
+            <div class="glass rounded-2xl border border-white/5 p-6">
+                <p class="text-white font-semibold mb-2">Î: Dacă vreau funcționalități recurente (abonamente, programări periodice), se poate?</p>
+                <p class="text-slate-400 leading-relaxed">R: Da — spui exact ce ai nevoie și construim fluxul potrivit.</p>
+            </div>
+        </div>
+        <div class="text-center">
+            <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Hai să discutăm proiectul tău</a>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center">Ce câștigi concret</h2>
+        <ul class="grid sm:grid-cols-2 gap-5 text-slate-300">
+            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Construiești o experiență de care oamenii își amintesc</span> — nu doar o prezență online.</span></li>
+            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Ai totul într-un singur loc</span> — nu mai cauți informații împrăștiate.</span></li>
+            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Poți construi un flux de venit mai constant</span> — dacă modelul tău permite programări sau plăți recurente.</span></li>
+            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Clienții tăi au o experiență consecventă</span> — răspunsuri și confirmări la timp, nu întârziate.</span></li>
+            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Știi mereu ce se întâmplă</span> — acces clar la cereri, programări, activitate.</span></li>
+            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Nu trebuie să fii o persoană tehnică</span> — produsul e gândit să fie simplu de folosit, nu doar de construit.</span></li>
+        </ul>
+    </div>
+</section>
+
+<section class="py-24 border-t border-white/5 bg-slate-950/30">
+    <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 text-center">Ce include pachetul</h2>
+        <p class="text-slate-400 text-center mb-10">De la prima interacțiune cu clientul, la sistemul complet din spate:</p>
+        <ul class="grid sm:grid-cols-2 gap-4 text-slate-300 max-w-2xl mx-auto">
+            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> Website sau platformă construită pe măsura business-ului tău</li>
+            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> Flux automat pentru cererile și task-urile repetitive, acolo unde ajută (opțional, în funcție de pachet)</li>
+            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> Configurare completă — nu trebuie să știi tehnic nimic</li>
+            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> Termen clar de livrare, stabilit înainte să începem</li>
+        </ul>
+    </div>
+</section>
+
+<section class="py-24 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+        <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">Pachete</p>
+        <h2 class="text-3xl md:text-5xl font-bold text-white mb-14 text-center">Alege nivelul potrivit pentru business-ul tău.</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <article class="glass p-8 rounded-3xl border border-white/10 flex flex-col">
+                <p class="text-3xl mb-4">🥉</p>
+                <h3 class="text-xl font-bold text-white mb-1">Digital Presence</h3>
+                <p class="text-sm text-slate-500 mb-4">Website simplu — prezența ta online</p>
+                <p class="text-2xl font-extrabold gradient-text mb-5">€150</p>
+                <ul class="space-y-2 text-sm text-slate-300 mb-6 flex-grow">
+                    <li>Website funcțional</li>
+                    <li>Prezentare și galerie</li>
+                    <li>Formular de contact</li>
+                </ul>
+                <p class="text-xs text-slate-400 mb-4">Ai un loc unde clienții te găsesc, înțeleg ce faci și te pot contacta — fără să te bazezi doar pe rețele sociale sau recomandări.</p>
+                <p class="text-xs text-slate-500 pt-4 border-t border-white/5">7 zile</p>
+            </article>
+            <article class="glass p-8 rounded-3xl border border-blue-500/40 shadow-xl shadow-blue-500/10 flex flex-col relative overflow-hidden">
+                <div class="absolute top-4 right-4 rounded-full bg-blue-500/15 text-blue-300 px-3 py-1 text-xs font-bold">Popular</div>
+                <p class="text-3xl mb-4">🥈</p>
+                <h3 class="text-xl font-bold text-white mb-1">Full Experience</h3>
+                <p class="text-sm text-slate-500 mb-4">Sistem digital personalizat — prezența plus funcționalitate</p>
+                <p class="text-2xl font-extrabold gradient-text mb-5">€380</p>
+                <ul class="space-y-2 text-sm text-slate-300 mb-6 flex-grow">
+                    <li>Site complet</li>
+                    <li>Flux automat integrat</li>
+                    <li>Recenzii clienți</li>
+                    <li>Dashboard admin</li>
+                </ul>
+                <p class="text-xs text-slate-400 mb-4">Clienții pot acționa direct pe site — trimit o cerere sau o programare — iar tu vezi totul într-un singur loc, fără să mai gestionezi manual fiecare pas.</p>
+                <p class="text-xs text-slate-500 pt-4 border-t border-white/5">14 zile</p>
+            </article>
+            <article class="glass p-8 rounded-3xl border border-white/10 flex flex-col">
+                <p class="text-3xl mb-4">🥇</p>
+                <h3 class="text-xl font-bold text-white mb-1">Premium System</h3>
+                <p class="text-sm text-slate-500 mb-4">Sistem digital personalizat — platformă completă</p>
+                <p class="text-2xl font-extrabold gradient-text mb-5">de la €850</p>
+                <ul class="space-y-2 text-sm text-slate-300 mb-6 flex-grow">
+                    <li>Platformă completă</li>
+                    <li>Plăți online</li>
+                    <li>Sistem și dashboard</li>
+                    <li>Personalizare în funcție de fluxul business-ului</li>
+                </ul>
+                <p class="text-xs text-slate-400 mb-4">Întregul flux — de la cerere la plată — se întâmplă în sistemul tău, construit pe fluxul real al business-ului tău, nu pe un șablon generic.</p>
+                <p class="text-xs text-slate-500 pt-4 border-t border-white/5">21 zile · 5 revizuiri</p>
+            </article>
+        </div>
+        <p class="text-center text-slate-500 text-sm mt-6">Costurile de domeniu (~10-15€/an) și hosting (~5-10€/lună) sunt separate de prețul pachetului.</p>
+    </div>
+</section>
+
+<section class="py-24 border-t border-white/5 bg-slate-950/30">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="glass rounded-3xl border border-blue-500/20 p-8 md:p-12">
+            <p class="text-3xl mb-4">🤖</p>
+            <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-3">Agenți AI & Automatizări</p>
+            <p class="text-slate-300 leading-relaxed mb-8">
+                Construiesc automatizări simple pentru task-uri repetitive și agenți AI pentru conversații și cereri mai complexe — separat, sau peste orice pachet de mai sus, dacă ai deja un website. Nu orice business are nevoie de amândouă — depinde ce se repetă la tine: un pas simplu de proces (automatizare) sau o conversație cu clientul (agent).
+            </p>
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h3 class="text-white font-bold mb-4">Exemple de automatizări</h3>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Când cineva face o programare, primește automat un email sau SMS de confirmare — nu trebuie să-i scrii tu</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Cu o zi înainte de programare, clientul primește automat un mesaj de reamintire, ca să vină mai puțini oameni care uită</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Când o oră se ocupă, dispare automat din calendar, ca să nu se suprapună două programări din greșeală</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Dacă cineva trimite o cerere și nu apuci să-i răspunzi în câteva zile, primește automat un mesaj de revenire</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Facturile sau confirmările de plată se trimit automat, fără să le faci tu manual de fiecare dată</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">Exemple de agenți</h3>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Agent care răspunde non-stop la întrebări frecvente pe site sau WhatsApp</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Agent care preia o cerere prin telefon sau chat și o structurează (nume, dată, serviciu dorit)</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Agent care triază cererile primite și le semnalează pe cele urgente</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Agent care confirmă sau propune reprogramare, în funcție de disponibilitatea reală</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400">✦</span> Agent care pregătește un răspuns personalizat pentru fiecare mesaj, gata să-l trimiți sau să-l ajustezi</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-6 border-t border-white/5 space-y-2">
+                <p class="text-lg font-bold gradient-text">Configurare automatizare simplă: de la €15 <span class="text-sm font-normal text-slate-500">(reminder, confirmare automată) — o singură dată</span></p>
+                <p class="text-lg font-bold gradient-text">Configurare agent: de la €25 <span class="text-sm font-normal text-slate-500">(conversație, răspunsuri, triaj) — o singură dată</span></p>
+            </div>
+            <p class="text-xs text-slate-500 leading-relaxed mt-6">
+                Pe lângă costul de configurare, mai există un cost separat de utilizare — banii pe care îi plătești direct către firmele care oferă tehnologia din spate (nu către mine). De exemplu: serviciul de AI care „gândește" răspunsurile (de obicei câțiva cenți pe conversație), WhatsApp Business dacă agentul răspunde acolo, sau un număr de telefon dedicat dacă răspunde la telefon. Depinde câte conversații are agentul pe lună — de obicei câțiva euro până la câteva zeci de euro lunar pentru un business mic-mediu, nu sute. Discutăm suma exactă la consultație, în funcție de ce alegi.
+            </p>
+            <p class="text-xs text-slate-500 mt-3">Mentenanță și monitorizare lunară (opțional): tarifată separat, dacă vrei să preiau și partea de întreținere continuă.</p>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 text-center border-t border-white/5">
+    <div class="max-w-2xl mx-auto px-6">
+        <p class="text-slate-400">
+            Ai întrebări despre proces, termene sau preț? <a href="{% url 'faq' %}" class="text-blue-400 font-semibold hover:text-blue-300 transition">Vezi Întrebări frecvente →</a>
+        </p>
+    </div>
+</section>
+
+<section class="py-24 md:py-32 border-t border-white/5 bg-slate-950/30">
+    <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center">Tu alegi ce faci în continuare</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="glass rounded-3xl border border-white/10 p-8">
+                <p class="text-slate-400 text-sm uppercase tracking-[0.2em] font-semibold mb-5">Continui cu procesul manual</p>
+                <ul class="space-y-3 text-slate-400">
+                    <li class="flex items-start gap-2"><span class="text-red-400">✕</span> pierzi timp — ore, poate zeci de ore, în fiecare lună</li>
+                    <li class="flex items-start gap-2"><span class="text-red-400">✕</span> pierzi ocazii — clienți care pleacă pentru că n-au primit răspuns la timp</li>
+                    <li class="flex items-start gap-2"><span class="text-red-400">✕</span> rămâi frustrată că business-ul nu crește în ritmul pe care ți-l dorești</li>
+                </ul>
+            </div>
+            <div class="glass rounded-3xl border border-blue-500/30 p-8">
+                <p class="text-cyan-300 text-sm uppercase tracking-[0.2em] font-semibold mb-5">Alegi un produs construit pentru tine</p>
+                <ul class="space-y-3 text-slate-300">
+                    <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> câștigi timp pe care-l poți folosi ca să crești business-ul</li>
+                    <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> nu te mai stresezi că ai uitat sau întârziat ceva</li>
+                    <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> clienții tăi au o experiență la care se gândesc și după ce pleacă</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center mt-14">
+            <a href="{% url 'start_project' %}" class="btn-primary inline-block px-10 py-5 rounded-xl font-bold text-lg">Hai să discutăm proiectul tău</a>
         </div>
     </div>
 </section>
