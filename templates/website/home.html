@@ -151,10 +151,10 @@
                 <h3 class="text-xl font-bold text-white mb-1">{{ pkg.name }}</h3>
                 <p class="text-sm text-slate-500 mb-4">{{ pkg.tagline }}</p>
                 <p class="text-2xl font-extrabold gradient-text mb-5">{{ pkg.price }}</p>
-                <ul class="space-y-2 text-sm text-slate-300 mb-6 flex-grow">
+                <ul class="space-y-2 text-sm text-slate-300 mb-6">
                     {% for feature in pkg.features %}<li>{{ feature }}</li>{% endfor %}
                 </ul>
-                <p class="text-xs text-slate-400 mb-4">{{ pkg.description }}</p>
+                <p class="text-xs text-slate-400 mb-4 flex-grow">{{ pkg.description }}</p>
                 <p class="text-xs text-slate-500 pt-4 border-t border-white/5 mb-4">{{ pkg.duration }}</p>
                 <a href="{% url 'start_project' %}?pachet={{ pkg.key }}" class="text-blue-400 text-sm font-bold hover:text-blue-300 transition">Alege {{ pkg.name }} →</a>
             </article>
@@ -202,6 +202,20 @@
                 Pe lângă costul de configurare, mai există un cost separat de utilizare — banii pe care îi plătești direct către firmele care oferă tehnologia din spate (nu către mine). De exemplu: serviciul de AI care „gândește" răspunsurile (de obicei câțiva cenți pe conversație), WhatsApp Business dacă agentul răspunde acolo, sau un număr de telefon dedicat dacă răspunde la telefon. Depinde câte conversații are agentul pe lună — de obicei câțiva euro până la câteva zeci de euro lunar pentru un business mic-mediu, nu sute. Discutăm suma exactă la consultație, în funcție de ce alegi.
             </p>
             <p class="text-xs text-slate-500 mt-3">Mentenanță și monitorizare lunară (opțional): tarifată separat, dacă vrei să preiau și partea de întreținere continuă.</p>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <div class="glass rounded-3xl border border-white/10 p-10 md:p-14">
+            <div class="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-300 mb-6">
+                <span class="w-2 h-2 rounded-full bg-cyan-300 animate-pulse"></span>
+                Early Access
+            </div>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-5">Produse proprii</h2>
+            <p class="max-w-2xl mx-auto text-lg text-slate-400 leading-relaxed mb-8">Pe lângă proiectele pentru clienți, construiesc și produse proprii — aplicații gândite să rezolve probleme reale, nu doar demo-uri de portofoliu. Momentan sunt gratuite, în early access, cât timp le testez și le îmbunătățesc.</p>
+            <a href="{% url 'products' %}" class="btn-primary inline-block px-8 py-4 rounded-xl font-semibold">Vezi produsele →</a>
         </div>
     </div>
 </section>
