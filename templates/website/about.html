@@ -60,7 +60,7 @@
             <div class="glass rounded-2xl border border-white/5 overflow-hidden card-hover group">
                 <div class="bg-slate-950 h-96 overflow-hidden p-2 flex items-center justify-center">
                     <img src="{{ cert.image.url }}"
-                         class="max-w-full max-h-full object-contain rounded-md shadow-lg transform group-hover:scale-105 transition-transform duration-500"
+                         class="cert-image max-w-full max-h-full object-contain rounded-md shadow-lg cursor-zoom-in transform group-hover:scale-105 transition-transform duration-500"
                          alt="{{ cert.title }}">
                 </div>
                 <div class="p-6">
@@ -93,5 +93,36 @@
         <a href="{% url 'contact' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Contactează-mă</a>
     </div>
 </section>
+
+<div id="certLightbox" class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-6 cursor-zoom-out">
+    <img id="certLightboxImg" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl">
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const lightbox = document.getElementById('certLightbox');
+        const lightboxImg = document.getElementById('certLightboxImg');
+
+        document.querySelectorAll('.cert-image').forEach((img) => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightboxImg.alt = img.alt;
+                lightbox.classList.remove('hidden');
+                lightbox.classList.add('flex');
+            });
+        });
+
+        const closeLightbox = () => {
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+            lightboxImg.src = '';
+        };
+
+        lightbox.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    });
+</script>
 
 {% endblock %}
