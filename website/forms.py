@@ -9,7 +9,8 @@ class StartProjectForm(forms.ModelForm):
         ("booking", "Sistem de rezervări / programări"),
         ("dashboard", "Dashboard de administrare"),
         ("website", "Website de prezentare"),
-        ("ai_automation", "Automatizare AI (telefon/WhatsApp)"),
+        ("automation", "Automatizare simplă (confirmări, remindere)"),
+        ("ai_agent", "Agent AI (telefon/WhatsApp, conversații)"),
     ]
 
     required_features = forms.MultipleChoiceField(
@@ -28,11 +29,15 @@ class StartProjectForm(forms.ModelForm):
             "name",
             "email",
             "industry",
+            "selected_package",
             "project_description",
             "hosting_info",
             "deadline_communication",
             "required_features",
         ]
+        widgets = {
+            "industry": forms.TextInput(attrs={"placeholder": "ex. restaurant, clinică, consultanță, retail..."}),
+        }
 
 
 class ContactForm(forms.ModelForm):

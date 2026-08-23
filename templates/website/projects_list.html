@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Portofoliu | Andreea Sandu{% endblock %}
-{% block meta_description %}Un portofoliu de sisteme Django gata de producție, construite pentru clienți și proiecte proprii — dovadă de capabilitate tehnică în rezervări, e-commerce și platforme de ticketing.{% endblock %}
+{% block meta_description %}Un portofoliu de produse digitale gata de producție, construite pentru clienți și proiecte proprii — dovadă de capabilitate tehnică în sisteme de rezervări și platforme de ticketing.{% endblock %}
 
 {% block content %}
 
@@ -99,6 +99,13 @@
         </div>
         {% endfor %}
 
+    </div>
+</section>
+
+<section class="py-24 md:py-32 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Vrei un sistem construit la fel de îngrijit pentru afacerea ta?</h2>
+        <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Hai să discutăm proiectul tău</a>
     </div>
 </section>
 

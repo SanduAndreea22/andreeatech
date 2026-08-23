@@ -1,16 +1,42 @@
+import logging
+
 from django.conf import settings
 from django.contrib import messages
+from django.core.cache import cache
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ContactForm, ReviewForm, StartProjectForm
-from .models import Certification, Project, Review
+from .models import Certification, ContactMessage, Project, Review
+
+logger = logging.getLogger(__name__)
 
 
 def _notify_admin(subject, message):
     if settings.ADMIN_EMAIL:
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [settings.ADMIN_EMAIL], fail_silently=True)
+        try:
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [settings.ADMIN_EMAIL], fail_silently=False)
+        except Exception:
+            logger.exception("Failed to send admin notification email: %s", subject)
+
+
+def _client_ip(request):
+    forwarded = request.META.get("HTTP_X_FORWARDED_FOR")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.META.get("REMOTE_ADDR", "unknown")
+
+
+def _rate_limited(request, form_name, limit=5, window_seconds=3600):
+    """Simple per-IP submission cap for public forms. Returns True if the
+    caller has already hit the limit and the submission should be dropped."""
+    key = f"ratelimit:{form_name}:{_client_ip(request)}"
+    count = cache.get(key, 0)
+    if count >= limit:
+        return True
+    cache.set(key, count + 1, window_seconds)
+    return False
 
 
 def home(request):
@@ -24,18 +50,6 @@ def robots_txt(request):
         f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
-
-
-def services(request):
-    return render(request, 'website/services.html')
-
-
-def services_restaurants(request):
-    return render(request, 'website/services_restaurants.html')
-
-
-def services_appointments(request):
-    return render(request, 'website/services_appointments.html')
 
 
 def products(request):
@@ -76,6 +90,10 @@ def start_project(request):
                 # Honeypot tripped — pretend success, save nothing.
                 return redirect("start_project")
 
+            if _rate_limited(request, "start_project"):
+                messages.error(request, "Ai trimis mai multe cereri într-un timp scurt. Te rog încearcă din nou peste puțin timp.")
+                return redirect("start_project")
+
             obj = form.save(commit=False)
 
             # convert list to comma-separated string
@@ -85,12 +103,16 @@ def start_project(request):
             obj.save()
             _notify_admin(
                 "New project brief — andreeatech",
-                f"Name: {obj.name}\nEmail: {obj.email}\nIndustry: {obj.get_industry_display()}\n\n{obj.project_description}"
+                f"Name: {obj.name}\nEmail: {obj.email}\nIndustry: {obj.industry}\nPachet: {obj.get_selected_package_display() if obj.selected_package else 'nespecificat'}\n\n{obj.project_description}"
             )
             messages.success(request, "Cerere primită! Îți analizez brief-ul și revin cu un răspuns în maximum 24 de ore.")
             return redirect("start_project")
     else:
-        form = StartProjectForm()
+        initial = {}
+        package = request.GET.get("pachet")
+        if package in dict(ContactMessage.PACKAGE_CHOICES):
+            initial["selected_package"] = package
+        form = StartProjectForm(initial=initial)
 
     return render(request, "website/start_project.html", {
         "form": form
@@ -103,6 +125,10 @@ def contact(request):
         if form.is_valid():
             if form.cleaned_data.get("website"):
                 # Honeypot tripped — pretend success, save nothing.
+                return redirect("contact")
+
+            if _rate_limited(request, "contact"):
+                messages.error(request, "Ai trimis mai multe mesaje într-un timp scurt. Te rog încearcă din nou peste puțin timp.")
                 return redirect("contact")
 
             obj = form.save()
@@ -148,11 +174,16 @@ def reviews(request):
                 # Honeypot tripped — pretend success, save nothing.
                 return redirect("reviews")
 
+            if _rate_limited(request, "reviews"):
+                messages.error(request, "Ai trimis mai multe recenzii într-un timp scurt. Te rog încearcă din nou peste puțin timp.")
+                return redirect("reviews")
+
             obj = form.save()
             _notify_admin(
                 "New review (pending approval) — andreeatech",
                 f"{obj.name} ({obj.company or 'no company'}) - {obj.rating} stars\n\n{obj.message}"
             )
+            messages.success(request, "Mulțumesc pentru recenzie! Va apărea pe site după ce o aprob.")
             return redirect("reviews")
 
     return render(request, "website/reviews.html", {

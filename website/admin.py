@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, ContactMessage, ContactMessageSimple, Certification
+from .models import Project, ContactMessage, ContactMessageSimple, Certification, Review
 
 
 @admin.register(Project)
@@ -16,8 +16,6 @@ class CertificationAdmin(admin.ModelAdmin):
     list_editable = ("order",)
     search_fields = ("title", "issuer")
 
-from .models import Review
-
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ("name", "rating", "is_approved", "created_at")
@@ -32,11 +30,12 @@ class ContactMessageAdmin(admin.ModelAdmin):
         "name",
         "email",
         "industry",
+        "selected_package",
         "required_features",
         "is_read",
         "created_at",
     )
-    list_filter = ("industry", "is_read")
+    list_filter = ("industry", "selected_package", "is_read")
     search_fields = ("name", "email")
     list_editable = ("is_read",)
 

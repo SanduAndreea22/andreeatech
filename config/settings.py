@@ -167,3 +167,22 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 
 # Where lead notifications (contact / start-project / review) are sent.
 ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", EMAIL_HOST_USER)
+
+# So unhandled 500s in production get emailed instead of vanishing into the
+# PythonAnywhere error log with no alert.
+if ADMIN_EMAIL:
+    ADMINS = [("Andreea", ADMIN_EMAIL)]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler"},
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
+    },
+}

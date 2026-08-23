@@ -64,7 +64,7 @@ class ContactMessageModelTests(TestCase):
         obj = ContactMessage.objects.create(
             name="Jane Doe",
             email="jane@example.com",
-            industry="hospitality",
+            industry="restaurant",
             project_description="A restaurant website.",
         )
         self.assertEqual(str(obj), "Jane Doe (jane@example.com)")
@@ -114,9 +114,6 @@ class StaticPageViewTests(TestCase):
     def test_static_pages_return_200(self):
         url_names = [
             "home",
-            "services",
-            "services_restaurants",
-            "services_appointments",
             "products",
             "planner_product",
             "budget_product",
@@ -185,7 +182,8 @@ class StartProjectFormViewTests(TestCase):
         payload = {
             "name": "Jane Doe",
             "email": "jane@example.com",
-            "industry": "hospitality",
+            "industry": "restaurant",
+            "selected_package": "full_experience",
             "project_description": "I need a booking system.",
             "hosting_info": "",
             "deadline_communication": "",
@@ -201,6 +199,11 @@ class StartProjectFormViewTests(TestCase):
         self.assertEqual(ContactMessage.objects.count(), 1)
         obj = ContactMessage.objects.first()
         self.assertEqual(obj.required_features, "booking, dashboard")
+        self.assertEqual(obj.selected_package, "full_experience")
+
+    def test_package_preselected_from_query_param(self):
+        response = self.client.get(reverse("start_project") + "?pachet=premium_system")
+        self.assertContains(response, "premium_system")
 
     def test_honeypot_filled_silently_drops_submission(self):
         response = self.client.post(

@@ -10,9 +10,7 @@ class StaticViewSitemap(Sitemap):
     def items(self):
         return [
             "home",
-            "services",
-            "services_restaurants",
-            "services_appointments",
+            "about",
             "products",
             "planner_product",
             "budget_product",
@@ -21,6 +19,7 @@ class StaticViewSitemap(Sitemap):
             "reviews",
             "contact",
             "start_project",
+            "privacy_policy",
         ]
 
     def location(self, item):

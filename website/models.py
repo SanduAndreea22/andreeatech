@@ -45,24 +45,33 @@ class Project(models.Model):
 
 class ContactMessage(models.Model):
 
-    INDUSTRY_CHOICES = [
-        ("hospitality", "Restaurant"),
-        ("service_business", "Afacere bazată pe programări"),
+    PACKAGE_CHOICES = [
+        ("digital_presence", "Digital Presence — €150"),
+        ("full_experience", "Full Experience — €380"),
+        ("premium_system", "Premium System — de la €850"),
+        ("not_sure", "Nu sunt sigur/ă, hai să discutăm"),
     ]
 
     name = models.CharField(max_length=150)
     email = models.EmailField()
 
     industry = models.CharField(
-        max_length=50,
-        choices=INDUSTRY_CHOICES
+        max_length=100,
+        help_text="Domeniul afacerii (liber, ex. restaurant, clinică, consultanță)."
     )
 
-    project_description = models.TextField()
+    selected_package = models.CharField(
+        max_length=30,
+        choices=PACKAGE_CHOICES,
+        blank=True,
+        help_text="Pachetul ales de pe homepage, dacă a venit de acolo."
+    )
 
-    hosting_info = models.TextField(blank=True)
+    project_description = models.TextField(max_length=5000)
 
-    deadline_communication = models.TextField(blank=True)
+    hosting_info = models.TextField(max_length=2000, blank=True)
+
+    deadline_communication = models.TextField(max_length=2000, blank=True)
 
     required_features = models.CharField(
         max_length=300,
@@ -82,7 +91,7 @@ class ContactMessage(models.Model):
 class ContactMessageSimple(models.Model):
     name = models.CharField(max_length=150)
     email = models.EmailField()
-    message = models.TextField()
+    message = models.TextField(max_length=3000)
 
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -106,7 +115,7 @@ class Review(models.Model):
 
     name = models.CharField(max_length=120)
     company = models.CharField(max_length=150, blank=True)
-    message = models.TextField()
+    message = models.TextField(max_length=2000)
     rating = models.IntegerField(choices=RATING_CHOICES)
 
     is_approved = models.BooleanField(default=False)
