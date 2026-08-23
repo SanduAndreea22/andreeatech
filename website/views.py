@@ -120,6 +120,8 @@ def start_project(request):
         package = request.GET.get("pachet")
         if package in dict(ContactMessage.PACKAGE_CHOICES):
             initial["selected_package"] = package
+            if package == "automation_only":
+                initial["required_features"] = ["automation", "ai_agent"]
         form = StartProjectForm(initial=initial)
 
     return render(request, "website/start_project.html", {

@@ -49,7 +49,10 @@ class ContactMessage(models.Model):
 
     PACKAGE_CHOICES = [
         (p["key"], f'{p["name"]} — {p["price"]}') for p in PACKAGES
-    ] + [(NOT_SURE_KEY, NOT_SURE_LABEL)]
+    ] + [
+        ("automation_only", "Doar automatizare / agent AI (am deja un website)"),
+        (NOT_SURE_KEY, NOT_SURE_LABEL),
+    ]
 
     name = models.CharField(max_length=150)
     email = models.EmailField()
