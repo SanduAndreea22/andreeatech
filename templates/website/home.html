@@ -16,7 +16,7 @@
     <div class="relative max-w-5xl mx-auto px-6 text-center">
         <p class="text-blue-400 text-sm uppercase tracking-[0.25em] font-semibold mb-6">Digital Products & Experiences</p>
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] text-white mb-6">
-            De la o interacțiune obișnuită, la o experiență de care oamenii își amintesc.
+            De la o interacțiune obișnuită, la <span class="text-blue-500">o experiență de care oamenii își amintesc.</span>
         </h1>
         <p class="text-xl md:text-2xl font-semibold text-slate-200 mb-7">
             Pentru antreprenorii care vor să-și ducă business-ul la următorul nivel.
@@ -188,7 +188,7 @@
                 </ul>
                 <p class="text-xs text-slate-400 mb-4 flex-grow">{{ pkg.description }}</p>
                 <p class="text-xs text-slate-500 pt-4 border-t border-white/5 mb-4">{{ pkg.duration }}</p>
-                <a href="{% url 'start_project' %}?pachet={{ pkg.key }}" class="text-blue-400 text-sm font-bold hover:text-blue-300 transition">Alege {{ pkg.name }} →</a>
+                <a href="{% url 'start_project' %}?pachet={{ pkg.key }}" class="block text-center text-sm font-bold py-3 rounded-lg transition {% if pkg.popular %}bg-blue-500 hover:bg-blue-600 text-white{% else %}border border-white/15 hover:border-white/30 text-white{% endif %}">Alege {{ pkg.name }} →</a>
             </article>
             {% endfor %}
         </div>
