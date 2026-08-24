@@ -25,6 +25,10 @@
             Construiesc produsul digital din spatele ei — website, sistem, automatizare — orice e nevoie ca să funcționeze corect.
         </p>
         <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Hai să discutăm proiectul tău</a>
+        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-5 text-sm">
+            <a href="#pachete" class="text-slate-500 hover:text-blue-400 transition">Vezi pachetele și prețurile ↓</a>
+            <a href="{% url 'contact' %}" class="text-slate-500 hover:text-blue-400 transition">Ai doar o întrebare rapidă? →</a>
+        </div>
     </div>
 </section>
 
@@ -145,7 +149,7 @@
     </div>
 </section>
 
-<section class="py-24 border-t border-white/5">
+<section id="pachete" class="py-24 border-t border-white/5">
     <div class="max-w-6xl mx-auto px-6">
         <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">Pachete</p>
         <h2 class="text-3xl md:text-5xl font-bold text-white mb-14 text-center">Alege nivelul potrivit pentru business-ul tău.</h2>
@@ -167,6 +171,10 @@
             {% endfor %}
         </div>
         <p class="text-center text-slate-500 text-sm mt-6">Costurile de domeniu (~10-15€/an) și hosting (~5-10€/lună) sunt separate de prețul pachetului.</p>
+        <div class="max-w-2xl mx-auto mt-8 glass rounded-2xl border border-white/5 p-6 text-sm text-slate-400 leading-relaxed">
+            <p class="text-white font-semibold mb-2">Recapitulare cost</p>
+            <p>Plătești o singură dată prețul pachetului ales. Domeniul și hostingul sunt separate, doar dacă nu le ai deja. Automatizarea sau agentul AI sunt complet opționale, cu cost separat de configurare și utilizare — le adaugi doar dacă chiar ai nevoie de ele.</p>
+        </div>
     </div>
 </section>
 
