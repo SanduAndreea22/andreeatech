@@ -5,58 +5,53 @@
 
 {% block content %}
 
-<section class="pt-32 pb-20 text-center relative overflow-hidden">
-    <div class="max-w-5xl mx-auto px-6 relative z-10">
-        <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
+<section class="page-hero page-hero-tight about-hero">
+    <div class="hero-glow"></div>
+    <div class="container-md center">
+        <h1 class="page-title">
             Sisteme și platforme construite <span class="gradient-text">pentru clienți și proiecte proprii</span>
         </h1>
     </div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-blue-600/5 blur-[120px] rounded-full -z-10"></div>
 </section>
 
 {% if featured %}
-<section class="pb-24">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="group relative glass rounded-3xl p-1 md:p-1.5 border border-white/10 overflow-hidden shadow-2xl">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<section class="section-sm">
+    <div class="container">
+        <div class="glass pl-featured-card">
+            <div class="pl-featured-glow"></div>
 
-            <div class="relative bg-[#D6E2F5]/70 rounded-[calc(1.5rem-2px)] p-8 md:p-12 grid md:grid-cols-2 gap-12 items-center">
-                <div class="order-2 md:order-1">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-                        <span class="text-xs font-bold tracking-[0.2em] text-blue-400 uppercase">Studiu de caz recomandat</span>
+            <div class="pl-featured-inner">
+                <div>
+                    <div class="pl-featured-badge-row">
+                        <span class="badge-dot badge-dot-pulse"></span>
+                        <span class="pl-featured-badge-label">Studiu de caz recomandat</span>
                     </div>
 
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+                    <h2 class="pl-featured-title">
                         {{ featured.title }}
                     </h2>
 
-                    <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                    <p class="pl-featured-desc">
                         {{ featured.short_description }}
                     </p>
 
-                    <div class="flex flex-wrap gap-6 items-center">
-                        <a href="{% url 'project_detail' featured.slug %}"
-                           class="btn-primary px-8 py-3 rounded-xl font-bold text-sm tracking-wide">
+                    <div class="pl-featured-actions">
+                        <a href="{% url 'project_detail' featured.slug %}" class="btn-primary pl-featured-cta">
                             VEZI STUDIUL DE CAZ
                         </a>
 
                         {% if featured.link %}
-                        <a href="{{ featured.link }}"
-                           target="_blank" rel="noopener noreferrer"
-                           class="text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2">
+                        <a href="{{ featured.link }}" target="_blank" rel="noopener noreferrer" class="pl-featured-live">
                             <span>Vezi live</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                         </a>
                         {% endif %}
                     </div>
                 </div>
 
                 {% if featured.image %}
-                <div class="order-1 md:order-2 overflow-hidden rounded-2xl border border-white/5 shadow-2xl">
-                    <img src="{{ featured.image.url }}"
-                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                         alt="{{ featured.title }}">
+                <div class="pl-featured-image-wrap">
+                    <img src="{{ featured.image.url }}" alt="{{ featured.title }}">
                 </div>
                 {% endif %}
             </div>
@@ -65,40 +60,37 @@
 </section>
 {% endif %}
 
-<section class="pb-28">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<section class="section-lg">
+    <div class="container projects-grid">
 
         {% for project in projects %}
-        <div class="glass p-8 rounded-2xl card-hover border border-white/5 flex flex-col justify-between group">
+        <div class="glass card-hover project-card">
             <div>
-                <div class="h-1 w-12 bg-blue-500/30 mb-6 group-hover:w-full transition-all duration-500"></div>
-                <h3 class="text-xl font-bold mb-4 text-white">
+                <div class="project-card-bar"></div>
+                <h3 class="project-card-title">
                     {{ project.title }}
                 </h3>
 
                 {% if project.result_highlight %}
-                <p class="text-amber-300 text-xs font-bold uppercase tracking-wide mb-3 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                <p class="project-highlight">
                     {{ project.result_highlight }}
                 </p>
                 {% endif %}
 
-                <p class="text-slate-400 text-sm mb-8 leading-relaxed">
+                <p class="project-card-desc">
                     {{ project.short_description }}
                 </p>
             </div>
 
-            <div class="flex justify-between items-center mt-auto pt-6 border-t border-white/5">
-                <a href="{% url 'project_detail' project.slug %}"
-                   class="text-blue-400 text-sm font-bold hover:text-blue-300 transition flex items-center gap-1">
-                    Vezi proiectul <span class="group-hover:translate-x-1 transition-transform">→</span>
+            <div class="project-card-footer">
+                <a href="{% url 'project_detail' project.slug %}" class="project-link">
+                    Vezi proiectul <span>→</span>
                 </a>
 
                 {% if project.link %}
-                <a href="{{ project.link }}"
-                   target="_blank" rel="noopener noreferrer"
-                   class="text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2">
+                <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="project-live-link">
                     <span>Vezi live</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                 </a>
                 {% endif %}
             </div>
@@ -108,10 +100,10 @@
     </div>
 </section>
 
-<section class="py-24 md:py-32 border-t border-white/5">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Vrei un sistem construit la fel de îngrijit pentru afacerea ta?</h2>
-        <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Hai să discutăm proiectul tău</a>
+<section class="section section-lg">
+    <div class="container-lg home-cta-center">
+        <h2 class="h2-lg">Vrei un sistem construit la fel de îngrijit pentru afacerea ta?</h2>
+        <a href="{% url 'start_project' %}" class="btn-primary home-cta-btn-sm">Hai să discutăm proiectul tău</a>
     </div>
 </section>
 

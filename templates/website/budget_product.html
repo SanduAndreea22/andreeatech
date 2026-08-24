@@ -4,34 +4,34 @@
 {% block meta_description %}Budget Planner — un tracker inteligent de buget și finanțe, construit pentru o vizibilitate clară și simplă asupra veniturilor, cheltuielilor și economiilor tale.{% endblock %}
 
 {% block content %}
-<section class="pt-32 pb-24 relative overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
-        <div class="inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-amber-300 mb-6">
-            <span class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
+<section class="page-hero about-hero">
+    <div class="hero-glow hero-glow-strong"></div>
+    <div class="container-lg center">
+        <div class="badge mb-lg">
+            <span class="badge-dot badge-dot-pulse"></span>
             Early Access
         </div>
-        <p class="text-blue-400 uppercase tracking-[0.25em] text-sm font-semibold mb-6">Tracker Inteligent de Buget & Finanțe</p>
-        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-white mb-7">Vezi exact unde se duc banii tăi, fără calcule complicate.</h1>
-        <p class="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-10">Un tracker financiar simplu, construit ca să-ți arate clar unde se duc banii și să te ajute să iei decizii mai calme, lună de lună.</p>
-        <a href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block px-10 py-5 rounded-xl font-bold text-lg">Îmi organizez bugetul</a>
-        <p class="text-slate-500 text-sm mt-5">Produs în early access — complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
+        <p class="eyebrow eyebrow-center">Tracker Inteligent de Buget & Finanțe</p>
+        <h1 class="pp-hero-title">Vezi exact unde se duc banii tăi, fără calcule complicate.</h1>
+        <p class="pp-hero-lede">Un tracker financiar simplu, construit ca să-ți arate clar unde se duc banii și să te ajute să iei decizii mai calme, lună de lună.</p>
+        <a href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary pp-hero-cta">Îmi organizez bugetul</a>
+        <p class="pp-hero-note">Produs în early access — complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
     </div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-cyan-600/15 blur-[140px] rounded-full -z-10"></div>
 </section>
 
-<section class="pb-20">
-    <div class="max-w-5xl mx-auto px-6">
-        <div class="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-            <img src="{% static 'website/budget-preview.jpg' %}" alt="Budget Planner — ecranul de start" class="w-full h-auto">
+<section class="section-sm">
+    <div class="container-md">
+        <div class="pp-preview-wrap">
+            <img src="{% static 'website/budget-preview.jpg' %}" alt="Budget Planner — ecranul de start">
         </div>
     </div>
 </section>
 
-<section class="py-24 border-y border-white/5 bg-slate-950/30">
-    <div class="max-w-4xl mx-auto px-6">
-        <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4">Mai multă claritate financiară</p>
-        <h2 class="text-3xl md:text-5xl font-bold text-white mb-10">Un buget n-ar trebui să te facă să te simți vinovat(ă).</h2>
-        <div class="space-y-6 text-slate-300 leading-relaxed text-lg">
+<section class="section section-tint">
+    <div class="container-md">
+        <p class="eyebrow">Mai multă claritate financiară</p>
+        <h2 class="h2-lg h2-left">Un buget n-ar trebui să te facă să te simți vinovat(ă).</h2>
+        <div class="pp-story-body">
             <p>Când nu vezi imaginea completă, fiecare cheltuială pare o surpriză. Iar un Excel complicat sau o listă de cifre greu de urmărit ajunge abandonată după câteva zile.</p>
             <p>Tracker Inteligent de Buget & Finanțe îți aduce veniturile, cheltuielile și obiectivele într-un singur loc. Vezi dintr-o privire ce se întâmplă cu banii tăi, fără formule complicate și fără să verifici aplicații diferite.</p>
             <p>În loc să te întrebi unde s-au dus toți banii, începi să-ți observi obiceiurile, să planifici luna următoare și să faci loc pentru lucrurile care contează pentru tine.</p>
@@ -39,37 +39,37 @@
     </div>
 </section>
 
-<section class="py-24">
-    <div class="max-w-7xl mx-auto px-6">
-        <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">Ce primești</p>
-        <h2 class="text-3xl md:text-5xl font-bold text-white mb-14 text-center">Un dashboard pentru decizii mai simple.</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-            <article class="glass p-7 rounded-2xl">
-                <h3 class="text-xl font-semibold text-white mb-3">Venituri și cheltuieli într-un singur loc</h3>
-                <p class="text-slate-400 leading-relaxed">Adaugi tranzacții rapid și ții la zi imaginea lunii curente.</p>
+<section class="section">
+    <div class="container">
+        <p class="eyebrow eyebrow-center">Ce primești</p>
+        <h2 class="h2-lg">Un dashboard pentru decizii mai simple.</h2>
+        <div class="pp-features-grid">
+            <article class="glass pp-feature-card">
+                <h3 class="pp-feature-title">Venituri și cheltuieli într-un singur loc</h3>
+                <p class="pp-feature-body">Adaugi tranzacții rapid și ții la zi imaginea lunii curente.</p>
             </article>
-            <article class="glass p-7 rounded-2xl">
-                <h3 class="text-xl font-semibold text-white mb-3">Categorii care dezvăluie tipare</h3>
-                <p class="text-slate-400 leading-relaxed">Înțelegi ce categorii îți consumă cel mai mult din buget și unde poți ajusta.</p>
+            <article class="glass pp-feature-card">
+                <h3 class="pp-feature-title">Categorii care dezvăluie tipare</h3>
+                <p class="pp-feature-body">Înțelegi ce categorii îți consumă cel mai mult din buget și unde poți ajusta.</p>
             </article>
-            <article class="glass p-7 rounded-2xl">
-                <h3 class="text-xl font-semibold text-white mb-3">Obiective financiare vizibile</h3>
-                <p class="text-slate-400 leading-relaxed">Urmărești economiile și progresul spre obiectivele care contează pentru tine.</p>
+            <article class="glass pp-feature-card">
+                <h3 class="pp-feature-title">Obiective financiare vizibile</h3>
+                <p class="pp-feature-body">Urmărești economiile și progresul spre obiectivele care contează pentru tine.</p>
             </article>
-            <article class="glass p-7 rounded-2xl">
-                <h3 class="text-xl font-semibold text-white mb-3">Claritate, nu perfecțiune</h3>
-                <p class="text-slate-400 leading-relaxed">Tracker-ul e aici ca să te ajute să observi și să alegi mai bine, nu să te judece.</p>
+            <article class="glass pp-feature-card">
+                <h3 class="pp-feature-title">Claritate, nu perfecțiune</h3>
+                <p class="pp-feature-body">Tracker-ul e aici ca să te ajute să observi și să alegi mai bine, nu să te judece.</p>
             </article>
         </div>
     </div>
 </section>
 
-<section class="py-28 text-center bg-slate-950/40 border-y border-white/5">
-    <div class="max-w-4xl mx-auto px-6">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Fă din bani un subiect mai clar, mai calm.</h2>
-        <p class="text-slate-400 text-lg mb-10">Începe cu o privire de ansamblu și construiește un sistem financiar care te susține.</p>
-        <a href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block px-10 py-5 rounded-xl font-bold text-lg">Îmi organizez bugetul</a>
-        <p class="text-slate-500 text-sm mt-8">Ai o afacere, nu doar nevoi personale? <a href="{% url 'start_project' %}" class="text-blue-400 hover:text-blue-300 transition">Vezi ce pot construi pentru tine →</a></p>
+<section class="section-lg section-tint">
+    <div class="container-md pp-cta-section">
+        <h2 class="h2-lg">Fă din bani un subiect mai clar, mai calm.</h2>
+        <p class="text-muted lead">Începe cu o privire de ansamblu și construiește un sistem financiar care te susține.</p>
+        <a href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary pp-hero-cta">Îmi organizez bugetul</a>
+        <p class="pp-cta-note">Ai o afacere, nu doar nevoi personale? <a href="{% url 'start_project' %}" class="link">Vezi ce pot construi pentru tine →</a></p>
     </div>
 </section>
 {% endblock %}

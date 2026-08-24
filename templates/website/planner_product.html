@@ -4,33 +4,33 @@
 {% block meta_description %}Emotional Planner — un planner de echilibru personal și productivitate, construit ca să-ți urmărești starea, obiceiurile și obiectivele într-un singur loc.{% endblock %}
 
 {% block content %}
-<section class="pt-32 pb-24 relative overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
-        <div class="inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-amber-300 mb-6">
-            <span class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
+<section class="page-hero about-hero">
+    <div class="hero-glow hero-glow-strong"></div>
+    <div class="container-lg center">
+        <div class="badge mb-lg">
+            <span class="badge-dot badge-dot-pulse"></span>
             Early Access
         </div>
-        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-white mb-7">Planifică-ți ziua fără să te lupți cu tine.</h1>
-        <p class="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-10">Plannerul zilnic care îți urmărește starea alături de task-uri, ca să-ți organizezi ziua fără să te forțezi să fii productiv(ă) în zilele grele.</p>
-        <a href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block px-10 py-5 rounded-xl font-bold text-lg">Încearcă gratuit acum</a>
-        <p class="text-slate-500 text-sm mt-5">Produs în early access — complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
+        <h1 class="pp-hero-title">Planifică-ți ziua fără să te lupți cu tine.</h1>
+        <p class="pp-hero-lede">Plannerul zilnic care îți urmărește starea alături de task-uri, ca să-ți organizezi ziua fără să te forțezi să fii productiv(ă) în zilele grele.</p>
+        <a href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary pp-hero-cta">Încearcă gratuit acum</a>
+        <p class="pp-hero-note">Produs în early access — complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
     </div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/15 blur-[140px] rounded-full -z-10"></div>
 </section>
 
-<section class="pb-20">
-    <div class="max-w-5xl mx-auto px-6">
-        <div class="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-            <img src="{% static 'website/planner-preview.jpg' %}" alt="Emotional Planner — ecranul de start" class="w-full h-auto">
+<section class="section-sm">
+    <div class="container-md">
+        <div class="pp-preview-wrap">
+            <img src="{% static 'website/planner-preview.jpg' %}" alt="Emotional Planner — ecranul de start">
         </div>
     </div>
 </section>
 
-<section class="py-24 border-y border-white/5 bg-slate-950/30">
-    <div class="max-w-4xl mx-auto px-6">
-        <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4">De ce ai nevoie de el</p>
-        <h2 class="text-3xl md:text-5xl font-bold text-white mb-10">De ce planner-ul obișnuit te lasă baltă exact în zilele grele</h2>
-        <div class="space-y-6 text-slate-300 leading-relaxed text-lg">
+<section class="section section-tint">
+    <div class="container-md">
+        <p class="eyebrow">De ce ai nevoie de el</p>
+        <h2 class="h2-lg h2-left">De ce planner-ul obișnuit te lasă baltă exact în zilele grele</h2>
+        <div class="pp-story-body">
             <p>Ai încercat probabil deja o agendă clasică sau o aplicație de task-uri. Funcționează bine când ai energie. Dar în zilele în care ești copleșit(ă) sau obosit(ă), același sistem rigid devine o presiune în plus.</p>
             <p>Majoritatea planner-elor tratează fiecare zi la fel. Emotional Planner pornește invers: înainte de listă, îți notezi starea și energia. Apoi alegi ce e realist pentru ziua pe care chiar o ai, nu pentru ziua în care crezi că ar trebui să fii.</p>
             <p>La final, două întrebări simple te ajută să închei ziua cu claritate: ce te-a epuizat și ce mică victorie ai avut. În timp, începi să vezi tipare, nu doar task-uri nebifate.</p>
@@ -39,11 +39,11 @@
     </div>
 </section>
 
-<section class="py-24">
-    <div class="max-w-4xl mx-auto px-6">
-        <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4">Povestea produsului</p>
-        <h2 class="text-3xl md:text-5xl font-bold text-white mb-10">Am transformat o perioadă grea într-un produs care îți face loc.</h2>
-        <div class="space-y-6 text-slate-300 leading-relaxed text-lg">
+<section class="section">
+    <div class="container-md">
+        <p class="eyebrow">Povestea produsului</p>
+        <h2 class="h2-lg h2-left">Am transformat o perioadă grea într-un produs care îți face loc.</h2>
+        <div class="pp-story-body">
             <p>Ideea s-a născut într-o perioadă în care o listă de obiective a încetat să mai ajute. Scrisul a devenit un mod de a pune ordine în gânduri, fără presiunea de a rezolva totul într-o singură zi.</p>
             <p>Ca developer, am pornit de la o întrebare simplă: dacă o problemă poate fi înțeleasă, se poate construi și o soluție în jurul ei. Așa a apărut un planner care urmărește deopotrivă timpul și starea din spatele lui.</p>
             <p>Astăzi, Planner de Echilibru Personal & Productivitate e un spațiu digital pentru zilele bune, zilele pline și zilele în care ai nevoie s-o iei mai încet.</p>
@@ -51,37 +51,37 @@
     </div>
 </section>
 
-<section class="py-24 bg-slate-950/40 border-y border-white/5">
-    <div class="max-w-7xl mx-auto px-6">
-        <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">Ce îl face diferit</p>
-        <h2 class="text-3xl md:text-5xl font-bold text-white mb-14 text-center">Mai mult decât o listă de task-uri.</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-            <article class="glass p-7 rounded-2xl">
-                <h3 class="text-xl font-semibold text-white mb-3">Ziua ta începe cu starea ta</h3>
-                <p class="text-slate-400 leading-relaxed">Îți notezi energia și starea de spirit înainte să-ți alegi prioritățile, pentru un plan potrivit cu ziua reală.</p>
+<section class="section section-tint">
+    <div class="container">
+        <p class="eyebrow eyebrow-center">Ce îl face diferit</p>
+        <h2 class="h2-lg">Mai mult decât o listă de task-uri.</h2>
+        <div class="pp-features-grid">
+            <article class="glass pp-feature-card">
+                <h3 class="pp-feature-title">Ziua ta începe cu starea ta</h3>
+                <p class="pp-feature-body">Îți notezi energia și starea de spirit înainte să-ți alegi prioritățile, pentru un plan potrivit cu ziua reală.</p>
             </article>
-            <article class="glass p-7 rounded-2xl">
-                <h3 class="text-xl font-semibold text-white mb-3">Reflecție de seară în două minute</h3>
-                <p class="text-slate-400 leading-relaxed">Observi ce te-a epuizat și ce mică victorie ai avut, fără un jurnal lung sau o rutină imposibil de ținut.</p>
+            <article class="glass pp-feature-card">
+                <h3 class="pp-feature-title">Reflecție de seară în două minute</h3>
+                <p class="pp-feature-body">Observi ce te-a epuizat și ce mică victorie ai avut, fără un jurnal lung sau o rutină imposibil de ținut.</p>
             </article>
-            <article class="glass p-7 rounded-2xl">
-                <h3 class="text-xl font-semibold text-white mb-3">Mesaje potrivite cu starea ta</h3>
-                <p class="text-slate-400 leading-relaxed">Primești un gând relevant pentru ziua ta — blândețe în zilele grele și încurajare în cele bune.</p>
+            <article class="glass pp-feature-card">
+                <h3 class="pp-feature-title">Mesaje potrivite cu starea ta</h3>
+                <p class="pp-feature-body">Primești un gând relevant pentru ziua ta — blândețe în zilele grele și încurajare în cele bune.</p>
             </article>
-            <article class="glass p-7 rounded-2xl">
-                <h3 class="text-xl font-semibold text-white mb-3">Vezi tiparul, nu doar ziua de azi</h3>
-                <p class="text-slate-400 leading-relaxed">Scorul săptămânal și graficul lunar îți dau context, fără să transforme echilibrul tău într-o competiție.</p>
+            <article class="glass pp-feature-card">
+                <h3 class="pp-feature-title">Vezi tiparul, nu doar ziua de azi</h3>
+                <p class="pp-feature-body">Scorul săptămânal și graficul lunar îți dau context, fără să transforme echilibrul tău într-o competiție.</p>
             </article>
         </div>
     </div>
 </section>
 
-<section class="py-28 text-center">
-    <div class="max-w-4xl mx-auto px-6">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Încearcă-l gratuit și organizează-ți ziua în ritmul tău.</h2>
-        <p class="text-slate-400 text-lg mb-10">Fă loc pentru planuri, stări și progresul care contează pentru tine.</p>
-        <a href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block px-10 py-5 rounded-xl font-bold text-lg">Încearcă gratuit acum</a>
-        <p class="text-slate-500 text-sm mt-8">Ai o afacere, nu doar nevoi personale? <a href="{% url 'start_project' %}" class="text-blue-400 hover:text-blue-300 transition">Vezi ce pot construi pentru tine →</a></p>
+<section class="section-lg">
+    <div class="container-md pp-cta-section">
+        <h2 class="h2-lg">Încearcă-l gratuit și organizează-ți ziua în ritmul tău.</h2>
+        <p class="text-muted lead">Fă loc pentru planuri, stări și progresul care contează pentru tine.</p>
+        <a href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary pp-hero-cta">Încearcă gratuit acum</a>
+        <p class="pp-cta-note">Ai o afacere, nu doar nevoi personale? <a href="{% url 'start_project' %}" class="link">Vezi ce pot construi pentru tine →</a></p>
     </div>
 </section>
 {% endblock %}

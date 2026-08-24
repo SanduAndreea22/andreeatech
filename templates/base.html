@@ -23,34 +23,6 @@
     <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/poza_me.JPG' %}{% endblock %}">
 
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        white: '#1E3A72',
-                        slate: {
-                            50: '#1E3A72', 100: '#1E3A72', 200: '#26437D', 300: '#2C3D6E',
-                            400: '#4C5A85', 500: '#7A88AC', 600: '#96A0B8', 700: '#B8C0D2',
-                            800: '#D7DEEA', 900: '#D6E2F5', 950: '#D6E2F5',
-                        },
-                        blue: {
-                            300: '#5B7FC4', 400: '#3E5C99', 500: '#3E5C99', 600: '#2E477A',
-                        },
-                        cyan: {
-                            300: '#3E5C99', 400: '#2E477A',
-                        },
-                        amber: {
-                            300: '#3E5C99', 400: '#3E5C99', 500: '#8eafd9',
-                        },
-                        teal: '#3E5C99',
-                    },
-                },
-            },
-        };
-    </script>
-
     <link rel="stylesheet" href="{% static 'website/style.css' %}">
 </head>
 <body class="site-body">
