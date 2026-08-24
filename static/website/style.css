@@ -151,11 +151,6 @@ body {
     background: #3b82f6;
 }
 
-/* Body offset for fixed navbar */
-body {
-    padding-top: 75px;
-}
-
 /* =========================================
    FORMS
 ========================================= */

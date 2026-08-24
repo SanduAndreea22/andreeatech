@@ -52,24 +52,24 @@
                 <span class="text-xl font-bold text-white">Andreea <span class="text-amber-400">Tech</span></span>
             </a>
             <div class="hidden md:flex gap-7 text-sm font-medium items-center text-slate-300">
-                <a href="{% url 'home' %}" class="hover:text-blue-400 transition">Acasă</a>
-                <a href="{% url 'about' %}" class="hover:text-blue-400 transition">Despre mine</a>
-                <a href="{% url 'projects' %}" class="hover:text-blue-400 transition">Portofoliu</a>
-                <a href="{% url 'products' %}" class="hover:text-blue-400 transition">Produse</a>
-                <a href="{% url 'faq' %}" class="hover:text-blue-400 transition">Întrebări frecvente</a>
-                <a href="{% url 'reviews' %}" class="hover:text-blue-400 transition">Ce spun clienții</a>
-                <a href="{% url 'contact' %}" class="btn-primary px-5 py-2 rounded-lg">Contact</a>
+                <a href="{% url 'home' %}" class="hover:text-blue-400 transition{% if request.resolver_match.url_name == 'home' %} active text-blue-400{% endif %}">Acasă</a>
+                <a href="{% url 'about' %}" class="hover:text-blue-400 transition{% if request.resolver_match.url_name == 'about' %} active text-blue-400{% endif %}">Despre mine</a>
+                <a href="{% url 'projects' %}" class="hover:text-blue-400 transition{% if request.resolver_match.url_name == 'projects' %} active text-blue-400{% endif %}">Portofoliu</a>
+                <a href="{% url 'products' %}" class="hover:text-blue-400 transition{% if request.resolver_match.url_name == 'products' %} active text-blue-400{% endif %}">Produse</a>
+                <a href="{% url 'faq' %}" class="hover:text-blue-400 transition{% if request.resolver_match.url_name == 'faq' %} active text-blue-400{% endif %}">Întrebări frecvente</a>
+                <a href="{% url 'reviews' %}" class="hover:text-blue-400 transition{% if request.resolver_match.url_name == 'reviews' %} active text-blue-400{% endif %}">Ce spun clienții</a>
+                <a href="{% url 'contact' %}" class="btn-primary px-5 py-2 rounded-lg{% if request.resolver_match.url_name == 'contact' %} active{% endif %}">Contact</a>
             </div>
             <details class="relative md:hidden text-sm font-medium text-slate-300">
                 <summary class="cursor-pointer rounded-lg border border-slate-700 px-4 py-2 hover:border-blue-400">Meniu</summary>
                 <div class="absolute right-0 mt-3 w-48 glass p-3 shadow-2xl flex flex-col gap-3">
-                    <a href="{% url 'home' %}" class="hover:text-blue-400">Acasă</a>
-                    <a href="{% url 'about' %}" class="hover:text-blue-400">Despre mine</a>
-                    <a href="{% url 'projects' %}" class="hover:text-blue-400">Portofoliu</a>
-                    <a href="{% url 'products' %}" class="hover:text-blue-400">Produse</a>
-                    <a href="{% url 'faq' %}" class="hover:text-blue-400">Întrebări frecvente</a>
-                    <a href="{% url 'reviews' %}" class="hover:text-blue-400">Ce spun clienții</a>
-                    <a href="{% url 'contact' %}" class="text-blue-400">Contact</a>
+                    <a href="{% url 'home' %}" class="hover:text-blue-400{% if request.resolver_match.url_name == 'home' %} text-blue-400 font-semibold{% endif %}">Acasă</a>
+                    <a href="{% url 'about' %}" class="hover:text-blue-400{% if request.resolver_match.url_name == 'about' %} text-blue-400 font-semibold{% endif %}">Despre mine</a>
+                    <a href="{% url 'projects' %}" class="hover:text-blue-400{% if request.resolver_match.url_name == 'projects' %} text-blue-400 font-semibold{% endif %}">Portofoliu</a>
+                    <a href="{% url 'products' %}" class="hover:text-blue-400{% if request.resolver_match.url_name == 'products' %} text-blue-400 font-semibold{% endif %}">Produse</a>
+                    <a href="{% url 'faq' %}" class="hover:text-blue-400{% if request.resolver_match.url_name == 'faq' %} text-blue-400 font-semibold{% endif %}">Întrebări frecvente</a>
+                    <a href="{% url 'reviews' %}" class="hover:text-blue-400{% if request.resolver_match.url_name == 'reviews' %} text-blue-400 font-semibold{% endif %}">Ce spun clienții</a>
+                    <a href="{% url 'contact' %}" class="text-blue-400{% if request.resolver_match.url_name == 'contact' %} font-semibold{% endif %}">Contact</a>
                 </div>
             </details>
         </div>
