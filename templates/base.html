@@ -92,6 +92,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const hero = document.querySelector('main > section:first-of-type');
+            if (hero && window.matchMedia('(hover: hover)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                hero.addEventListener('mousemove', (e) => {
+                    const rect = hero.getBoundingClientRect();
+                    hero.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+                    hero.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+                });
+            }
+
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
             const sections = document.querySelectorAll('main > section');

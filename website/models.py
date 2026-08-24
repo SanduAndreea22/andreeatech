@@ -12,6 +12,13 @@ class Project(models.Model):
 
     short_description = models.TextField()
 
+    result_highlight = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="Un rezultat scurt și cuantificat (opțional), ex. „+40% programări online”. "
+                   "Apare la hover pe cardul din Portofoliu. Lasă gol dacă nu ai o cifră reală."
+    )
+
     problem = RichTextField()
     solution = RichTextField()
     outcome = RichTextField()

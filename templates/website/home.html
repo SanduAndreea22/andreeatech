@@ -21,10 +21,16 @@
         <p class="text-xl md:text-2xl font-semibold text-slate-200 mb-7">
             De la o interacțiune obișnuită, la o experiență de care oamenii își amintesc.
         </p>
-        <p class="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed text-slate-400 mb-10">
+        <p class="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed text-slate-400 mb-8">
             Construiesc produsul digital din spatele ei — website, sistem, automatizare — orice e nevoie ca să funcționeze corect.
         </p>
-        <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Hai să discutăm proiectul tău</a>
+        <div class="inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-500/10 px-4 py-1.5 text-xs font-semibold text-amber-300 mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
+            Răspund în maximum 24h
+        </div>
+        <div>
+            <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Hai să discutăm proiectul tău</a>
+        </div>
         <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-5 text-sm">
             <a href="#pachete" class="text-slate-500 hover:text-blue-400 transition">Vezi pachetele și prețurile ↓</a>
             <a href="{% url 'contact' %}" class="text-slate-500 hover:text-blue-400 transition">Ai doar o întrebare rapidă? →</a>
@@ -241,8 +247,8 @@
 <section class="py-24 border-t border-white/5">
     <div class="max-w-4xl mx-auto px-6 text-center">
         <div class="glass rounded-3xl border border-white/10 p-10 md:p-14">
-            <div class="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-300 mb-6">
-                <span class="w-2 h-2 rounded-full bg-cyan-300 animate-pulse"></span>
+            <div class="inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-amber-300 mb-6">
+                <span class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
                 Early Access
             </div>
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-5">Produse proprii</h2>
