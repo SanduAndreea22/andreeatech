@@ -9,7 +9,7 @@ class StartProjectForm(forms.ModelForm):
         ("booking", "Sistem de rezervări / programări"),
         ("dashboard", "Dashboard de administrare"),
         ("website", "Website de prezentare"),
-        ("automation", "Automatizare simplă (confirmări, remindere)"),
+        ("automation", "Automatizare simplă (confirmări, mesaje de reamintire)"),
         ("ai_agent", "Agent AI (telefon/WhatsApp, conversații)"),
     ]
 
@@ -48,18 +48,8 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = ContactMessageSimple
         fields = ["name", "email", "message"]
-
         widgets = {
-            "name": forms.TextInput(attrs={
-                "class": "w-full p-3 rounded-lg bg-slate-800 border border-slate-700 text-white"
-            }),
-            "email": forms.EmailInput(attrs={
-                "class": "w-full p-3 rounded-lg bg-slate-800 border border-slate-700 text-white"
-            }),
-            "message": forms.Textarea(attrs={
-                "rows": 5,
-                "class": "w-full p-3 rounded-lg bg-slate-800 border border-slate-700 text-white"
-            }),
+            "message": forms.Textarea(attrs={"rows": 5}),
         }
 
 
@@ -71,19 +61,6 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ["name", "company", "rating", "message"]
-
         widgets = {
-            "name": forms.TextInput(attrs={
-                "class": "w-full p-3 rounded-lg bg-slate-900 border border-slate-700"
-            }),
-            "company": forms.TextInput(attrs={
-                "class": "w-full p-3 rounded-lg bg-slate-900 border border-slate-700"
-            }),
-            "rating": forms.Select(attrs={
-                "class": "w-full p-3 rounded-lg bg-slate-900 border border-slate-700"
-            }),
-            "message": forms.Textarea(attrs={
-                "class": "w-full p-3 rounded-lg bg-slate-900 border border-slate-700",
-                "rows": 4
-            }),
+            "message": forms.Textarea(attrs={"rows": 4}),
         }

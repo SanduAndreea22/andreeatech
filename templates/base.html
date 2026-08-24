@@ -113,6 +113,23 @@
 
             items.forEach((el) => observer.observe(el));
         });
+
+        // Visible feedback on submit — the view sends the admin notification
+        // email synchronously before redirecting, so on a slow connection
+        // the button would otherwise sit there looking dead and inviting a
+        // second click. Scoped to real POST forms only, so the client-side
+        // demo booking form on the homepage (no method="POST") is untouched.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('form[method="POST"], form[method="post"]').forEach((form) => {
+                form.addEventListener('submit', () => {
+                    const btn = form.querySelector('button[type="submit"]');
+                    if (btn && !btn.disabled) {
+                        btn.disabled = true;
+                        btn.textContent = 'Se trimite...';
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>

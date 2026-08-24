@@ -1,8 +1,30 @@
+from PIL import Image
+
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
 
 from .packages import NOT_SURE_KEY, NOT_SURE_LABEL, PACKAGES
+
+
+def shrink_image_if_needed(image_field, max_width):
+    """Resize an ImageField's file in place if it's wider than max_width.
+
+    Runs after the model has been saved (so image_field.path exists).
+    No-op once the file is already at or under max_width, so re-saving
+    an already-shrunk image never re-compresses it further.
+    """
+    if not image_field:
+        return
+    img = Image.open(image_field.path)
+    img.load()  # reads pixel data into memory and closes the underlying
+    # file handle — required on Windows, which won't allow writing to a
+    # path that's still open for reading.
+    if img.width <= max_width:
+        return
+    ratio = max_width / img.width
+    resized = img.resize((max_width, round(img.height * ratio)), Image.LANCZOS)
+    resized.save(image_field.path, optimize=True)
 
 
 class Project(models.Model):
@@ -47,6 +69,7 @@ class Project(models.Model):
                 suffix += 1
             self.slug = slug
         super().save(*args, **kwargs)
+        shrink_image_if_needed(self.image, max_width=1600)
 
     def __str__(self):
         return self.title
@@ -151,6 +174,10 @@ class Certification(models.Model):
 
     class Meta:
         ordering = ["order", "-issue_date"]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        shrink_image_if_needed(self.image, max_width=900)
 
     def __str__(self):
         return self.title

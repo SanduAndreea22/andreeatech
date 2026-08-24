@@ -6,6 +6,7 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.templatetags.static import static
 
 from .forms import ContactForm, ReviewForm, StartProjectForm
 from .models import Certification, ContactMessage, Project, Review
@@ -85,8 +86,10 @@ def projects_list(request):
 
 def project_detail(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    image_path = project.image.url if project.image else static("website/poza_me.JPG")
     return render(request, "website/project_detail.html", {
-        "project": project
+        "project": project,
+        "share_image_url": request.build_absolute_uri(image_path),
     })
 
 

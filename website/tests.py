@@ -1,26 +1,36 @@
+import io
+
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
+from PIL import Image
 
 from .models import Certification, Project, ContactMessage, ContactMessageSimple, Review
 
-# 1x1 transparent PNG, used wherever a test needs a real image file.
-TEST_PNG = SimpleUploadedFile(
-    "test.png",
-    bytes.fromhex(
-        "89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4"
-        "890000000a49444154789c6360000002000100ffff03000006000557bfabd400"
-        "0000004945454e44ae426082"
-    ),
-    content_type="image/png",
-)
+# 1x1 PNG, generated fresh per call (not a shared SimpleUploadedFile): an
+# UploadedFile wraps a BytesIO with a read cursor, so a single shared
+# instance gets exhausted — and silently written as a truncated/empty file
+# — the second time any test reuses it.
+def make_test_png():
+    buffer = io.BytesIO()
+    Image.new("RGB", (1, 1), color="blue").save(buffer, format="PNG")
+    buffer.seek(0)
+    return SimpleUploadedFile("test.png", buffer.read(), content_type="image/png")
+
+
+def make_oversized_png(width, height):
+    """An in-memory PNG at an exact size, for testing the resize-on-save hook."""
+    buffer = io.BytesIO()
+    Image.new("RGB", (width, height), color="red").save(buffer, format="PNG")
+    buffer.seek(0)
+    return SimpleUploadedFile("oversized.png", buffer.read(), content_type="image/png")
 
 
 def make_certification(**overrides):
     defaults = {
         "title": "Django for Professionals",
         "issuer": "Test Academy",
-        "image": TEST_PNG,
+        "image": make_test_png(),
     }
     defaults.update(overrides)
     return Certification.objects.create(**defaults)
@@ -56,6 +66,26 @@ class ProjectModelTests(TestCase):
     def test_str_returns_title(self):
         project = make_project(title="My Cool Project")
         self.assertEqual(str(project), "My Cool Project")
+
+
+class ImageResizeOnSaveTests(TestCase):
+
+    def test_project_image_wider_than_max_is_shrunk(self):
+        project = make_project(image=make_oversized_png(2000, 1000))
+        with Image.open(project.image.path) as saved:
+            self.assertEqual(saved.width, 1600)
+            self.assertEqual(saved.height, 800)
+
+    def test_project_image_under_max_is_untouched(self):
+        project = make_project(image=make_oversized_png(800, 400))
+        with Image.open(project.image.path) as saved:
+            self.assertEqual(saved.width, 800)
+
+    def test_certification_image_wider_than_max_is_shrunk(self):
+        cert = make_certification(image=make_oversized_png(1400, 700))
+        with Image.open(cert.image.path) as saved:
+            self.assertEqual(saved.width, 900)
+            self.assertEqual(saved.height, 450)
 
 
 class ContactMessageModelTests(TestCase):
@@ -141,6 +171,16 @@ class ProjectDetailViewTests(TestCase):
     def test_missing_project_returns_404(self):
         response = self.client.get(reverse("project_detail", args=["does-not-exist"]))
         self.assertEqual(response.status_code, 404)
+
+    def test_og_image_falls_back_to_default_without_project_image(self):
+        project = make_project(title="No Image Project")
+        response = self.client.get(reverse("project_detail", args=[project.slug]))
+        self.assertContains(response, "poza_me")
+
+    def test_og_image_uses_project_image_when_present(self):
+        project = make_project(title="With Image Project", image=make_test_png())
+        response = self.client.get(reverse("project_detail", args=[project.slug]))
+        self.assertContains(response, project.image.url)
 
 
 class ContactFormViewTests(TestCase):

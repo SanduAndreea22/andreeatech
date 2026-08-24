@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block title %}{{ project.title }} | Studiu de caz{% endblock %}
 {% block meta_description %}{{ project.short_description }}{% endblock %}
+{% block og_title %}{{ project.title }} | Andreea Sandu{% endblock %}
+{% block og_description %}{{ project.short_description }}{% endblock %}
+{% block twitter_title %}{{ project.title }} | Andreea Sandu{% endblock %}
+{% block twitter_description %}{{ project.short_description }}{% endblock %}
+{% block og_image %}{{ share_image_url }}{% endblock %}
+{% block twitter_image %}{{ share_image_url }}{% endblock %}
 
 {% block content %}
 <section class="page-hero about-hero">

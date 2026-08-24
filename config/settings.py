@@ -189,5 +189,9 @@ LOGGING = {
             "handlers": ["console"],
             "level": "INFO",
         },
+        "website": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
     },
 }

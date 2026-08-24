@@ -11,7 +11,7 @@ PACKAGES = [
     {
         "key": "digital_presence",
         "emoji": "🥉",
-        "name": "Digital Presence",
+        "name": "Prezență Digitală",
         "price": "€150",
         "tagline": "Website simplu — prezența ta online",
         "features": [
@@ -26,7 +26,7 @@ PACKAGES = [
     {
         "key": "full_experience",
         "emoji": "🥈",
-        "name": "Full Experience",
+        "name": "Experiența Completă",
         "price": "€380",
         "tagline": "Site complet, plus un flux care lucrează pentru tine",
         "features": [
@@ -43,7 +43,7 @@ PACKAGES = [
     {
         "key": "premium_system",
         "emoji": "🥇",
-        "name": "Premium System",
+        "name": "Sistem Premium",
         "price": "de la €850",
         "tagline": "Platformă completă, construită pe fluxul tău real",
         "features": [
