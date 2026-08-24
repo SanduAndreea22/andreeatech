@@ -31,7 +31,8 @@
             {% endfor %}
         {% endif %}
 
-        <div class="glass p-8 md:p-10 mb-16 shadow-2xl border border-white/5">
+        <div class="glass p-8 md:p-10 mb-16 shadow-2xl border border-white/5 relative">
+            <div class="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
             <form method="POST" class="space-y-6">
                 {% csrf_token %}
                 <div style="position:absolute; left:-9999px;" aria-hidden="true">{{ form.website }}</div>
