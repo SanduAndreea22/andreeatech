@@ -31,7 +31,7 @@ h1, h2, h3 {
 
 /* Signature style touches */
 ::selection {
-    background: #E85C3B;
+    background: #f59e0b;
     color: #fff;
 }
 
@@ -47,7 +47,7 @@ h1, h2, h3 {
     border: 2px solid #1C1613;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #E85C3B;
+    background: #f59e0b;
 }
 html {
     scrollbar-width: thin;
@@ -71,8 +71,8 @@ body::before {
     position: fixed;
     inset: 0;
     background:
-        radial-gradient(circle at 15% 10%, rgba(232,92,59,.25) 0%, transparent 50%),
-        radial-gradient(circle at 85% 40%, rgba(255,122,87,.2) 0%, transparent 50%);
+        radial-gradient(circle at 15% 10%, rgba(245,158,11,.25) 0%, transparent 50%),
+        radial-gradient(circle at 85% 40%, rgba(251,191,36,.2) 0%, transparent 50%);
     opacity: .15;
     filter: blur(120px);
     z-index: -1;
@@ -81,7 +81,7 @@ body::before {
 
 /* Gradient text */
 .gradient-text {
-    background: linear-gradient(90deg,#E85C3B,#FF7A57);
+    background: linear-gradient(90deg,#f59e0b,#fbbf24);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -109,7 +109,7 @@ body::before {
 .project-card:hover,
 .pricing-card:hover {
     transform: translateY(-6px) scale(1.015);
-    border-color: rgba(232,92,59,.3);
+    border-color: rgba(245,158,11,.3);
     box-shadow: 0 30px 80px rgba(0,0,0,.6);
 }
 
@@ -120,8 +120,8 @@ body::before {
 
 .glass[class*="rounded-"]:hover {
     transform: translateY(-4px);
-    border-color: rgba(232,92,59,.25);
-    box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 40px rgba(232,92,59,.08);
+    border-color: rgba(245,158,11,.25);
+    box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 40px rgba(245,158,11,.08);
 }
 
 /* Scroll reveal */
@@ -171,13 +171,13 @@ main > section:first-of-type::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(600px circle at var(--spot-x, 50%) var(--spot-y, 20%), rgba(232, 92, 59, .10), transparent 60%);
+    background: radial-gradient(600px circle at var(--spot-x, 50%) var(--spot-y, 20%), rgba(245, 158, 11, .10), transparent 60%);
     pointer-events: none;
 }
 
 /* Buttons */
 .btn-primary {
-    background: linear-gradient(135deg,#E85C3B,#FF7A57);
+    background: linear-gradient(135deg,#f59e0b,#fbbf24);
     color: #fff;
     transition: transform .25s ease, box-shadow .25s ease;
     border-radius: 10px;
@@ -186,7 +186,7 @@ main > section:first-of-type::before {
 
 .btn-primary:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(232,92,59,.35);
+    box-shadow: 0 20px 60px rgba(245,158,11,.35);
 }
 
 /* =========================================
@@ -221,7 +221,7 @@ main > section:first-of-type::before {
     left: 0;
     width: 100%;
     height: 2px;
-    background: #E85C3B;
+    background: #f59e0b;
 }
 
 /* =========================================
@@ -245,8 +245,8 @@ select {
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: #E85C3B;
-    box-shadow: 0 0 0 3px rgba(232,92,59,.2);
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245,158,11,.2);
     outline: none;
 }
 
@@ -268,15 +268,15 @@ select {
     font-size: 2.5rem;
     font-weight: 700;
     letter-spacing: -1px;
-    background: linear-gradient(135deg,#E85C3B,#FF7A57);
+    background: linear-gradient(135deg,#f59e0b,#fbbf24);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .most-popular {
-    border: 1px solid rgba(232,92,59,.4);
+    border: 1px solid rgba(245,158,11,.4);
     box-shadow:
-        0 0 0 1px rgba(232,92,59,.15),
+        0 0 0 1px rgba(245,158,11,.15),
         0 30px 90px rgba(0,0,0,.7);
     transform: scale(1.02);
 }
@@ -291,8 +291,8 @@ select {
 }
 
 .chat-message.user {
-    background: rgba(232, 92, 59, 0.2);
-    border: 1px solid rgba(232, 92, 59, 0.3);
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.3);
     color: white;
     margin-left: auto;
 }
@@ -306,7 +306,7 @@ select {
 .typing-dots span {
     width: 6px;
     height: 6px;
-    background: #FF7A57;
+    background: #fbbf24;
     border-radius: 50%;
     display: inline-block;
     animation: blink 1.4s infinite both;
