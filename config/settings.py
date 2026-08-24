@@ -7,6 +7,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / ".env")
 import os
+AUTH_USER_MODEL = 'auth.User'
+SUPER_USER = os.getenv('DJANGO_SUPERUSER_NAME')
+SUPER_PASS = os.getenv('DJANGO_SUPERUSER_PASSWORD')
+SUPER_EMAIL = os.getenv('DJANGO_SUPERUSER_EMAIL')
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
