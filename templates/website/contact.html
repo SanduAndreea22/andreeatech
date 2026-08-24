@@ -3,80 +3,76 @@
 {% block meta_description %}Contactează-mă ca să vorbim despre proiectul tău — website, sistem sau automatizare — și despre fluxul de lucru pe care vrei să-l îmbunătățești.{% endblock %}
 {% block content %}
 
-<section class="pt-32 pb-24 relative overflow-hidden">
-    <div class="max-w-3xl mx-auto px-6 relative z-10">
+<section class="page-hero about-hero">
+    <div class="hero-glow hero-glow-strong"></div>
+    <div class="container-sm">
 
-        <div class="mb-12 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">
+        <div class="mb-xl center">
+            <h1 class="page-title gradient-text">
                 Începe o conversație
             </h1>
 
-            <p class="text-slate-400 text-lg leading-relaxed">
+            <p class="page-subtitle">
                 Ai o nelămurire înainte să treci la un proiect? Întreabă-mă direct — răspund repede.
             </p>
 
-            <p class="text-slate-500 text-sm mt-5">
+            <p class="text-muted page-hero-note">
                 Preferi să mă contactezi direct?
-                <a href="mailto:andreea.tech@outlook.com" class="text-blue-400 hover:text-blue-300 transition">andreea.tech@outlook.com</a>
+                <a href="mailto:andreea.tech@outlook.com" class="link">andreea.tech@outlook.com</a>
                 ·
-                <a href="https://www.linkedin.com/in/andreeasandu22" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/andreeasandu22" target="_blank" rel="noopener noreferrer" class="link">LinkedIn</a>
             </p>
         </div>
 
         {% if messages %}
             {% for message in messages %}
-            <div class="mb-8 p-4 rounded-lg border {% if message.tags == 'error' %}border-red-600 bg-red-600/10 text-red-600{% else %}border-green-600 bg-green-600/10 text-green-600{% endif %} text-center animate-pulse">
+            <div class="form-message {% if message.tags == 'error' %}form-message-error{% else %}form-message-success{% endif %}">
                 {{ message }}
             </div>
             {% endfor %}
         {% endif %}
 
-        <div class="glass p-8 md:p-10 mb-16 shadow-2xl border border-white/5 relative">
-            <div class="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
-            <form method="POST" class="space-y-6">
+        <div class="glass form-card">
+            <form method="POST" class="form-fields">
                 {% csrf_token %}
                 <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
-                <div>
-                    <label class="block mb-2 text-sm text-slate-400">Nume</label>
+                <div class="form-field">
+                    <label class="form-label">Nume</label>
                     {{ form.name }}
                 </div>
 
-                <div>
-                    <label class="block mb-2 text-sm text-slate-400">Email</label>
+                <div class="form-field">
+                    <label class="form-label">Email</label>
                     {{ form.email }}
                 </div>
 
-                <div>
-                    <label class="block mb-2 text-sm text-slate-400">Mesaj</label>
+                <div class="form-field">
+                    <label class="form-label">Mesaj</label>
                     {{ form.message }}
                 </div>
 
-                <button type="submit"
-                    class="btn-primary w-full py-4 rounded-xl font-bold text-white uppercase tracking-wider shadow-lg shadow-blue-500/20">
+                <button type="submit" class="btn-primary form-submit">
                     Trimite mesajul
                 </button>
             </form>
         </div>
 
-        <div class="border-t border-slate-800 pt-12 text-center">
-            <h2 class="text-2xl font-semibold mb-4 text-white">
+        <div class="form-footer">
+            <h2>
                 Cauți mai mult decât o întrebare rapidă?
             </h2>
 
-            <p class="text-slate-400 mb-8 leading-relaxed max-w-md mx-auto">
+            <p>
                 Dacă ai nevoie de un website, un flux de rezervări sau un instrument de administrare personalizat, dă-mi câteva detalii în brief-ul de proiect.
             </p>
 
-            <a href="{% url 'start_project' %}"
-               class="inline-block px-10 py-4 rounded-xl border border-[#1E3A72]/20 text-[#1E3A72] hover:bg-[#1E3A72]/5 transition-all duration-300 font-semibold">
+            <a href="{% url 'start_project' %}" class="btn-outline">
                 Începe un proiect →
             </a>
         </div>
 
     </div>
-
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-blue-600/10 blur-[120px] rounded-full -z-10"></div>
 </section>
 
 {% endblock %}

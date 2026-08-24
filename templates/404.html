@@ -3,16 +3,16 @@
 {% block meta_description %}Această pagină nu există. Mergi înapoi acasă sau răsfoiește portofoliul și serviciile.{% endblock %}
 
 {% block content %}
-<section class="pt-32 pb-24">
-    <div class="max-w-2xl mx-auto px-6 text-center">
-        <p class="text-sm font-semibold uppercase tracking-[0.22em] text-blue-400 mb-5">Eroare 404</p>
-        <h1 class="text-4xl md:text-6xl font-extrabold gradient-text mb-6">Pagină negăsită</h1>
-        <p class="text-slate-400 text-lg leading-relaxed mb-10">
+<section class="page-hero">
+    <div class="container-xs">
+        <p class="eyebrow eyebrow-center">Eroare 404</p>
+        <h1 class="page-title gradient-text">Pagină negăsită</h1>
+        <p class="page-subtitle mb-xl">
             Pagina pe care o cauți nu există sau s-a mutat.
         </p>
-        <div class="flex flex-wrap justify-center gap-4">
-            <a href="{% url 'home' %}" class="btn-primary px-7 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Înapoi acasă</a>
-            <a href="{% url 'projects' %}" class="px-7 py-4 rounded-xl border border-[#1E3A72]/20 text-[#1E3A72] font-semibold hover:bg-[#1E3A72]/5 transition">Vezi portofoliul</a>
+        <div class="btn-row">
+            <a href="{% url 'home' %}" class="btn-primary home-cta-btn-sm">Înapoi acasă</a>
+            <a href="{% url 'projects' %}" class="btn-outline">Vezi portofoliul</a>
         </div>
     </div>
 </section>

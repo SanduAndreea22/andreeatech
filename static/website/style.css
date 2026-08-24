@@ -288,6 +288,35 @@ main > section:first-of-type::before {
 .link:hover { color: var(--blue-mid-hover); }
 .link-quiet { color: var(--ink-faint); transition: var(--transition); font-weight: 400; }
 .link-quiet:hover { color: var(--blue-mid); }
+
+/* Shared page-header pattern (eyebrow + big title + subtitle),
+   used by most inner pages (404, Contact, Start a Project, etc.) */
+.page-hero { padding: 128px 0 96px; text-align: center; }
+@media (min-width: 768px) { .page-hero { padding: 144px 0 96px; } }
+.page-title { font-size: 2.25rem; font-weight: 800; margin-bottom: 24px; letter-spacing: -.02em; }
+@media (min-width: 640px) { .page-title { font-size: 3rem; } }
+@media (min-width: 768px) { .page-title { font-size: 3.75rem; } }
+.page-subtitle { color: var(--ink-faint); font-size: 1.125rem; line-height: 1.7; }
+
+.btn-outline {
+    display: inline-block;
+    padding: 16px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    border: 1px solid rgba(30,58,114,.2);
+    color: var(--ink);
+    transition: var(--transition);
+}
+.btn-outline:hover { background: rgba(30,58,114,.05); }
+
+.btn-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+
+.hero-glow {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; height: 100%; border-radius: 50%;
+    background: rgba(62,92,153,.06); filter: blur(120px); z-index: -1; pointer-events: none;
+}
+.hero-glow-strong { background: rgba(62,92,153,.10); }
 .mb-sm { margin-bottom: 16px; }
 .mb-lg { margin-bottom: 32px; }
 .mb-xl { margin-bottom: 40px; }
@@ -805,6 +834,105 @@ select {
 
 .home-products-panel { padding: 40px; border-radius: 24px; text-align: center; }
 .home-products-desc { max-width: 42rem; margin-left: auto; margin-right: auto; }
+
+/* =========================================
+   FORM CARD (Contact / Reviews / Start a Project)
+========================================= */
+
+.form-card {
+    padding: 32px;
+    margin-bottom: 64px;
+    box-shadow: 0 25px 60px rgba(0,0,0,.08);
+    position: relative;
+}
+@media (min-width: 768px) { .form-card { padding: 40px; } }
+.form-card::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue-mid), transparent);
+}
+
+.form-fields { display: flex; flex-direction: column; gap: 24px; }
+.form-field { margin-bottom: 0; }
+.form-label { display: block; margin-bottom: 8px; font-size: .875rem; color: var(--ink-faint); }
+.form-note { font-size: .75rem; color: var(--ink-faint); }
+
+.page-hero-note { font-size: .875rem; margin-top: 20px; }
+
+.form-submit {
+    width: 100%;
+    padding: 16px 0;
+    border-radius: 12px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    box-shadow: 0 15px 40px rgba(62,92,153,.2);
+}
+
+.form-message {
+    margin-bottom: 32px;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid;
+    text-align: center;
+}
+.form-message-error { border-color: #dc2626; background: rgba(220,38,38,.08); color: #dc2626; }
+.form-message-success { border-color: #16a34a; background: rgba(22,163,74,.08); color: #16a34a; }
+
+.form-footer { border-top: 1px solid var(--line); padding-top: 48px; text-align: center; }
+.form-footer h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 16px; color: var(--ink); }
+.form-footer p { color: var(--ink-faint); line-height: 1.7; margin-bottom: 32px; max-width: 28rem; margin-left: auto; margin-right: auto; }
+
+/* =========================================
+   ABOUT PAGE
+========================================= */
+
+.about-hero { position: relative; overflow: hidden; }
+
+.about-bio-grid { display: grid; gap: 32px; align-items: start; }
+@media (min-width: 768px) { .about-bio-grid { grid-template-columns: 280px 1fr; } }
+.about-bio-photo-wrap { width: 14rem; margin: 0 auto; }
+@media (min-width: 768px) { .about-bio-photo-wrap { width: 100%; margin: 0; } }
+.about-bio-photo { border-radius: 24px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 25px 60px rgba(0,0,0,.12); }
+.about-bio-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about-bio-card { padding: 32px; border-radius: 24px; display: flex; flex-direction: column; gap: 24px; color: var(--ink-faint); line-height: 1.7; }
+@media (min-width: 768px) { .about-bio-card { padding: 48px; } }
+
+.about-certs-head { text-align: center; margin-bottom: 56px; }
+.about-certs-head p { max-width: 36rem; margin: 0 auto; }
+.about-certs-grid { display: grid; gap: 32px; }
+@media (min-width: 640px) { .about-certs-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .about-certs-grid { grid-template-columns: repeat(3, 1fr); } }
+.about-cert-card { border-radius: 18px; overflow: hidden; }
+.about-cert-image-wrap { background: var(--paper-tint); height: 24rem; overflow: hidden; padding: 8px; display: flex; align-items: center; justify-content: center; }
+.about-cert-image { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,.12); cursor: zoom-in; transition: transform .5s ease; }
+.about-cert-card:hover .about-cert-image { transform: scale(1.05); }
+.about-cert-body { padding: 24px; }
+.about-cert-title { font-size: 1.125rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.about-cert-issuer { font-size: .875rem; color: var(--ink-faint); margin-bottom: 4px; }
+.about-cert-date { font-size: .75rem; color: var(--ink-faint); margin-bottom: 16px; }
+.about-cert-link { color: var(--blue-mid); font-size: .875rem; font-weight: 700; transition: var(--transition); display: inline-flex; align-items: center; gap: 4px; }
+.about-cert-link:hover { color: var(--blue-mid-hover); }
+
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,.85);
+    backdrop-filter: blur(4px);
+    padding: 24px;
+    cursor: zoom-out;
+}
+.lightbox.is-open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 12px; box-shadow: 0 30px 80px rgba(0,0,0,.4); }
 
 /* =========================================
    ERROR PAGES (404 / 500)
