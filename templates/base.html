@@ -23,6 +23,7 @@
     <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/poza_me.JPG' %}{% endblock %}">
 
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -47,7 +48,6 @@
             },
         };
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="{% static 'website/style.css' %}">
 </head>
