@@ -3,6 +3,7 @@
 ========================================= */
 
 :root {
+    color-scheme: light only;
     --radius: 14px;
     --transition: all .3s ease;
 
@@ -451,6 +452,7 @@ main > section:first-of-type::before {
 .navbar-mobile-toggle:hover { border-color: var(--blue-mid); }
 
 .navbar-mobile-menu {
+    background: var(--paper);
     position: absolute;
     right: 0;
     margin-top: 12px;
