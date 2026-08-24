@@ -171,30 +171,30 @@
     </div>
 </section>
 
-<section id="pachete" class="py-24 border-t border-white/5">
+<section id="pachete" class="py-24 bg-slate-50">
     <div class="max-w-7xl mx-auto px-6">
-        <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">Pachete</p>
-        <h2 class="text-3xl md:text-5xl font-bold text-white mb-14 text-center">Alege nivelul potrivit pentru business-ul tău.</h2>
+        <p class="text-teal text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">Pachete</p>
+        <h2 class="text-3xl md:text-5xl font-bold text-slate-950 mb-14 text-center">Alege nivelul potrivit pentru business-ul tău.</h2>
         <div class="grid md:grid-cols-3 gap-6">
             {% for pkg in packages %}
-            <article class="glass p-8 rounded-3xl border {% if pkg.popular %}border-amber-400/40 shadow-xl shadow-amber-500/10{% else %}border-white/10{% endif %} flex flex-col relative overflow-hidden">
-                {% if pkg.popular %}<div class="absolute top-4 right-4 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30 px-3 py-1 text-xs font-bold">Popular</div>{% endif %}
+            <article class="bg-white p-8 rounded-3xl border {% if pkg.popular %}border-blue-500 border-2{% else %}border-slate-950/10{% endif %} flex flex-col relative overflow-hidden">
+                {% if pkg.popular %}<div class="absolute top-4 right-4 rounded-full bg-blue-500 text-white px-3 py-1 text-xs font-bold">Popular</div>{% endif %}
                 <p class="text-3xl mb-4">{{ pkg.emoji }}</p>
-                <h3 class="text-xl font-bold text-white mb-1">{{ pkg.name }}</h3>
-                <p class="text-sm text-slate-500 mb-4">{{ pkg.tagline }}</p>
+                <h3 class="text-xl font-bold text-slate-950 mb-1">{{ pkg.name }}</h3>
+                <p class="text-sm text-slate-600 mb-4">{{ pkg.tagline }}</p>
                 <p class="text-2xl font-extrabold gradient-text mb-5">{{ pkg.price }}</p>
-                <ul class="space-y-2 text-sm text-slate-300 mb-6">
+                <ul class="space-y-2 text-sm text-slate-700 mb-6">
                     {% for feature in pkg.features %}<li>{{ feature }}</li>{% endfor %}
                 </ul>
-                <p class="text-xs text-slate-400 mb-4 flex-grow">{{ pkg.description }}</p>
-                <p class="text-xs text-slate-500 pt-4 border-t border-white/5 mb-4">{{ pkg.duration }}</p>
-                <a href="{% url 'start_project' %}?pachet={{ pkg.key }}" class="block text-center text-sm font-bold py-3 rounded-lg transition {% if pkg.popular %}bg-blue-500 hover:bg-blue-600 text-white{% else %}border border-white/15 hover:border-white/30 text-white{% endif %}">Alege {{ pkg.name }} →</a>
+                <p class="text-xs text-slate-600 mb-4 flex-grow">{{ pkg.description }}</p>
+                <p class="text-xs text-slate-500 pt-4 border-t border-slate-950/10 mb-4">{{ pkg.duration }}</p>
+                <a href="{% url 'start_project' %}?pachet={{ pkg.key }}" class="block text-center text-sm font-bold py-3 rounded-lg transition {% if pkg.popular %}bg-blue-500 hover:bg-blue-600 text-white{% else %}bg-slate-950 hover:bg-slate-800 text-white{% endif %}">Alege {{ pkg.name }} →</a>
             </article>
             {% endfor %}
         </div>
-        <p class="text-center text-slate-500 text-sm mt-6">Costurile de domeniu (~10-15€/an) și hosting (~5-10€/lună) sunt separate de prețul pachetului.</p>
-        <div class="max-w-2xl mx-auto mt-8 glass rounded-2xl border border-white/5 p-6 text-sm text-slate-400 leading-relaxed">
-            <p class="text-white font-semibold mb-2">Recapitulare cost</p>
+        <p class="text-center text-slate-600 text-sm mt-6">Costurile de domeniu (~10-15€/an) și hosting (~5-10€/lună) sunt separate de prețul pachetului.</p>
+        <div class="max-w-2xl mx-auto mt-8 bg-slate-100 rounded-2xl border border-slate-950/10 p-6 text-sm text-slate-700 leading-relaxed">
+            <p class="text-slate-950 font-semibold mb-2">Recapitulare cost</p>
             <p>Plătești o singură dată prețul pachetului ales. Domeniul și hostingul sunt separate, doar dacă nu le ai deja. Automatizarea sau agentul AI sunt complet opționale, cu cost separat de configurare și utilizare — le adaugi doar dacă chiar ai nevoie de ele.</p>
         </div>
     </div>
