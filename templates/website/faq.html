@@ -4,7 +4,7 @@
 {% block content %}
 
 <section class="pt-32 pb-20 relative overflow-hidden">
-  <div class="max-w-7xl mx-auto px-6 relative z-10">
+  <div class="max-w-3xl mx-auto px-6 relative z-10">
 
   <div class="text-center mb-16">
     <h1 class="text-4xl md:text-6xl font-extrabold gradient-text mb-6">Întrebări frecvente</h1>
@@ -13,60 +13,117 @@
     </p>
   </div>
 
-  <div class="grid md:grid-cols-[1fr_1.5fr] gap-12 items-start">
+  <h3 class="text-xl font-semibold mb-6 text-white flex items-center gap-2">
+      <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+      Întrebări despre proiect
+  </h3>
 
-    <div class="space-y-4">
-      <h3 class="text-xl font-semibold mb-6 text-white flex items-center gap-2">
-          <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-          Întrebări despre proiect
-      </h3>
-
-      <div class="flex flex-wrap gap-2">
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="content">Ce ai nevoie de la mine?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="domain">Construiești sisteme de rezervări?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="price">Cât costă un proiect?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="duration">Cât durează un proiect?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="payments">Poți integra plăți online?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="django">De ce Django?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="custom">Pot cere funcționalități personalizate?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="portfolio">Care e diferența dintre Portofoliu și Produse?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="support">Oferi suport după lansare?</button>
-      </div>
-
-      <h3 class="text-xl font-semibold mb-6 mt-10 text-white flex items-center gap-2">
-          <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-          Întrebări despre automatizare AI
-      </h3>
-
-      <div class="flex flex-wrap gap-2">
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="automation_what">Ce face mai exact automatizarea AI?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="automation_replace">Îmi înlocuiește complet telefonul?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="automation_price">De ce e preț lunar, separat de pachet?</button>
-          <button class="faq-btn glass rounded-full px-4 py-2 text-sm text-slate-300 border border-white/5 hover:border-blue-500/50 hover:text-white transition-all duration-300" data-answer="automation_who">Se adaugă peste orice pachet?</button>
-      </div>
-
-      <a href="{% url 'contact' %}" class="inline-block mt-6 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">
-        Mai ai întrebări? Începe o conversație →
-      </a>
+  <div class="space-y-3 mb-12">
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="content">
+        <span>Ce ai nevoie de la mine?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
     </div>
-
-    <div class="glass flex flex-col h-[550px] border border-white/10 shadow-2xl relative overflow-hidden">
-      <div class="p-5 border-b border-white/5 bg-white/5 backdrop-blur-md flex items-center justify-between">
-        <span class="font-semibold text-sm tracking-wide uppercase text-slate-300">Asistent proiect</span>
-        <div class="flex gap-1.5">
-            <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
-        </div>
-      </div>
-
-      <div class="flex-1 p-6 overflow-y-auto space-y-6 custom-scrollbar" id="chatBody">
-        <div class="bg-white/5 p-4 rounded-2xl rounded-tl-none max-w-[85%] text-slate-300 border border-white/5 leading-relaxed">
-          Salut! Alege o întrebare ca să afli informații despre proiect.
-        </div>
-      </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="domain">
+        <span>Construiești sisteme de rezervări?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
     </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="price">
+        <span>Cât costă un proiect?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="duration">
+        <span>Cât durează un proiect?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="payments">
+        <span>Poți integra plăți online?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="django">
+        <span>De ce Django?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="custom">
+        <span>Pot cere funcționalități personalizate?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="portfolio">
+        <span>Care e diferența dintre Portofoliu și Produse?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="support">
+        <span>Oferi suport după lansare?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+  </div>
 
+  <h3 class="text-xl font-semibold mb-6 text-white flex items-center gap-2">
+      <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+      Întrebări despre automatizare AI
+  </h3>
+
+  <div class="space-y-3">
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="automation_what">
+        <span>Ce face mai exact automatizarea AI?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="automation_replace">
+        <span>Îmi înlocuiește complet telefonul?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="automation_price">
+        <span>De ce e preț lunar, separat de pachet?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+    <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+      <button class="faq-question w-full text-left p-5 flex items-center justify-between gap-4 text-slate-300 hover:text-white transition" data-answer="automation_who">
+        <span>Se adaugă peste orice pachet?</span>
+        <svg class="faq-chevron w-4 h-4 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden px-5 pb-5 text-sm text-slate-400 leading-relaxed"></div>
+    </div>
+  </div>
+
+  <div class="text-center mt-10">
+    <a href="{% url 'contact' %}" class="inline-block text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">
+      Mai ai întrebări? Începe o conversație →
+    </a>
   </div>
 
   </div>
@@ -90,36 +147,24 @@ const answers = {
   automation_who: "Da. Automatizarea AI e un add-on opțional care se adaugă peste orice pachet ales, indiferent de nivel."
 };
 
-const buttons = document.querySelectorAll(".faq-btn");
-const chatBody = document.getElementById("chatBody");
-
-buttons.forEach(btn => {
+document.querySelectorAll(".faq-question").forEach(btn => {
   btn.addEventListener("click", () => {
-    const questionText = btn.innerText;
-    const key = btn.dataset.answer;
+    const answerDiv = btn.nextElementSibling;
+    const chevron = btn.querySelector(".faq-chevron");
+    const isOpen = !answerDiv.classList.contains("hidden");
 
-    // Add User Message
-    const userDiv = document.createElement("div");
-    userDiv.className = "chat-message user p-4 rounded-2xl rounded-tr-none max-w-[85%] leading-relaxed";
-    userDiv.textContent = questionText;
-    chatBody.appendChild(userDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
+    if (isOpen) {
+      answerDiv.classList.add("hidden");
+      chevron.classList.remove("rotate-180");
+      return;
+    }
 
-    // Typing indicator
-    const typingDiv = document.createElement("div");
-    typingDiv.className = "chat-message system p-4 rounded-2xl rounded-tl-none typing-dots flex gap-1";
-    typingDiv.innerHTML = "<span></span><span></span><span></span>";
-    chatBody.appendChild(typingDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
-
-    setTimeout(() => {
-      typingDiv.remove();
-      const sysDiv = document.createElement("div");
-      sysDiv.className = "chat-message system p-4 rounded-2xl rounded-tl-none max-w-[85%] leading-relaxed border border-white/5";
-      sysDiv.textContent = answers[key];
-      chatBody.appendChild(sysDiv);
-      chatBody.scrollTop = chatBody.scrollHeight;
-    }, 800);
+    if (!answerDiv.dataset.filled) {
+      answerDiv.textContent = answers[btn.dataset.answer];
+      answerDiv.dataset.filled = "true";
+    }
+    answerDiv.classList.remove("hidden");
+    chevron.classList.add("rotate-180");
   });
 });
 </script>
