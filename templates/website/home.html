@@ -9,53 +9,53 @@
 {% block twitter_description %}De la o interacțiune obișnuită, la o experiență de care oamenii își amintesc — construiesc produsul digital din spate: website, sistem, automatizare.{% endblock %}
 
 {% block content %}
-<section class="relative overflow-hidden pt-32 pb-24 md:pt-36 md:pb-32">
-    <div class="absolute top-0 right-0 h-[520px] w-[520px] rounded-full bg-blue-500/10 blur-[130px]"></div>
-    <div class="absolute bottom-0 left-0 h-[360px] w-[360px] rounded-full bg-cyan-500/5 blur-[120px]"></div>
+<section class="section-hero">
+    <div class="home-hero-glow home-hero-glow-1"></div>
+    <div class="home-hero-glow home-hero-glow-2"></div>
 
-    <div class="relative max-w-5xl mx-auto px-6 text-center">
-        <p class="text-blue-400 text-sm uppercase tracking-[0.25em] font-semibold mb-6">Digital Products & Experiences</p>
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] text-white mb-6">
+    <div class="container-md home-hero-content">
+        <p class="eyebrow eyebrow-center">Digital Products & Experiences</p>
+        <h1 class="home-hero-title">
             De la o interacțiune obișnuită, la o experiență de care oamenii își amintesc.
         </h1>
-        <p class="text-xl md:text-2xl font-semibold text-slate-200 mb-7">
+        <p class="home-hero-subtitle">
             Pentru antreprenorii care vor să-și ducă business-ul la următorul nivel.
         </p>
-        <p class="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed text-slate-400 mb-8">
+        <p class="home-hero-lede">
             Construiesc produsul digital din spatele ei — website, sistem, automatizare — orice e nevoie ca să funcționeze corect.
         </p>
-        <div class="inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-500/10 px-4 py-1.5 text-xs font-semibold text-amber-300 mb-6">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
+        <div class="badge home-hero-badge">
+            <span class="badge-dot badge-dot-pulse"></span>
             Răspund în maximum 24h
         </div>
         <div>
-            <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/20">Hai să discutăm proiectul tău</a>
+            <a href="{% url 'start_project' %}" class="btn-primary home-hero-cta">Hai să discutăm proiectul tău</a>
         </div>
-        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-5 text-sm">
-            <a href="#pachete" class="text-slate-500 hover:text-blue-400 transition">Vezi pachetele și prețurile ↓</a>
-            <a href="{% url 'contact' %}" class="text-slate-500 hover:text-blue-400 transition">Ai doar o întrebare rapidă? →</a>
+        <div class="home-hero-links">
+            <a href="#pachete" class="link-quiet">Vezi pachetele și prețurile ↓</a>
+            <a href="{% url 'contact' %}" class="link-quiet">Ai doar o întrebare rapidă? →</a>
         </div>
     </div>
 </section>
 
-<section class="py-24 border-t border-white/5">
-    <div class="max-w-3xl mx-auto px-6">
-        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center">Nu poți construi o experiență bună dacă ești ocupat(ă) mereu cu lucruri mărunte</h2>
-        <p class="text-slate-400 leading-relaxed mb-6">
+<section class="section">
+    <div class="container-sm">
+        <h2 class="h2">Nu poți construi o experiență bună dacă ești ocupat(ă) mereu cu lucruri mărunte</h2>
+        <p class="text-muted lead">
             Dacă vrei să-ți dezvolți business-ul și să nu mai irosești o mare parte din timp pe task-uri repetitive, ești în locul potrivit.
         </p>
-        <p class="text-slate-400 leading-relaxed mb-8">
+        <p class="text-muted lead">
             De ce să pierzi ore în fiecare săptămână răspunzând manual la aceleași întrebări, notând cereri pe hârtie sau în capul tău, când timpul ăla ar putea merge spre partea din business care chiar contează — relația cu oamenii care aleg să lucreze cu tine?
         </p>
-        <p class="text-slate-300 leading-relaxed mb-4">Dacă vrei să folosești orele astea ca să:</p>
-        <ul class="space-y-2 text-slate-300 mb-8">
-            <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> găsești și păstrezi mai mulți clienți</li>
-            <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> construiești o experiență de care oamenii își amintesc</li>
-            <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> te ocupi de partea din business care chiar contează</li>
+        <p class="text-body mb-sm">Dacă vrei să folosești orele astea ca să:</p>
+        <ul class="checklist mb-lg">
+            <li><span class="mark">✦</span> găsești și păstrezi mai mulți clienți</li>
+            <li><span class="mark">✦</span> construiești o experiență de care oamenii își amintesc</li>
+            <li><span class="mark">✦</span> te ocupi de partea din business care chiar contează</li>
         </ul>
-        <p class="text-slate-400 leading-relaxed mb-4">atunci citește în continuare.</p>
-        <p class="text-slate-300 leading-relaxed mb-4">Singurul lucru pe care ți-l promit e că vei scăpa de întrebările care te macină lunar:</p>
-        <ul class="space-y-2 text-slate-400 italic">
+        <p class="text-muted mb-sm">atunci citește în continuare.</p>
+        <p class="text-body mb-sm">Singurul lucru pe care ți-l promit e că vei scăpa de întrebările care te macină lunar:</p>
+        <ul class="home-quote-list">
             <li>„Am răspuns la toate mesajele?"</li>
             <li>„Am uitat vreo cerere?"</li>
             <li>„De ce clientul ăla n-a mai revenit?"</li>
@@ -63,248 +63,246 @@
     </div>
 </section>
 
-<section class="py-20 border-t border-white/5 bg-slate-950/30">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-        <p class="text-lg text-slate-300 leading-relaxed">
-            Aici pot ajuta — printr-un site gândit corect, un sistem care ține pasul cu fluxul tău real, și, unde are sens, o automatizare care preia partea repetitivă. Nu automatizarea e scopul. <span class="text-white font-semibold">Experiența pe care o are omul de partea cealaltă e scopul.</span>
-        </p>
+<section class="section section-tint">
+    <div class="container-sm home-statement">
+        <p>Aici pot ajuta — printr-un site gândit corect, un sistem care ține pasul cu fluxul tău real, și, unde are sens, o automatizare care preia partea repetitivă. Nu automatizarea e scopul. <strong class="text-strong">Experiența pe care o are omul de partea cealaltă e scopul.</strong></p>
     </div>
 </section>
 
-<section class="py-24 border-t border-white/5">
-    <div class="max-w-5xl mx-auto px-6">
-        <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">De ce eu</p>
-        <div class="glass rounded-3xl border border-white/10 p-8 md:p-12 grid md:grid-cols-[auto_1fr] gap-8 items-start">
-            <div class="flex flex-col items-center md:items-start gap-3">
-                <img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" class="w-24 h-24 md:w-28 md:h-28 rounded-2xl object-cover border border-white/10">
-                <div class="text-center md:text-left">
-                    <p class="text-2xl font-extrabold gradient-text leading-none">5</p>
-                    <p class="text-[11px] text-slate-500 uppercase tracking-widest mt-1">sisteme construite</p>
+<section class="section">
+    <div class="container-md">
+        <p class="eyebrow eyebrow-center">De ce eu</p>
+        <div class="glass home-about-card">
+            <div class="home-about-stat-col">
+                <img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" class="home-about-photo">
+                <div class="home-about-stat">
+                    <p class="home-about-stat-num gradient-text">5</p>
+                    <p class="home-about-stat-label">sisteme construite</p>
                 </div>
             </div>
-            <div class="space-y-6 text-slate-400 leading-relaxed">
+            <div class="home-about-text">
                 <p>Nu construiesc produse doar pentru clienți — le construiesc și pentru mine. Am două produse proprii, construite din nevoi reale, nu dintr-un brief: un planner personal (Emotional Planner) și un tracker de buget (Budget Planner). Pe lângă ele, am construit și sisteme complete — o platformă de ticketing (Platform Tickets) și platforme precum Al Noir și Bookora.</p>
                 <p>De-asta nu pornesc de la un stack tehnic. Pornesc de la problemă — de ce are nevoie omul care folosește produsul. Uneori soluția e un website. Alteori e un sistem de rezervări, o platformă de ticketing, o automatizare, sau un agent AI care poate executa efectiv o parte din flux.</p>
-                <div class="flex flex-wrap gap-x-8 gap-y-2 pt-2">
-                    <a href="{% url 'projects' %}" class="text-blue-400 font-semibold hover:text-blue-300 transition">Vezi sistemele complete construite de mine →</a>
-                    <a href="{% url 'about' %}" class="text-blue-400 font-semibold hover:text-blue-300 transition">Despre mine →</a>
+                <div class="home-about-links">
+                    <a href="{% url 'projects' %}" class="link">Vezi sistemele complete construite de mine →</a>
+                    <a href="{% url 'about' %}" class="link">Despre mine →</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-24 border-t border-white/5 bg-slate-950/30">
-    <div class="max-w-6xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center">Cum arată experiența înainte și după</h2>
-        <div class="grid md:grid-cols-2 gap-6 mb-14">
-            <div class="glass rounded-3xl border border-white/10 p-8">
-                <p class="text-red-600 text-sm uppercase tracking-[0.2em] font-semibold mb-4">Înainte</p>
-                <p class="text-slate-400 leading-relaxed mb-4">Un client scrie și așteaptă. Nu știe dacă ai primit mesajul, nu știe când primește un răspuns. Tu vezi cererea mai târziu, printre altele, într-o zi în care ai avut o mie de alte lucruri de ținut minte — și încerci să-ți amintești ce mai era de făcut cu ea.</p>
-                <p class="text-slate-400 leading-relaxed">Depinde de ziua ta cum arată experiența lui. Bună, dacă ai avut timp. Neglijentă, dacă n-ai avut.</p>
+<section class="section section-tint">
+    <div class="container-lg">
+        <h2 class="h2-lg">Cum arată experiența înainte și după</h2>
+        <div class="home-compare-grid">
+            <div class="glass home-compare-card">
+                <p class="home-compare-label home-compare-label-bad">Înainte</p>
+                <p class="text-muted lead">Un client scrie și așteaptă. Nu știe dacă ai primit mesajul, nu știe când primește un răspuns. Tu vezi cererea mai târziu, printre altele, într-o zi în care ai avut o mie de alte lucruri de ținut minte — și încerci să-ți amintești ce mai era de făcut cu ea.</p>
+                <p class="text-muted">Depinde de ziua ta cum arată experiența lui. Bună, dacă ai avut timp. Neglijentă, dacă n-ai avut.</p>
             </div>
-            <div class="glass rounded-3xl border border-blue-500/30 p-8">
-                <p class="text-cyan-300 text-sm uppercase tracking-[0.2em] font-semibold mb-4">După</p>
-                <p class="text-slate-300 leading-relaxed mb-4">Clientul primește un răspuns sau o confirmare la timp, indiferent cât de plină e ziua ta. Tu vezi totul într-un dashboard simplu, într-un singur loc — nu mai reconstitui din memorie ce a rămas nerezolvat.</p>
-                <p class="text-slate-300 leading-relaxed">Experiența lui nu mai depinde de cât de ocupat(ă) ești tu în ziua aia. E aceeași, de fiecare dată.</p>
+            <div class="glass home-compare-card home-compare-card-good">
+                <p class="home-compare-label home-compare-label-good">După</p>
+                <p class="text-body lead">Clientul primește un răspuns sau o confirmare la timp, indiferent cât de plină e ziua ta. Tu vezi totul într-un dashboard simplu, într-un singur loc — nu mai reconstitui din memorie ce a rămas nerezolvat.</p>
+                <p class="text-body">Experiența lui nu mai depinde de cât de ocupat(ă) ești tu în ziua aia. E aceeași, de fiecare dată.</p>
             </div>
         </div>
 
-        <div class="max-w-xl mx-auto mb-14">
-            <p class="text-center text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4">Încearcă chiar tu</p>
-            <div class="glass rounded-3xl border border-white/10 p-6 md:p-8">
-                <form id="demoBookingForm" class="grid sm:grid-cols-2 gap-4">
-                    <input type="text" id="demoName" placeholder="Numele clientei/clientului" class="sm:col-span-2" maxlength="40">
+        <div class="home-demo-wrap">
+            <p class="eyebrow eyebrow-center">Încearcă chiar tu</p>
+            <div class="glass home-demo-card">
+                <form id="demoBookingForm" class="home-demo-form">
+                    <input type="text" id="demoName" placeholder="Numele clientei/clientului" class="home-demo-input-wide" maxlength="40">
                     <input type="text" id="demoService" placeholder="Serviciu (ex. tuns, consultație)" maxlength="40">
                     <input type="text" id="demoTime" placeholder="Ora (ex. mâine, 14:00)" maxlength="40">
-                    <button type="submit" class="btn-primary sm:col-span-2 py-3 rounded-xl font-semibold">Trimite cererea (simulare) →</button>
+                    <button type="submit" class="btn-primary home-demo-submit">Trimite cererea (simulare) →</button>
                 </form>
-                <div id="demoLog" class="hidden space-y-3"></div>
-                <button type="button" id="demoReset" class="hidden mt-6 text-sm text-blue-400 hover:text-blue-300 transition">↺ Încearcă din nou</button>
+                <div id="demoLog" class="home-demo-log hidden"></div>
+                <button type="button" id="demoReset" class="home-demo-reset hidden">↺ Încearcă din nou</button>
             </div>
-            <p class="text-center text-slate-500 text-xs mt-3">100% simulare — nimic nu se trimite sau se salvează, doar îți arăt cum ar arăta pentru clienta ta.</p>
+            <p class="home-demo-note">100% simulare — nimic nu se trimite sau se salvează, doar îți arăt cum ar arăta pentru clienta ta.</p>
         </div>
 
-        <p class="max-w-3xl mx-auto text-center text-slate-400 leading-relaxed mb-14">
+        <p class="home-recap-text">
             Iar timpul pe care-l recuperezi din task-urile care se repeteau identic, săptămână de săptămână, se duce înapoi spre partea din business care chiar contează — relația cu oamenii care te aleg. Aia nu poate fi automatizată, și nici n-ar trebui.
         </p>
-        <div class="max-w-2xl mx-auto space-y-6 mb-12">
-            <div class="glass rounded-2xl border border-white/5 p-6">
-                <p class="text-white font-semibold mb-2">Î: Cât timp economisesc concret?</p>
-                <p class="text-slate-400 leading-relaxed">R: Depinde de volumul de cereri și task-uri repetitive din business-ul tău — discutăm exact la consultație, pe situația ta reală, nu pe o estimare generică.</p>
+
+        <div class="home-minifaq">
+            <div class="glass home-minifaq-item">
+                <p class="home-minifaq-q">Î: Cât timp economisesc concret?</p>
+                <p class="text-muted">R: Depinde de volumul de cereri și task-uri repetitive din business-ul tău — discutăm exact la consultație, pe situația ta reală, nu pe o estimare generică.</p>
             </div>
-            <div class="glass rounded-2xl border border-white/5 p-6">
-                <p class="text-white font-semibold mb-2">Î: Dacă vreau funcționalități recurente (abonamente, programări periodice), se poate?</p>
-                <p class="text-slate-400 leading-relaxed">R: Da — spui exact ce ai nevoie și construim fluxul potrivit.</p>
+            <div class="glass home-minifaq-item">
+                <p class="home-minifaq-q">Î: Dacă vreau funcționalități recurente (abonamente, programări periodice), se poate?</p>
+                <p class="text-muted">R: Da — spui exact ce ai nevoie și construim fluxul potrivit.</p>
             </div>
         </div>
-        <div class="text-center">
-            <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Spune-mi despre afacerea ta →</a>
+
+        <div class="home-cta-center">
+            <a href="{% url 'start_project' %}" class="btn-primary home-cta-btn">Spune-mi despre afacerea ta →</a>
         </div>
     </div>
 </section>
 
-<section class="py-24 border-t border-white/5">
-    <div class="max-w-6xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center">Ce câștigi concret</h2>
-        <ul class="grid sm:grid-cols-2 gap-5 text-slate-300">
-            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Construiești o experiență de care oamenii își amintesc</span> — nu doar o prezență online.</span></li>
-            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Ai totul într-un singur loc</span> — nu mai cauți informații împrăștiate.</span></li>
-            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Poți construi un flux de venit mai constant</span> — dacă modelul tău permite programări sau plăți recurente.</span></li>
-            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Clienții tăi au o experiență consecventă</span> — răspunsuri și confirmări la timp, nu întârziate.</span></li>
-            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Știi mereu ce se întâmplă</span> — acces clar la cereri, programări, activitate.</span></li>
-            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> <span><span class="text-white font-semibold">Nu trebuie să fii o persoană tehnică</span> — produsul e gândit să fie simplu de folosit, nu doar de construit.</span></li>
+<section class="section">
+    <div class="container-lg">
+        <h2 class="h2-lg">Ce câștigi concret</h2>
+        <ul class="home-benefits-grid">
+            <li><span class="mark">✦</span> <span><span class="text-strong">Construiești o experiență de care oamenii își amintesc</span> — nu doar o prezență online.</span></li>
+            <li><span class="mark">✦</span> <span><span class="text-strong">Ai totul într-un singur loc</span> — nu mai cauți informații împrăștiate.</span></li>
+            <li><span class="mark">✦</span> <span><span class="text-strong">Poți construi un flux de venit mai constant</span> — dacă modelul tău permite programări sau plăți recurente.</span></li>
+            <li><span class="mark">✦</span> <span><span class="text-strong">Clienții tăi au o experiență consecventă</span> — răspunsuri și confirmări la timp, nu întârziate.</span></li>
+            <li><span class="mark">✦</span> <span><span class="text-strong">Știi mereu ce se întâmplă</span> — acces clar la cereri, programări, activitate.</span></li>
+            <li><span class="mark">✦</span> <span><span class="text-strong">Nu trebuie să fii o persoană tehnică</span> — produsul e gândit să fie simplu de folosit, nu doar de construit.</span></li>
         </ul>
     </div>
 </section>
 
-<section class="py-24 border-t border-white/5 bg-slate-950/30">
-    <div class="max-w-5xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 text-center">Ce include pachetul</h2>
-        <p class="text-slate-400 text-center mb-10">De la prima interacțiune cu clientul, la sistemul complet din spate:</p>
-        <ul class="grid sm:grid-cols-2 gap-4 text-slate-300 max-w-2xl mx-auto">
-            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> Website sau platformă construită pe măsura business-ului tău</li>
-            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> Flux automat pentru cererile și task-urile repetitive, acolo unde ajută (opțional, în funcție de pachet)</li>
-            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> Configurare completă — nu trebuie să știi tehnic nimic</li>
-            <li class="flex items-start gap-3"><span class="text-cyan-300 mt-1">✦</span> Termen clar de livrare, stabilit înainte să începem</li>
+<section class="section section-tint">
+    <div class="container-md">
+        <h2 class="h2-xl">Ce include pachetul</h2>
+        <p class="text-muted center mb-xl">De la prima interacțiune cu clientul, la sistemul complet din spate:</p>
+        <ul class="home-includes-grid">
+            <li><span class="mark">✦</span> Website sau platformă construită pe măsura business-ului tău</li>
+            <li><span class="mark">✦</span> Flux automat pentru cererile și task-urile repetitive, acolo unde ajută (opțional, în funcție de pachet)</li>
+            <li><span class="mark">✦</span> Configurare completă — nu trebuie să știi tehnic nimic</li>
+            <li><span class="mark">✦</span> Termen clar de livrare, stabilit înainte să începem</li>
         </ul>
     </div>
 </section>
 
-<section id="pachete" class="py-24 border-t border-white/5">
-    <div class="max-w-7xl mx-auto px-6">
-        <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4 text-center">Pachete</p>
-        <h2 class="text-3xl md:text-5xl font-bold text-white mb-14 text-center">Alege nivelul potrivit pentru business-ul tău.</h2>
-        <div class="grid md:grid-cols-3 gap-6">
+<section id="pachete" class="section">
+    <div class="container">
+        <p class="eyebrow eyebrow-center">Pachete</p>
+        <h2 class="h2-lg">Alege nivelul potrivit pentru business-ul tău.</h2>
+        <div class="home-pricing-grid">
             {% for pkg in packages %}
-            <article class="glass p-8 rounded-3xl border {% if pkg.popular %}border-amber-400/40 shadow-xl shadow-amber-500/10{% else %}border-white/10{% endif %} flex flex-col relative overflow-hidden">
-                {% if pkg.popular %}<div class="absolute top-4 right-4 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30 px-3 py-1 text-xs font-bold">Popular</div>{% endif %}
-                <p class="text-3xl mb-4">{{ pkg.emoji }}</p>
-                <h3 class="text-xl font-bold text-white mb-1">{{ pkg.name }}</h3>
-                <p class="text-sm text-slate-500 mb-4">{{ pkg.tagline }}</p>
-                <p class="text-2xl font-extrabold gradient-text mb-5">{{ pkg.price }}</p>
-                <ul class="space-y-2 text-sm text-slate-300 mb-6">
+            <article class="glass home-pricing-card{% if pkg.popular %} home-pricing-card-popular{% endif %}">
+                {% if pkg.popular %}<div class="home-pricing-popular-tag">Popular</div>{% endif %}
+                <p class="home-pricing-emoji">{{ pkg.emoji }}</p>
+                <h3 class="home-pricing-name">{{ pkg.name }}</h3>
+                <p class="home-pricing-tagline">{{ pkg.tagline }}</p>
+                <p class="home-pricing-price gradient-text">{{ pkg.price }}</p>
+                <ul class="home-pricing-features">
                     {% for feature in pkg.features %}<li>{{ feature }}</li>{% endfor %}
                 </ul>
-                <p class="text-xs text-slate-400 mb-4 flex-grow">{{ pkg.description }}</p>
-                <p class="text-xs text-slate-500 pt-4 border-t border-white/5 mb-4">{{ pkg.duration }}</p>
-                <a href="{% url 'start_project' %}?pachet={{ pkg.key }}" class="text-blue-400 text-sm font-bold hover:text-blue-300 transition">Alege {{ pkg.name }} →</a>
+                <p class="home-pricing-desc">{{ pkg.description }}</p>
+                <p class="home-pricing-duration">{{ pkg.duration }}</p>
+                <a href="{% url 'start_project' %}?pachet={{ pkg.key }}" class="home-pricing-pick">Alege {{ pkg.name }} →</a>
             </article>
             {% endfor %}
         </div>
-        <p class="text-center text-slate-500 text-sm mt-6">Costurile de domeniu (~10-15€/an) și hosting (~5-10€/lună) sunt separate de prețul pachetului.</p>
-        <div class="max-w-2xl mx-auto mt-8 glass rounded-2xl border border-white/5 p-6 text-sm text-slate-400 leading-relaxed">
-            <p class="text-white font-semibold mb-2">Recapitulare cost</p>
+        <p class="home-pricing-note">Costurile de domeniu (~10-15€/an) și hosting (~5-10€/lună) sunt separate de prețul pachetului.</p>
+        <div class="glass home-pricing-recap">
+            <p class="home-pricing-recap-title">Recapitulare cost</p>
             <p>Plătești o singură dată prețul pachetului ales. Domeniul și hostingul sunt separate, doar dacă nu le ai deja. Automatizarea sau agentul AI sunt complet opționale, cu cost separat de configurare și utilizare — le adaugi doar dacă chiar ai nevoie de ele.</p>
         </div>
     </div>
 </section>
 
-<section class="py-24 border-t border-white/5 bg-slate-950/30">
-    <div class="max-w-5xl mx-auto px-6">
-        <div class="glass rounded-3xl border border-blue-500/20 p-8 md:p-12">
-            <p class="text-3xl mb-4">🤖</p>
-            <p class="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-3">Agenți AI & Automatizări</p>
-            <p class="text-slate-300 leading-relaxed mb-6">
+<section class="section section-tint">
+    <div class="container-md">
+        <div class="glass home-agent-panel">
+            <p class="home-agent-emoji">🤖</p>
+            <p class="eyebrow">Agenți AI & Automatizări</p>
+            <p class="text-body lead">
                 Construiesc automatizări simple pentru task-uri repetitive și agenți AI pentru conversații și cereri mai complexe — separat, sau peste orice pachet de mai sus, dacă ai deja un website. Nu orice business are nevoie de amândouă — depinde ce se repetă la tine: un pas simplu de proces (automatizare) sau o conversație cu clientul (agent).
             </p>
-            <div class="flex flex-wrap items-center gap-3 mb-8">
-                <span class="text-xs uppercase tracking-widest text-slate-500 font-semibold mr-1">Se integrează cu</span>
-                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-700 text-xs font-semibold">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-6l-4 4v-4z"></path></svg>
+            <div class="home-integrations">
+                <span class="home-integrations-label">Se integrează cu</span>
+                <span class="home-integration-pill home-integration-pill-whatsapp">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-6l-4 4v-4z"></path></svg>
                     WhatsApp
                 </span>
-                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-400/20 text-violet-700 text-xs font-semibold">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"></path></svg>
+                <span class="home-integration-pill home-integration-pill-stripe">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"></path></svg>
                     Stripe
                 </span>
-                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-300 text-xs font-semibold">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span class="home-integration-pill home-integration-pill-calendar">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     Google Calendar
                 </span>
             </div>
-            <div class="grid md:grid-cols-2 gap-8 mb-8">
+            <div class="home-examples-grid">
                 <div>
-                    <h3 class="text-white font-bold mb-4">Exemple de automatizări</h3>
-                    <ul class="space-y-3 text-sm text-slate-300">
-                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Când cineva face o programare, primește automat un email sau SMS de confirmare — nu trebuie să-i scrii tu</li>
-                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Cu o zi înainte de programare, clientul primește automat un mesaj de reamintire, ca să vină mai puțini oameni care uită</li>
-                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Când o oră se ocupă, dispare automat din calendar, ca să nu se suprapună două programări din greșeală</li>
-                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg> Dacă cineva trimite o cerere și nu apuci să-i răspunzi în câteva zile, primește automat un mesaj de revenire</li>
-                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2z"></path></svg> Facturile sau confirmările de plată se trimit automat, fără să le faci tu manual de fiecare dată</li>
+                    <h3 class="home-examples-title">Exemple de automatizări</h3>
+                    <ul class="home-examples-list">
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Când cineva face o programare, primește automat un email sau SMS de confirmare — nu trebuie să-i scrii tu</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Cu o zi înainte de programare, clientul primește automat un mesaj de reamintire, ca să vină mai puțini oameni care uită</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Când o oră se ocupă, dispare automat din calendar, ca să nu se suprapună două programări din greșeală</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg> Dacă cineva trimite o cerere și nu apuci să-i răspunzi în câteva zile, primește automat un mesaj de revenire</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2z"></path></svg> Facturile sau confirmările de plată se trimit automat, fără să le faci tu manual de fiecare dată</li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-white font-bold mb-4">Exemple de agenți</h3>
-                    <ul class="space-y-3 text-sm text-slate-300">
-                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-6l-4 4v-4z"></path></svg> Agent care răspunde non-stop la întrebări frecvente pe site sau WhatsApp</li>
-                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> Agent care preia o cerere prin telefon sau chat și o structurează (nume, dată, serviciu dorit)</li>
-                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v18h18M8 17l4-4 3 3 5-6"></path></svg> Agent care triază cererile primite și le semnalează pe cele urgente</li>
-                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Agent care confirmă sau propune reprogramare, în funcție de disponibilitatea reală</li>
-                        <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg> Agent care pregătește un răspuns personalizat pentru fiecare mesaj, gata să-l trimiți sau să-l ajustezi</li>
+                    <h3 class="home-examples-title">Exemple de agenți</h3>
+                    <ul class="home-examples-list">
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-6l-4 4v-4z"></path></svg> Agent care răspunde non-stop la întrebări frecvente pe site sau WhatsApp</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> Agent care preia o cerere prin telefon sau chat și o structurează (nume, dată, serviciu dorit)</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v18h18M8 17l4-4 3 3 5-6"></path></svg> Agent care triază cererile primite și le semnalează pe cele urgente</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Agent care confirmă sau propune reprogramare, în funcție de disponibilitatea reală</li>
+                        <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg> Agent care pregătește un răspuns personalizat pentru fiecare mesaj, gata să-l trimiți sau să-l ajustezi</li>
                     </ul>
                 </div>
             </div>
-            <div class="pt-6 border-t border-white/5 space-y-2">
-                <p class="text-lg font-bold gradient-text">Configurare automatizare simplă: de la €15 <span class="text-sm font-normal text-slate-500">(reminder, confirmare automată) — o singură dată</span></p>
-                <p class="text-lg font-bold gradient-text">Configurare agent: de la €25 <span class="text-sm font-normal text-slate-500">(conversație, răspunsuri, triaj) — o singură dată</span></p>
+            <div class="home-automation-pricing">
+                <p class="home-automation-pricing-line gradient-text">Configurare automatizare simplă: de la €15 <span class="home-automation-pricing-note">(reminder, confirmare automată) — o singură dată</span></p>
+                <p class="home-automation-pricing-line gradient-text">Configurare agent: de la €25 <span class="home-automation-pricing-note">(conversație, răspunsuri, triaj) — o singură dată</span></p>
             </div>
-            <p class="text-xs text-slate-500 leading-relaxed mt-6">
+            <p class="home-automation-fineprint">
                 Pe lângă costul de configurare, mai există un cost separat de utilizare — banii pe care îi plătești direct către firmele care oferă tehnologia din spate (nu către mine). De exemplu: serviciul de AI care „gândește" răspunsurile (de obicei câțiva cenți pe conversație), WhatsApp Business dacă agentul răspunde acolo, sau un număr de telefon dedicat dacă răspunde la telefon. Depinde câte conversații are agentul pe lună — de obicei câțiva euro până la câteva zeci de euro lunar pentru un business mic-mediu, nu sute. Discutăm suma exactă la consultație, în funcție de ce alegi.
             </p>
-            <p class="text-xs text-slate-500 mt-3">Mentenanță și monitorizare lunară (opțional): tarifată separat, dacă vrei să preiau și partea de întreținere continuă.</p>
-            <div class="pt-6 mt-6 border-t border-white/5 text-center">
-                <a href="{% url 'start_project' %}?pachet=automation_only" class="text-blue-400 font-semibold hover:text-blue-300 transition">Ai deja un website și vrei doar automatizare/agent AI? →</a>
+            <p class="home-automation-fineprint-sm">Mentenanță și monitorizare lunară (opțional): tarifată separat, dacă vrei să preiau și partea de întreținere continuă.</p>
+            <div class="home-automation-cta">
+                <a href="{% url 'start_project' %}?pachet=automation_only" class="link">Ai deja un website și vrei doar automatizare/agent AI? →</a>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-24 border-t border-white/5">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-        <div class="glass rounded-3xl border border-white/10 p-10 md:p-14">
-            <div class="inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-amber-300 mb-6">
-                <span class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
+<section class="section">
+    <div class="container-md center">
+        <div class="glass home-products-panel">
+            <div class="badge mb-lg">
+                <span class="badge-dot badge-dot-pulse"></span>
                 Early Access
             </div>
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-5">Produse proprii</h2>
-            <p class="max-w-2xl mx-auto text-lg text-slate-400 leading-relaxed mb-8">Pe lângă sistemele din Portofoliu, construiesc și produse proprii — aplicații gândite să rezolve probleme reale, nu doar demo-uri de portofoliu. Momentan sunt gratuite, în early access, cât timp le testez și le îmbunătățesc.</p>
-            <a href="{% url 'products' %}" class="btn-primary inline-block px-8 py-4 rounded-xl font-semibold">Vezi produsele →</a>
+            <h2 class="h2-xl">Produse proprii</h2>
+            <p class="text-muted lead home-products-desc">Pe lângă sistemele din Portofoliu, construiesc și produse proprii — aplicații gândite să rezolve probleme reale, nu doar demo-uri de portofoliu. Momentan sunt gratuite, în early access, cât timp le testez și le îmbunătățesc.</p>
+            <a href="{% url 'products' %}" class="btn-primary home-cta-btn-sm">Vezi produsele →</a>
         </div>
     </div>
 </section>
 
-<section class="py-16 text-center border-t border-white/5">
-    <div class="max-w-2xl mx-auto px-6">
-        <p class="text-slate-400">
-            Ai întrebări despre proces, termene sau preț? <a href="{% url 'faq' %}" class="text-blue-400 font-semibold hover:text-blue-300 transition">Vezi Întrebări frecvente →</a>
-        </p>
+<section class="section section-sm">
+    <div class="container-xs home-faq-prompt">
+        <p>Ai întrebări despre proces, termene sau preț? <a href="{% url 'faq' %}" class="link">Vezi Întrebări frecvente →</a></p>
     </div>
 </section>
 
-<section class="py-24 md:py-32 border-t border-white/5 bg-slate-950/30">
-    <div class="max-w-5xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center">Tu alegi ce faci în continuare</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-            <div class="glass rounded-3xl border border-white/10 p-8">
-                <p class="text-slate-400 text-sm uppercase tracking-[0.2em] font-semibold mb-5">Continui cu procesul manual</p>
-                <ul class="space-y-3 text-slate-400">
-                    <li class="flex items-start gap-2"><span class="text-red-600">✕</span> pierzi timp — ore, poate zeci de ore, în fiecare lună</li>
-                    <li class="flex items-start gap-2"><span class="text-red-600">✕</span> pierzi ocazii — clienți care pleacă pentru că n-au primit răspuns la timp</li>
-                    <li class="flex items-start gap-2"><span class="text-red-600">✕</span> rămâi frustrat(ă) că business-ul nu crește în ritmul pe care ți-l dorești</li>
+<section class="section section-lg section-tint">
+    <div class="container-md">
+        <h2 class="h2-lg">Tu alegi ce faci în continuare</h2>
+        <div class="home-choice-grid">
+            <div class="glass home-choice-card">
+                <p class="home-choice-label">Continui cu procesul manual</p>
+                <ul class="checklist">
+                    <li><span class="mark-bad">✕</span> <span class="text-muted">pierzi timp — ore, poate zeci de ore, în fiecare lună</span></li>
+                    <li><span class="mark-bad">✕</span> <span class="text-muted">pierzi ocazii — clienți care pleacă pentru că n-au primit răspuns la timp</span></li>
+                    <li><span class="mark-bad">✕</span> <span class="text-muted">rămâi frustrat(ă) că business-ul nu crește în ritmul pe care ți-l dorești</span></li>
                 </ul>
             </div>
-            <div class="glass rounded-3xl border border-blue-500/30 p-8">
-                <p class="text-cyan-300 text-sm uppercase tracking-[0.2em] font-semibold mb-5">Alegi sistemul construit pentru tine</p>
-                <ul class="space-y-3 text-slate-300">
-                    <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> câștigi timp pe care-l poți folosi ca să crești business-ul</li>
-                    <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> nu te mai stresezi că ai uitat sau întârziat ceva</li>
-                    <li class="flex items-start gap-2"><span class="text-cyan-300">✦</span> clienții tăi au o experiență la care se gândesc și după ce pleacă</li>
+            <div class="glass home-choice-card home-choice-card-good">
+                <p class="home-choice-label home-choice-label-good">Alegi sistemul construit pentru tine</p>
+                <ul class="checklist">
+                    <li><span class="mark">✦</span> <span class="text-body">câștigi timp pe care-l poți folosi ca să crești business-ul</span></li>
+                    <li><span class="mark">✦</span> <span class="text-body">nu te mai stresezi că ai uitat sau întârziat ceva</span></li>
+                    <li><span class="mark">✦</span> <span class="text-body">clienții tăi au o experiență la care se gândesc și după ce pleacă</span></li>
                 </ul>
             </div>
         </div>
-        <div class="text-center mt-14">
-            <a href="{% url 'start_project' %}" class="btn-primary inline-block px-10 py-5 rounded-xl font-bold text-lg">Hai să construim sistemul tău →</a>
+        <div class="home-cta-center mt-lg">
+            <a href="{% url 'start_project' %}" class="btn-primary home-cta-btn">Hai să construim sistemul tău →</a>
         </div>
     </div>
 </section>
@@ -331,7 +329,7 @@
                 const step = steps[i];
                 if (i > 0) {
                     const typing = document.createElement('div');
-                    typing.className = 'chat-message system typing-dots flex gap-1 px-4 py-3 rounded-2xl rounded-tl-none max-w-[85%]';
+                    typing.className = 'chat-message system typing-dots home-demo-typing';
                     typing.innerHTML = '<span></span><span></span><span></span>';
                     demoLog.appendChild(typing);
                     demoLog.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -339,9 +337,9 @@
                     typing.remove();
                 }
                 const bubble = document.createElement('div');
-                const corner = step.type === 'user' ? 'rounded-tr-none' : 'rounded-tl-none';
-                const emphasis = step.highlight ? 'font-semibold text-white' : '';
-                bubble.className = `chat-message ${step.type} px-4 py-3 rounded-2xl max-w-[85%] leading-relaxed text-sm ${corner} ${emphasis}`;
+                const corner = step.type === 'user' ? 'home-demo-bubble-user' : 'home-demo-bubble-system';
+                const emphasis = step.highlight ? 'home-demo-bubble-highlight' : '';
+                bubble.className = `chat-message ${step.type} home-demo-bubble ${corner} ${emphasis}`;
                 bubble.textContent = step.text;
                 demoLog.appendChild(bubble);
                 await wait(300);
