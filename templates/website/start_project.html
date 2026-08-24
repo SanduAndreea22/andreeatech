@@ -32,7 +32,7 @@
 
             <form method="POST" class="space-y-10">
                 {% csrf_token %}
-                <div style="position:absolute; left:-9999px;" aria-hidden="true">{{ form.website }}</div>
+                <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
                 <div class="space-y-6">
                     <h3 class="text-sm uppercase tracking-widest text-blue-400 font-bold flex items-center gap-2">

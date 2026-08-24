@@ -1,56 +1,18 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eroare de server | Andreea Sandu</title>
-    <style>
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #FFFFFF;
-            color: #16223E;
-            font-family: Arial, Helvetica, sans-serif;
-            text-align: center;
-        }
-        .wrap { max-width: 32rem; padding: 24px; }
-        p.eyebrow {
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: #3E5C99;
-            margin-bottom: 20px;
-        }
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 0 0 24px;
-            background: linear-gradient(90deg, #3E5C99, #7E9DD9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        p.desc { color: #55617C; font-size: 1.1rem; line-height: 1.6; margin-bottom: 36px; }
-        a.btn {
-            display: inline-block;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            color: white;
-            background: linear-gradient(135deg, #3E5C99, #2E477A);
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'website/style.css' %}">
 </head>
-<body>
-    <div class="wrap">
-        <p class="eyebrow">Eroare 500</p>
-        <h1>Ceva n-a mers bine</h1>
-        <p class="desc">A apărut o eroare neașteptată pe acest server. Te rog încearcă din nou peste puțin timp.</p>
-        <a class="btn" href="/">Înapoi acasă</a>
+<body class="error-page">
+    <div class="error-wrap">
+        <p class="error-eyebrow">Eroare 500</p>
+        <h1 class="error-title">Ceva n-a mers bine</h1>
+        <p class="error-desc">A apărut o eroare neașteptată pe acest server. Te rog încearcă din nou peste puțin timp.</p>
+        <a class="error-btn" href="/">Înapoi acasă</a>
     </div>
 </body>
 </html>

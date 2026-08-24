@@ -68,7 +68,7 @@
 
                 <form method="POST" class="space-y-6">
                     {% csrf_token %}
-                    <div style="position:absolute; left:-9999px;" aria-hidden="true">{{ form.website }}</div>
+                    <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>

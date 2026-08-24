@@ -6,18 +6,18 @@
     --radius: 14px;
     --transition: all .3s ease;
 
-    --paper: #FFFFFF;
-    --paper-tint: #E7EDF8;
-    --paper-raised: #FFFFFF;
-    --line: rgba(22,34,62,.12);
+    --paper: #EAF0FA;
+    --paper-tint: #D6E2F5;
+    --paper-raised: #EAF0FA;
+    --line: rgba(0,15,73,.14);
 
-    --ink: #16223E;
-    --ink-soft: #55617C;
-    --ink-faint: #8B95AC;
+    --ink: #000f49;
+    --ink-soft: #4C5A85;
+    --ink-faint: #7A88AC;
 
     --blue-mid: #3E5C99;
     --blue-mid-hover: #2E477A;
-    --periwinkle: #7E9DD9;
+    --periwinkle: #8eafd9;
 }
 
 /* Reset refinement */
@@ -178,17 +178,17 @@ main > section:first-of-type::before {
 
 /* Buttons */
 .btn-primary {
-    background: var(--blue-mid);
-    color: #fff;
+    background: var(--periwinkle);
+    color: #000000;
     transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
     border-radius: 10px;
     border: none;
 }
 
 .btn-primary:hover {
-    background: var(--blue-mid-hover);
+    background: #729BD1;
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 20px 50px rgba(62,92,153,.28);
+    box-shadow: 0 20px 50px rgba(142,175,217,.45);
 }
 
 /* =========================================
@@ -208,6 +208,7 @@ main > section:first-of-type::before {
 }
 
 .navbar a {
+    color: var(--ink);
     transition: var(--transition);
 }
 
@@ -372,3 +373,52 @@ select {
 
 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(22,34,62,0.12); border-radius: 10px; }
+
+/* Honeypot field for the anti-spam trap on Contact / Start a Project / Reviews */
+.honeypot-field {
+    position: absolute;
+    left: -9999px;
+}
+
+/* =========================================
+   ERROR PAGES (404 / 500)
+========================================= */
+
+.error-page {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--paper);
+    color: var(--ink);
+}
+.error-wrap { max-width: 32rem; padding: 24px; }
+.error-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 20px;
+}
+.error-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 24px;
+    background: linear-gradient(90deg, var(--blue-mid), var(--periwinkle));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.error-desc { color: var(--ink-soft); font-size: 1.1rem; line-height: 1.6; margin-bottom: 36px; }
+.error-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #000000;
+    background: var(--periwinkle);
+}
