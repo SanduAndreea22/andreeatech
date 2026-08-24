@@ -109,6 +109,22 @@
                 <p class="text-slate-300 leading-relaxed">Experiența lui nu mai depinde de cât de ocupat(ă) ești tu în ziua aia. E aceeași, de fiecare dată.</p>
             </div>
         </div>
+
+        <div class="max-w-xl mx-auto mb-14">
+            <p class="text-center text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold mb-4">Încearcă chiar tu</p>
+            <div class="glass rounded-3xl border border-white/10 p-6 md:p-8">
+                <form id="demoBookingForm" class="grid sm:grid-cols-2 gap-4">
+                    <input type="text" id="demoName" placeholder="Numele clientei/clientului" class="sm:col-span-2" maxlength="40">
+                    <input type="text" id="demoService" placeholder="Serviciu (ex. tuns, consultație)" maxlength="40">
+                    <input type="text" id="demoTime" placeholder="Ora (ex. mâine, 14:00)" maxlength="40">
+                    <button type="submit" class="btn-primary sm:col-span-2 py-3 rounded-xl font-semibold">Trimite cererea (simulare) →</button>
+                </form>
+                <div id="demoLog" class="hidden space-y-3"></div>
+                <button type="button" id="demoReset" class="hidden mt-6 text-sm text-blue-400 hover:text-blue-300 transition">↺ Încearcă din nou</button>
+            </div>
+            <p class="text-center text-slate-500 text-xs mt-3">100% simulare — nimic nu se trimite sau se salvează, doar îți arăt cum ar arăta pentru clienta ta.</p>
+        </div>
+
         <p class="max-w-3xl mx-auto text-center text-slate-400 leading-relaxed mb-14">
             Iar timpul pe care-l recuperezi din task-urile care se repeteau identic, săptămână de săptămână, se duce înapoi spre partea din business care chiar contează — relația cu oamenii care te aleg. Aia nu poate fi automatizată, și nici n-ar trebui.
         </p>
@@ -292,4 +308,66 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const demoForm = document.getElementById('demoBookingForm');
+        const demoLog = document.getElementById('demoLog');
+        const demoReset = document.getElementById('demoReset');
+        if (!demoForm) return;
+
+        const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+        async function playDemo(name, service, time) {
+            const steps = [
+                { type: 'user', text: `${name} a cerut o programare: ${service}, ${time}.` },
+                { type: 'system', text: '✓ Cerere primită.' },
+                { type: 'system', text: `✓ SMS de confirmare trimis către ${name}.` },
+                { type: 'system', text: '✓ Programare adăugată automat în calendar.' },
+                { type: 'system', text: 'Asta primește clienta ta — fără să ridici tu telefonul.', highlight: true },
+            ];
+
+            for (let i = 0; i < steps.length; i++) {
+                const step = steps[i];
+                if (i > 0) {
+                    const typing = document.createElement('div');
+                    typing.className = 'chat-message system typing-dots flex gap-1 px-4 py-3 rounded-2xl rounded-tl-none max-w-[85%]';
+                    typing.innerHTML = '<span></span><span></span><span></span>';
+                    demoLog.appendChild(typing);
+                    demoLog.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    await wait(700);
+                    typing.remove();
+                }
+                const bubble = document.createElement('div');
+                const corner = step.type === 'user' ? 'rounded-tr-none' : 'rounded-tl-none';
+                const emphasis = step.highlight ? 'font-semibold text-white' : '';
+                bubble.className = `chat-message ${step.type} px-4 py-3 rounded-2xl max-w-[85%] leading-relaxed text-sm ${corner} ${emphasis}`;
+                bubble.textContent = step.text;
+                demoLog.appendChild(bubble);
+                await wait(300);
+            }
+            demoReset.classList.remove('hidden');
+        }
+
+        demoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('demoName').value.trim() || 'Clienta';
+            const service = document.getElementById('demoService').value.trim() || 'un serviciu';
+            const time = document.getElementById('demoTime').value.trim() || 'ora dorită';
+
+            demoForm.classList.add('hidden');
+            demoLog.classList.remove('hidden');
+            demoLog.innerHTML = '';
+            playDemo(name, service, time);
+        });
+
+        demoReset.addEventListener('click', () => {
+            demoLog.classList.add('hidden');
+            demoLog.innerHTML = '';
+            demoReset.classList.add('hidden');
+            demoForm.reset();
+            demoForm.classList.remove('hidden');
+        });
+    });
+</script>
 {% endblock %}
