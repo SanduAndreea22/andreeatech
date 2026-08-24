@@ -22,30 +22,39 @@
     <meta name="twitter:description" content="{% block twitter_description %}De la o interacțiune obișnuită, la o experiență de care oamenii își amintesc — construiesc produsul digital din spate: website, sistem, automatizare.{% endblock %}">
     <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/poza_me.JPG' %}{% endblock %}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            50: '#F5EEE4', 100: '#E9DFCF', 200: '#D9CBB5', 300: '#C2AF95',
+                            400: '#A79A8C', 500: '#8B7B6B', 600: '#6B5D50', 700: '#4A3F36',
+                            800: '#362D26', 900: '#28201B', 950: '#1C1613',
+                        },
+                        blue: {
+                            300: '#FFB088', 400: '#FF7A57', 500: '#E85C3B', 600: '#C94A2C',
+                        },
+                        cyan: {
+                            300: '#FFCBA8', 400: '#FF9E6D',
+                        },
+                        red: {
+                            400: '#9C8570',
+                        },
+                    },
+                },
+            },
+        };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        :root { --bg: #020617; --accent: #3b82f6; }
-        body { background-color: var(--bg); color: #f1f5f9; margin: 0; }
-        .bg-noise { position: fixed; inset: 0; background: radial-gradient(circle at 15% 15%, rgba(37,99,235,0.12) 0%, transparent 40%), radial-gradient(circle at 85% 60%, rgba(14,165,233,0.1) 0%, transparent 40%); filter: blur(80px); z-index: -1; }
-        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 14px; }
-        .gradient-text { background: linear-gradient(90deg, #60a5fa, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-primary { background: linear-gradient(135deg, #2563eb, #38bdf8); color: white !important; transition: all 0.3s ease; border: none; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4); }
-        /* Forced styles for Django forms */
-        input, textarea, select { background: rgba(15, 23, 42, 0.9) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; color: white !important; padding: 12px; border-radius: 10px; width: 100%; outline: none; margin-bottom: 10px; }
-        input:focus { border-color: var(--accent) !important; }
-        .navbar { height: 70px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        summary { list-style: none; }
-        summary::-webkit-details-marker { display: none; }
-    </style>
     <link rel="stylesheet" href="{% static 'website/style.css' %}">
 </head>
 <body class="min-h-screen flex flex-col relative">
     <div class="bg-noise"></div>
 
-    <nav class="navbar fixed w-full z-50 bg-[#020617]/80 backdrop-blur-md">
+    <nav class="navbar fixed w-full z-50 bg-[#1C1613]/80 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
             <a href="{% url 'home' %}" class="hover:opacity-80 transition-opacity flex items-center gap-2.5">
                 <img src="{% static 'website/logo.jpeg' %}" alt="Andreea Tech" class="w-9 h-9 rounded-full object-cover border border-amber-400/30">
