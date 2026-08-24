@@ -53,7 +53,7 @@ h1, h2, h3 {
 .glass {
     background: rgba(28,22,19,.75);
     backdrop-filter: blur(22px);
-    border: 1px solid rgba(245,238,228,.06);
+    border: 1px solid rgba(245,238,228,.14);
     box-shadow: 0 20px 60px rgba(0,0,0,.5);
     border-radius: var(--radius);
 }
