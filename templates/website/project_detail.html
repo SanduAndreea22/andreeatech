@@ -36,7 +36,7 @@
                     alt="{{ project.title }}"
                     class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
                 >
-                <div class="absolute inset-0 bg-gradient-to-t from-[#020617]/50 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#FFFFFF]/40 to-transparent"></div>
             </div>
         </div>
         {% endif %}
@@ -45,7 +45,7 @@
 
             <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-1 h-full bg-red-500/50"></div>
-                <h2 class="text-sm uppercase tracking-[0.2em] text-red-400 font-bold mb-6">Provocarea</h2>
+                <h2 class="text-sm uppercase tracking-[0.2em] text-red-600 font-bold mb-6">Provocarea</h2>
                 <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
                     {{ project.problem|safe }}
                 </div>
@@ -61,7 +61,7 @@
 
             <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-1 h-full bg-green-500/50"></div>
-                <h2 class="text-sm uppercase tracking-[0.2em] text-green-400 font-bold mb-6">Rezultatul</h2>
+                <h2 class="text-sm uppercase tracking-[0.2em] text-green-600 font-bold mb-6">Rezultatul</h2>
                 <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
                     {{ project.outcome|safe }}
                 </div>
@@ -92,11 +92,5 @@
 
     </div>
 </section>
-
-<style>
-    .prose p { margin-bottom: 1.5rem; }
-    .prose strong { color: #fff; font-weight: 600; }
-    .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #94a3b8; }
-</style>
 
 {% endblock %}

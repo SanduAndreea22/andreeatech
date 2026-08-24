@@ -21,7 +21,7 @@
 
         {% if messages %}
             {% for message in messages %}
-            <div class="mb-8 p-5 rounded-2xl border {% if message.tags == 'error' %}border-red-500/30 bg-red-500/10 text-red-400{% else %}border-green-500/30 bg-green-500/10 text-green-400{% endif %} text-center animate-pulse">
+            <div class="mb-8 p-5 rounded-2xl border {% if message.tags == 'error' %}border-red-500/30 bg-red-500/10 text-red-600{% else %}border-green-500/30 bg-green-500/10 text-green-600{% endif %} text-center animate-pulse">
                 {{ message }}
             </div>
             {% endfor %}
@@ -109,36 +109,5 @@
 
     </div>
 </section>
-
-<style>
-    /* Style for checkboxes rendered by Django */
-    .custom-checkboxes ul {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-    }
-    @media (min-width: 640px) {
-        .custom-checkboxes ul { grid-template-columns: 1fr 1fr; }
-    }
-    .custom-checkboxes li {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: rgba(255,255,255,0.03);
-        padding: 12px;
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.05);
-        transition: all 0.3s;
-    }
-    .custom-checkboxes li:hover {
-        background: rgba(255,255,255,0.07);
-        border-color: rgba(59, 130, 246, 0.3);
-    }
-    .custom-checkboxes input[type="checkbox"] {
-        accent-color: #3b82f6;
-        width: 18px;
-        height: 18px;
-    }
-</style>
 
 {% endblock %}

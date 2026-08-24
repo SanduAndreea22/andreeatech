@@ -20,7 +20,7 @@
                     <div class="flex gap-1 mb-5">
                         {% for i in "12345"|make_list %}
                             {% if forloop.counter <= review.rating %}
-                                <span class="text-yellow-400 text-xl">★</span>
+                                <span class="text-yellow-500 text-xl">★</span>
                             {% else %}
                                 <span class="text-slate-700 text-xl">★</span>
                             {% endif %}
@@ -60,7 +60,7 @@
 
                 {% if messages %}
                     {% for message in messages %}
-                    <div class="mb-8 p-4 rounded-lg border {% if message.tags == 'error' %}border-red-600 bg-red-600/10 text-red-400{% else %}border-green-600 bg-green-600/10 text-green-400{% endif %} text-center animate-pulse">
+                    <div class="mb-8 p-4 rounded-lg border {% if message.tags == 'error' %}border-red-600 bg-red-600/10 text-red-600{% else %}border-green-600 bg-green-600/10 text-green-600{% endif %} text-center animate-pulse">
                         {{ message }}
                     </div>
                     {% endfor %}
@@ -109,14 +109,4 @@
     </div>
 </section>
 
-<style>
-    select, input[type="number"] {
-        background: rgba(15, 23, 42, 0.9) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        color: white !important;
-        padding: 10px !important;
-        border-radius: 8px !important;
-        width: 100%;
-    }
-</style>
 {% endblock %}
