@@ -935,6 +935,70 @@ select {
 .faq-footer { text-align: center; margin-top: 40px; }
 
 /* =========================================
+   PROJECT DETAIL PAGE
+========================================= */
+
+.pd-back { display: inline-flex; align-items: center; font-size: .875rem; color: var(--ink-faint); transition: var(--transition); margin-bottom: 40px; }
+.pd-back:hover { color: var(--blue-mid); }
+.pd-back span { margin-right: 8px; transition: transform .2s ease; }
+.pd-back:hover span { transform: translateX(-4px); }
+
+.pd-header { margin-bottom: 48px; }
+.pd-title { font-size: 2.25rem; font-weight: 800; line-height: 1.15; margin-bottom: 24px; }
+@media (min-width: 768px) { .pd-title { font-size: 3.75rem; } }
+.pd-desc { color: var(--ink-faint); font-size: 1.25rem; line-height: 1.7; max-width: 42rem; margin-bottom: 32px; }
+.pd-live-link { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-size: .875rem; font-weight: 700; }
+.pd-live-link svg { width: 16px; height: 16px; }
+
+.pd-image-wrap { margin-bottom: 64px; }
+.pd-image-frame { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 25px 60px rgba(0,0,0,.12); }
+.pd-image-frame img { width: 100%; height: auto; object-fit: cover; transition: transform .7s ease; display: block; }
+.pd-image-frame:hover img { transform: scale(1.05); }
+.pd-image-fade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(234,240,250,.5), transparent); }
+
+.pd-blocks { display: grid; gap: 48px; }
+.pd-block { padding: 32px; position: relative; overflow: hidden; }
+@media (min-width: 768px) { .pd-block { padding: 40px; } }
+.pd-block-bar { position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+.pd-block-problem .pd-block-bar { background: rgba(220,38,38,.5); }
+.pd-block-solution .pd-block-bar { background: rgba(62,92,153,.5); }
+.pd-block-outcome .pd-block-bar { background: rgba(34,197,94,.5); }
+.pd-block-label { font-size: .875rem; text-transform: uppercase; letter-spacing: .2em; font-weight: 700; margin-bottom: 24px; }
+.pd-block-problem .pd-block-label { color: #dc2626; }
+.pd-block-solution .pd-block-label { color: var(--blue-mid); }
+.pd-block-outcome .pd-block-label { color: #16a34a; }
+.pd-block-body { color: var(--ink-soft); line-height: 1.7; }
+.pd-block-body p { margin-bottom: 1.5rem; }
+.pd-block-body strong { color: var(--ink); font-weight: 600; }
+.pd-block-body ul { list-style: disc; padding-left: 24px; margin-bottom: 1.5rem; color: var(--ink-faint); }
+
+.pd-footer {
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+}
+@media (min-width: 768px) { .pd-footer { flex-direction: row; align-items: center; justify-content: space-between; } }
+.pd-tech-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .15em; color: var(--ink-faint); font-weight: 700; }
+.pd-tech-list { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px; }
+.pd-tech-pill { padding: 6px 16px; font-size: .75rem; font-weight: 500; background: rgba(30,58,114,.04); border: 1px solid var(--line); border-radius: 999px; color: var(--blue-mid); }
+.pd-cta { padding: 16px 32px; border-radius: 12px; font-size: .875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; flex-shrink: 0; }
+
+/* =========================================
+   PRIVACY POLICY PAGE
+========================================= */
+
+.policy-card { padding: 32px; display: flex; flex-direction: column; gap: 40px; color: var(--ink-soft); line-height: 1.7; }
+@media (min-width: 768px) { .policy-card { padding: 40px; } }
+.policy-card h2 { font-size: 1.25rem; font-weight: 600; color: var(--ink); margin-bottom: 12px; }
+.policy-card ul { list-style: disc; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.policy-card p + p { margin-top: 12px; }
+.policy-card strong { color: var(--ink); }
+
+/* =========================================
    PRODUCTS PAGE
 ========================================= */
 

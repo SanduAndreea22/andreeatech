@@ -3,91 +3,84 @@
 {% block meta_description %}{{ project.short_description }}{% endblock %}
 
 {% block content %}
-<section class="pt-32 pb-24 relative overflow-hidden">
-    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/5 blur-[120px] rounded-full -z-10"></div>
+<section class="page-hero about-hero">
+    <div class="hero-glow"></div>
 
-    <div class="max-w-5xl mx-auto px-6">
+    <div class="container-lg">
 
-        <a href="{% url 'projects' %}" class="inline-flex items-center text-sm text-slate-500 hover:text-blue-400 transition mb-10 group">
-            <span class="mr-2 transition-transform group-hover:-translate-x-1">←</span> Înapoi la portofoliu
+        <a href="{% url 'projects' %}" class="pd-back">
+            <span>←</span> Înapoi la portofoliu
         </a>
 
-        <header class="mb-12">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+        <header class="pd-header">
+            <h1 class="pd-title">
                 {{ project.title }}
             </h1>
-            <p class="text-slate-400 text-xl leading-relaxed max-w-2xl mb-8">
+            <p class="pd-desc">
                 {{ project.short_description }}
             </p>
             {% if project.link %}
-            <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer"
-               class="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold">
+            <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="btn-primary pd-live-link">
                 <span>Vezi proiectul live</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
             </a>
             {% endif %}
         </header>
 
         {% if project.image %}
-        <div class="mb-16 group">
-            <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-                <img
-                    src="{{ project.image.url }}"
-                    alt="{{ project.title }}"
-                    class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                >
-                <div class="absolute inset-0 bg-gradient-to-t from-[#EAF0FA]/50 to-transparent"></div>
+        <div class="pd-image-wrap">
+            <div class="pd-image-frame">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                <div class="pd-image-fade"></div>
             </div>
         </div>
         {% endif %}
 
-        <div class="grid gap-12">
+        <div class="pd-blocks">
 
-            <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-1 h-full bg-red-500/50"></div>
-                <h2 class="text-sm uppercase tracking-[0.2em] text-red-600 font-bold mb-6">Provocarea</h2>
-                <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
+            <div class="glass pd-block pd-block-problem">
+                <div class="pd-block-bar"></div>
+                <h2 class="pd-block-label">Provocarea</h2>
+                <div class="pd-block-body">
                     {{ project.problem|safe }}
                 </div>
             </div>
 
-            <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-1 h-full bg-blue-500/50"></div>
-                <h2 class="text-sm uppercase tracking-[0.2em] text-blue-400 font-bold mb-6">Soluția</h2>
-                <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
+            <div class="glass pd-block pd-block-solution">
+                <div class="pd-block-bar"></div>
+                <h2 class="pd-block-label">Soluția</h2>
+                <div class="pd-block-body">
                     {{ project.solution|safe }}
                 </div>
             </div>
 
-            <div class="glass p-8 md:p-10 border border-white/5 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-1 h-full bg-green-500/50"></div>
-                <h2 class="text-sm uppercase tracking-[0.2em] text-green-600 font-bold mb-6">Rezultatul</h2>
-                <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed">
+            <div class="glass pd-block pd-block-outcome">
+                <div class="pd-block-bar"></div>
+                <h2 class="pd-block-label">Rezultatul</h2>
+                <div class="pd-block-body">
                     {{ project.outcome|safe }}
                 </div>
             </div>
 
         </div>
 
-        <div class="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-10">
+        <div class="pd-footer">
             <div>
-                <span class="text-xs uppercase tracking-widest text-slate-500 font-bold">
+                <span class="pd-tech-label">
                     Construit cu
                 </span>
-                <div class="mt-4 flex flex-wrap gap-3">
+                <div class="pd-tech-list">
                     {% for tech in project.tech_list %}
-                        <span class="px-4 py-1.5 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-blue-300 backdrop-blur-sm">
+                        <span class="pd-tech-pill">
                             {{ tech }}
                         </span>
                     {% endfor %}
                 </div>
             </div>
 
-            <div class="flex-shrink-0">
-                <a href="{% url 'contact' %}" class="btn-primary px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-wider">
-                    Hai să construim ceva similar
-                </a>
-            </div>
+            <a href="{% url 'contact' %}" class="btn-primary pd-cta">
+                Hai să construim ceva similar
+            </a>
         </div>
 
     </div>
