@@ -11,7 +11,7 @@
     --paper-raised: #EAF0FA;
     --line: rgba(0,15,73,.14);
 
-    --ink: #000f49;
+    --ink: #1E3A72;
     --ink-soft: #4C5A85;
     --ink-faint: #7A88AC;
 
@@ -179,7 +179,7 @@ main > section:first-of-type::before {
 /* Buttons */
 .btn-primary {
     background: var(--periwinkle);
-    color: #000000;
+    color: var(--ink);
     transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
     border-radius: 10px;
     border: none;
@@ -419,6 +419,6 @@ select {
     border-radius: 12px;
     font-weight: 600;
     text-decoration: none;
-    color: #000000;
+    color: var(--ink);
     background: var(--periwinkle);
 }
