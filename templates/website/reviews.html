@@ -3,107 +3,105 @@
 {% block meta_description %}Recenzii despre produse digitale și sisteme construite de Andreea Sandu.{% endblock %}
 
 {% block content %}
-<section class="pt-32 pb-24">
-    <div class="max-w-7xl mx-auto px-6">
+<section class="page-hero">
+    <div class="container">
 
-        <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">
+        <div class="mb-xl">
+            <h1 class="page-title gradient-text">
                 Ce spun clienții
             </h1>
-            <p class="text-slate-400">Păreri de la afaceri care au trecut de la haos la structură.</p>
+            <p class="text-muted">Păreri de la afaceri care au trecut de la haos la structură.</p>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+        <div class="reviews-grid">
             {% for review in reviews %}
-            <div class="glass p-8 rounded-2xl border border-white/5 card-hover flex flex-col justify-between">
+            <div class="glass card-hover review-card">
                 <div>
-                    <div class="flex gap-1 mb-5">
+                    <div class="review-stars">
                         {% for i in "12345"|make_list %}
                             {% if forloop.counter <= review.rating %}
-                                <span class="text-yellow-500 text-xl">★</span>
+                                <span class="review-star-filled">★</span>
                             {% else %}
-                                <span class="text-slate-700 text-xl">★</span>
+                                <span class="review-star-empty">★</span>
                             {% endif %}
                         {% endfor %}
                     </div>
 
-                    <p class="text-slate-300 italic mb-8 leading-relaxed">
+                    <p class="review-quote">
                         "{{ review.message }}"
                     </p>
                 </div>
 
                 <div>
-                    <div class="font-bold text-white text-lg">
+                    <div class="review-name">
                         {{ review.name }}
                     </div>
                     {% if review.company %}
-                    <div class="text-sm text-blue-400 font-medium uppercase tracking-wider mt-1">
+                    <div class="review-company">
                         {{ review.company }}
                     </div>
                     {% endif %}
                 </div>
             </div>
             {% empty %}
-            <div class="col-span-full text-center py-20 glass rounded-2xl border border-dashed border-slate-700">
-                <p class="text-slate-500">Nu există recenzii încă. Fii primul care lasă una!</p>
+            <div class="glass reviews-empty">
+                <p>Nu există recenzii încă. Fii primul care lasă una!</p>
             </div>
             {% endfor %}
         </div>
 
-        <div class="max-w-3xl mx-auto">
-            <div class="glass p-8 md:p-12 border border-white/10 shadow-2xl relative">
-                <div class="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
+        <div class="container-sm">
+            <div class="glass form-card">
 
-                <h2 class="text-2xl font-bold mb-8 text-center text-white">
+                <h2 class="h2">
                     Împărtășește experiența ta
                 </h2>
 
                 {% if messages %}
                     {% for message in messages %}
-                    <div class="mb-8 p-4 rounded-lg border {% if message.tags == 'error' %}border-red-600 bg-red-600/10 text-red-600{% else %}border-green-600 bg-green-600/10 text-green-600{% endif %} text-center animate-pulse">
+                    <div class="form-message {% if message.tags == 'error' %}form-message-error{% else %}form-message-success{% endif %}">
                         {{ message }}
                     </div>
                     {% endfor %}
                 {% endif %}
 
-                <form method="POST" class="space-y-6">
+                <form method="POST" class="form-fields">
                     {% csrf_token %}
                     <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block mb-2 text-sm font-medium text-slate-400">Nume</label>
+                    <div class="review-form-grid">
+                        <div class="form-field">
+                            <label class="form-label">Nume</label>
                             {{ form.name }}
                         </div>
-                        <div>
-                            <label class="block mb-2 text-sm font-medium text-slate-400">Companie (opțional)</label>
+                        <div class="form-field">
+                            <label class="form-label">Companie (opțional)</label>
                             {{ form.company }}
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-slate-400">Notă (1-5)</label>
-                        <div class="max-w-[100px]">
+                    <div class="form-field">
+                        <label class="form-label">Notă (1-5)</label>
+                        <div class="review-rating-field">
                              {{ form.rating }}
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-slate-400">Mesajul tău</label>
+                    <div class="form-field">
+                        <label class="form-label">Mesajul tău</label>
                         {{ form.message }}
                     </div>
 
-                    <button type="submit"
-                        class="btn-primary w-full py-4 rounded-xl font-bold text-white uppercase tracking-widest shadow-lg shadow-blue-600/20 transition-all duration-300">
+                    <button type="submit" class="btn-primary form-submit">
                         Trimite recenzia
                     </button>
                 </form>
             </div>
         </div>
 
-        <div class="text-center mt-20">
-            <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">Vrei o experiență la fel de bună pentru clienții tăi?</h2>
-            <a href="{% url 'start_project' %}" class="btn-primary inline-block px-9 py-4 rounded-xl font-semibold">Hai să discutăm proiectul tău →</a>
+        <div class="home-cta-center mt-lg">
+            <h2 class="h2-xl">Vrei o experiență la fel de bună pentru clienții tăi?</h2>
+            <a href="{% url 'start_project' %}" class="btn-primary home-cta-btn-sm">Hai să discutăm proiectul tău →</a>
         </div>
 
     </div>

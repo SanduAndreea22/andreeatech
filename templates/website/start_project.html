@@ -4,104 +4,102 @@
 
 {% block content %}
 
-<section class="pt-32 pb-24 relative overflow-hidden">
-    <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/5 blur-[120px] rounded-full -z-10"></div>
+<section class="page-hero about-hero">
+    <div class="hero-glow"></div>
 
-    <div class="max-w-4xl mx-auto px-6">
+    <div class="container-lg">
 
-        <div class="mb-14 text-center">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 gradient-text">
+        <div class="mb-xl center">
+            <h1 class="page-title gradient-text">
                 Hai să construim sistemul tău
             </h1>
 
-            <p class="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto">
+            <p class="page-subtitle measure">
                 Spune-mi despre afacerea ta și despre fluxul de lucru pe care vrei să-l îmbunătățești. Completează brief-ul de mai jos ca să putem începe.
             </p>
         </div>
 
         {% if messages %}
             {% for message in messages %}
-            <div class="mb-8 p-5 rounded-2xl border {% if message.tags == 'error' %}border-red-500/30 bg-red-500/10 text-red-600{% else %}border-green-500/30 bg-green-500/10 text-green-600{% endif %} text-center animate-pulse">
+            <div class="form-message {% if message.tags == 'error' %}form-message-error{% else %}form-message-success{% endif %}">
                 {{ message }}
             </div>
             {% endfor %}
         {% endif %}
 
-        <div class="glass p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl relative">
-            <div class="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
+        <div class="glass form-card">
 
-            <form method="POST" class="space-y-10">
+            <form method="POST" class="sp-form">
                 {% csrf_token %}
                 <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
-                <div class="space-y-6">
-                    <h3 class="text-sm uppercase tracking-widest text-blue-400 font-bold flex items-center gap-2">
-                        <span class="w-1 h-4 bg-blue-500 rounded-full"></span> 01. Identificare
+                <div class="sp-group">
+                    <h3 class="sp-step-title">
+                        <span class="sp-step-dot"></span> 01. Identificare
                     </h3>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase">Numele tău</label>
+                    <div class="sp-field-row">
+                        <div class="sp-field">
+                            <label class="sp-field-label">Numele tău</label>
                             {{ form.name }}
                         </div>
-                        <div class="space-y-2">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase">Adresa de email</label>
+                        <div class="sp-field">
+                            <label class="sp-field-label">Adresa de email</label>
                             {{ form.email }}
                         </div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase">Domeniul afacerii tale</label>
+                    <div class="sp-field-row">
+                        <div class="sp-field">
+                            <label class="sp-field-label">Domeniul afacerii tale</label>
                             {{ form.industry }}
                         </div>
-                        <div class="space-y-2">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase">Pachet ales</label>
+                        <div class="sp-field">
+                            <label class="sp-field-label">Pachet ales</label>
                             {{ form.selected_package }}
                         </div>
                     </div>
                 </div>
 
-                <div class="space-y-6">
-                    <h3 class="text-sm uppercase tracking-widest text-blue-400 font-bold flex items-center gap-2">
-                        <span class="w-1 h-4 bg-blue-500 rounded-full"></span> 02. Scopul proiectului
+                <div class="sp-group">
+                    <h3 class="sp-step-title">
+                        <span class="sp-step-dot"></span> 02. Scopul proiectului
                     </h3>
-                    <div class="space-y-2">
-                        <label class="block text-xs font-semibold text-slate-500 uppercase">Descrierea proiectului și obiective</label>
+                    <div class="sp-field">
+                        <label class="sp-field-label">Descrierea proiectului și obiective</label>
                         {{ form.project_description }}
-                        <p class="text-[11px] text-slate-500">Descrie website-ul, fluxul de rezervări sau procesul intern de care ai nevoie.</p>
+                        <p class="sp-field-hint">Descrie website-ul, fluxul de rezervări sau procesul intern de care ai nevoie.</p>
                     </div>
                 </div>
 
-                <div class="space-y-6">
-                    <h3 class="text-sm uppercase tracking-widest text-blue-400 font-bold flex items-center gap-2">
-                        <span class="w-1 h-4 bg-blue-500 rounded-full"></span> 03. Cerințe tehnice
+                <div class="sp-group">
+                    <h3 class="sp-step-title">
+                        <span class="sp-step-dot"></span> 03. Cerințe tehnice
                     </h3>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="space-y-2">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase">Domeniu & hosting</label>
+                    <div class="sp-field-row-lg">
+                        <div class="sp-field">
+                            <label class="sp-field-label">Domeniu & hosting</label>
                             {{ form.hosting_info }}
-                            <p class="text-[11px] text-slate-500">Ai deja domeniu și hosting, sau vrei să ți le configurez eu? (cost separat de pachet — discutăm exact suma la consultație)</p>
+                            <p class="sp-field-hint">Ai deja domeniu și hosting, sau vrei să ți le configurez eu? (cost separat de pachet — discutăm exact suma la consultație)</p>
                         </div>
-                        <div class="space-y-2">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase">Termen / urgență</label>
+                        <div class="sp-field">
+                            <label class="sp-field-label">Termen / urgență</label>
                             {{ form.deadline_communication }}
                         </div>
                     </div>
 
-                    <div class="space-y-4 pt-4">
-                        <label class="block text-xs font-semibold text-slate-500 uppercase">Funcționalități necesare</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-300 custom-checkboxes">
+                    <div class="sp-features-wrap">
+                        <label class="sp-field-label">Funcționalități necesare</label>
+                        <div class="custom-checkboxes">
                             {{ form.required_features }}
                         </div>
                     </div>
                 </div>
 
-                <div class="pt-6">
-                    <button type="submit"
-                        class="btn-primary w-full py-5 rounded-2xl font-black text-white uppercase tracking-[0.2em] shadow-xl shadow-blue-600/20 transform hover:scale-[1.01] transition-all">
+                <div class="sp-submit-wrap">
+                    <button type="submit" class="btn-primary sp-submit">
                         Trimite proiectul
                     </button>
-                    <p class="text-center text-slate-500 text-xs mt-6">
-                        Apăsând „Trimite proiectul", ești de acord cu <a href="{% url 'privacy_policy' %}" class="text-blue-400 hover:text-blue-300 transition">Politica de confidențialitate</a> și primești un răspuns despre brief-ul tău în maximum 24 de ore.
+                    <p class="sp-submit-note">
+                        Apăsând „Trimite proiectul", ești de acord cu <a href="{% url 'privacy_policy' %}" class="link">Politica de confidențialitate</a> și primești un răspuns despre brief-ul tău în maximum 24 de ore.
                     </p>
                 </div>
             </form>

@@ -322,6 +322,7 @@ main > section:first-of-type::before {
 .mb-xl { margin-bottom: 40px; }
 .mt-lg { margin-top: 56px; }
 .hidden { display: none; }
+.measure { max-width: 42rem; margin-left: auto; margin-right: auto; }
 
 .site-body {
     min-height: 100vh;
@@ -887,6 +888,73 @@ select {
 .form-footer { border-top: 1px solid var(--line); padding-top: 48px; text-align: center; }
 .form-footer h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 16px; color: var(--ink); }
 .form-footer p { color: var(--ink-faint); line-height: 1.7; margin-bottom: 32px; max-width: 28rem; margin-left: auto; margin-right: auto; }
+
+/* =========================================
+   START A PROJECT PAGE
+========================================= */
+
+.sp-form { display: flex; flex-direction: column; gap: 40px; }
+.sp-group { display: flex; flex-direction: column; gap: 24px; }
+.sp-step-title {
+    font-size: .875rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--blue-mid);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.sp-step-dot { width: 4px; height: 16px; border-radius: 999px; background: var(--blue-mid); }
+
+.sp-field-row { display: grid; gap: 24px; }
+@media (min-width: 768px) { .sp-field-row { grid-template-columns: 1fr 1fr; } }
+.sp-field-row-lg { display: grid; gap: 32px; }
+@media (min-width: 768px) { .sp-field-row-lg { grid-template-columns: 1fr 1fr; } }
+
+.sp-field { display: flex; flex-direction: column; gap: 8px; }
+.sp-field-label { font-size: .75rem; font-weight: 600; color: var(--ink-faint); text-transform: uppercase; }
+.sp-field-hint { font-size: .6875rem; color: var(--ink-faint); }
+
+.sp-features-wrap { display: flex; flex-direction: column; gap: 16px; padding-top: 16px; }
+.sp-features-wrap .custom-checkboxes { color: var(--ink-soft); }
+
+.sp-submit-wrap { padding-top: 24px; }
+.sp-submit {
+    width: 100%;
+    padding: 20px 0;
+    border-radius: 16px;
+    font-weight: 900;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    box-shadow: 0 20px 50px rgba(62,92,153,.25);
+}
+.sp-submit-note { text-align: center; color: var(--ink-faint); font-size: .75rem; margin-top: 24px; }
+
+/* =========================================
+   REVIEWS PAGE
+========================================= */
+
+.reviews-grid { display: grid; gap: 32px; margin-bottom: 96px; }
+@media (min-width: 768px) { .reviews-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.review-card { padding: 32px; border-radius: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.review-stars { display: flex; gap: 4px; margin-bottom: 20px; }
+.review-stars span { font-size: 1.25rem; }
+.review-star-filled { color: #eab308; }
+.review-star-empty { color: var(--line); }
+.review-quote { color: var(--ink-soft); font-style: italic; margin-bottom: 32px; line-height: 1.7; }
+.review-name { font-weight: 700; color: var(--ink); font-size: 1.125rem; }
+.review-company { font-size: .875rem; color: var(--blue-mid); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; margin-top: 4px; }
+
+.reviews-empty { grid-column: 1 / -1; text-align: center; padding: 80px 0; border-radius: 18px; border-style: dashed; }
+.reviews-empty p { color: var(--ink-faint); }
+
+.review-form-grid { display: grid; gap: 24px; }
+@media (min-width: 768px) { .review-form-grid { grid-template-columns: 1fr 1fr; } }
+.review-rating-field { max-width: 6.25rem; }
 
 /* =========================================
    ABOUT PAGE
