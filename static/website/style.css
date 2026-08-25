@@ -28,6 +28,13 @@
     box-sizing: border-box;
 }
 
+/* No link on the site is meant to show the browser's default underline —
+   every link class styles its own hover state via color instead. Reset
+   here once instead of repeating text-decoration: none on every class. */
+a {
+    text-decoration: none;
+}
+
 html {
     font-size: 18px;
 }
