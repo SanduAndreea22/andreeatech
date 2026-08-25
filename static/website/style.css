@@ -1,25 +1,26 @@
 /* =========================================
-   GLOBAL CORE — MONOCHROME NAVY (LIGHT)
-   One hue, multiple shades — no second accent color.
+   GLOBAL CORE — DARK (original first-commit direction, rebuilt on the
+   current token system + component set, contrast-checked with
+   check_contrast.py instead of hand-picked).
 ========================================= */
 
 :root {
-    color-scheme: light only;
+    color-scheme: dark only;
     --radius: 14px;
     --transition: all .3s ease;
 
-    --paper: #F1F3F7;
-    --paper-tint: #E4E8EF;
-    --paper-raised: #F1F3F7;
-    --line: rgba(15,26,43,.15);
+    --paper: #020617;
+    --paper-tint: #0B1220;
+    --paper-raised: #0F172A;
+    --line: rgba(241,245,249,.12);
 
-    --ink: #0F1A2B;
-    --ink-soft: #47536B;
-    --ink-faint: #5A6478;
+    --ink: #DCEAFE;
+    --ink-soft: #A9C2E8;
+    --ink-faint: #93A9CC;
 
-    --blue-mid: #1F3B6B;
-    --blue-mid-hover: #14263F;
-    --periwinkle: #4A6BA0;
+    --blue-mid: #4C8DFA;
+    --blue-mid-hover: #7BADFB;
+    --periwinkle: #22D3EE;
 }
 
 /* Reset refinement */
@@ -88,8 +89,14 @@ html {
     pointer-events: none;
 }
 
-/* Accent text — solid, not gradient: keeps contrast stable regardless of size. */
+/* Gradient between two tokens that both independently pass 4.5:1 on
+   paper (verified with check_contrast.py) — unlike the original
+   navy->periwinkle gradient, whose light end failed at ~2:1. */
 .gradient-text {
+    background: linear-gradient(90deg, var(--blue-mid), var(--periwinkle));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     color: var(--blue-mid);
 }
 
@@ -184,7 +191,7 @@ main > section:first-of-type::before {
 /* Buttons */
 .btn-primary {
     background: var(--blue-mid);
-    color: #fff;
+    color: var(--paper);
     transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
     border-radius: 10px;
     border: none;
@@ -1260,6 +1267,6 @@ select {
     border-radius: 12px;
     font-weight: 600;
     text-decoration: none;
-    color: var(--ink);
+    color: var(--paper);
     background: var(--periwinkle);
 }

@@ -23,7 +23,7 @@ PAIRS = [
     ("Text de corp (ink-soft pe paper)", "--ink-soft", "--paper", "normal"),
     ("Eyebrow/etichete (ink-faint pe paper)", "--ink-faint", "--paper", "normal"),
     ("Accent/linkuri (blue-mid pe paper)", "--blue-mid", "--paper", "normal"),
-    ("Buton primar (alb pe blue-mid)", "#FFFFFF", "--blue-mid", "large"),
+    ("Buton primar (paper pe blue-mid)", "--paper", "--blue-mid", "large"),
 ]
 
 
