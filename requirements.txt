@@ -1,6 +1,7 @@
 asgiref==3.11.1
 dj-database-url==3.1.2
 Django==6.0.2
+django-axes==8.3.1
 django-ckeditor==6.7.3
 django-js-asset==3.1.2
 dotenv==0.9.9

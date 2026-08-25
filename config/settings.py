@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'website',
     'ckeditor',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -41,7 +42,21 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Must stay last: needs to see the response produced by every other
+    # middleware (including the auth result) to decide on a lockout.
+    'axes.middleware.AxesMiddleware',
 ]
+
+# django-axes: locks out repeated failed /admin/ login attempts. Without
+# this, admin auth has no defense beyond password strength (see audit-cod.md).
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesStandaloneBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = 1  # hours
+AXES_LOCKOUT_PARAMETERS = ['ip_address', 'username']
+AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT = False
 
 ROOT_URLCONF = 'config.urls'
 
