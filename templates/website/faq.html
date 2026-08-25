@@ -21,6 +21,34 @@
 
   <div class="faq-list">
     <div class="faq-item glass">
+      <button class="faq-question" data-answer="agency" aria-expanded="false" aria-controls="faq-answer-agency">
+        <span>De ce să te aleg pe tine și nu o agenție?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden" id="faq-answer-agency" aria-hidden="true"></div>
+    </div>
+    <div class="faq-item glass">
+      <button class="faq-question" data-answer="process" aria-expanded="false" aria-controls="faq-answer-process">
+        <span>Cum arată colaborarea, pas cu pas?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden" id="faq-answer-process" aria-hidden="true"></div>
+    </div>
+    <div class="faq-item glass">
+      <button class="faq-question" data-answer="disappear" aria-expanded="false" aria-controls="faq-answer-disappear">
+        <span>Ce se întâmplă dacă dispari după ce livrezi proiectul?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden" id="faq-answer-disappear" aria-hidden="true"></div>
+    </div>
+    <div class="faq-item glass">
+      <button class="faq-question" data-answer="notsure" aria-expanded="false" aria-controls="faq-answer-notsure">
+        <span>Nu știu dacă am nevoie de un sistem complex sau doar de un site simplu</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="faq-answer hidden" id="faq-answer-notsure" aria-hidden="true"></div>
+    </div>
+    <div class="faq-item glass">
       <button class="faq-question" data-answer="content" aria-expanded="false" aria-controls="faq-answer-content">
         <span>Ce ai nevoie de la mine?</span>
         <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -132,6 +160,10 @@
 
 <script>
 const answers = {
+  agency: "Lucrezi direct cu mine, de la primul mesaj până la livrare — nu treci printr-un account manager care transmite mai departe unei echipe. Eu scriu codul, eu răspund la mesaje, eu știu exact în ce stadiu e proiectul tău în orice moment.",
+  process: "Pornim cu un call inițial în care clarificăm exact ce ai nevoie. Pe parcursul proiectului, comunicăm prin mesaje — îți arăt progresul și iau feedback fără să fie nevoie de call-uri programate. La final, ai 7 zile de stabilizare gratuită după livrare (vezi mai jos).",
+  disappear: "Fiecare proiect are 7 zile de stabilizare gratuită după livrare — orice bug găsești în perioada asta, îl repar fără cost suplimentar. Rămân contactabilă și după — dacă apare o problemă mai târziu sau vrei mentenanță continuă, discutăm separat, dar nu dispar odată ce ai plătit.",
+  notsure: "Complet normal — mulți clienți încep așa. Alege \"Nu sunt sigur/ă, hai să discutăm\" din formularul de contact și stabilim împreună, în funcție de fluxul real al afacerii tale, dacă ai nevoie de un site simplu sau de un sistem mai complex. Nu te împing spre pachetul cel mai scump.",
   content: "Îmi dai contextul afacerii tale, fluxul de lucru actual, obiectivele și orice materiale existente. Transform asta într-un plan tehnic clar.",
   domain: "Da. Fluxurile de rezervări pot fi construite în jurul serviciilor tale, al regulilor de disponibilitate și al modului în care lucrează echipa ta.",
   price: "Am 3 pachete cu prețuri clare — de la €150 pentru un website simplu, până la €850+ pentru o platformă completă personalizată. Toate pachetele sunt detaliate pe Acasă.",
@@ -140,7 +172,7 @@ const answers = {
   django: "Pentru că e stabil și testat la scară mare — nu se blochează când crește traficul sau numărul de cereri. Și pentru că îmi permite să construiesc exact fluxul afacerii tale, nu să te forțez într-un template generic, ca la un website builder.",
   custom: "Absolut. Fiecare proiect poate fi construit în jurul procesului real al afacerii tale, nu forțat într-un instrument generic.",
   portfolio: "Proiectele din Portofoliu (Al Noir, Platform Tickets, Bookora) sunt exemple din ce pot construi, nu produse de vânzare. Emotional Planner și Budget Planner, din secțiunea Produse, sunt produsele mele proprii, oferite direct.",
-  support: "Fiecare proiect include o perioadă de stabilizare după lansare. Mentenanța continuă poate fi stabilită separat, atunci când e nevoie.",
+  support: "Da — 7 zile de stabilizare gratuită după livrare: orice bug apare în perioada asta, îl repar fără cost suplimentar. Mentenanța continuă (dincolo de bug-uri) poate fi stabilită separat, atunci când e nevoie.",
   automation_what: "Un agent AI care preia telefonul și WhatsApp-ul afacerii tale: răspunde la întrebări despre servicii, prețuri și program, preia rezervări sau programări și le confirmă automat, non-stop.",
   automation_replace: "Nu — preia partea repetitivă, ca tu să nu ridici telefonul între doi clienți. Rămâi disponibilă pentru situațiile care chiar au nevoie de tine, iar sistemul se integrează cu calendarul din pachetul ales.",
   automation_price: "Configurarea e o singură dată — de la €15 pentru automatizare simplă, de la €25 pentru un agent AI care preia și sortează cererile. Pe lângă asta, mai există un cost separat de utilizare (câțiva euro până la câteva zeci de euro lunar, în funcție de volum), plătit direct către firmele care oferă tehnologia din spate, nu către mine. Mentenanța lunară e opțională, separată.",

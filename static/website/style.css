@@ -815,6 +815,7 @@ select {
 .home-pricing-duration { font-size: .75rem; color: var(--ink-faint); border-top: 1px solid var(--line); padding-top: 16px; margin-bottom: 16px; }
 .home-pricing-pick { color: var(--blue-mid); font-size: .875rem; font-weight: 700; transition: var(--transition); }
 .home-pricing-pick:hover { color: var(--blue-mid-hover); }
+.home-pricing-guarantee { display: flex; width: fit-content; margin: 32px auto 0; text-align: left; }
 .home-pricing-note { text-align: center; color: var(--ink-faint); font-size: .875rem; margin-top: 24px; }
 .home-pricing-recap { max-width: 42rem; margin: 32px auto 0; padding: 24px; border-radius: 18px; font-size: .875rem; line-height: 1.7; color: var(--ink-soft); }
 .home-pricing-recap-title { color: var(--ink); font-weight: 600; margin-bottom: 8px; }
@@ -830,6 +831,12 @@ select {
 .home-integration-pill-stripe { background: rgba(139,92,246,.10); border: 1px solid rgba(139,92,246,.25); color: #6d28d9; }
 .home-integration-pill-calendar { background: rgba(var(--blue-mid-rgb),.10); border: 1px solid rgba(var(--blue-mid-rgb),.25); color: var(--blue-mid); }
 
+.home-automation-summary {
+    cursor: pointer; display: inline-flex; align-items: center; gap: 6px; color: var(--blue-mid);
+    font-weight: 700; font-size: .875rem; margin-bottom: 32px; transition: var(--transition);
+}
+.home-automation-summary:hover { color: var(--blue-mid-hover); }
+.home-automation-details[open] .home-automation-summary { margin-bottom: 24px; }
 .home-examples-grid { display: grid; gap: 32px; margin-bottom: 32px; }
 @media (min-width: 768px) { .home-examples-grid { grid-template-columns: 1fr 1fr; } }
 .home-examples-title { color: var(--ink); font-weight: 700; margin-bottom: 16px; }
