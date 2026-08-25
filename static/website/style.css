@@ -737,6 +737,7 @@ select {
 
 .home-about-stat-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 @media (min-width: 768px) { .home-about-stat-col { align-items: flex-start; } }
+.home-about-photo-wrap { display: inline-block; border-radius: 16px; overflow: hidden; }
 
 .home-about-photo { width: 96px; height: 96px; border-radius: 16px; object-fit: cover; border: 1px solid var(--line); }
 @media (min-width: 768px) { .home-about-photo { width: 112px; height: 112px; } }
@@ -826,7 +827,7 @@ select {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 6px 12px; border-radius: 999px; font-size: .75rem; font-weight: 600;
 }
-.home-integration-pill svg { width: 14px; height: 14px; }
+.home-integration-pill svg { width: 15px; height: 15px; stroke-width: 2.75; }
 .home-integration-pill-whatsapp { background: rgba(16,185,129,.10); border: 1px solid rgba(16,185,129,.25); color: #047857; }
 .home-integration-pill-stripe { background: rgba(139,92,246,.10); border: 1px solid rgba(139,92,246,.25); color: #6d28d9; }
 .home-integration-pill-calendar { background: rgba(var(--blue-mid-rgb),.10); border: 1px solid rgba(var(--blue-mid-rgb),.25); color: var(--blue-mid); }
@@ -842,7 +843,7 @@ select {
 .home-examples-title { color: var(--ink); font-weight: 700; margin-bottom: 16px; }
 .home-examples-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 1rem; color: var(--ink-soft); }
 .home-examples-list li { display: flex; align-items: flex-start; gap: 8px; }
-.home-examples-list svg { width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; color: var(--blue-mid); }
+.home-examples-list svg { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; color: var(--blue-mid); stroke-width: 2.5; }
 
 .home-automation-pricing { padding-top: 24px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
 .home-automation-pricing-line { font-size: 1.125rem; font-weight: 700; }
