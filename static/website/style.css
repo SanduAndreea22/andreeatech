@@ -192,6 +192,7 @@ main > section:first-of-type::before {
 .btn-primary {
     background: var(--blue-mid);
     color: var(--paper);
+    text-decoration: none;
     transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
     border-radius: 10px;
     border: none;
