@@ -146,7 +146,10 @@ class Review(models.Model):
     ]
 
     name = models.CharField(max_length=120)
+    role = models.CharField(max_length=120, blank=True, help_text="Ex: Fondator, Manager.")
     company = models.CharField(max_length=150, blank=True)
+    business_url = models.URLField(blank=True, help_text="Site-ul afacerii, ca vizitatorii sa poata verifica.")
+    project_note = models.CharField(max_length=200, blank=True, help_text="Ce s-a construit, pe scurt.")
     message = models.TextField(max_length=2000)
     rating = models.IntegerField(choices=RATING_CHOICES)
 

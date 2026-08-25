@@ -60,7 +60,10 @@ class ReviewForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        fields = ["name", "company", "rating", "message"]
+        fields = ["name", "role", "company", "business_url", "project_note", "rating", "message"]
         widgets = {
+            "role": forms.TextInput(attrs={"placeholder": "ex. Fondator, Manager"}),
+            "business_url": forms.URLInput(attrs={"placeholder": "https://..."}),
+            "project_note": forms.TextInput(attrs={"placeholder": "ex. Sistem de rezervări"}),
             "message": forms.Textarea(attrs={"rows": 4}),
         }

@@ -34,12 +34,15 @@
 
                 <div>
                     <div class="review-name">
-                        {{ review.name }}
+                        {{ review.name }}{% if review.role %}, {{ review.role }}{% endif %}
                     </div>
                     {% if review.company %}
                     <div class="review-company">
-                        {{ review.company }}
+                        {% if review.business_url %}<a href="{{ review.business_url }}" target="_blank" rel="noopener noreferrer nofollow" class="link">{{ review.company }} ↗</a>{% else %}{{ review.company }}{% endif %}
                     </div>
+                    {% endif %}
+                    {% if review.project_note %}
+                    <div class="review-project-note">{{ review.project_note }}</div>
                     {% endif %}
                 </div>
             </div>
@@ -75,9 +78,25 @@
                             {{ form.name }}
                         </div>
                         <div class="form-field">
-                            <label class="form-label">Companie (opțional)</label>
+                            <label class="form-label">Rol/funcție (opțional)</label>
+                            {{ form.role }}
+                        </div>
+                    </div>
+
+                    <div class="review-form-grid">
+                        <div class="form-field">
+                            <label class="form-label">Afacerea ta (opțional)</label>
                             {{ form.company }}
                         </div>
+                        <div class="form-field">
+                            <label class="form-label">Site-ul afacerii (opțional)</label>
+                            {{ form.business_url }}
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="form-label">Ce am construit pentru tine (opțional)</label>
+                        {{ form.project_note }}
                     </div>
 
                     <div class="form-field">

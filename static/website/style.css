@@ -1195,6 +1195,7 @@ select {
 .review-quote { color: var(--ink-soft); font-style: italic; margin-bottom: 32px; line-height: 1.7; }
 .review-name { font-weight: 700; color: var(--ink); font-size: 1.125rem; }
 .review-company { font-size: .875rem; color: var(--blue-mid); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; margin-top: 4px; }
+.review-project-note { font-size: .8125rem; color: var(--ink-faint); margin-top: 4px; }
 
 .reviews-empty { grid-column: 1 / -1; text-align: center; padding: 80px 0; border-radius: 18px; border-style: dashed; }
 .reviews-empty p { color: var(--ink-faint); }

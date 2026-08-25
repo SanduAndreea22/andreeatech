@@ -18,10 +18,10 @@ class CertificationAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ("name", "rating", "is_approved", "created_at")
+    list_display = ("name", "company", "rating", "is_approved", "created_at")
     list_editable = ("is_approved",)
     list_filter = ("rating", "is_approved")
-    search_fields = ("name", "company")
+    search_fields = ("name", "company", "business_url")
 
 
 @admin.register(ContactMessage)
