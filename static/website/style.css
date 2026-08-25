@@ -377,6 +377,7 @@ main > section:first-of-type::before {
     align-items: center;
     gap: 10px;
     transition: opacity .2s ease;
+    text-decoration: none;
 }
 .navbar-brand:hover { opacity: .8; }
 
@@ -411,6 +412,7 @@ main > section:first-of-type::before {
     color: var(--ink);
     transition: var(--transition);
     position: relative;
+    text-decoration: none;
 }
 .navbar-link:hover { color: var(--blue-mid); }
 
@@ -463,7 +465,7 @@ main > section:first-of-type::before {
     gap: 12px;
 }
 
-.navbar-mobile-link { color: var(--ink); }
+.navbar-mobile-link { color: var(--ink); text-decoration: none; }
 .navbar-mobile-link.active { color: var(--blue-mid); font-weight: 600; }
 
 /* =========================================
