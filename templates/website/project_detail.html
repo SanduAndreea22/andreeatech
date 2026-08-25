@@ -36,7 +36,7 @@
         {% if project.image %}
         <div class="pd-image-wrap">
             <div class="pd-image-frame">
-                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" width="{{ project.image.width }}" height="{{ project.image.height }}">
                 <div class="pd-image-fade"></div>
             </div>
         </div>

@@ -51,7 +51,7 @@
 
                 {% if featured.image %}
                 <div class="pl-featured-image-wrap">
-                    <img src="{{ featured.image.url }}" alt="{{ featured.title }}">
+                    <img src="{{ featured.image.url }}" alt="{{ featured.title }}" width="{{ featured.image.width }}" height="{{ featured.image.height }}">
                 </div>
                 {% endif %}
             </div>
@@ -67,7 +67,7 @@
         <div class="glass card-hover project-card">
             {% if project.image %}
             <div class="project-card-image">
-                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" width="{{ project.image.width }}" height="{{ project.image.height }}" loading="lazy">
             </div>
             {% endif %}
 

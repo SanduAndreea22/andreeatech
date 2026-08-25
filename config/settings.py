@@ -15,7 +15,9 @@ SUPER_EMAIL = os.getenv('DJANGO_SUPERUSER_EMAIL')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ['andreeastech.pythonanywhere.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['andreeastech.pythonanywhere.com']
+if DEBUG:
+    ALLOWED_HOSTS += ['localhost', '127.0.0.1']
 
 
 # Application definition

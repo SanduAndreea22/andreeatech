@@ -19,7 +19,7 @@
     <div class="container-lg about-bio-grid">
         <div class="about-bio-photo-wrap">
             <div class="about-bio-photo">
-                <img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu">
+                <img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" width="800" height="800">
             </div>
         </div>
         <div class="glass about-bio-card">
@@ -57,7 +57,7 @@
             {% for cert in certifications %}
             <div class="glass card-hover about-cert-card">
                 <div class="about-cert-image-wrap">
-                    <img src="{{ cert.image.url }}" class="cert-image about-cert-image" alt="{{ cert.title }}">
+                    <img src="{{ cert.image.url }}" class="cert-image about-cert-image" alt="{{ cert.title }}" width="{{ cert.image.width }}" height="{{ cert.image.height }}" loading="lazy">
                 </div>
                 <div class="about-cert-body">
                     <h3 class="about-cert-title">{{ cert.title }}</h3>
