@@ -28,12 +28,31 @@
             <span class="badge-dot badge-dot-pulse"></span>
             Răspund în maximum 24h
         </div>
-        <div>
+        <div class="btn-row">
             <a href="{% url 'start_project' %}" class="btn-primary home-hero-cta">Hai să discutăm proiectul tău</a>
+            <a href="{% url 'contact' %}" class="btn-outline home-hero-cta">Ai doar o întrebare rapidă?</a>
         </div>
         <div class="home-hero-links">
             <a href="#pachete" class="link-quiet">Vezi pachetele și prețurile ↓</a>
-            <a href="{% url 'contact' %}" class="link-quiet">Ai doar o întrebare rapidă? →</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container-md">
+        <p class="eyebrow eyebrow-center">De ce eu</p>
+        <div class="glass home-about-card">
+            <div class="home-about-stat-col">
+                <img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" class="home-about-photo" width="800" height="800" loading="lazy">
+            </div>
+            <div class="home-about-text">
+                <p>Nu construiesc produse doar pentru clienți — le construiesc și pentru mine. Am două produse proprii, construite din nevoi reale, nu dintr-un brief: un planner personal (Emotional Planner) și un tracker de buget (Budget Planner). Pe lângă ele, am construit și sisteme complete — o platformă de ticketing (Platform Tickets) și platforme precum Al Noir și Bookora.</p>
+                <p>De-asta nu pornesc de la un stack tehnic. Pornesc de la problemă — de ce are nevoie omul care folosește produsul. Uneori soluția e un website. Alteori e un sistem de rezervări, o platformă de ticketing, o automatizare, sau un agent AI care poate executa efectiv o parte din flux.</p>
+                <div class="home-about-links">
+                    <a href="{% url 'projects' %}" class="link">Vezi sistemele complete construite de mine →</a>
+                    <a href="{% url 'about' %}" class="link">Despre mine →</a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -66,29 +85,6 @@
 <section class="section section-tint">
     <div class="container-sm home-statement">
         <p>Aici pot ajuta — printr-un site gândit corect, un sistem care ține pasul cu fluxul tău real, și, unde are sens, o automatizare care preia partea repetitivă. Nu automatizarea e scopul. <strong class="text-strong">Experiența pe care o are omul de partea cealaltă e scopul.</strong></p>
-    </div>
-</section>
-
-<section class="section">
-    <div class="container-md">
-        <p class="eyebrow eyebrow-center">De ce eu</p>
-        <div class="glass home-about-card">
-            <div class="home-about-stat-col">
-                <img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" class="home-about-photo" width="800" height="800" loading="lazy">
-                <div class="home-about-stat">
-                    <p class="home-about-stat-num gradient-text">5</p>
-                    <p class="home-about-stat-label">sisteme construite</p>
-                </div>
-            </div>
-            <div class="home-about-text">
-                <p>Nu construiesc produse doar pentru clienți — le construiesc și pentru mine. Am două produse proprii, construite din nevoi reale, nu dintr-un brief: un planner personal (Emotional Planner) și un tracker de buget (Budget Planner). Pe lângă ele, am construit și sisteme complete — o platformă de ticketing (Platform Tickets) și platforme precum Al Noir și Bookora.</p>
-                <p>De-asta nu pornesc de la un stack tehnic. Pornesc de la problemă — de ce are nevoie omul care folosește produsul. Uneori soluția e un website. Alteori e un sistem de rezervări, o platformă de ticketing, o automatizare, sau un agent AI care poate executa efectiv o parte din flux.</p>
-                <div class="home-about-links">
-                    <a href="{% url 'projects' %}" class="link">Vezi sistemele complete construite de mine →</a>
-                    <a href="{% url 'about' %}" class="link">Despre mine →</a>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 
