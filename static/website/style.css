@@ -1003,17 +1003,20 @@ select {
 .project-card-image { aspect-ratio: 16 / 10; overflow: hidden; }
 .project-card-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
 .project-card:hover .project-card-image img { transform: scale(1.05); }
-.project-card-body { padding: 32px; display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
-.project-card-bar { height: 4px; width: 48px; background: rgba(31,59,107,.3); margin-bottom: 24px; transition: width .5s ease; }
+.project-card-body { padding: 24px; display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
+.project-card-bar { height: 4px; width: 48px; background: rgba(31,59,107,.3); margin-bottom: 16px; transition: width .5s ease; }
 .project-card:hover .project-card-bar { width: 100%; }
-.project-card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 16px; }
+.project-card-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 12px; }
 .project-highlight {
     color: var(--blue-mid); font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
-    margin-bottom: 12px; opacity: 0; transform: translateY(-4px); transition: all .3s ease;
+    margin-bottom: 10px; opacity: 0; transform: translateY(-4px); transition: all .3s ease;
 }
 .project-card:hover .project-highlight { opacity: 1; transform: translateY(0); }
-.project-card-desc { color: var(--ink-faint); font-size: .9375rem; margin-bottom: 32px; line-height: 1.7; }
-.project-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); }
+.project-card-desc {
+    color: var(--ink-faint); font-size: .9375rem; margin-bottom: 20px; line-height: 1.6;
+    display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.project-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
 .project-link { color: var(--blue-mid); font-size: .875rem; font-weight: 700; transition: var(--transition); display: flex; align-items: center; gap: 4px; }
 .project-link:hover { color: var(--blue-mid-hover); }
 .project-link span { transition: transform .2s ease; }
