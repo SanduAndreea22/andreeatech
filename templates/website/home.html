@@ -213,6 +213,48 @@
             <p class="home-pricing-recap-title">Recapitulare cost</p>
             <p>Plătești o singură dată prețul pachetului ales. Domeniul și hostingul sunt separate, doar dacă nu le ai deja. Automatizarea sau agentul AI sunt complet opționale, cu cost separat de configurare și utilizare — le adaugi doar dacă chiar ai nevoie de ele.</p>
         </div>
+
+        <div class="glass home-calc" id="priceCalc">
+            <p class="home-calc-title">Calculator rapid de preț</p>
+            <div class="home-calc-body">
+                <div class="home-calc-group">
+                    <p class="home-calc-label">Alege pachetul</p>
+                    <div class="home-calc-options">
+                        <label class="home-calc-option">
+                            <input type="radio" name="calcPackage" value="150" data-key="digital_presence" data-name="Prezență Digitală" data-exact="true">
+                            <span>Prezență Digitală — €150</span>
+                        </label>
+                        <label class="home-calc-option">
+                            <input type="radio" name="calcPackage" value="380" data-key="full_experience" data-name="Experiența Completă" data-exact="true" checked>
+                            <span>Experiența Completă — €380</span>
+                        </label>
+                        <label class="home-calc-option">
+                            <input type="radio" name="calcPackage" value="850" data-key="premium_system" data-name="Sistem Premium" data-exact="false">
+                            <span>Sistem Premium — de la €850</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="home-calc-group">
+                    <p class="home-calc-label">Adaugi și (opțional)</p>
+                    <div class="home-calc-options">
+                        <label class="home-calc-option">
+                            <input type="checkbox" id="calcAutomation" value="15">
+                            <span>Automatizare simplă — de la €15</span>
+                        </label>
+                        <label class="home-calc-option">
+                            <input type="checkbox" id="calcAgent" value="25">
+                            <span>Agent AI — de la €25</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="home-calc-total">
+                <span class="home-calc-total-label">Estimare</span>
+                <span class="home-calc-total-value gradient-text" id="calcTotal">€380</span>
+            </div>
+            <a href="{% url 'start_project' %}?pachet=full_experience" class="btn-primary home-calc-cta" id="calcCta">Pornesc cu acest pachet →</a>
+            <p class="home-calc-note">Estimare orientativă — suma exactă se stabilește la consultație, în funcție de ce alegi.</p>
+        </div>
     </div>
 </section>
 
@@ -371,6 +413,40 @@
             demoForm.reset();
             demoForm.classList.remove('hidden');
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const calc = document.getElementById('priceCalc');
+        if (!calc) return;
+
+        const packageInputs = calc.querySelectorAll('input[name="calcPackage"]');
+        const automationInput = document.getElementById('calcAutomation');
+        const agentInput = document.getElementById('calcAgent');
+        const totalEl = document.getElementById('calcTotal');
+        const ctaEl = document.getElementById('calcCta');
+
+        const formatEUR = (n) => '€' + n.toLocaleString('ro-RO');
+
+        const update = () => {
+            const selected = calc.querySelector('input[name="calcPackage"]:checked');
+            if (!selected) return;
+
+            const base = parseInt(selected.value, 10);
+            const addAutomation = automationInput.checked ? parseInt(automationInput.value, 10) : 0;
+            const addAgent = agentInput.checked ? parseInt(agentInput.value, 10) : 0;
+            const total = base + addAutomation + addAgent;
+
+            const isExact = selected.dataset.exact === 'true' && !addAutomation && !addAgent;
+            totalEl.textContent = (isExact ? '' : 'de la ') + formatEUR(total);
+
+            ctaEl.href = ctaEl.href.split('?')[0] + '?pachet=' + selected.dataset.key;
+            ctaEl.textContent = `Pornesc cu ${selected.dataset.name} →`;
+        };
+
+        packageInputs.forEach((input) => input.addEventListener('change', update));
+        automationInput.addEventListener('change', update);
+        agentInput.addEventListener('change', update);
+        update();
     });
 </script>
 {% endblock %}

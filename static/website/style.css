@@ -851,6 +851,33 @@ select {
 .home-pricing-recap { max-width: 42rem; margin: 32px auto 0; padding: 24px; border-radius: 18px; font-size: .875rem; line-height: 1.7; color: var(--ink-soft); }
 .home-pricing-recap-title { color: var(--ink); font-weight: 600; margin-bottom: 8px; }
 
+/* Interactive price calculator */
+.home-calc { max-width: 42rem; margin: 32px auto 0; padding: 32px; border-radius: 20px; }
+.home-calc-title { font-size: 1.125rem; font-weight: 700; color: var(--ink); margin-bottom: 24px; }
+.home-calc-body { display: grid; gap: 24px; margin-bottom: 24px; }
+@media (min-width: 640px) { .home-calc-body { grid-template-columns: 1fr 1fr; } }
+.home-calc-label { font-size: .75rem; font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
+.home-calc-group { display: flex; flex-direction: column; }
+.home-calc-options { display: flex; flex-direction: column; gap: 8px; }
+.home-calc-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 10px;
+    border: 1px solid var(--line);
+    font-size: .875rem; color: var(--ink-soft);
+    cursor: pointer; transition: var(--transition);
+}
+.home-calc-option:has(input:checked) { border-color: var(--blue-mid); background: rgba(var(--blue-mid-rgb),.06); color: var(--ink); }
+.home-calc-option input { width: auto; margin: 0; flex-shrink: 0; accent-color: var(--blue-mid); }
+.home-calc-total {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 20px; border-top: 1px solid var(--line);
+    margin-bottom: 20px;
+}
+.home-calc-total-label { font-size: .875rem; color: var(--ink-faint); }
+.home-calc-total-value { font-size: 1.75rem; font-weight: 800; color: var(--blue-mid); }
+.home-calc-cta { display: block; text-align: center; padding: 14px 0; border-radius: 12px; font-weight: 700; margin-bottom: 12px; }
+.home-calc-note { font-size: .75rem; color: var(--ink-faint); text-align: center; }
+
 .home-integrations { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 32px; }
 .home-integrations-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .15em; color: var(--ink-faint); font-weight: 600; margin-right: 4px; }
 .home-integration-pill {
