@@ -965,6 +965,12 @@ select {
 @media (min-width: 768px) { .home-agent-panel { padding: 56px; } }
 .home-agent-emoji { font-size: 1.875rem; margin-bottom: 16px; }
 
+.home-agent-demo { margin-bottom: 32px; padding: 20px; border-radius: 16px; background: var(--paper); border: 1px solid var(--line); }
+.home-agent-demo-questions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.home-agent-demo-log { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.home-agent-demo-log:empty { margin-top: 0; }
+.home-agent-demo-note { font-size: .75rem; color: var(--ink-faint); margin-top: 16px; }
+
 .home-products-panel { padding: 40px; border-radius: 24px; text-align: center; }
 .home-products-desc { max-width: 42rem; margin-left: auto; margin-right: auto; }
 
