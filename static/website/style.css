@@ -1099,6 +1099,40 @@ select {
 .pp-cta-section { text-align: center; }
 .pp-cta-note { color: var(--ink-faint); font-size: .875rem; margin-top: 32px; }
 
+/* Interactive mini-preview widget, shared shape used by Planner and Budget */
+.pp-demo-card { max-width: 36rem; margin: 0 auto; padding: 32px; border-radius: 24px; }
+@media (min-width: 768px) { .pp-demo-card { padding: 40px; } }
+.pp-demo-label { font-size: .8125rem; font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+.pp-demo-mood { margin-bottom: 24px; }
+.pp-demo-mood-options { display: flex; gap: 10px; flex-wrap: wrap; }
+.pp-demo-mood-btn {
+    padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line);
+    background: none; color: var(--ink-soft); font-size: .875rem; cursor: pointer;
+    transition: var(--transition); font: inherit;
+}
+.pp-demo-mood-btn:hover { border-color: var(--blue-mid); }
+.pp-demo-mood-btn.is-active { border-color: var(--blue-mid); background: rgba(var(--blue-mid-rgb),.10); color: var(--ink); font-weight: 600; }
+.pp-demo-field { margin-bottom: 24px; }
+.pp-demo-field input { margin-bottom: 0; }
+.pp-demo-submit { width: 100%; padding: 14px 0; border-radius: 12px; font-weight: 700; }
+.pp-demo-output { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+.pp-demo-note { text-align: center; color: var(--ink-faint); font-size: .75rem; margin-top: 20px; }
+
+/* Budget-specific demo bits */
+.pp-demo-row { display: grid; gap: 16px; margin-bottom: 24px; }
+@media (min-width: 640px) { .pp-demo-row { grid-template-columns: 1fr 1fr; } }
+.pp-demo-field-inline { display: flex; flex-direction: column; }
+.pp-demo-field-inline input { margin-bottom: 0; }
+.pp-demo-balance { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+.pp-demo-balance-label { font-size: .875rem; color: var(--ink-faint); }
+.pp-demo-balance-value { font-size: 1.75rem; font-weight: 800; }
+.pp-demo-balance-value.is-negative { color: #dc2626; }
+.pp-demo-balance-value.is-positive { color: #16a34a; }
+.pp-demo-bar-track { height: 10px; border-radius: 999px; background: var(--paper-tint); overflow: hidden; margin-bottom: 8px; }
+.pp-demo-bar-fill { height: 100%; background: var(--blue-mid); border-radius: 999px; width: 0%; }
+@media (prefers-reduced-motion: no-preference) { .pp-demo-bar-fill { transition: width .4s ease; } }
+.pp-demo-bar-label { font-size: .75rem; color: var(--ink-faint); text-align: right; }
+
 /* =========================================
    PROJECTS LIST PAGE
 ========================================= */
