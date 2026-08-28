@@ -183,6 +183,35 @@
     </div>
 </section>
 
+<section class="section">
+    <div class="container-md">
+        <p class="eyebrow eyebrow-center">Cum lucrăm</p>
+        <h2 class="h2-lg">Patru pași, de la brief la sistem funcțional.</h2>
+        <div class="home-timeline">
+            <div class="home-timeline-step">
+                <div class="home-timeline-dot">1</div>
+                <h3 class="home-timeline-title">Brief-ul tău</h3>
+                <p class="home-timeline-body">Completezi un brief scurt — despre afacerea ta, fluxul de lucru actual și ce vrei să funcționeze mai bine.</p>
+            </div>
+            <div class="home-timeline-step">
+                <div class="home-timeline-dot">2</div>
+                <h3 class="home-timeline-title">Plan tehnic & confirmare</h3>
+                <p class="home-timeline-body">Transform brief-ul într-un plan tehnic clar, cu termen de livrare stabilit înainte să începem — fără surprize pe parcurs.</p>
+            </div>
+            <div class="home-timeline-step">
+                <div class="home-timeline-dot">3</div>
+                <h3 class="home-timeline-title">Construcție</h3>
+                <p class="home-timeline-body">Construiesc website-ul sau sistemul, în termenul stabilit — 7, 14 sau 21 de zile, în funcție de pachetul ales.</p>
+            </div>
+            <div class="home-timeline-step">
+                <div class="home-timeline-dot">4</div>
+                <h3 class="home-timeline-title">Livrare & stabilizare</h3>
+                <p class="home-timeline-body">Primești sistemul complet, plus 7 zile de stabilizare gratuită — orice bug găsit în perioada asta, îl repar fără cost.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="pachete" class="section">
     <div class="container">
         <p class="eyebrow eyebrow-center">Pachete</p>
@@ -447,6 +476,27 @@
         automationInput.addEventListener('change', update);
         agentInput.addEventListener('change', update);
         update();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const steps = document.querySelectorAll('.home-timeline-step');
+        if (!steps.length) return;
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+            steps.forEach((el) => el.classList.add('in-view'));
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.4, rootMargin: '0px 0px -80px 0px' });
+
+        steps.forEach((el) => observer.observe(el));
     });
 </script>
 {% endblock %}
