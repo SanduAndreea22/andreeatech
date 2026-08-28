@@ -38,7 +38,13 @@
                 {% csrf_token %}
                 <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
-                <div class="sp-group">
+                <div class="sp-progress" id="spProgress">
+                    <div class="sp-progress-segment"><div class="sp-progress-fill"></div></div>
+                    <div class="sp-progress-segment"><div class="sp-progress-fill"></div></div>
+                    <div class="sp-progress-segment"><div class="sp-progress-fill"></div></div>
+                </div>
+
+                <div class="sp-group" data-sp-step>
                     <h3 class="sp-step-title">
                         <span class="sp-step-dot"></span> 01. Identificare
                     </h3>
@@ -64,7 +70,7 @@
                     </div>
                 </div>
 
-                <div class="sp-group">
+                <div class="sp-group" data-sp-step>
                     <h3 class="sp-step-title">
                         <span class="sp-step-dot"></span> 02. Scopul proiectului
                     </h3>
@@ -75,7 +81,7 @@
                     </div>
                 </div>
 
-                <div class="sp-group">
+                <div class="sp-group" data-sp-step>
                     <h3 class="sp-step-title">
                         <span class="sp-step-dot"></span> 03. Ce ai nevoie mai exact
                     </h3>
@@ -112,5 +118,36 @@
 
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const steps = document.querySelectorAll('[data-sp-step]');
+        const fills = document.querySelectorAll('#spProgress .sp-progress-fill');
+        if (!steps.length || steps.length !== fills.length) return;
+
+        const OFFSET = 160;
+
+        const update = () => {
+            steps.forEach((step, i) => {
+                const rect = step.getBoundingClientRect();
+                const top = rect.top;
+                const height = rect.height;
+                let pct;
+                if (top + height <= OFFSET) {
+                    pct = 100;
+                } else if (top >= OFFSET) {
+                    pct = 0;
+                } else {
+                    pct = ((OFFSET - top) / height) * 100;
+                }
+                fills[i].style.width = Math.min(100, Math.max(0, pct)) + '%';
+            });
+        };
+
+        window.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        update();
+    });
+</script>
 
 {% endblock %}

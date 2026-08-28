@@ -121,7 +121,12 @@ html {
 .card-hover,
 .service-card,
 .project-card,
-.pricing-card {
+.pricing-card,
+.home-pricing-card,
+.product-card,
+.pp-feature-card,
+.review-card,
+.about-cert-card {
     transition: var(--transition);
     border-radius: var(--radius);
 }
@@ -129,7 +134,12 @@ html {
 .card-hover:hover,
 .service-card:hover,
 .project-card:hover,
-.pricing-card:hover {
+.pricing-card:hover,
+.home-pricing-card:hover,
+.product-card:hover,
+.pp-feature-card:hover,
+.review-card:hover,
+.about-cert-card:hover {
     transform: translateY(-6px) scale(1.015);
     border-color: rgba(var(--blue-mid-rgb),.3);
     box-shadow: 0 30px 70px rgba(22,34,62,.10);
@@ -1216,6 +1226,31 @@ select {
 /* =========================================
    START A PROJECT PAGE
 ========================================= */
+
+.sp-progress {
+    position: sticky;
+    top: 75px;
+    z-index: 5;
+    display: flex;
+    gap: 6px;
+    padding-bottom: 24px;
+    background: var(--paper);
+}
+.sp-progress-segment {
+    flex: 1;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--paper-tint);
+    overflow: hidden;
+}
+.sp-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--blue-mid);
+}
+@media (prefers-reduced-motion: no-preference) {
+    .sp-progress-fill { transition: width .15s ease; }
+}
 
 .sp-form { display: flex; flex-direction: column; gap: 40px; }
 .sp-group { display: flex; flex-direction: column; gap: 24px; }
