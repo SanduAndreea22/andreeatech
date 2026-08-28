@@ -495,6 +495,26 @@ main > section:first-of-type::before {
 
 .footer-copy { opacity: .5; }
 
+/* Copy-to-clipboard button, used next to email addresses */
+.copy-email-wrap { display: inline-flex; align-items: center; gap: 6px; }
+.copy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--ink-faint);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: color .2s ease, background .2s ease;
+}
+.copy-btn:hover { color: var(--blue-mid); background: rgba(62,92,153,.08); }
+.copy-btn svg { width: 14px; height: 14px; }
+.copy-btn.is-copied { color: #16a34a; }
+
 /* =========================================
    FORMS
 ========================================= */
@@ -890,9 +910,23 @@ select {
     border-radius: 10px;
     border: 1px solid;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    animation: formMessagePop .5s cubic-bezier(.34,1.56,.64,1) both;
 }
+.form-message-icon { width: 20px; height: 20px; flex-shrink: 0; }
 .form-message-error { border-color: #dc2626; background: rgba(220,38,38,.08); color: #dc2626; }
 .form-message-success { border-color: #16a34a; background: rgba(22,163,74,.08); color: #16a34a; }
+
+@keyframes formMessagePop {
+    from { opacity: 0; transform: scale(.92) translateY(-8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .form-message { animation: none; }
+}
 
 .form-footer { border-top: 1px solid var(--line); padding-top: 48px; text-align: center; }
 .form-footer h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 16px; color: var(--ink); }
@@ -1002,7 +1036,36 @@ select {
 @media (min-width: 768px) { .projects-grid { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 1024px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
 
-.project-card { padding: 32px; border-radius: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.project-card { padding: 0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
+.project-card-body { padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+
+.project-card-image-wrap { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+.project-card-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+.project-card:hover .project-card-image-wrap img { transform: scale(1.08); }
+.project-card-image-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(30,58,114,.80), transparent 65%);
+    display: flex; align-items: flex-end;
+    padding: 16px;
+    opacity: 0; transition: opacity .3s ease;
+}
+.project-card:hover .project-card-image-overlay { opacity: 1; }
+.project-card-image-overlay span { color: #fff; font-weight: 700; font-size: .875rem; }
+
+.live-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(234,240,250,.95);
+    padding: 4px 12px; border-radius: 999px;
+    font-size: .75rem; font-weight: 700; color: #16a34a;
+    box-shadow: 0 4px 14px rgba(0,0,0,.12);
+}
+.live-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #16a34a; animation: badgePulse 2s ease infinite; }
+.live-badge-overlay { position: absolute; top: 12px; left: 12px; z-index: 1; }
+.live-badge-inline { margin-bottom: 16px; }
+
+.project-card-title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.project-card-title-row .project-card-title { margin-bottom: 0; }
+
 .project-card-bar { height: 4px; width: 48px; background: rgba(62,92,153,.3); margin-bottom: 24px; transition: width .5s ease; }
 .project-card:hover .project-card-bar { width: 100%; }
 .project-card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 16px; }
@@ -1024,6 +1087,24 @@ select {
 /* =========================================
    PROJECT DETAIL PAGE
 ========================================= */
+
+.read-progress {
+    position: fixed;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(30,58,114,.08);
+    z-index: 9998;
+}
+.read-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--blue-mid);
+}
+@media (prefers-reduced-motion: no-preference) {
+    .read-progress-bar { transition: width .1s linear; }
+}
 
 .pd-back { display: inline-flex; align-items: center; font-size: .875rem; color: var(--ink-faint); transition: var(--transition); margin-bottom: 40px; }
 .pd-back:hover { color: var(--blue-mid); }

@@ -3,6 +3,8 @@
 {% block meta_description %}{{ project.short_description }}{% endblock %}
 
 {% block content %}
+<div class="read-progress"><div class="read-progress-bar" id="readProgressBar"></div></div>
+
 <section class="page-hero about-hero">
     <div class="hero-glow"></div>
 
@@ -85,5 +87,21 @@
 
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const bar = document.getElementById('readProgressBar');
+        if (!bar) return;
+
+        const updateProgress = () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+            bar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+        };
+
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        updateProgress();
+    });
+</script>
 
 {% endblock %}

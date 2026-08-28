@@ -18,7 +18,12 @@
 
             <p class="text-muted page-hero-note">
                 Preferi să mă contactezi direct?
-                <a href="mailto:andreea.tech@outlook.com" class="link">andreea.tech@outlook.com</a>
+                <span class="copy-email-wrap">
+                    <a href="mailto:andreea.tech@outlook.com" class="link">andreea.tech@outlook.com</a>
+                    <button type="button" class="copy-btn" data-copy-email="andreea.tech@outlook.com" aria-label="Copiază adresa de email" title="Copiază adresa de email">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </button>
+                </span>
                 ·
                 <a href="https://www.linkedin.com/in/andreeasandu22" target="_blank" rel="noopener noreferrer" class="link">LinkedIn</a>
             </p>
@@ -27,6 +32,11 @@
         {% if messages %}
             {% for message in messages %}
             <div class="form-message {% if message.tags == 'error' %}form-message-error{% else %}form-message-success{% endif %}">
+                {% if message.tags == 'error' %}
+                <svg class="form-message-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                {% else %}
+                <svg class="form-message-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                {% endif %}
                 {{ message }}
             </div>
             {% endfor %}
