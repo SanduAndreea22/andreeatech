@@ -1116,6 +1116,8 @@ select {
 .pp-demo-field input { margin-bottom: 0; }
 .pp-demo-submit { width: 100%; padding: 14px 0; border-radius: 12px; font-weight: 700; }
 .pp-demo-output { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+.pp-demo-task-row { padding: 14px 16px; border-radius: 12px; }
+.pp-demo-task-row .mark { color: var(--blue-mid); margin-right: 8px; }
 .pp-demo-note { text-align: center; color: var(--ink-faint); font-size: .75rem; margin-top: 20px; }
 
 /* Budget-specific demo bits */

@@ -76,6 +76,30 @@
     </div>
 </section>
 
+<section class="section">
+    <div class="container-md">
+        <p class="eyebrow eyebrow-center">Încearcă chiar tu</p>
+        <h2 class="h2-lg">Vezi cum arată o zi planificată cu Emotional Planner.</h2>
+        <div class="glass pp-demo-card">
+            <div class="pp-demo-mood">
+                <p class="pp-demo-label">Cum te simți azi?</p>
+                <div class="pp-demo-mood-options" id="plannerMood">
+                    <button type="button" class="pp-demo-mood-btn" data-mood="grea">😮‍💨 Grea</button>
+                    <button type="button" class="pp-demo-mood-btn is-active" data-mood="ok">🙂 Ok</button>
+                    <button type="button" class="pp-demo-mood-btn" data-mood="buna">😄 Bună</button>
+                </div>
+            </div>
+            <div class="pp-demo-field">
+                <label class="pp-demo-label" for="plannerTask">Ce ai de făcut azi? (un task)</label>
+                <input type="text" id="plannerTask" placeholder="Ex. Trimit oferta către client" maxlength="60">
+            </div>
+            <button type="button" class="btn-primary pp-demo-submit" id="plannerGenerate">Vezi planul de azi →</button>
+            <div class="pp-demo-output hidden" id="plannerOutput"></div>
+            <p class="pp-demo-note">100% simulare — nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
+        </div>
+    </div>
+</section>
+
 <section class="section-lg">
     <div class="container-md pp-cta-section">
         <h2 class="h2-lg">Încearcă-l gratuit și organizează-ți ziua în ritmul tău.</h2>
@@ -84,4 +108,66 @@
         <p class="pp-cta-note">Ai o afacere, nu doar nevoi personale? <a href="{% url 'start_project' %}" class="link">Vezi ce pot construi pentru tine →</a></p>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const moodWrap = document.getElementById('plannerMood');
+        const taskInput = document.getElementById('plannerTask');
+        const generateBtn = document.getElementById('plannerGenerate');
+        const output = document.getElementById('plannerOutput');
+        if (!moodWrap || !generateBtn) return;
+
+        let mood = 'ok';
+
+        moodWrap.querySelectorAll('.pp-demo-mood-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                moodWrap.querySelectorAll('.pp-demo-mood-btn').forEach((b) => b.classList.remove('is-active'));
+                btn.classList.add('is-active');
+                mood = btn.dataset.mood;
+            });
+        });
+
+        const copy = {
+            grea: {
+                intro: 'Azi pare o zi grea. E ok să mergi mai încet — un singur pas contează.',
+                closing: 'Nu trebuie să fii productiv(ă) azi. Trebuie doar să fii sincer(ă) cu tine.',
+            },
+            ok: {
+                intro: 'O zi obișnuită — poți avansa în ritmul tău, fără presiune.',
+                closing: 'Bifează ce poți azi, restul rămâne pentru mâine.',
+            },
+            buna: {
+                intro: 'Ai energie azi — e un moment bun să avansezi cu ce contează.',
+                closing: 'O victorie mică tot contează la fel de mult ca una mare.',
+            },
+        };
+
+        generateBtn.addEventListener('click', () => {
+            const task = taskInput.value.trim() || 'Un task important pentru azi';
+            const c = copy[mood];
+
+            output.innerHTML = '';
+            output.classList.remove('hidden');
+
+            const intro = document.createElement('p');
+            intro.className = 'text-body';
+            intro.textContent = c.intro;
+            output.appendChild(intro);
+
+            const taskRow = document.createElement('div');
+            taskRow.className = 'glass pp-demo-task-row';
+            const taskMark = document.createElement('span');
+            taskMark.className = 'mark';
+            taskMark.textContent = '☐';
+            taskRow.appendChild(taskMark);
+            taskRow.appendChild(document.createTextNode(task));
+            output.appendChild(taskRow);
+
+            const closing = document.createElement('p');
+            closing.className = 'text-muted';
+            closing.textContent = c.closing;
+            output.appendChild(closing);
+        });
+    });
+</script>
 {% endblock %}
