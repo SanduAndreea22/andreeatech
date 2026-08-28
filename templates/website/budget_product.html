@@ -64,6 +64,41 @@
     </div>
 </section>
 
+<section class="section">
+    <div class="container-md">
+        <p class="eyebrow eyebrow-center">Încearcă chiar tu</p>
+        <h2 class="h2-lg">Vezi cât îți rămâne, dintr-o privire.</h2>
+        <div class="glass pp-demo-card">
+            <div class="pp-demo-row">
+                <div class="pp-demo-field-inline">
+                    <label class="pp-demo-label" for="budgetIncome">Venit lunar (€)</label>
+                    <input type="number" id="budgetIncome" placeholder="Ex. 2500" min="0">
+                </div>
+                <div class="pp-demo-field-inline">
+                    <label class="pp-demo-label" for="budgetFixed">Cheltuieli fixe (€)</label>
+                    <input type="number" id="budgetFixed" placeholder="Chirie, utilități..." min="0">
+                </div>
+            </div>
+            <div class="pp-demo-field">
+                <label class="pp-demo-label" for="budgetVariable">Cheltuieli variabile (€)</label>
+                <input type="number" id="budgetVariable" placeholder="Mâncare, ieșiri, altele..." min="0">
+            </div>
+            <button type="button" class="btn-primary pp-demo-submit" id="budgetGenerate">Calculează →</button>
+            <div class="pp-demo-output hidden" id="budgetOutput">
+                <div class="pp-demo-balance">
+                    <span class="pp-demo-balance-label">Îți rămâne</span>
+                    <span class="pp-demo-balance-value" id="budgetBalance">€0</span>
+                </div>
+                <div class="pp-demo-bar-track">
+                    <div class="pp-demo-bar-fill" id="budgetBar"></div>
+                </div>
+                <p class="pp-demo-bar-label" id="budgetBarLabel">0% din venit cheltuit</p>
+            </div>
+            <p class="pp-demo-note">100% simulare — nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
+        </div>
+    </div>
+</section>
+
 <section class="section-lg section-tint">
     <div class="container-md pp-cta-section">
         <h2 class="h2-lg">Fă din bani un subiect mai clar, mai calm.</h2>
@@ -72,4 +107,38 @@
         <p class="pp-cta-note">Ai o afacere, nu doar nevoi personale? <a href="{% url 'start_project' %}" class="link">Vezi ce pot construi pentru tine →</a></p>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const generateBtn = document.getElementById('budgetGenerate');
+        if (!generateBtn) return;
+
+        const incomeInput = document.getElementById('budgetIncome');
+        const fixedInput = document.getElementById('budgetFixed');
+        const variableInput = document.getElementById('budgetVariable');
+        const output = document.getElementById('budgetOutput');
+        const balanceEl = document.getElementById('budgetBalance');
+        const barEl = document.getElementById('budgetBar');
+        const barLabelEl = document.getElementById('budgetBarLabel');
+
+        const formatEUR = (n) => '€' + Math.round(n).toLocaleString('ro-RO');
+
+        generateBtn.addEventListener('click', () => {
+            const income = parseFloat(incomeInput.value) || 0;
+            const fixed = parseFloat(fixedInput.value) || 0;
+            const variable = parseFloat(variableInput.value) || 0;
+            const spent = fixed + variable;
+            const balance = income - spent;
+            const pctSpent = income > 0 ? Math.min(100, (spent / income) * 100) : 0;
+
+            output.classList.remove('hidden');
+            balanceEl.textContent = formatEUR(balance);
+            balanceEl.classList.remove('is-negative', 'is-positive');
+            balanceEl.classList.add(balance < 0 ? 'is-negative' : 'is-positive');
+
+            barEl.style.width = pctSpent + '%';
+            barLabelEl.textContent = Math.round(pctSpent) + '% din venit cheltuit';
+        });
+    });
+</script>
 {% endblock %}
