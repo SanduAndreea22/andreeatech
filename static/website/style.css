@@ -1263,6 +1263,19 @@ select {
 .pd-live-link { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-size: .875rem; font-weight: 700; }
 .pd-live-link svg { width: 16px; height: 16px; }
 
+.pd-result-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 22px;
+    border-radius: 14px;
+    background: rgba(var(--blue-mid-rgb),.08);
+    border: 1px solid rgba(var(--blue-mid-rgb),.2);
+    margin-bottom: 24px;
+}
+.pd-result-stat-icon { font-size: 1.25rem; }
+.pd-result-stat-text { font-size: 1.0625rem; font-weight: 700; color: var(--blue-mid); }
+
 .pd-image-wrap { margin-bottom: 64px; }
 .pd-image-frame { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 25px 60px rgba(0,0,0,.12); }
 .pd-image-frame img { width: 100%; height: auto; object-fit: cover; transition: transform .7s ease; display: block; }

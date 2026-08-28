@@ -27,6 +27,12 @@
             <p class="pd-desc">
                 {{ project.short_description }}
             </p>
+            {% if project.result_highlight %}
+            <div class="pd-result-stat">
+                <span class="pd-result-stat-icon">📈</span>
+                <span class="pd-result-stat-text">{{ project.result_highlight }}</span>
+            </div>
+            {% endif %}
             {% if project.link %}
             <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="btn-primary pd-live-link">
                 <span>Vezi proiectul live</span>
