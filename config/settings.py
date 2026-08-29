@@ -188,13 +188,16 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 
 # Where lead notifications (contact / start-project / review) are sent.
+# On PythonAnywhere's free tier, outbound email doesn't work at all, so
+# these notifications (and any Django error-email feature) silently do
+# nothing in production today. Left in place for when/if the account
+# upgrades to a plan that supports outbound SMTP.
 ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", EMAIL_HOST_USER)
 
-# So unhandled 500s in production get emailed instead of vanishing into the
-# PythonAnywhere error log with no alert.
-if ADMIN_EMAIL:
-    ADMINS = [("Andreea", ADMIN_EMAIL)]
-
+# No mail_admins handler here on purpose: PythonAnywhere's free tier can't
+# send email, so wiring one up would just fail on every 500 instead of
+# helping. Unhandled errors are visible in PythonAnywhere's error log via
+# the console handler below — check that log directly, not an inbox.
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

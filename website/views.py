@@ -25,9 +25,13 @@ def _notify_admin(subject, message):
 
 
 def _client_ip(request):
+    # The LAST entry is the one PythonAnywhere's proxy itself appended
+    # (closest hop to us), so it's the one a client can't forge by sending
+    # their own X-Forwarded-For header — taking the first entry would let
+    # spammers rotate a fake IP on every request and dodge the rate limit.
     forwarded = request.META.get("HTTP_X_FORWARDED_FOR")
     if forwarded:
-        return forwarded.split(",")[0].strip()
+        return forwarded.split(",")[-1].strip()
     return request.META.get("REMOTE_ADDR", "unknown")
 
 
