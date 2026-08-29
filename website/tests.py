@@ -235,7 +235,7 @@ class StartProjectFormViewTests(TestCase):
 
     def test_valid_submission_creates_message_with_joined_features(self):
         response = self.client.post(reverse("start_project"), self.valid_payload())
-        self.assertRedirects(response, reverse("start_project"))
+        self.assertRedirects(response, reverse("start_project") + "?sent=1")
         self.assertEqual(ContactMessage.objects.count(), 1)
         obj = ContactMessage.objects.first()
         self.assertEqual(obj.required_features, "booking, dashboard")
@@ -244,6 +244,13 @@ class StartProjectFormViewTests(TestCase):
     def test_package_preselected_from_query_param(self):
         response = self.client.get(reverse("start_project") + "?pachet=premium_system")
         self.assertContains(response, "premium_system")
+
+    def test_thank_you_state_shown_only_after_submit(self):
+        response = self.client.get(reverse("start_project"))
+        self.assertNotContains(response, "sp-thanks")
+
+        response = self.client.get(reverse("start_project") + "?sent=1")
+        self.assertContains(response, "sp-thanks")
 
     def test_honeypot_filled_silently_drops_submission(self):
         response = self.client.post(

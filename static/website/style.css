@@ -1412,6 +1412,11 @@ select {
 }
 .sp-submit-note { text-align: center; color: var(--ink-faint); font-size: .75rem; margin-top: 24px; }
 
+.sp-thanks { max-width: 32rem; margin: 0 auto; padding: 48px 32px; border-radius: 24px; text-align: center; animation: formMessagePop .5s cubic-bezier(.34,1.56,.64,1) both; }
+.sp-thanks-icon { width: 48px; height: 48px; color: #16a34a; margin: 0 auto 20px; display: block; }
+.sp-thanks-message { font-size: 1.25rem; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
+.sp-thanks-note { color: var(--ink-faint); line-height: 1.7; margin-bottom: 28px; }
+
 /* =========================================
    REVIEWS PAGE
 ========================================= */

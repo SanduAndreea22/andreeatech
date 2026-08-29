@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.templatetags.static import static
+from django.urls import reverse
 
 from .forms import ContactForm, ReviewForm, StartProjectForm
 from .models import Certification, ContactMessage, Project, Review
@@ -117,7 +118,7 @@ def start_project(request):
                 f"Name: {obj.name}\nEmail: {obj.email}\nIndustry: {obj.industry}\nPachet: {obj.get_selected_package_display() if obj.selected_package else 'nespecificat'}\n\n{obj.project_description}"
             )
             messages.success(request, "Cerere primită! Îți analizez brief-ul și revin cu un răspuns în maximum 24 de ore.")
-            return redirect("start_project")
+            return redirect(f"{reverse('start_project')}?sent=1")
     else:
         initial = {}
         package = request.GET.get("pachet")
@@ -128,7 +129,8 @@ def start_project(request):
         form = StartProjectForm(initial=initial)
 
     return render(request, "website/start_project.html", {
-        "form": form
+        "form": form,
+        "just_submitted": request.GET.get("sent") == "1",
     })
 
 

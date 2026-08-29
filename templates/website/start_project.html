@@ -19,6 +19,17 @@
             </p>
         </div>
 
+        {% if just_submitted %}
+        <div class="glass sp-thanks">
+            <svg class="sp-thanks-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            {% for message in messages %}
+            <p class="sp-thanks-message">{{ message }}</p>
+            {% endfor %}
+            <p class="sp-thanks-note">Verifică-ți emailul în următoarele 24h — răspund personal la fiecare brief, nu e un mesaj automat.</p>
+            <a href="{% url 'home' %}" class="btn-outline">Înapoi acasă</a>
+        </div>
+        {% else %}
+
         {% if messages %}
             {% for message in messages %}
             <div class="form-message {% if message.tags == 'error' %}form-message-error{% else %}form-message-success{% endif %}">
@@ -115,6 +126,8 @@
                 </div>
             </form>
         </div>
+
+        {% endif %}
 
     </div>
 </section>
