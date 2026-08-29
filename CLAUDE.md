@@ -4,7 +4,7 @@ Portfolio/freelance site for Andreea Sandu (andreeastech.pythonanywhere.com),
 built with Django. Read this before making assumptions about business
 context, audience, or workflow.
 
-## Business reality — do not assume otherwise
+## Business positioning — do not assume otherwise
 
 - **Positioning: "Antreprenori care vor să-și ducă business-ul la
   următorul nivel."** Generic small-business/entrepreneur audience — NOT
@@ -14,14 +14,15 @@ context, audience, or workflow.
   templates are stale, don't treat their CONTEXT line as current fact.
   Cross-check against actual site copy (home.html hero already says
   "antreprenori", not a specific niche) before repeating old framing.
-- **No paying clients yet.** The Portofoliu projects (Al Noir, Platform
-  Tickets, Bookora) are personal/practice builds, not client work.
-- **No real reviews yet.** Don't propose or build trust-signal features
-  that assume a track record that doesn't exist yet — aggregate ratings,
-  "X clienți", testimonial counts, impact-number strips ("X proiecte
-  livrate"), etc. Never fabricate numbers to make the site look more
-  established than it is. Revisit these ideas only once she actually has
-  real data to show.
+- Keep every trust/marketing claim strictly grounded in what's actually
+  true and verifiable on the live site right now — never propose or
+  build a feature that implies a track record (review counts, ratings,
+  "X proiecte livrate" style stats, etc.) beyond what's genuinely there.
+  Ask her before adding anything of that kind, rather than assuming.
+
+(This section is intentionally general — this repo is public on GitHub,
+so avoid writing specifics here that read as a weakness to a visitor
+browsing the source. Ask Andreea directly if you need the real numbers.)
 
 ## Standing technical rules
 
