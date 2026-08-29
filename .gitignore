@@ -19,8 +19,10 @@ venv/
 # 📦 Collected static files (regenerated via `collectstatic` on deploy)
 staticfiles/
 
-# 📝 Internal working notes (audits, context, planning) — not site code
-CLAUDE.md
+# 📝 Internal working notes (audits, planning) — not site code.
+# CLAUDE.md is deliberately NOT ignored — a past session removed it as
+# "internal notes" and that's exactly why business context (niche,
+# track record) kept getting lost between sessions. Keep it tracked.
 andreeatech-site-context.md
 audit-*.md
 digital-products-experiences.md
