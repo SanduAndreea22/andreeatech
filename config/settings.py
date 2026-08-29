@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'axes.middleware.AxesMiddleware',
 ]
 
-# django-axes: locks out repeated failed /admin/ login attempts. Without
+# django-axes: locks out repeated failed admin login attempts. Without
 # this, admin auth has no defense beyond password strength (see audit-cod.md).
 AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesStandaloneBackend',
@@ -59,6 +59,18 @@ AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = 1  # hours
 AXES_LOCKOUT_PARAMETERS = ['ip_address', 'username']
 AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT = False
+
+# By default axes only looks at REMOTE_ADDR, which on PythonAnywhere is the
+# proxy's own address, not the visitor's — every login attempt would look
+# like it's coming from the same IP, so 5 failed attempts from anyone would
+# lock out that shared address (and, combined with the username in
+# AXES_LOCKOUT_PARAMETERS, could let someone lock Andreea out of her own
+# admin just by failing her username 5 times). Same fix and reasoning as
+# _client_ip() in website/views.py: trust the right-most X-Forwarded-For
+# entry, the one PythonAnywhere's single proxy hop appended itself.
+AXES_IPWARE_META_PRECEDENCE_ORDER = ('HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR')
+AXES_IPWARE_PROXY_COUNT = 1
+AXES_IPWARE_PROXY_ORDER = 'right-most'
 
 ROOT_URLCONF = 'config.urls'
 

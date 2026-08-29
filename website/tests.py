@@ -1,5 +1,6 @@
 import io
 
+from django.core.cache import cache
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
@@ -310,3 +311,27 @@ class SeoEndpointTests(TestCase):
         response = self.client.get("/sitemap.xml")
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"<urlset", response.content)
+
+
+class RateLimitTests(TestCase):
+    """_rate_limited() uses the default in-memory cache, which is shared
+    across every test in the process — clear it before each test so counts
+    from other test classes' submissions don't leak in here."""
+
+    def setUp(self):
+        cache.clear()
+
+    def test_sixth_submission_within_an_hour_is_rate_limited(self):
+        payload = {
+            "name": "Jane Doe",
+            "email": "jane@example.com",
+            "message": "Hello there!",
+            "website": "",
+        }
+        for _ in range(5):
+            self.client.post(reverse("contact"), payload)
+        self.assertEqual(ContactMessageSimple.objects.count(), 5)
+
+        response = self.client.post(reverse("contact"), payload)
+        self.assertRedirects(response, reverse("contact"))
+        self.assertEqual(ContactMessageSimple.objects.count(), 5)

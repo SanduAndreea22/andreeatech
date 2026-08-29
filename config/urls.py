@@ -12,7 +12,9 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # Moved off the default /admin/ path — django-axes already blocks
+    # brute force here, this just keeps it off the generic scanner lists.
+    path('panou-admin/', admin.site.urls),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('robots.txt', robots_txt, name='robots_txt'),
     path('', include('website.urls')),  # links your site
