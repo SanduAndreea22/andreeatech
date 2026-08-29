@@ -883,8 +883,8 @@ select {
     padding: 6px 12px; border-radius: 999px; font-size: .75rem; font-weight: 600;
 }
 .home-integration-pill svg { width: 15px; height: 15px; stroke-width: 2.75; }
-.home-integration-pill-whatsapp { background: rgba(16,185,129,.10); border: 1px solid rgba(16,185,129,.25); color: #047857; }
-.home-integration-pill-stripe { background: rgba(139,92,246,.10); border: 1px solid rgba(139,92,246,.25); color: #6d28d9; }
+.home-integration-pill-whatsapp { background: rgba(16,185,129,.10); border: 1px solid rgba(16,185,129,.25); color: #4ade80; }
+.home-integration-pill-stripe { background: rgba(139,92,246,.10); border: 1px solid rgba(139,92,246,.25); color: #a78bfa; }
 .home-integration-pill-calendar { background: rgba(var(--blue-mid-rgb),.10); border: 1px solid rgba(var(--blue-mid-rgb),.25); color: var(--blue-mid); }
 
 .home-automation-summary {
