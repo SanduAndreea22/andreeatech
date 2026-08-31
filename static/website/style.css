@@ -1275,7 +1275,7 @@ select {
 .pd-header { margin-bottom: 48px; }
 .pd-title { font-size: 2.25rem; font-weight: 800; line-height: 1.15; margin-bottom: 24px; }
 @media (min-width: 768px) { .pd-title { font-size: 3.75rem; } }
-.pd-desc { color: var(--ink-faint); font-size: 1.25rem; line-height: 1.7; max-width: 42rem; margin-bottom: 32px; }
+.pd-desc { color: var(--ink-faint); font-size: 1.25rem; line-height: 1.7; max-width: 42rem; margin: 0 auto 32px; }
 .pd-live-link { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-size: .875rem; font-weight: 700; }
 .pd-live-link svg { width: 16px; height: 16px; }
 
