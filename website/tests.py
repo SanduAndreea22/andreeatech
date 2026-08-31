@@ -162,6 +162,21 @@ class StaticPageViewTests(TestCase):
                 self.assertEqual(response.status_code, 200)
 
 
+class ProjectsListViewTests(TestCase):
+
+    def test_multiple_featured_projects_all_shown_as_featured(self):
+        make_project(title="Featured A", is_featured=True)
+        make_project(title="Featured B", is_featured=True)
+        make_project(title="Regular")
+
+        response = self.client.get(reverse("projects"))
+
+        featured_titles = {p.title for p in response.context["featured_projects"]}
+        grid_titles = {p.title for p in response.context["projects"]}
+        self.assertEqual(featured_titles, {"Featured A", "Featured B"})
+        self.assertEqual(grid_titles, {"Regular"})
+
+
 class ProjectDetailViewTests(TestCase):
 
     def test_existing_project_returns_200(self):

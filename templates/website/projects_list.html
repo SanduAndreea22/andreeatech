@@ -17,9 +17,10 @@
     </div>
 </section>
 
-{% if featured %}
+{% if featured_projects %}
 <section class="section-sm">
-    <div class="container">
+    <div class="container pl-featured-stack">
+        {% for featured in featured_projects %}
         <div class="glass pl-featured-card">
             <div class="pl-featured-glow"></div>
 
@@ -59,6 +60,7 @@
                 {% endif %}
             </div>
         </div>
+        {% endfor %}
     </div>
 </section>
 {% endif %}

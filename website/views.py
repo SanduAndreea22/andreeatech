@@ -79,12 +79,12 @@ def budget_product(request):
 
 
 def projects_list(request):
-    featured = Project.objects.filter(is_featured=True).order_by("order", "-created_at").first()
-    # Show the selected project prominently, then show every remaining project.
-    # Previously, additional projects marked as featured were hidden completely.
-    projects = Project.objects.exclude(pk=featured.pk).order_by("order", "-created_at") if featured else Project.objects.all().order_by("order", "-created_at")
+    # Every project marked as featured gets its own prominent card, in order;
+    # everything else shows in the regular grid below.
+    featured_projects = Project.objects.filter(is_featured=True).order_by("order", "-created_at")
+    projects = Project.objects.exclude(is_featured=True).order_by("order", "-created_at")
     return render(request, "website/projects_list.html", {
-        "featured": featured,
+        "featured_projects": featured_projects,
         "projects": projects
     })
 

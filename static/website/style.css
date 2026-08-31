@@ -1143,6 +1143,7 @@ select {
    PROJECTS LIST PAGE
 ========================================= */
 
+.pl-featured-stack { display: flex; flex-direction: column; gap: 32px; }
 .pl-featured-card { position: relative; padding: 6px; overflow: hidden; }
 .pl-featured-glow {
     position: absolute; inset: 0;
