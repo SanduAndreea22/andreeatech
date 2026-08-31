@@ -1298,11 +1298,7 @@ select {
 .pd-image-frame:hover img { transform: scale(1.05); }
 .pd-image-fade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(234,240,250,.5), transparent); }
 
-/* .page-hero (the wrapping section) sets text-align: center for the
-   centered title/description above — without resetting it here, every
-   paragraph in the problem/solution/outcome text inherits center
-   alignment too, which is unreadable for anything longer than a line. */
-.pd-blocks { display: grid; gap: 48px; text-align: left; }
+.pd-blocks { display: grid; gap: 48px; }
 .pd-block { padding: 32px; position: relative; overflow: hidden; }
 @media (min-width: 768px) { .pd-block { padding: 40px; } }
 .pd-block-bar { position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
@@ -1325,7 +1321,6 @@ select {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    text-align: left;
     gap: 40px;
 }
 @media (min-width: 768px) { .pd-footer { flex-direction: row; align-items: center; justify-content: space-between; } }
