@@ -1144,6 +1144,16 @@ select {
 ========================================= */
 
 .pl-featured-stack { display: flex; flex-direction: column; gap: 32px; }
+/* With 2+ featured projects, stacking full-width hero cards reads as a
+   monotonous wall of identical blocks — switch to a side-by-side grid of
+   more compact cards instead, image on top, text below. */
+.pl-featured-stack.is-multiple { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 768px) { .pl-featured-stack.is-multiple { grid-template-columns: repeat(2, 1fr); } }
+.pl-featured-stack.is-multiple .pl-featured-inner { gap: 24px; padding: 28px; }
+@media (min-width: 768px) { .pl-featured-stack.is-multiple .pl-featured-inner { grid-template-columns: 1fr; padding: 28px; } }
+.pl-featured-stack.is-multiple .pl-featured-title { font-size: 1.5rem; margin-bottom: 16px; }
+.pl-featured-stack.is-multiple .pl-featured-desc { font-size: 1rem; margin-bottom: 24px; }
+.pl-featured-stack.is-multiple .pl-featured-image-wrap { aspect-ratio: 16 / 9; }
 .pl-featured-card { position: relative; padding: 6px; overflow: hidden; }
 .pl-featured-glow {
     position: absolute; inset: 0;
@@ -1176,9 +1186,10 @@ select {
 .pl-featured-card:hover .pl-featured-image-wrap img { transform: scale(1.05); }
 @media (min-width: 768px) { .pl-featured-image-wrap { order: 0; } }
 
-.projects-grid { display: grid; gap: 32px; }
-@media (min-width: 768px) { .projects-grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1024px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
+/* auto-fit instead of a fixed column count: with fewer projects than
+   columns, cards fill the row evenly instead of leaving a dead gap where
+   the missing column would be. */
+.projects-grid { display: grid; gap: 32px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
 .project-card { padding: 20px; border-radius: 18px; display: flex; flex-direction: column; }
 .project-card-image {

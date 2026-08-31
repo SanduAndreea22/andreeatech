@@ -19,7 +19,7 @@
 
 {% if featured_projects %}
 <section class="section-sm">
-    <div class="container pl-featured-stack">
+    <div class="container pl-featured-stack{% if featured_projects|length > 1 %} is-multiple{% endif %}">
         {% for featured in featured_projects %}
         <div class="glass pl-featured-card">
             <div class="pl-featured-glow"></div>
