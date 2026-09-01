@@ -155,7 +155,7 @@ def contact(request):
                 "New contact message — andreeatech",
                 f"From: {obj.name} ({obj.email})\n\n{obj.message}"
             )
-            messages.success(request, "Mesajul tău a fost trimis cu succes.")
+            messages.success(request, "Mesajul tău a ajuns la mine — răspund cât pot de repede.")
             return redirect("contact")
     else:
         form = ContactForm()

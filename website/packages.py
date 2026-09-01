@@ -26,7 +26,7 @@ PACKAGES = [
     {
         "key": "full_experience",
         "emoji": "🥈",
-        "name": "Experiența Completă",
+        "name": "Experiență Completă",
         "price": "€380",
         "tagline": "Site complet, plus un flux care lucrează pentru tine",
         "features": [
@@ -47,7 +47,7 @@ PACKAGES = [
         "price": "de la €850",
         "tagline": "Platformă completă, construită pe fluxul tău real",
         "features": [
-            "Tot ce include Experiența Completă, plus:",
+            "Tot ce include Experiență Completă, plus:",
             "Clienții pot plăti online, direct pe site",
             "Sistemul e construit pe pașii reali ai afacerii tale, nu pe un șablon",
             "Panou de control extins, adaptat la ce ai nevoie să vezi și să administrezi",
