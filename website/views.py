@@ -121,7 +121,11 @@ def start_project(request):
                 "New project brief — andreeatech",
                 f"Name: {obj.name}\nEmail: {obj.email}\nIndustry: {obj.industry}\nPachet: {obj.get_selected_package_display() if obj.selected_package else 'nespecificat'}\n\n{obj.project_description}"
             )
-            messages.success(request, "Cerere primită! Îți analizez brief-ul și revin cu un răspuns în maximum 24 de ore.")
+            # No messages.success() here — the thank-you panel (just_submitted)
+            # shows fixed text instead of a one-time message, so a refresh,
+            # back-button, or bookmarked ?sent=1 link never renders an empty
+            # panel. Setting one anyway would just leak, unconsumed, into the
+            # next page that renders {{ messages }} (e.g. Contact).
             return redirect(f"{reverse('start_project')}?sent=1")
     else:
         initial = {}

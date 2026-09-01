@@ -75,16 +75,19 @@
 
                 <form method="POST" class="form-fields">
                     {% csrf_token %}
+                    {{ form.non_field_errors }}
                     <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
                     <div class="review-form-grid">
                         <div class="form-field">
                             <label class="form-label">Nume</label>
                             {{ form.name }}
+                            {{ form.name.errors }}
                         </div>
                         <div class="form-field">
                             <label class="form-label">Rol/funcție (opțional)</label>
                             {{ form.role }}
+                            {{ form.role.errors }}
                         </div>
                     </div>
 
@@ -92,16 +95,19 @@
                         <div class="form-field">
                             <label class="form-label">Afacerea ta (opțional)</label>
                             {{ form.company }}
+                            {{ form.company.errors }}
                         </div>
                         <div class="form-field">
                             <label class="form-label">Site-ul afacerii (opțional)</label>
                             {{ form.business_url }}
+                            {{ form.business_url.errors }}
                         </div>
                     </div>
 
                     <div class="form-field">
                         <label class="form-label">Ce am construit pentru tine (opțional)</label>
                         {{ form.project_note }}
+                        {{ form.project_note.errors }}
                     </div>
 
                     <div class="form-field">
@@ -109,11 +115,13 @@
                         <div class="review-rating-field">
                              {{ form.rating }}
                         </div>
+                        {{ form.rating.errors }}
                     </div>
 
                     <div class="form-field">
                         <label class="form-label">Mesajul tău</label>
                         {{ form.message }}
+                        {{ form.message.errors }}
                     </div>
 
                     <button type="submit" class="btn-primary form-submit">

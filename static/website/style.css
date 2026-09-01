@@ -897,6 +897,13 @@ select {
 @media (min-width: 768px) { .home-pricing-grid { grid-template-columns: repeat(3, 1fr); } }
 .home-pricing-card { padding: 32px; border-radius: 24px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
 .home-pricing-card-popular { border-color: rgba(var(--blue-mid-rgb),.5); box-shadow: 0 20px 50px rgba(var(--blue-mid-rgb),.2); }
+/* Linked to whichever package is selected in the price calculator below,
+   so the two clearly-separate widgets read as connected. */
+.home-pricing-card.is-linked {
+    border-color: var(--blue-mid);
+    box-shadow: 0 0 0 2px rgba(var(--blue-mid-rgb),.3);
+    transition: box-shadow .25s ease, border-color .25s ease;
+}
 .home-pricing-popular-tag {
     position: absolute; top: 16px; right: 16px;
     border-radius: 999px; background: rgba(var(--blue-mid-rgb),.2); color: var(--blue-mid);
@@ -1061,6 +1068,19 @@ select {
 
 .form-fields { display: flex; flex-direction: column; gap: 24px; }
 .form-field { margin-bottom: 0; }
+
+/* Django's default {{ form.field.errors }} / {{ form.non_field_errors }}
+   output — a plain <ul class="errorlist">, styled to read as a clear
+   inline warning instead of an unstyled bullet list. */
+.errorlist {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+    color: #dc2626;
+    font-size: .8125rem;
+    font-weight: 500;
+}
+.errorlist:empty { display: none; }
 .form-label { display: block; margin-bottom: 8px; font-size: .875rem; color: var(--ink-faint); }
 .form-note { font-size: .75rem; color: var(--ink-faint); }
 

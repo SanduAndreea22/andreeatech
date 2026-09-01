@@ -45,21 +45,25 @@
         <div class="glass form-card">
             <form method="POST" class="form-fields">
                 {% csrf_token %}
+                {{ form.non_field_errors }}
                 <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
                 <div class="form-field">
                     <label class="form-label">Nume</label>
                     {{ form.name }}
+                    {{ form.name.errors }}
                 </div>
 
                 <div class="form-field">
                     <label class="form-label">Email</label>
                     {{ form.email }}
+                    {{ form.email.errors }}
                 </div>
 
                 <div class="form-field">
                     <label class="form-label">Mesaj</label>
                     {{ form.message }}
+                    {{ form.message.errors }}
                 </div>
 
                 <button type="submit" class="btn-primary form-submit">

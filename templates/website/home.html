@@ -226,7 +226,7 @@
         <h2 class="h2-lg">Alege nivelul potrivit pentru business-ul tău.</h2>
         <div class="home-pricing-grid">
             {% for pkg in packages %}
-            <article class="glass home-pricing-card{% if pkg.popular %} home-pricing-card-popular{% endif %}">
+            <article class="glass home-pricing-card{% if pkg.popular %} home-pricing-card-popular{% endif %}" data-key="{{ pkg.key }}">
                 {% if pkg.popular %}<div class="home-pricing-popular-tag">Popular</div>{% endif %}
                 <p class="home-pricing-emoji">{{ pkg.emoji }}</p>
                 <h3 class="home-pricing-name">{{ pkg.name }}</h3>
@@ -526,6 +526,10 @@
 
             ctaEl.href = ctaEl.href.split('?')[0] + '?pachet=' + selected.dataset.key;
             ctaEl.textContent = `Pornesc cu ${selected.dataset.name} →`;
+
+            document.querySelectorAll('.home-pricing-card').forEach((card) => {
+                card.classList.toggle('is-linked', card.dataset.key === selected.dataset.key);
+            });
         };
 
         packageInputs.forEach((input) => input.addEventListener('change', update));

@@ -22,9 +22,7 @@
         {% if just_submitted %}
         <div class="glass sp-thanks">
             <svg class="sp-thanks-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            {% for message in messages %}
-            <p class="sp-thanks-message">{{ message }}</p>
-            {% endfor %}
+            <p class="sp-thanks-message">Cerere primită! Îți analizez brief-ul și revin cu un răspuns în maximum 24 de ore.</p>
             <p class="sp-thanks-note">Verifică-ți emailul în următoarele 24h — răspund personal la fiecare brief, nu e un mesaj automat.</p>
             <a href="{% url 'home' %}" class="btn-outline">Înapoi acasă</a>
         </div>
@@ -47,6 +45,7 @@
 
             <form method="POST" class="sp-form">
                 {% csrf_token %}
+                {{ form.non_field_errors }}
                 <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
                 <div class="sp-progress" id="spProgress">
@@ -63,20 +62,24 @@
                         <div class="sp-field">
                             <label class="sp-field-label">Numele tău</label>
                             {{ form.name }}
+                            {{ form.name.errors }}
                         </div>
                         <div class="sp-field">
                             <label class="sp-field-label">Adresa de email</label>
                             {{ form.email }}
+                            {{ form.email.errors }}
                         </div>
                     </div>
                     <div class="sp-field-row">
                         <div class="sp-field">
                             <label class="sp-field-label">Domeniul afacerii tale</label>
                             {{ form.industry }}
+                            {{ form.industry.errors }}
                         </div>
                         <div class="sp-field">
                             <label class="sp-field-label">Pachet ales</label>
                             {{ form.selected_package }}
+                            {{ form.selected_package.errors }}
                         </div>
                     </div>
                 </div>
@@ -88,6 +91,7 @@
                     <div class="sp-field">
                         <label class="sp-field-label">Descrierea proiectului și obiective</label>
                         {{ form.project_description }}
+                        {{ form.project_description.errors }}
                         <p class="sp-field-hint">Descrie website-ul, fluxul de rezervări sau procesul intern de care ai nevoie.</p>
                     </div>
                 </div>
@@ -100,11 +104,13 @@
                         <div class="sp-field">
                             <label class="sp-field-label">Domeniu & hosting</label>
                             {{ form.hosting_info }}
+                            {{ form.hosting_info.errors }}
                             <p class="sp-field-hint">Ai deja domeniu și hosting, sau vrei să ți le configurez eu? (cost separat de pachet — discutăm exact suma la consultație)</p>
                         </div>
                         <div class="sp-field">
                             <label class="sp-field-label">Termen / urgență</label>
                             {{ form.deadline_communication }}
+                            {{ form.deadline_communication.errors }}
                         </div>
                     </div>
 
@@ -113,6 +119,7 @@
                         <div class="custom-checkboxes">
                             {{ form.required_features }}
                         </div>
+                        {{ form.required_features.errors }}
                     </div>
                 </div>
 

@@ -141,6 +141,29 @@
             });
         });
 
+        // Native browser validation messages ("Please fill out this field.")
+        // show in the browser's own language, not the page's — jarring on a
+        // Romanian-only site for anyone with an English-language browser.
+        // Override with Romanian text via the Constraint Validation API.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('form').forEach((form) => {
+                form.querySelectorAll('input, textarea, select').forEach((field) => {
+                    field.addEventListener('invalid', () => {
+                        if (field.validity.valueMissing) {
+                            field.setCustomValidity('Acest câmp este obligatoriu.');
+                        } else if (field.validity.typeMismatch && field.type === 'email') {
+                            field.setCustomValidity('Adresa de email nu pare validă — verific-o și mai încearcă o dată.');
+                        } else if (field.validity.tooShort || field.validity.tooLong || field.validity.patternMismatch) {
+                            field.setCustomValidity('Verifică ce ai completat aici — nu pare în formatul așteptat.');
+                        } else {
+                            field.setCustomValidity('');
+                        }
+                    });
+                    field.addEventListener('input', () => field.setCustomValidity(''));
+                });
+            });
+        });
+
         // Fade lazy-loaded images in once they've actually finished loading,
         // instead of letting them pop in abruptly (opt-in via .img-fade).
         document.addEventListener('DOMContentLoaded', () => {
