@@ -446,7 +446,7 @@ main > section:first-of-type::before {
     align-items: center;
     color: var(--ink);
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .navbar-links { display: flex; }
 }
 
@@ -480,7 +480,7 @@ main > section:first-of-type::before {
     font-weight: 500;
     color: var(--ink);
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .navbar-mobile { display: none; }
 }
 
@@ -599,35 +599,39 @@ select {
     padding-right: 2.5rem;
 }
 
-/* Checkbox groups rendered by Django (used on Start a Project) */
-.custom-checkboxes ul {
+/* Checkbox groups rendered by Django (used on Start a Project). Django's
+   CheckboxSelectMultiple renders each option as its own <div><label>, not
+   <ul><li> — the selectors below target that actual output. */
+.custom-checkboxes > div {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.75rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
 }
 @media (min-width: 640px) {
-    .custom-checkboxes ul { grid-template-columns: 1fr 1fr; }
+    .custom-checkboxes > div { grid-template-columns: 1fr 1fr; }
 }
-.custom-checkboxes li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.custom-checkboxes > div > div {
     background: var(--paper-tint);
     padding: 12px;
     border-radius: 12px;
     border: 1px solid var(--line);
     transition: all .3s ease;
 }
-.custom-checkboxes li:hover {
+.custom-checkboxes > div > div:hover {
     border-color: rgba(var(--blue-mid-rgb),.35);
+}
+.custom-checkboxes label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
 }
 .custom-checkboxes input[type="checkbox"] {
     accent-color: var(--blue-mid);
     width: 18px;
     height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
 }
 
 /* =========================================
@@ -757,15 +761,16 @@ select {
 }
 
 .home-hero-stats {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
     margin-top: 48px;
     padding-top: 32px;
     border-top: 1px solid var(--line);
 }
-@media (min-width: 640px) { .home-hero-stats { gap: 56px; } }
+@media (min-width: 640px) {
+    .home-hero-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 56px; }
+}
 .home-hero-stat { text-align: center; }
 .home-hero-stat-num { font-size: 1.75rem; font-weight: 800; line-height: 1; }
 @media (min-width: 768px) { .home-hero-stat-num { font-size: 2rem; } }

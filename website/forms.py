@@ -19,6 +19,14 @@ class StartProjectForm(forms.ModelForm):
         required=False,
     )
 
+    # Overrides the auto-generated field just to swap Django's default
+    # "---------" empty option for a real label — ContactMessage.selected_package
+    # is a plain CharField (not a FK), so ModelForm can't infer a better one.
+    selected_package = forms.ChoiceField(
+        choices=[("", "Alege un pachet")] + ContactMessage.PACKAGE_CHOICES,
+        required=False,
+    )
+
     # Honeypot: real visitors never see or fill this field, bots that
     # auto-fill every input do. Checked (not saved) in the view.
     website = forms.CharField(required=False, widget=forms.HiddenInput())
@@ -36,7 +44,7 @@ class StartProjectForm(forms.ModelForm):
             "required_features",
         ]
         widgets = {
-            "industry": forms.TextInput(attrs={"placeholder": "ex. restaurant, clinică, consultanță, retail..."}),
+            "industry": forms.TextInput(attrs={"placeholder": "ex. restaurant, clinică, salon..."}),
         }
 
 
