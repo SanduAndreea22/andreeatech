@@ -175,6 +175,19 @@ html {
     }
 }
 
+/* Fade an image in once it's actually loaded, instead of letting it pop in
+   abruptly when a lazy-loaded image finishes fetching. */
+.img-fade {
+    opacity: 0;
+    transition: opacity .4s ease;
+}
+.img-fade.is-loaded {
+    opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+    .img-fade { opacity: 1; transition: none; }
+}
+
 /* Hero entrance — the first section on every page isn't scroll-triggered
    (it's visible on load), so it gets its own fade/slide-in instead of
    sitting there static while every section below it animates in. */
@@ -221,6 +234,7 @@ main > section:first-of-type::before {
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 20px 50px rgba(var(--blue-mid-rgb),.45);
 }
+.btn-primary:active { transform: scale(.97); }
 
 /* =========================================
    LAYOUT PRIMITIVES
@@ -341,7 +355,8 @@ main > section:first-of-type::before {
     text-decoration: none;
     transition: var(--transition);
 }
-.btn-outline:hover { background: rgba(255,255,255,.05); border-color: var(--blue-mid); }
+.btn-outline:hover { background: var(--paper-tint); border-color: var(--blue-mid); }
+.btn-outline:active { transform: scale(.97); }
 
 .btn-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
 
@@ -741,6 +756,21 @@ select {
     font-size: .875rem;
 }
 
+.home-hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+}
+@media (min-width: 640px) { .home-hero-stats { gap: 56px; } }
+.home-hero-stat { text-align: center; }
+.home-hero-stat-num { font-size: 1.75rem; font-weight: 800; line-height: 1; }
+@media (min-width: 768px) { .home-hero-stat-num { font-size: 2rem; } }
+.home-hero-stat-label { font-size: .75rem; color: var(--ink-faint); margin-top: 6px; }
+
 .home-quote-list {
     list-style: none;
     margin: 0;
@@ -800,7 +830,39 @@ select {
 .home-demo-bubble { padding: 12px 16px; border-radius: 16px; max-width: 85%; line-height: 1.6; font-size: .875rem; }
 .home-demo-bubble-user { border-top-right-radius: 0; }
 .home-demo-bubble-system { border-top-left-radius: 0; }
-.home-demo-bubble-highlight { font-weight: 600; color: var(--ink); }
+.home-demo-bubble-highlight {
+    font-weight: 600;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: demoCelebrate .5s ease;
+}
+.home-demo-bubble-check {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--blue-mid);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: demoCheckPop .4s cubic-bezier(.34,1.56,.64,1) .1s both;
+}
+.home-demo-bubble-check svg { width: 13px; height: 13px; }
+@keyframes demoCelebrate {
+    0% { transform: scale(.96); box-shadow: 0 0 0 0 rgba(var(--blue-mid-rgb),.35); }
+    60% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(var(--blue-mid-rgb),0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--blue-mid-rgb),0); }
+}
+@keyframes demoCheckPop {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .home-demo-bubble-highlight, .home-demo-bubble-check { animation: none; }
+}
 .home-demo-reset { margin-top: 24px; font-size: .875rem; color: var(--blue-mid); transition: var(--transition); background: none; border: none; cursor: pointer; padding: 0; }
 .home-demo-reset:hover { color: var(--blue-mid-hover); }
 .home-demo-note { text-align: center; color: var(--ink-faint); font-size: .75rem; margin-top: 12px; }

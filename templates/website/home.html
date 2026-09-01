@@ -9,6 +9,8 @@
 {% block twitter_description %}De la o interacțiune obișnuită, la o experiență de care oamenii își amintesc — construiesc produsul digital din spate: website, sistem, automatizare.{% endblock %}
 
 {% block content %}
+<div class="read-progress"><div class="read-progress-bar" id="readProgressBar"></div></div>
+
 <section class="section-hero">
     <div class="home-hero-glow home-hero-glow-1"></div>
     <div class="home-hero-glow home-hero-glow-2"></div>
@@ -34,6 +36,21 @@
         </div>
         <div class="home-hero-links">
             <a href="#pachete" class="link-quiet">Vezi pachetele și prețurile ↓</a>
+        </div>
+
+        <div class="home-hero-stats">
+            <div class="home-hero-stat">
+                <p class="home-hero-stat-num gradient-text">5+</p>
+                <p class="home-hero-stat-label">Sisteme construite</p>
+            </div>
+            <div class="home-hero-stat">
+                <p class="home-hero-stat-num gradient-text">7-21</p>
+                <p class="home-hero-stat-label">Zile până la livrare</p>
+            </div>
+            <div class="home-hero-stat">
+                <p class="home-hero-stat-num gradient-text">100%</p>
+                <p class="home-hero-stat-label">Cod propriu, fără șabloane</p>
+            </div>
         </div>
     </div>
 </section>
@@ -429,7 +446,12 @@
                 const corner = step.type === 'user' ? 'home-demo-bubble-user' : 'home-demo-bubble-system';
                 const emphasis = step.highlight ? 'home-demo-bubble-highlight' : '';
                 bubble.className = `chat-message ${step.type} home-demo-bubble ${corner} ${emphasis}`;
-                bubble.textContent = step.text;
+                if (step.highlight) {
+                    bubble.innerHTML = '<span class="home-demo-bubble-check"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span></span>';
+                    bubble.querySelector('span:last-child').textContent = step.text;
+                } else {
+                    bubble.textContent = step.text;
+                }
                 demoLog.appendChild(bubble);
                 await wait(300);
             }
@@ -468,6 +490,26 @@
         const ctaEl = document.getElementById('calcCta');
 
         const formatEUR = (n) => '€' + n.toLocaleString('ro-RO');
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        let currentTotal = parseInt(totalEl.textContent.replace(/[^0-9]/g, ''), 10) || 0;
+
+        const animateTotal = (from, to, prefix) => {
+            if (reduceMotion || from === to) {
+                totalEl.textContent = prefix + formatEUR(to);
+                return;
+            }
+            const duration = 350;
+            const start = performance.now();
+            const step = (now) => {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const value = Math.round(from + (to - from) * eased);
+                totalEl.textContent = prefix + formatEUR(value);
+                if (progress < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+        };
 
         const update = () => {
             const selected = calc.querySelector('input[name="calcPackage"]:checked');
@@ -479,7 +521,8 @@
             const total = base + addAutomation + addAgent;
 
             const isExact = selected.dataset.exact === 'true' && !addAutomation && !addAgent;
-            totalEl.textContent = (isExact ? '' : 'de la ') + formatEUR(total);
+            animateTotal(currentTotal, total, isExact ? '' : 'de la ');
+            currentTotal = total;
 
             ctaEl.href = ctaEl.href.split('?')[0] + '?pachet=' + selected.dataset.key;
             ctaEl.textContent = `Pornesc cu ${selected.dataset.name} →`;

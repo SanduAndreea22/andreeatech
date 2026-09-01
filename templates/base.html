@@ -141,6 +141,34 @@
             });
         });
 
+        // Fade lazy-loaded images in once they've actually finished loading,
+        // instead of letting them pop in abruptly (opt-in via .img-fade).
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('img.img-fade').forEach((img) => {
+                if (img.complete) {
+                    img.classList.add('is-loaded');
+                    return;
+                }
+                img.addEventListener('load', () => img.classList.add('is-loaded'), { once: true });
+            });
+        });
+
+        // Slim scroll-progress bar — opt-in via the .read-progress markup,
+        // shared by every page that includes it (case studies, Home, FAQ).
+        document.addEventListener('DOMContentLoaded', () => {
+            const bar = document.getElementById('readProgressBar');
+            if (!bar) return;
+
+            const updateProgress = () => {
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+                bar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+            };
+
+            window.addEventListener('scroll', updateProgress, { passive: true });
+            updateProgress();
+        });
+
         // Visible feedback on submit — the view sends the admin notification
         // email synchronously before redirecting, so on a slow connection
         // the button would otherwise sit there looking dead and inviting a

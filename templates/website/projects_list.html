@@ -55,7 +55,7 @@
 
                 {% if featured.image %}
                 <div class="pl-featured-image-wrap">
-                    <img src="{{ featured.image.url }}" alt="{{ featured.title }}" width="{{ featured.image.width }}" height="{{ featured.image.height }}">
+                    <img src="{{ featured.image.url }}" alt="{{ featured.title }}" width="{{ featured.image.width }}" height="{{ featured.image.height }}" class="img-fade">
                 </div>
                 {% endif %}
             </div>
@@ -75,7 +75,7 @@
                 {% if project.link %}
                 <span class="live-badge"><span class="dot"></span>Live</span>
                 {% endif %}
-                <img src="{{ project.image.url }}" alt="{{ project.title }}" width="{{ project.image.width }}" height="{{ project.image.height }}" loading="lazy">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" width="{{ project.image.width }}" height="{{ project.image.height }}" loading="lazy" class="img-fade">
                 <div class="project-card-image-overlay">
                     <span>Vezi studiul de caz →</span>
                 </div>
