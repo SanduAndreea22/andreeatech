@@ -1,28 +1,27 @@
 /* =========================================
-   GLOBAL CORE — DARK (original first-commit direction, rebuilt on the
-   current token system + component set, contrast-checked with
-   check_contrast.py instead of hand-picked).
+   GLOBAL CORE — COBALT LIGHT (single-hue cobalt, light paper instead of
+   dark; contrast-checked with check_contrast.py instead of hand-picked).
 ========================================= */
 
 :root {
-    color-scheme: dark only;
+    color-scheme: light only;
     --radius: 14px;
     --transition: all .3s ease;
 
-    --paper: #020617;
-    --paper-tint: #0B1220;
-    --paper-raised: #0F172A;
-    --line: rgba(241,245,249,.12);
+    --paper: #EBEEF8;
+    --paper-tint: #DCE2F4;
+    --paper-raised: #FFFFFF;
+    --line: rgba(22,33,94,.12);
 
-    --ink: #DCEAFE;
-    --ink-soft: #A9C2E8;
-    --ink-faint: #93A9CC;
+    --ink: #10173D;
+    --ink-soft: #3A4A94;
+    --ink-faint: #5568B0;
 
-    --blue-mid: #4C8DFA;
-    --blue-mid-rgb: 76,141,250;
-    --blue-mid-hover: #7BADFB;
-    --periwinkle: #22D3EE;
-    --periwinkle-rgb: 34,211,238;
+    --blue-mid: #3355D8;
+    --blue-mid-rgb: 51,85,216;
+    --blue-mid-hover: #2743B8;
+    --periwinkle: #2743B8;
+    --periwinkle-rgb: 39,67,184;
 }
 
 /* Reset refinement */
@@ -73,7 +72,7 @@ h1, h2, h3 {
     background: var(--paper);
 }
 ::-webkit-scrollbar-thumb {
-    background: #C7D2E8;
+    background: #8C9BD9;
     border-radius: 10px;
     border: 2px solid var(--paper);
 }
@@ -82,7 +81,7 @@ h1, h2, h3 {
 }
 html {
     scrollbar-width: thin;
-    scrollbar-color: #C7D2E8 var(--paper);
+    scrollbar-color: #8C9BD9 var(--paper);
 }
 
 /* Ambient background — soft periwinkle glow, kept very subtle on light paper */
