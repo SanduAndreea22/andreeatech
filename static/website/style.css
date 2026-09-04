@@ -984,22 +984,6 @@ select {
     border: 1px solid rgba(var(--blue-mid-rgb),.4);
     padding: 4px 12px; font-size: .75rem; font-weight: 700;
 }
-/* Roman numeral tier badge, replacing the medal emoji — a designed mark
-   instead of a game-medal glyph. */
-.home-pricing-tier {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    margin-bottom: 16px;
-    border: 1.5px solid var(--line);
-    border-radius: 10px;
-    font-family: 'Archivo', sans-serif;
-    font-size: 1.0625rem;
-    font-weight: 800;
-    color: var(--blue-mid);
-}
 .home-pricing-name { font-size: 1.25rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
 .home-pricing-tagline { font-size: .875rem; color: var(--ink-faint); margin-bottom: 16px; }
 .home-pricing-price { font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; }

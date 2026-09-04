@@ -10,7 +10,6 @@ Used by:
 PACKAGES = [
     {
         "key": "digital_presence",
-        "tier": "I",
         "name": "Prezență Digitală",
         "price": "€150",
         "tagline": "Website simplu — prezența ta online",
@@ -25,7 +24,6 @@ PACKAGES = [
     },
     {
         "key": "full_experience",
-        "tier": "II",
         "name": "Experiență Completă",
         "price": "€380",
         "tagline": "Site complet, plus un flux care lucrează pentru tine",
@@ -42,7 +40,6 @@ PACKAGES = [
     },
     {
         "key": "premium_system",
-        "tier": "III",
         "name": "Sistem Premium",
         "price": "de la €850",
         "tagline": "Platformă completă, construită pe fluxul tău real",
