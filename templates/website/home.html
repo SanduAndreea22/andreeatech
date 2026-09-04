@@ -88,9 +88,9 @@
         </p>
         <p class="text-body mb-sm">Dacă vrei să folosești orele astea ca să:</p>
         <ul class="checklist mb-lg">
-            <li><span class="mark">✦</span> găsești și păstrezi mai mulți clienți</li>
-            <li><span class="mark">✦</span> construiești o experiență de care oamenii își amintesc</li>
-            <li><span class="mark">✦</span> te ocupi de partea din business care chiar contează</li>
+            <li><span class="mark"></span> găsești și păstrezi mai mulți clienți</li>
+            <li><span class="mark"></span> construiești o experiență de care oamenii își amintesc</li>
+            <li><span class="mark"></span> te ocupi de partea din business care chiar contează</li>
         </ul>
         <p class="text-muted mb-sm">atunci citește în continuare.</p>
         <p class="text-body mb-sm">Singurul lucru pe care ți-l promit e că vei scăpa de întrebările care te macină lunar:</p>
@@ -164,12 +164,12 @@
     <div class="container-lg">
         <h2 class="h2-lg">Ce câștigi concret</h2>
         <ul class="home-benefits-grid">
-            <li><span class="mark">✦</span> <span><span class="text-strong">Construiești o experiență de care oamenii își amintesc</span> — nu doar o prezență online.</span></li>
-            <li><span class="mark">✦</span> <span><span class="text-strong">Ai totul într-un singur loc</span> — nu mai cauți informații împrăștiate.</span></li>
-            <li><span class="mark">✦</span> <span><span class="text-strong">Poți construi un flux de venit mai constant</span> — dacă modelul tău permite programări sau plăți recurente.</span></li>
-            <li><span class="mark">✦</span> <span><span class="text-strong">Clienții tăi au o experiență consecventă</span> — răspunsuri și confirmări la timp, nu întârziate.</span></li>
-            <li><span class="mark">✦</span> <span><span class="text-strong">Știi mereu ce se întâmplă</span> — acces clar la cereri, programări, activitate.</span></li>
-            <li><span class="mark">✦</span> <span><span class="text-strong">Nu trebuie să fii o persoană tehnică</span> — produsul e gândit să fie simplu de folosit, nu doar de construit.</span></li>
+            <li><span class="mark"></span> <span><span class="text-strong">Construiești o experiență de care oamenii își amintesc</span> — nu doar o prezență online.</span></li>
+            <li><span class="mark"></span> <span><span class="text-strong">Ai totul într-un singur loc</span> — nu mai cauți informații împrăștiate.</span></li>
+            <li><span class="mark"></span> <span><span class="text-strong">Poți construi un flux de venit mai constant</span> — dacă modelul tău permite programări sau plăți recurente.</span></li>
+            <li><span class="mark"></span> <span><span class="text-strong">Clienții tăi au o experiență consecventă</span> — răspunsuri și confirmări la timp, nu întârziate.</span></li>
+            <li><span class="mark"></span> <span><span class="text-strong">Știi mereu ce se întâmplă</span> — acces clar la cereri, programări, activitate.</span></li>
+            <li><span class="mark"></span> <span><span class="text-strong">Nu trebuie să fii o persoană tehnică</span> — produsul e gândit să fie simplu de folosit, nu doar de construit.</span></li>
         </ul>
     </div>
 </section>
@@ -179,10 +179,10 @@
         <h2 class="h2-xl">Ce include pachetul</h2>
         <p class="text-muted center mb-xl">De la prima interacțiune cu clientul, la sistemul complet din spate:</p>
         <ul class="home-includes-grid">
-            <li><span class="mark">✦</span> Website sau platformă construită pe măsura business-ului tău</li>
-            <li><span class="mark">✦</span> Flux automat pentru cererile și task-urile repetitive, acolo unde ajută (opțional, în funcție de pachet)</li>
-            <li><span class="mark">✦</span> Configurare completă — nu trebuie să știi tehnic nimic</li>
-            <li><span class="mark">✦</span> Termen clar de livrare, stabilit înainte să începem</li>
+            <li><span class="mark"></span> Website sau platformă construită pe măsura business-ului tău</li>
+            <li><span class="mark"></span> Flux automat pentru cererile și task-urile repetitive, acolo unde ajută (opțional, în funcție de pachet)</li>
+            <li><span class="mark"></span> Configurare completă — nu trebuie să știi tehnic nimic</li>
+            <li><span class="mark"></span> Termen clar de livrare, stabilit înainte să începem</li>
         </ul>
     </div>
 </section>
@@ -229,7 +229,7 @@
             {% for pkg in packages %}
             <article class="glass home-pricing-card{% if pkg.popular %} home-pricing-card-popular{% endif %}" data-key="{{ pkg.key }}">
                 {% if pkg.popular %}<div class="home-pricing-popular-tag">Popular</div>{% endif %}
-                <p class="home-pricing-emoji">{{ pkg.emoji }}</p>
+                <p class="home-pricing-tier">{{ pkg.tier }}</p>
                 <h3 class="home-pricing-name">{{ pkg.name }}</h3>
                 <p class="home-pricing-tagline">{{ pkg.tagline }}</p>
                 <p class="home-pricing-price gradient-text">{{ pkg.price }}</p>
@@ -394,17 +394,17 @@
             <div class="glass home-choice-card">
                 <p class="home-choice-label">Continui cu procesul manual</p>
                 <ul class="checklist">
-                    <li><span class="mark-bad">✕</span> <span class="text-muted">pierzi timp — ore, poate zeci de ore, în fiecare lună</span></li>
-                    <li><span class="mark-bad">✕</span> <span class="text-muted">pierzi ocazii — clienți care pleacă pentru că n-au primit răspuns la timp</span></li>
-                    <li><span class="mark-bad">✕</span> <span class="text-muted">rămâi frustrat(ă) că business-ul nu crește în ritmul pe care ți-l dorești</span></li>
+                    <li><span class="mark-bad"></span> <span class="text-muted">pierzi timp — ore, poate zeci de ore, în fiecare lună</span></li>
+                    <li><span class="mark-bad"></span> <span class="text-muted">pierzi ocazii — clienți care pleacă pentru că n-au primit răspuns la timp</span></li>
+                    <li><span class="mark-bad"></span> <span class="text-muted">rămâi frustrat(ă) că business-ul nu crește în ritmul pe care ți-l dorești</span></li>
                 </ul>
             </div>
             <div class="glass home-choice-card home-choice-card-good">
                 <p class="home-choice-label home-choice-label-good">Alegi sistemul construit pentru tine</p>
                 <ul class="checklist">
-                    <li><span class="mark">✦</span> <span class="text-body">câștigi timp pe care-l poți folosi ca să crești business-ul</span></li>
-                    <li><span class="mark">✦</span> <span class="text-body">nu te mai stresezi că ai uitat sau întârziat ceva</span></li>
-                    <li><span class="mark">✦</span> <span class="text-body">clienții tăi au o experiență la care se gândesc și după ce pleacă</span></li>
+                    <li><span class="mark"></span> <span class="text-body">câștigi timp pe care-l poți folosi ca să crești business-ul</span></li>
+                    <li><span class="mark"></span> <span class="text-body">nu te mai stresezi că ai uitat sau întârziat ceva</span></li>
+                    <li><span class="mark"></span> <span class="text-body">clienții tăi au o experiență la care se gândesc și după ce pleacă</span></li>
                 </ul>
             </div>
         </div>
