@@ -72,7 +72,7 @@ h1, h2, h3 {
     background: var(--paper);
 }
 ::-webkit-scrollbar-thumb {
-    background: #8C9BD9;
+    background: rgba(var(--periwinkle-rgb),.55);
     border-radius: 10px;
     border: 2px solid var(--paper);
 }
@@ -81,7 +81,7 @@ h1, h2, h3 {
 }
 html {
     scrollbar-width: thin;
-    scrollbar-color: #8C9BD9 var(--paper);
+    scrollbar-color: rgba(var(--periwinkle-rgb),.55) var(--paper);
 }
 
 /* Ambient background — soft periwinkle glow, kept very subtle on light paper */
