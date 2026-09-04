@@ -726,6 +726,11 @@ select {
 .home-hero-glow-1 { top: 0; right: 0; width: 520px; height: 520px; background: rgba(var(--blue-mid-rgb),.12); }
 .home-hero-glow-2 { bottom: 0; left: 0; width: 360px; height: 360px; background: rgba(var(--blue-mid-rgb),.10); filter: blur(120px); }
 
+/* Signature motif: an ascending trail of dots, growing toward the top
+   right — a brand mark for the hero instead of generic stat boxes. */
+.home-hero-trail { position: absolute; top: 24px; right: 24px; width: 140px; height: 140px; pointer-events: none; display: none; }
+@media (min-width: 768px) { .home-hero-trail { display: block; width: 180px; height: 180px; } }
+
 .home-hero-content { position: relative; text-align: center; }
 
 .home-hero-title {
@@ -760,21 +765,16 @@ select {
     font-size: .875rem;
 }
 
-.home-hero-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+.home-hero-stats-line {
     margin-top: 48px;
     padding-top: 32px;
     border-top: 1px solid var(--line);
+    font-size: .9375rem;
+    line-height: 2.2;
+    color: var(--ink-faint);
 }
-@media (min-width: 640px) {
-    .home-hero-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 56px; }
-}
-.home-hero-stat { text-align: center; }
-.home-hero-stat-num { font-size: 1.75rem; font-weight: 800; line-height: 1; }
-@media (min-width: 768px) { .home-hero-stat-num { font-size: 2rem; } }
-.home-hero-stat-label { font-size: .75rem; color: var(--ink-faint); margin-top: 6px; }
+.home-hero-stats-line strong { font-size: 1.125rem; font-weight: 800; color: var(--ink); }
+.home-hero-stats-divider { margin: 0 10px; color: var(--line); }
 
 .home-quote-list {
     list-style: none;
