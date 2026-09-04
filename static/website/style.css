@@ -848,10 +848,46 @@ select {
 .home-about-text { display: flex; flex-direction: column; gap: 24px; color: var(--ink-faint); line-height: 1.7; }
 .home-about-links { display: flex; flex-wrap: wrap; column-gap: 32px; row-gap: 8px; padding-top: 8px; }
 
-.home-compare-grid { display: grid; gap: 24px; margin-bottom: 56px; }
-@media (min-width: 768px) { .home-compare-grid { grid-template-columns: 1fr 1fr; } }
-.home-compare-card { padding: 32px; border-radius: 24px; }
-.home-compare-card-good { border-color: rgba(var(--blue-mid-rgb),.3); }
+/* Split-screen before/after: a real visual break between the two states,
+   not just two matching cards side by side — the "before" side reads
+   duller/quieter, the "after" side gets the site's accent glow, and a
+   divider marks the transition between them (an arrow on desktop, just
+   the stacking order itself on mobile). */
+.home-compare-split {
+    display: grid;
+    margin-bottom: 56px;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+}
+@media (min-width: 768px) { .home-compare-split { grid-template-columns: 1fr 56px 1fr; align-items: stretch; } }
+
+.home-compare-side { padding: 32px; }
+@media (min-width: 768px) { .home-compare-side { padding: 40px; } }
+
+.home-compare-side-bad { background: rgba(220,38,38,.04); filter: saturate(.75); }
+.home-compare-side-good { background: linear-gradient(160deg, rgba(var(--blue-mid-rgb),.07), rgba(var(--periwinkle-rgb),.05)); }
+
+.home-compare-divider { display: none; }
+@media (min-width: 768px) {
+    .home-compare-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(180deg, rgba(220,38,38,.15), rgba(var(--blue-mid-rgb),.25));
+    }
+}
+.home-compare-divider-arrow {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--blue-mid);
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
 .home-compare-label { font-size: .875rem; text-transform: uppercase; letter-spacing: .2em; font-weight: 600; margin-bottom: 16px; }
 .home-compare-label-bad { color: #dc2626; }
 .home-compare-label-good { color: var(--blue-mid); }
@@ -859,6 +895,10 @@ select {
 .home-demo-wrap { max-width: 36rem; margin: 0 auto 56px; }
 .home-demo-card { padding: 24px; border-radius: 24px; }
 @media (min-width: 768px) { .home-demo-card { padding: 32px; } }
+/* Same "this one's special" treatment as the popular pricing card —
+   the simulation is the payoff of the before/after story, not a
+   generic contact-style form, so it gets the same visual weight. */
+.home-demo-card-featured { border-color: rgba(var(--blue-mid-rgb),.5); box-shadow: 0 20px 50px rgba(var(--blue-mid-rgb),.2); }
 .home-demo-form { display: grid; gap: 16px; }
 @media (min-width: 640px) { .home-demo-form { grid-template-columns: 1fr 1fr; } }
 .home-demo-form input { margin-bottom: 0; }
