@@ -1072,42 +1072,42 @@ select {
 .home-choice-label-good { color: var(--blue-mid); }
 
 .home-timeline { max-width: 44rem; margin: 0 auto; position: relative; }
+/* A connecting thread down the number column, so the 5 steps read as one
+   route rather than a plain numbered list. */
 .home-timeline::before {
     content: "";
     position: absolute;
-    left: 19px;
-    top: 8px;
-    bottom: 8px;
-    width: 2px;
+    left: 70px;
+    top: 12px;
+    bottom: 12px;
+    width: 1px;
     background: var(--line);
 }
+@media (min-width: 640px) { .home-timeline::before { left: 86px; } }
 .home-timeline-step {
     position: relative;
-    padding-left: 56px;
-    padding-bottom: 40px;
+    padding-left: 96px;
+    padding-bottom: 64px;
 }
+@media (min-width: 640px) { .home-timeline-step { padding-left: 120px; } }
 .home-timeline-step:last-child { padding-bottom: 0; }
+/* Big display-serif numeral instead of a small digit in a badge — the
+   number carries visual weight on its own, not squeezed into a circle. */
 .home-timeline-dot {
     position: absolute;
     left: 0;
-    top: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--paper-tint);
-    border: 2px solid var(--line);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: .9375rem;
+    top: -4px;
+    width: 70px;
+    font-family: 'Italiana', serif;
+    font-weight: 400;
+    font-size: 2.75rem;
+    line-height: 1;
     color: var(--ink-faint);
-    transition: border-color .4s ease, color .4s ease, background .4s ease;
+    transition: color .4s ease;
 }
+@media (min-width: 640px) { .home-timeline-dot { width: 86px; font-size: 3.5rem; } }
 .home-timeline-step.in-view .home-timeline-dot {
-    border-color: var(--ink-faint);
     color: var(--ink-soft);
-    background: var(--paper-tint);
 }
 .home-timeline-title { font-size: 1.125rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
 .home-timeline-body { color: var(--ink-faint); line-height: 1.7; }
