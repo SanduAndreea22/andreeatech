@@ -14,7 +14,7 @@ SUPER_EMAIL = os.getenv('DJANGO_SUPERUSER_EMAIL')
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = os.environ.get("DEBUG", "False").strip().lower() == "true"
 ALLOWED_HOSTS = ['andreeastech.pythonanywhere.com']
 if DEBUG:
     ALLOWED_HOSTS += ['localhost', '127.0.0.1']
@@ -225,5 +225,23 @@ LOGGING = {
             "handlers": ["console"],
             "level": "INFO",
         },
+    },
+}
+
+# Only the Project problem/solution/outcome fields use this — a case-study
+# write-up, not free-form page building — so the toolbar is trimmed to text
+# formatting and links instead of django-ckeditor's full default set
+# (source view, embeds, tables, etc.), which nobody here needs and which
+# only widens what's possible to paste into a field rendered with |safe.
+CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": "Custom",
+        "toolbar_Custom": [
+            ["Format", "Bold", "Italic", "Underline"],
+            ["NumberedList", "BulletedList", "-", "Link", "Unlink"],
+            ["Undo", "Redo"],
+        ],
+        "removePlugins": "elementspath",
+        "resize_enabled": False,
     },
 }

@@ -32,10 +32,10 @@
         </div>
         <div class="btn-row">
             <a href="{% url 'start_project' %}" class="btn-primary home-hero-cta">Hai să discutăm proiectul tău</a>
-            <a href="{% url 'contact' %}" class="btn-outline home-hero-cta">Ai doar o întrebare rapidă?</a>
         </div>
         <div class="home-hero-links">
             <a href="#pachete" class="link-quiet">Vezi pachetele și prețurile ↓</a>
+            <a href="{% url 'contact' %}" class="link-quiet">Ai doar o întrebare rapidă? →</a>
         </div>
 
         <p class="home-hero-stats-line">
@@ -213,6 +213,30 @@
                 <p class="home-timeline-body">Primești sistemul complet, plus 7 zile de stabilizare gratuită — orice bug găsit în perioada asta, îl repar fără cost.</p>
             </div>
         </div>
+    </div>
+</section>
+
+<section class="section section-tint">
+    <div class="container-md">
+        <p class="eyebrow eyebrow-center">Înainte să continui</p>
+        <h2 class="h2-lg center">Întrebările pe care probabil le ai acum</h2>
+        <div class="home-minifaq">
+            <div class="glass home-minifaq-item">
+                <p class="home-minifaq-q">Întrebare: De ce să te aleg pe tine și nu o agenție?</p>
+                <p class="text-muted">Răspuns: Lucrezi direct cu mine, de la primul mesaj până la livrare — nu treci printr-un account manager care transmite mai departe unei echipe. Eu scriu codul, eu răspund la mesaje, eu știu exact în ce stadiu e proiectul tău în orice moment.</p>
+            </div>
+            <div class="glass home-minifaq-item">
+                <p class="home-minifaq-q">Întrebare: Ce se întâmplă dacă dispari după ce livrezi proiectul?</p>
+                <p class="text-muted">Răspuns: Fiecare proiect are 7 zile de stabilizare gratuită după livrare — orice bug găsești în perioada asta, îl repar fără cost suplimentar. Nu dispar odată ce ai plătit.</p>
+            </div>
+            <div class="glass home-minifaq-item">
+                <p class="home-minifaq-q">Întrebare: Cât costă un proiect?</p>
+                <p class="text-muted">Răspuns: Am 3 pachete cu prețuri clare — de la €150 pentru un website simplu, până la €850+ pentru o platformă completă personalizată. Le vezi mai jos.</p>
+            </div>
+        </div>
+        <p class="center mt-lg">
+            <a href="{% url 'faq' %}" class="link">Mai multe întrebări frecvente →</a>
+        </p>
     </div>
 </section>
 

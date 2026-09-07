@@ -129,32 +129,29 @@
 </section>
 
 <script>
+    // Progress reflects how much of each step is actually filled in, not
+    // how far the page has scrolled — a bar that fills on scroll alone
+    // looked like real progress even on an empty form.
     document.addEventListener('DOMContentLoaded', () => {
-        const steps = document.querySelectorAll('[data-sp-step]');
+        const form = document.querySelector('.sp-form');
         const fills = document.querySelectorAll('#spProgress .sp-progress-fill');
-        if (!steps.length || steps.length !== fills.length) return;
+        if (!form || fills.length !== 3) return;
 
-        const OFFSET = 160;
+        const filled = (name) => !!form.querySelector(`[name="${name}"]`)?.value.trim();
+        const anyChecked = (name) => form.querySelectorAll(`input[name="${name}"]:checked`).length > 0;
 
         const update = () => {
-            steps.forEach((step, i) => {
-                const rect = step.getBoundingClientRect();
-                const top = rect.top;
-                const height = rect.height;
-                let pct;
-                if (top + height <= OFFSET) {
-                    pct = 100;
-                } else if (top >= OFFSET) {
-                    pct = 0;
-                } else {
-                    pct = ((OFFSET - top) / height) * 100;
-                }
-                fills[i].style.width = Math.min(100, Math.max(0, pct)) + '%';
+            const step1 = [filled('name'), filled('email'), filled('industry')].filter(Boolean).length / 3;
+            const step2 = filled('project_description') ? 1 : 0;
+            const step3 = [filled('hosting_info'), filled('deadline_communication'), anyChecked('required_features')].filter(Boolean).length / 3;
+
+            [step1, step2, step3].forEach((fraction, i) => {
+                fills[i].style.width = (fraction * 100) + '%';
             });
         };
 
-        window.addEventListener('scroll', update, { passive: true });
-        window.addEventListener('resize', update);
+        form.addEventListener('input', update);
+        form.addEventListener('change', update);
         update();
     });
 </script>

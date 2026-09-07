@@ -401,6 +401,7 @@ main > section:first-of-type::before {
 }
 .hero-glow-strong { background: rgba(var(--blue-mid-rgb),.10); }
 .mb-sm { margin-bottom: 16px; }
+.mt-sm { margin-top: 16px; }
 .mb-lg { margin-bottom: 32px; }
 .mb-xl { margin-bottom: 40px; }
 .mt-lg { margin-top: 56px; }
