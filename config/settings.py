@@ -175,7 +175,11 @@ if "test" in sys.argv:
 # PythonAnywhere terminates TLS in front of the app and forwards requests
 # over plain HTTP, signaling the original scheme via this header. Keep the
 # local development server (DEBUG=True) on HTTP: `runserver` has no TLS.
-if not DEBUG:
+# Also skip this under `manage.py test`: Django's test client talks plain
+# HTTP, and DEBUG defaults to False when no .env is present (a fresh clone,
+# or CI) — without this, SECURE_SSL_REDIRECT would 301 nearly every test
+# instead of letting the view run, independent of DEBUG.
+if not DEBUG and "test" not in sys.argv:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
