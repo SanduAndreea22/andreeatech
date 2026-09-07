@@ -23,7 +23,7 @@ urlpatterns = [
     # — easy to forget and silently 404 in production. Traffic here is a
     # handful of project/certification images, not high-volume uploads, so
     # serving it directly is an acceptable trade-off for not depending on an
-    # out-of-repo config step (see audit-cod.md).
+    # out-of-repo config step.
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 

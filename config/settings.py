@@ -50,7 +50,7 @@ MIDDLEWARE = [
 ]
 
 # django-axes: locks out repeated failed admin login attempts. Without
-# this, admin auth has no defense beyond password strength (see audit-cod.md).
+# this, admin auth has no defense beyond password strength.
 AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesStandaloneBackend',
     'django.contrib.auth.backends.ModelBackend',
