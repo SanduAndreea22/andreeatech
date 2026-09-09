@@ -1,10 +1,18 @@
 from PIL import Image
 
-from django.db import models
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError, models, transaction
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
 
 from .packages import NOT_SURE_KEY, NOT_SURE_LABEL, PACKAGES
+
+MAX_UPLOAD_SIZE_BYTES = 5 * 1024 * 1024  # 5 MB
+
+
+def validate_image_max_size(image_field):
+    if image_field.size > MAX_UPLOAD_SIZE_BYTES:
+        raise ValidationError("Imaginea depășește dimensiunea maximă permisă (5 MB).")
 
 
 def shrink_image_if_needed(image_field, max_width):
@@ -50,25 +58,37 @@ class Project(models.Model):
         help_text="Separă tehnologiile prin virgulă. Exemplu: Django, PostgreSQL, Redis"
     )
 
-    image = models.ImageField(upload_to="projects/", blank=True, null=True)
+    image = models.ImageField(upload_to="projects/", blank=True, null=True, validators=[validate_image_max_size])
 
     is_featured = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ["order", "-created_at", "pk"]
+
     def tech_list(self):
         return [tech.strip() for tech in self.tech_stack.split(",")]
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            base_slug = slugify(self.title)
-            slug = base_slug
-            suffix = 2
-            while Project.objects.filter(slug=slug).exclude(pk=self.pk).exists():
-                slug = f"{base_slug}-{suffix}"
+        auto_slug = not self.slug
+        if auto_slug:
+            self.slug = slugify(self.title)
+
+        # Two concurrent saves can both see the slug as free before either
+        # writes — retry on the unique-constraint violation instead of
+        # racing on a check-then-write query.
+        suffix = 2
+        while True:
+            try:
+                with transaction.atomic():
+                    super().save(*args, **kwargs)
+                break
+            except IntegrityError:
+                if not auto_slug:
+                    raise
+                self.slug = f"{slugify(self.title)}-{suffix}"
                 suffix += 1
-            self.slug = slug
-        super().save(*args, **kwargs)
         shrink_image_if_needed(self.image, max_width=1600)
 
     def __str__(self):
@@ -170,13 +190,13 @@ class Certification(models.Model):
     issue_date = models.DateField(blank=True, null=True)
     credential_url = models.URLField(blank=True, help_text="Link de verificare a certificatului (opțional).")
 
-    image = models.ImageField(upload_to="certifications/")
+    image = models.ImageField(upload_to="certifications/", validators=[validate_image_max_size])
 
     order = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["order", "-issue_date"]
+        ordering = ["order", "-issue_date", "pk"]
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

@@ -4,7 +4,12 @@ Used by:
 - ContactMessage.PACKAGE_CHOICES (models.py) — so admin/email always show
   the same name+price as the homepage, without a second hardcoded copy.
 - home.html, via the `packages` context variable from views.home — so the
-  pricing cards render name/price/CTA from here instead of literal text.
+  pricing cards AND the price calculator render name/price/CTA from here
+  instead of a second hardcoded copy in the calculator's markup.
+
+`price_value` is the plain number backing the calculator's math (the €
+sign and, for premium_system, the "de la" prefix live only in `price`,
+for display).
 """
 
 PACKAGES = [
@@ -12,6 +17,7 @@ PACKAGES = [
         "key": "digital_presence",
         "name": "Prezență Digitală",
         "price": "€150",
+        "price_value": 150,
         "tagline": "Website simplu — prezența ta online",
         "features": [
             "Website cu paginile de care ai nevoie (acasă, despre, servicii, galerie)",
@@ -26,6 +32,7 @@ PACKAGES = [
         "key": "full_experience",
         "name": "Experiență Completă",
         "price": "€380",
+        "price_value": 380,
         "tagline": "Site complet, plus un flux care lucrează pentru tine",
         "features": [
             "Tot ce include Prezență Digitală, plus:",
@@ -42,6 +49,7 @@ PACKAGES = [
         "key": "premium_system",
         "name": "Sistem Premium",
         "price": "de la €850",
+        "price_value": 850,
         "tagline": "Platformă completă, construită pe fluxul tău real",
         "features": [
             "Tot ce include Experiență Completă, plus:",

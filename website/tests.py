@@ -1,12 +1,17 @@
 import io
+from types import SimpleNamespace
 
 from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.db import IntegrityError
 from django.test import TestCase
+from django.test import RequestFactory
 from django.urls import reverse
 from PIL import Image
 
-from .models import Certification, Project, ContactMessage, ContactMessageSimple, Review
+from .models import Certification, Project, ContactMessage, ContactMessageSimple, Review, validate_image_max_size
+from .views import _client_ip
 
 # 1x1 PNG, generated fresh per call (not a shared SimpleUploadedFile): an
 # UploadedFile wraps a BytesIO with a read cursor, so a single shared
@@ -60,6 +65,22 @@ class ProjectModelTests(TestCase):
         project = make_project(title="My Cool Project", slug="custom-slug")
         self.assertEqual(project.slug, "custom-slug")
 
+    def test_duplicate_title_gets_suffixed_slug(self):
+        # Exercises the retry-on-IntegrityError path in Project.save():
+        # two projects with the same title must not collide on slug.
+        first = make_project(title="Same Title")
+        second = make_project(title="Same Title")
+        self.assertEqual(first.slug, "same-title")
+        self.assertEqual(second.slug, "same-title-2")
+
+    def test_explicit_duplicate_slug_still_raises(self):
+        # A collision on a slug the caller set explicitly (not
+        # auto-generated) is a real conflict, not one save() should paper
+        # over with a suffix.
+        make_project(title="First", slug="taken")
+        with self.assertRaises(IntegrityError):
+            make_project(title="Second", slug="taken")
+
     def test_tech_list_splits_and_strips(self):
         project = make_project(tech_stack="Django, PostgreSQL ,  Redis")
         self.assertEqual(project.tech_list(), ["Django", "PostgreSQL", "Redis"])
@@ -81,6 +102,21 @@ class ImageResizeOnSaveTests(TestCase):
         project = make_project(image=make_oversized_png(800, 400))
         with Image.open(project.image.path) as saved:
             self.assertEqual(saved.width, 800)
+
+
+class ImageMaxSizeValidationTests(TestCase):
+    """Unit tests against the validator function directly — a real upload's
+    .size is a read-only property backed by storage, not something a test
+    can just overwrite on a saved model instance."""
+
+    def test_oversized_file_fails_validation(self):
+        oversized = SimpleNamespace(size=6 * 1024 * 1024)
+        with self.assertRaises(ValidationError):
+            validate_image_max_size(oversized)
+
+    def test_file_at_the_limit_passes_validation(self):
+        at_limit = SimpleNamespace(size=5 * 1024 * 1024)
+        validate_image_max_size(at_limit)  # should not raise
 
     def test_certification_image_wider_than_max_is_shrunk(self):
         cert = make_certification(image=make_oversized_png(1400, 700))
@@ -350,3 +386,34 @@ class RateLimitTests(TestCase):
         response = self.client.post(reverse("contact"), payload)
         self.assertRedirects(response, reverse("contact"))
         self.assertEqual(ContactMessageSimple.objects.count(), 5)
+
+    def test_rate_limit_uses_atomic_increment_not_read_then_write(self):
+        # A plain cache.get() + cache.set() pair lets two near-simultaneous
+        # requests both read the same pre-increment count and both slip
+        # under the limit. Simulate that by calling _rate_limited() several
+        # times in a tight loop and checking the count lands exactly on the
+        # limit boundary — a get/set race would let it drift past 5.
+        from .views import _rate_limited
+
+        request = RequestFactory().get("/")
+        results = [_rate_limited(request, "atomic-check") for _ in range(6)]
+        self.assertEqual(results, [False, False, False, False, False, True])
+
+
+class ClientIpTests(TestCase):
+
+    def test_uses_rightmost_forwarded_for_entry(self):
+        request = RequestFactory().get(
+            "/", HTTP_X_FORWARDED_FOR="203.0.113.5, 10.0.0.1"
+        )
+        # The right-most entry is the one PythonAnywhere's own proxy
+        # appended — a client can forge every entry before it.
+        self.assertEqual(_client_ip(request), "10.0.0.1")
+
+    def test_single_forwarded_for_entry(self):
+        request = RequestFactory().get("/", HTTP_X_FORWARDED_FOR="203.0.113.5")
+        self.assertEqual(_client_ip(request), "203.0.113.5")
+
+    def test_falls_back_to_remote_addr_without_header(self):
+        request = RequestFactory().get("/", REMOTE_ADDR="127.0.0.1")
+        self.assertEqual(_client_ip(request), "127.0.0.1")

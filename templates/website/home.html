@@ -247,18 +247,12 @@
                 <div class="home-calc-group">
                     <p class="home-calc-label">Alege pachetul</p>
                     <div class="home-calc-options">
+                        {% for pkg in packages %}
                         <label class="home-calc-option">
-                            <input type="radio" name="calcPackage" value="150" data-key="digital_presence" data-name="Prezență Digitală" data-exact="true">
-                            <span>Prezență Digitală — €150</span>
+                            <input type="radio" name="calcPackage" value="{{ pkg.price_value }}" data-key="{{ pkg.key }}" data-name="{{ pkg.name }}" data-exact="{% if 'de la' in pkg.price %}false{% else %}true{% endif %}"{% if pkg.popular %} checked{% endif %}>
+                            <span>{{ pkg.name }} — {{ pkg.price }}</span>
                         </label>
-                        <label class="home-calc-option">
-                            <input type="radio" name="calcPackage" value="380" data-key="full_experience" data-name="Experiență Completă" data-exact="true" checked>
-                            <span>Experiență Completă — €380</span>
-                        </label>
-                        <label class="home-calc-option">
-                            <input type="radio" name="calcPackage" value="850" data-key="premium_system" data-name="Sistem Premium" data-exact="false">
-                            <span>Sistem Premium — de la €850</span>
-                        </label>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="home-calc-group">
@@ -277,9 +271,9 @@
             </div>
             <div class="home-calc-total">
                 <span class="home-calc-total-label">Estimare</span>
-                <span class="home-calc-total-value gradient-text" id="calcTotal">€380</span>
+                <span class="home-calc-total-value gradient-text" id="calcTotal">{% for pkg in packages %}{% if pkg.popular %}{{ pkg.price }}{% endif %}{% endfor %}</span>
             </div>
-            <a href="{% url 'start_project' %}?pachet=full_experience" class="btn-primary home-calc-cta" id="calcCta">Pornesc cu acest pachet →</a>
+            <a href="{% url 'start_project' %}?pachet={% for pkg in packages %}{% if pkg.popular %}{{ pkg.key }}{% endif %}{% endfor %}" class="btn-primary home-calc-cta" id="calcCta">Pornesc cu {% for pkg in packages %}{% if pkg.popular %}{{ pkg.name }}{% endif %}{% endfor %} →</a>
             <p class="home-calc-note">Estimare orientativă — suma exactă se stabilește la consultație, în funcție de ce alegi.</p>
         </div>
     </div>

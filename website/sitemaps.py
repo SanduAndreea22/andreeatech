@@ -31,7 +31,7 @@ class ProjectSitemap(Sitemap):
     changefreq = "yearly"
 
     def items(self):
-        return Project.objects.order_by("order", "-created_at")
+        return Project.objects.only("slug", "created_at", "order").order_by("order", "-created_at", "pk")
 
     def lastmod(self, obj):
         return obj.created_at

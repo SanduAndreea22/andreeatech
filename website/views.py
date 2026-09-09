@@ -39,6 +39,11 @@ def _rate_limited(request, form_name, limit=5, window_seconds=3600):
     """Simple per-IP submission cap for public forms. Returns True if the
     caller has already hit the limit and the submission should be dropped.
 
+    cache.add() + cache.incr() are each atomic on their own, so two
+    submissions arriving at (almost) the same time can't both read the same
+    pre-increment count and both slip under the limit — a plain get()-then-
+    set() pair could race that way.
+
     Uses Django's default in-memory cache, which lives inside a single
     process — correct as long as the app runs on one worker (true today on
     PythonAnywhere's free tier). If this ever moves to a multi-process/
@@ -46,11 +51,23 @@ def _rate_limited(request, form_name, limit=5, window_seconds=3600):
     or the limit won't be enforced consistently across workers.
     """
     key = f"ratelimit:{form_name}:{_client_ip(request)}"
-    count = cache.get(key, 0)
-    if count >= limit:
-        return True
-    cache.set(key, count + 1, window_seconds)
-    return False
+    cache.add(key, 0, window_seconds)
+    count = cache.incr(key)
+    return count > limit
+
+
+def _reject_spam_submission(request, form, form_name, rate_limit_message):
+    """Shared honeypot + rate-limit check for the public forms below.
+    Returns a redirect response if the submission should be dropped
+    silently or with a rate-limit message, otherwise None.
+    """
+    if form.cleaned_data.get("website"):
+        # Honeypot tripped — pretend success, save nothing.
+        return redirect(form_name)
+    if _rate_limited(request, form_name):
+        messages.error(request, rate_limit_message)
+        return redirect(form_name)
+    return None
 
 
 def home(request):
@@ -81,8 +98,8 @@ def budget_product(request):
 def projects_list(request):
     # Every project marked as featured gets its own prominent card, in order;
     # everything else shows in the regular grid below.
-    featured_projects = Project.objects.filter(is_featured=True).order_by("order", "-created_at")
-    projects = Project.objects.exclude(is_featured=True).order_by("order", "-created_at")
+    featured_projects = Project.objects.filter(is_featured=True).order_by("order", "-created_at", "pk")
+    projects = Project.objects.exclude(is_featured=True).order_by("order", "-created_at", "pk")
     return render(request, "website/projects_list.html", {
         "featured_projects": featured_projects,
         "projects": projects
@@ -102,13 +119,12 @@ def start_project(request):
     if request.method == "POST":
         form = StartProjectForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data.get("website"):
-                # Honeypot tripped — pretend success, save nothing.
-                return redirect("start_project")
-
-            if _rate_limited(request, "start_project"):
-                messages.error(request, "Ai trimis mai multe cereri într-un timp scurt. Te rog încearcă din nou peste puțin timp.")
-                return redirect("start_project")
+            spam_response = _reject_spam_submission(
+                request, form, "start_project",
+                "Ai trimis mai multe cereri într-un timp scurt. Te rog încearcă din nou peste puțin timp.",
+            )
+            if spam_response:
+                return spam_response
 
             obj = form.save(commit=False)
 
@@ -146,13 +162,12 @@ def contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data.get("website"):
-                # Honeypot tripped — pretend success, save nothing.
-                return redirect("contact")
-
-            if _rate_limited(request, "contact"):
-                messages.error(request, "Ai trimis mai multe mesaje într-un timp scurt. Te rog încearcă din nou peste puțin timp.")
-                return redirect("contact")
+            spam_response = _reject_spam_submission(
+                request, form, "contact",
+                "Ai trimis mai multe mesaje într-un timp scurt. Te rog încearcă din nou peste puțin timp.",
+            )
+            if spam_response:
+                return spam_response
 
             obj = form.save()
             _notify_admin(
@@ -193,13 +208,12 @@ def reviews(request):
     if request.method == "POST":
         form = ReviewForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data.get("website"):
-                # Honeypot tripped — pretend success, save nothing.
-                return redirect("reviews")
-
-            if _rate_limited(request, "reviews"):
-                messages.error(request, "Ai trimis mai multe recenzii într-un timp scurt. Te rog încearcă din nou peste puțin timp.")
-                return redirect("reviews")
+            spam_response = _reject_spam_submission(
+                request, form, "reviews",
+                "Ai trimis mai multe recenzii într-un timp scurt. Te rog încearcă din nou peste puțin timp.",
+            )
+            if spam_response:
+                return spam_response
 
             obj = form.save()
             _notify_admin(

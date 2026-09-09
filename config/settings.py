@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -13,8 +14,16 @@ SUPER_PASS = os.getenv('DJANGO_SUPERUSER_PASSWORD')
 SUPER_EMAIL = os.getenv('DJANGO_SUPERUSER_EMAIL')
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    # Fail loudly at boot instead of letting Django start with SECRET_KEY=None
+    # and break session/CSRF signing on the first real request.
+    raise ImproperlyConfigured(
+        "SECRET_KEY is not set. Add it to your .env file (see .env.example)."
+    )
 
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+# Accept "True"/"true"/" True " etc. so a stray case or whitespace difference
+# in the .env file doesn't silently leave DEBUG off without anyone noticing.
+DEBUG = os.environ.get("DEBUG", "False").strip().lower() == "true"
 ALLOWED_HOSTS = ['andreeastech.pythonanywhere.com']
 if DEBUG:
     ALLOWED_HOSTS += ['localhost', '127.0.0.1']
