@@ -1599,9 +1599,11 @@ select {
    REVIEWS PAGE
 ========================================= */
 
-.reviews-grid { display: grid; gap: 32px; margin-bottom: 96px; }
-@media (min-width: 768px) { .reviews-grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1024px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+/* auto-fit with a capped card width (not a fixed 2/3-column split) so a
+   handful of reviews doesn't leave an obviously empty column, or stretch
+   into one oversized card, on wide screens — cards center as a group and
+   more columns appear once there are enough cards to fill them. */
+.reviews-grid { display: grid; gap: 32px; margin-bottom: 96px; grid-template-columns: repeat(auto-fit, minmax(280px, 380px)); justify-content: center; }
 
 .review-card { padding: 32px; border-radius: 18px; display: flex; flex-direction: column; justify-content: space-between; }
 .review-stars { display: flex; gap: 4px; margin-bottom: 20px; }
