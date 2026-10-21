@@ -1,18 +1,25 @@
 from PIL import Image
 
 from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 from django.db import IntegrityError, models, transaction
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
 
 from .packages import NOT_SURE_KEY, NOT_SURE_LABEL, PACKAGES
 
-MAX_UPLOAD_SIZE_BYTES = 5 * 1024 * 1024  # 5 MB
+MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024  # 5 MB
+MAX_PDF_SIZE_BYTES = 10 * 1024 * 1024  # 10 MB — a design deck with photos runs bigger than a single image
 
 
 def validate_image_max_size(image_field):
-    if image_field.size > MAX_UPLOAD_SIZE_BYTES:
+    if image_field.size > MAX_IMAGE_SIZE_BYTES:
         raise ValidationError("Imaginea depășește dimensiunea maximă permisă (5 MB).")
+
+
+def validate_pdf_max_size(file_field):
+    if file_field.size > MAX_PDF_SIZE_BYTES:
+        raise ValidationError("Fișierul depășește dimensiunea maximă permisă (10 MB).")
 
 
 def shrink_image_if_needed(image_field, max_width):
@@ -40,6 +47,19 @@ class Project(models.Model):
     slug = models.SlugField(unique=True, blank=True)
     link = models.URLField(blank=True, null=True)
 
+    CATEGORY_SISTEM = "sistem"
+    CATEGORY_CONTINUT_CREATIV = "continut_creativ"
+    CATEGORY_CHOICES = [
+        (CATEGORY_SISTEM, "Sistem"),
+        (CATEGORY_CONTINUT_CREATIV, "Conținut creativ"),
+    ]
+    category = models.CharField(
+        max_length=20,
+        choices=CATEGORY_CHOICES,
+        default=CATEGORY_SISTEM,
+        help_text="Sistem = website/platformă construită. Conținut creativ = concept de conținut/strategie, fără stack tehnic.",
+    )
+
     short_description = models.TextField()
 
     result_highlight = models.CharField(
@@ -55,10 +75,19 @@ class Project(models.Model):
 
     tech_stack = models.CharField(
         max_length=300,
-        help_text="Separă tehnologiile prin virgulă. Exemplu: Django, PostgreSQL, Redis"
+        blank=True,
+        help_text="Doar pentru proiecte de tip Sistem. Separă tehnologiile prin virgulă. Exemplu: Django, PostgreSQL, Redis. Lasă gol la Conținut creativ."
     )
 
     image = models.ImageField(upload_to="projects/", blank=True, null=True, validators=[validate_image_max_size])
+
+    portfolio_pdf = models.FileField(
+        upload_to="project_files/",
+        blank=True,
+        null=True,
+        validators=[FileExtensionValidator(["pdf"]), validate_pdf_max_size],
+        help_text="PDF descărcabil (ex. un concept/portofoliu demonstrativ) — opțional. Apare ca buton de descărcare pe pagina proiectului.",
+    )
 
     is_featured = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
@@ -68,6 +97,8 @@ class Project(models.Model):
         ordering = ["order", "-created_at", "pk"]
 
     def tech_list(self):
+        if not self.tech_stack:
+            return []
         return [tech.strip() for tech in self.tech_stack.split(",")]
 
     def save(self, *args, **kwargs):

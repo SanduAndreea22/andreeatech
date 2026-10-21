@@ -10,7 +10,7 @@ from django.test import RequestFactory
 from django.urls import reverse
 from PIL import Image
 
-from .models import Certification, Project, ContactMessage, ContactMessageSimple, Review, validate_image_max_size
+from .models import Certification, Project, ContactMessage, ContactMessageSimple, Review, validate_image_max_size, validate_pdf_max_size
 from .views import _client_ip
 
 # 1x1 PNG, generated fresh per call (not a shared SimpleUploadedFile): an
@@ -30,6 +30,11 @@ def make_oversized_png(width, height):
     Image.new("RGB", (width, height), color="red").save(buffer, format="PNG")
     buffer.seek(0)
     return SimpleUploadedFile("oversized.png", buffer.read(), content_type="image/png")
+
+
+def make_test_pdf():
+    # FileExtensionValidator only checks the filename, so minimal bytes are fine.
+    return SimpleUploadedFile("portfolio.pdf", b"%PDF-1.4 test", content_type="application/pdf")
 
 
 def make_certification(**overrides):
@@ -85,6 +90,13 @@ class ProjectModelTests(TestCase):
         project = make_project(tech_stack="Django, PostgreSQL ,  Redis")
         self.assertEqual(project.tech_list(), ["Django", "PostgreSQL", "Redis"])
 
+    def test_tech_list_is_empty_for_blank_tech_stack(self):
+        # Content-category projects have no tech stack — tech_list() must
+        # return [] rather than [''] so the "Construit cu" block in the
+        # template can hide itself with {% if project.tech_list %}.
+        project = make_project(tech_stack="", category=Project.CATEGORY_CONTINUT_CREATIV)
+        self.assertEqual(project.tech_list(), [])
+
     def test_str_returns_title(self):
         project = make_project(title="My Cool Project")
         self.assertEqual(str(project), "My Cool Project")
@@ -117,6 +129,18 @@ class ImageMaxSizeValidationTests(TestCase):
     def test_file_at_the_limit_passes_validation(self):
         at_limit = SimpleNamespace(size=5 * 1024 * 1024)
         validate_image_max_size(at_limit)  # should not raise
+
+
+class PdfMaxSizeValidationTests(TestCase):
+
+    def test_oversized_file_fails_validation(self):
+        oversized = SimpleNamespace(size=11 * 1024 * 1024)
+        with self.assertRaises(ValidationError):
+            validate_pdf_max_size(oversized)
+
+    def test_file_at_the_limit_passes_validation(self):
+        at_limit = SimpleNamespace(size=10 * 1024 * 1024)
+        validate_pdf_max_size(at_limit)  # should not raise
 
     def test_certification_image_wider_than_max_is_shrunk(self):
         cert = make_certification(image=make_oversized_png(1400, 700))
@@ -228,6 +252,25 @@ class ProjectDetailViewTests(TestCase):
         project = make_project(title="No Image Project")
         response = self.client.get(reverse("project_detail", args=[project.slug]))
         self.assertContains(response, "poza_me")
+
+    def test_download_button_shown_when_pdf_attached(self):
+        project = make_project(title="With PDF", portfolio_pdf=make_test_pdf())
+        response = self.client.get(reverse("project_detail", args=[project.slug]))
+        self.assertContains(response, "Descarcă PDF-ul proiectului")
+
+    def test_download_button_hidden_without_pdf(self):
+        project = make_project(title="No PDF")
+        response = self.client.get(reverse("project_detail", args=[project.slug]))
+        self.assertNotContains(response, "Descarcă PDF-ul proiectului")
+
+    def test_tech_block_hidden_for_content_project_without_tech_stack(self):
+        project = make_project(
+            title="Content Concept",
+            tech_stack="",
+            category=Project.CATEGORY_CONTINUT_CREATIV,
+        )
+        response = self.client.get(reverse("project_detail", args=[project.slug]))
+        self.assertNotContains(response, "Construit cu")
 
     def test_og_image_uses_project_image_when_present(self):
         project = make_project(title="With Image Project", image=make_test_png())

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Portofoliu | Andreea Sandu{% endblock %}
-{% block meta_description %}Un portofoliu de sisteme și platforme funcționale, construite pentru clienți reali și pentru propriile mele proiecte — dovadă clară a ce pot construi și pentru afacerea ta.{% endblock %}
+{% block meta_description %}Un portofoliu de sisteme, platforme și concepte de conținut — construite pentru clienți reali și pentru propriile mele proiecte — dovadă clară a ce pot construi și pentru afacerea ta.{% endblock %}
 
 {% block content %}
 
@@ -9,10 +9,10 @@
     <div class="hero-glow"></div>
     <div class="container-md center">
         <h1 class="page-title">
-            Sisteme și platforme construite <span class="gradient-text">pentru clienți și proiecte proprii</span>
+            Sisteme, platforme și conținut <span class="gradient-text">construite pentru clienți și proiecte proprii</span>
         </h1>
         <p class="page-subtitle measure">
-            Proiectele de mai jos sunt din zona rezervări/programări — dar principiile din spate (un flux clar, automatizat, care ține pasul cu afacerea ta) se aplică la orice proces repetitiv, indiferent de domeniu.
+            De la sisteme de rezervări/programări la concepte de conținut — principiul din spate e același: un flux clar, gândit pentru afacerea ta, nu pentru un șablon generic.
         </p>
     </div>
 </section>
@@ -28,7 +28,7 @@
                 <div>
                     <div class="pl-featured-badge-row">
                         <span class="badge-dot badge-dot-pulse"></span>
-                        <span class="pl-featured-badge-label">Studiu de caz recomandat</span>
+                        <span class="pl-featured-badge-label">{% if featured.category == "continut_creativ" %}Concept recomandat{% else %}Studiu de caz recomandat{% endif %}</span>
                     </div>
 
                     <h2 class="pl-featured-title">
@@ -41,7 +41,7 @@
 
                     <div class="pl-featured-actions">
                         <a href="{% url 'project_detail' featured.slug %}" class="btn-primary pl-featured-cta">
-                            VEZI STUDIUL DE CAZ
+                            {% if featured.category == "continut_creativ" %}VEZI PROIECTUL{% else %}VEZI STUDIUL DE CAZ{% endif %}
                         </a>
 
                         {% if featured.link %}
@@ -86,6 +86,9 @@
                 <div>
                     {% if project.link and not project.image %}
                     <span class="live-badge live-badge-inline"><span class="dot"></span>Live</span>
+                    {% endif %}
+                    {% if project.category == "continut_creativ" %}
+                    <p class="pl-featured-badge-label">Conținut creativ</p>
                     {% endif %}
                     <div class="project-card-bar"></div>
                     <h3 class="project-card-title">
