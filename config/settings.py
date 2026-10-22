@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
@@ -7,11 +8,7 @@ from django.core.exceptions import ImproperlyConfigured
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / ".env")
-import os
 AUTH_USER_MODEL = 'auth.User'
-SUPER_USER = os.getenv('DJANGO_SUPERUSER_NAME')
-SUPER_PASS = os.getenv('DJANGO_SUPERUSER_PASSWORD')
-SUPER_EMAIL = os.getenv('DJANGO_SUPERUSER_EMAIL')
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 if not SECRET_KEY:
@@ -53,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'website.middleware.ContentSecurityPolicyMiddleware',
     # Must stay last: needs to see the response produced by every other
     # middleware (including the auth result) to decide on a lockout.
     'axes.middleware.AxesMiddleware',
@@ -80,6 +78,27 @@ AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT = False
 AXES_IPWARE_META_PRECEDENCE_ORDER = ('HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR')
 AXES_IPWARE_PROXY_COUNT = 1
 AXES_IPWARE_PROXY_ORDER = 'right-most'
+
+# Project.problem/solution/outcome are RichTextFields rendered with |safe
+# in project_detail.html, so whatever CKEditor allows an admin to insert
+# gets rendered unescaped. Without this, the default config includes a
+# "Source" button (raw HTML editing) and no content filtering — either
+# one lets a compromised/careless admin session inject <script>/<iframe>.
+# allowedContent restricts CKEditor's own filter to formatting tags only;
+# removePlugins drops the "Source" button and other unused surface area.
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList'],
+            ['Link', 'Unlink'],
+            ['Format'],
+            ['RemoveFormat', 'Undo', 'Redo'],
+        ],
+        'removePlugins': 'elementspath,resize,save,about,source,iframe,flash,forms,smiley,specialchar,templates,uploadimage,uploadwidget',
+        'allowedContent': 'p br strong em u ol ul li a[!href]; h2 h3 h4; blockquote',
+    },
+}
 
 ROOT_URLCONF = 'config.urls'
 

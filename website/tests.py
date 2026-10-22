@@ -10,7 +10,7 @@ from django.test import RequestFactory
 from django.urls import reverse
 from PIL import Image
 
-from .models import Certification, Project, ContactMessage, ContactMessageSimple, Review, validate_image_max_size, validate_pdf_max_size
+from .models import Certification, Project, ContactMessage, ContactMessageSimple, Review, validate_image_max_size, validate_pdf_max_size, validate_pdf_content
 from .views import _client_ip
 
 # 1x1 PNG, generated fresh per call (not a shared SimpleUploadedFile): an
@@ -147,6 +147,26 @@ class PdfMaxSizeValidationTests(TestCase):
         with Image.open(cert.image.path) as saved:
             self.assertEqual(saved.width, 900)
             self.assertEqual(saved.height, 450)
+
+
+class PdfContentValidationTests(TestCase):
+    """FileExtensionValidator only checks the filename — these exercise the
+    magic-bytes check that catches a renamed non-PDF file."""
+
+    def test_file_without_pdf_header_fails_validation(self):
+        fake = SimpleUploadedFile("fake.pdf", b"not a real pdf", content_type="application/pdf")
+        with self.assertRaises(ValidationError):
+            validate_pdf_content(fake)
+
+    def test_real_pdf_header_passes_validation(self):
+        validate_pdf_content(make_test_pdf())  # should not raise
+
+    def test_validation_does_not_consume_the_file(self):
+        # save() reads the file again after validators run — if the
+        # validator didn't rewind, the saved file would be truncated.
+        pdf = make_test_pdf()
+        validate_pdf_content(pdf)
+        self.assertEqual(pdf.read(), b"%PDF-1.4 test")
 
 
 class ContactMessageModelTests(TestCase):

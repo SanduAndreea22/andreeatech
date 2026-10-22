@@ -3,7 +3,7 @@
 
 Run after touching the :root palette in static/website/style.css:
 
-    python check_contrast.py
+    python scripts/check_contrast.py
 
 Reads the hex values straight out of style.css, so it never drifts out of
 sync with what's actually shipped. Exits non-zero if anything fails its
@@ -13,7 +13,7 @@ import re
 import sys
 from pathlib import Path
 
-CSS_PATH = Path(__file__).parent / "static" / "website" / "style.css"
+CSS_PATH = Path(__file__).parent.parent / "static" / "website" / "style.css"
 
 # (label, foreground var, background var, "normal" or "large")
 # "large" also covers UI components / graphical objects (WCAG 1.4.11), used

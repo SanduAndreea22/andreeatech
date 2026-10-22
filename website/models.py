@@ -22,6 +22,18 @@ def validate_pdf_max_size(file_field):
         raise ValidationError("Fișierul depășește dimensiunea maximă permisă (10 MB).")
 
 
+def validate_pdf_content(file_field):
+    # FileExtensionValidator only checks the filename, so a renamed file
+    # with a .pdf extension would otherwise pass untouched. Read just the
+    # magic bytes real PDFs start with, then rewind — the file is read
+    # again right after by the storage backend to actually save it.
+    file_field.seek(0)
+    header = file_field.read(5)
+    file_field.seek(0)
+    if header != b"%PDF-":
+        raise ValidationError("Fișierul nu este un PDF valid.")
+
+
 def shrink_image_if_needed(image_field, max_width):
     """Resize an ImageField's file in place if it's wider than max_width.
 
@@ -45,7 +57,7 @@ def shrink_image_if_needed(image_field, max_width):
 class Project(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
-    link = models.URLField(blank=True, null=True)
+    link = models.URLField(blank=True)
 
     CATEGORY_SISTEM = "sistem"
     CATEGORY_CONTINUT_CREATIV = "continut_creativ"
@@ -79,18 +91,18 @@ class Project(models.Model):
         help_text="Doar pentru proiecte de tip Sistem. Separă tehnologiile prin virgulă. Exemplu: Django, PostgreSQL, Redis. Lasă gol la Conținut creativ."
     )
 
-    image = models.ImageField(upload_to="projects/", blank=True, null=True, validators=[validate_image_max_size])
+    image = models.ImageField(upload_to="projects/", blank=True, validators=[validate_image_max_size])
 
     portfolio_pdf = models.FileField(
         upload_to="project_files/",
         blank=True,
         null=True,
-        validators=[FileExtensionValidator(["pdf"]), validate_pdf_max_size],
+        validators=[FileExtensionValidator(["pdf"]), validate_pdf_max_size, validate_pdf_content],
         help_text="PDF descărcabil (ex. un concept/portofoliu demonstrativ) — opțional. Apare ca buton de descărcare pe pagina proiectului.",
     )
 
     is_featured = models.BooleanField(default=False)
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -223,7 +235,7 @@ class Certification(models.Model):
 
     image = models.ImageField(upload_to="certifications/", validators=[validate_image_max_size])
 
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

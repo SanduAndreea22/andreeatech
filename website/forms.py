@@ -3,7 +3,13 @@ from django import forms
 from .models import ContactMessage, ContactMessageSimple, Review
 
 
-class StartProjectForm(forms.ModelForm):
+class HoneypotFormMixin(forms.Form):
+    # Real visitors never see or fill this field, bots that auto-fill
+    # every input do. Checked (not saved) in the view.
+    website = forms.CharField(required=False, widget=forms.HiddenInput())
+
+
+class StartProjectForm(HoneypotFormMixin, forms.ModelForm):
 
     FEATURE_CHOICES = [
         ("booking", "Sistem de rezervări / programări"),
@@ -27,10 +33,6 @@ class StartProjectForm(forms.ModelForm):
         required=False,
     )
 
-    # Honeypot: real visitors never see or fill this field, bots that
-    # auto-fill every input do. Checked (not saved) in the view.
-    website = forms.CharField(required=False, widget=forms.HiddenInput())
-
     class Meta:
         model = ContactMessage
         fields = [
@@ -48,11 +50,7 @@ class StartProjectForm(forms.ModelForm):
         }
 
 
-class ContactForm(forms.ModelForm):
-    # Honeypot: real visitors never see or fill this field, bots that
-    # auto-fill every input do. Checked (not saved) in the view.
-    website = forms.CharField(required=False, widget=forms.HiddenInput())
-
+class ContactForm(HoneypotFormMixin, forms.ModelForm):
     class Meta:
         model = ContactMessageSimple
         fields = ["name", "email", "message"]
@@ -61,11 +59,7 @@ class ContactForm(forms.ModelForm):
         }
 
 
-class ReviewForm(forms.ModelForm):
-    # Honeypot: real visitors never see or fill this field, bots that
-    # auto-fill every input do. Checked (not saved) in the view.
-    website = forms.CharField(required=False, widget=forms.HiddenInput())
-
+class ReviewForm(HoneypotFormMixin, forms.ModelForm):
     class Meta:
         model = Review
         fields = ["name", "role", "company", "business_url", "project_note", "rating", "message"]
