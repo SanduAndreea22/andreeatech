@@ -524,9 +524,13 @@ main > section:first-of-type::before {
     border: 1px solid var(--line);
     padding: 8px 16px;
     list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 .navbar-mobile-toggle::-webkit-details-marker { display: none; }
 .navbar-mobile-toggle:hover { border-color: var(--blue-mid); }
+.navbar-mobile-toggle-icon { width: 18px; height: 18px; flex-shrink: 0; }
 
 .navbar-mobile-menu {
     background: var(--paper);
@@ -782,6 +786,10 @@ select {
 .home-hero-badge { margin-bottom: 24px; }
 
 .home-hero-cta { display: inline-block; padding: 16px 36px; border-radius: 12px; font-weight: 600; box-shadow: 0 20px 50px rgba(var(--blue-mid-rgb),.35); }
+/* The outline/secondary hero CTA shared the primary's glow shadow and full
+   padding, making it compete almost equally for attention on the first
+   screen — scale it down so the primary action reads as primary. */
+.home-hero-cta-secondary { padding: 14px 30px; font-weight: 500; font-size: .9375rem; box-shadow: none; }
 
 .home-hero-links {
     display: flex;
@@ -1172,9 +1180,16 @@ select {
     border-radius: 12px;
     font-weight: 700;
     color: var(--paper);
-    text-transform: uppercase;
-    letter-spacing: .05em;
     box-shadow: 0 15px 40px rgba(var(--blue-mid-rgb),.2);
+}
+/* Contact/Review are a quick message, not a full project brief — keep the
+   submit full-width on mobile for easy tapping, but let it shrink to its
+   content on larger screens so it doesn't carry the same visual weight as
+   Start Project's full-commitment .sp-submit button. */
+@media (min-width: 640px) {
+    /* .form-fields is a column flexbox (align-items: stretch by default) —
+       align-self overrides that so width: auto actually takes effect. */
+    .form-submit { width: auto; align-self: flex-start; padding: 16px 40px; }
 }
 
 .form-message {
@@ -1262,6 +1277,11 @@ select {
 
 .pp-features-grid { display: grid; gap: 24px; }
 @media (min-width: 768px) { .pp-features-grid { grid-template-columns: 1fr 1fr; } }
+/* 3-card variant (Home's "Ce fac" pillars) — auto-fit instead of a fixed
+   2-column grid so a 3rd card doesn't strand itself alone with a gap. */
+@media (min-width: 768px) {
+    .pp-features-grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+}
 .pp-feature-card { padding: 28px; border-radius: 18px; }
 .pp-feature-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 12px; }
 .pp-feature-body { color: var(--ink-faint); line-height: 1.7; }
@@ -1403,8 +1423,13 @@ select {
     display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 .project-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
-.project-link { color: var(--blue-mid); font-size: .875rem; font-weight: 700; transition: var(--transition); display: flex; align-items: center; gap: 4px; }
-.project-link:hover { color: var(--blue-mid-hover); }
+/* Small outline-button treatment instead of a bare text link — the
+   featured cards' "Vezi studiul de caz" is a solid btn-primary for the
+   same underlying action (open the project), so a plain link here read
+   as an unrelated, lighter-weight pattern rather than a deliberate
+   secondary-vs-primary pairing. */
+.project-link { color: var(--blue-mid); font-size: .8125rem; font-weight: 700; transition: var(--transition); display: inline-flex; align-items: center; gap: 4px; padding: 8px 16px; border-radius: 10px; border: 1px solid var(--line); }
+.project-link:hover { color: var(--blue-mid-hover); border-color: var(--blue-mid); }
 .project-link span { transition: transform .2s ease; }
 .project-card:hover .project-link span { transform: translateX(4px); }
 .project-live-link { font-size: .875rem; font-weight: 600; color: var(--ink-faint); display: flex; align-items: center; gap: 8px; transition: var(--transition); }
@@ -1493,7 +1518,7 @@ select {
 .pd-tech-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .15em; color: var(--ink-faint); font-weight: 700; }
 .pd-tech-list { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px; }
 .pd-tech-pill { padding: 6px 16px; font-size: .75rem; font-weight: 500; background: rgba(var(--blue-mid-rgb),.04); border: 1px solid var(--line); border-radius: 999px; color: var(--blue-mid); }
-.pd-cta { padding: 16px 32px; border-radius: 12px; font-size: .875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; flex-shrink: 0; }
+.pd-cta { padding: 16px 32px; border-radius: 12px; font-size: .875rem; font-weight: 700; flex-shrink: 0; }
 
 /* =========================================
    PRIVACY POLICY PAGE
@@ -1584,8 +1609,6 @@ select {
     border-radius: 16px;
     font-weight: 900;
     color: var(--paper);
-    text-transform: uppercase;
-    letter-spacing: .2em;
     box-shadow: 0 20px 50px rgba(var(--blue-mid-rgb),.25);
 }
 .sp-submit-note { text-align: center; color: var(--ink-faint); font-size: .75rem; margin-top: 24px; }
@@ -1604,6 +1627,12 @@ select {
    into one oversized card, on wide screens — cards center as a group and
    more columns appear once there are enough cards to fill them. */
 .reviews-grid { display: grid; gap: 32px; margin-bottom: 96px; grid-template-columns: repeat(auto-fit, minmax(280px, 380px)); justify-content: center; }
+
+/* The "leave a review" form sat directly under the displayed reviews with
+   no visual break, reading as a continuation rather than its own section
+   reserved for past clients. */
+.reviews-form-section { padding-top: 64px; border-top: 1px solid var(--line); }
+.reviews-form-section .eyebrow { margin-bottom: 20px; }
 
 .review-card { padding: 32px; border-radius: 18px; display: flex; flex-direction: column; justify-content: space-between; }
 .review-stars { display: flex; gap: 4px; margin-bottom: 20px; }
@@ -1639,9 +1668,11 @@ select {
 
 .about-certs-head { text-align: center; margin-bottom: 56px; }
 .about-certs-head p { max-width: 36rem; margin: 0 auto; }
-.about-certs-grid { display: grid; gap: 32px; }
-@media (min-width: 640px) { .about-certs-grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1024px) { .about-certs-grid { grid-template-columns: repeat(3, 1fr); } }
+/* auto-fit + justify-content: center instead of a fixed 3-column grid —
+   with fewer than 3 certifications the row centers on real content
+   instead of stretching into empty trailing columns. */
+.about-certs-grid { display: grid; gap: 32px; justify-content: center; }
+@media (min-width: 640px) { .about-certs-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 320px)); } }
 .about-cert-card { border-radius: 18px; overflow: hidden; }
 .about-cert-image-wrap { background: var(--paper-tint); height: 24rem; overflow: hidden; padding: 8px; display: flex; align-items: center; justify-content: center; }
 .about-cert-image { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,.12); cursor: zoom-in; transition: transform .5s ease; }
