@@ -12,6 +12,7 @@ class HoneypotFormMixin(forms.Form):
 class StartProjectForm(HoneypotFormMixin, forms.ModelForm):
 
     FEATURE_CHOICES = [
+        ("content", "Conținut & postări social media"),
         ("booking", "Sistem de rezervări / programări"),
         ("dashboard", "Dashboard de administrare"),
         ("website", "Website de prezentare"),

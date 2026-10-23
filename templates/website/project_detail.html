@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ project.title }} | Studiu de caz{% endblock %}
+{% block title %}{{ project.title }} | {% if project.category == "continut_creativ" %}Concept de conținut{% else %}Studiu de caz{% endif %}{% endblock %}
 {% block meta_description %}{{ project.short_description }}{% endblock %}
 {% block og_title %}{{ project.title }} | Andreea Sandu{% endblock %}
 {% block og_description %}{{ project.short_description }}{% endblock %}
@@ -101,7 +101,7 @@
             {% endif %}
 
             <a href="{% url 'start_project' %}" class="btn-primary pd-cta">
-                Hai să construim ceva similar
+                {% if project.category == "continut_creativ" %}Hai să discutăm un concept similar{% else %}Hai să construim ceva similar{% endif %}
             </a>
         </div>
 
