@@ -338,7 +338,7 @@ class StartProjectFormViewTests(TestCase):
             "name": "Jane Doe",
             "email": "jane@example.com",
             "industry": "restaurant",
-            "selected_package": "full_experience",
+            "selected_package": "ai_automatizare",
             "project_description": "I need a booking system.",
             "hosting_info": "",
             "deadline_communication": "",
@@ -354,11 +354,11 @@ class StartProjectFormViewTests(TestCase):
         self.assertEqual(ContactMessage.objects.count(), 1)
         obj = ContactMessage.objects.first()
         self.assertEqual(obj.required_features, "booking, dashboard")
-        self.assertEqual(obj.selected_package, "full_experience")
+        self.assertEqual(obj.selected_package, "ai_automatizare")
 
     def test_package_preselected_from_query_param(self):
-        response = self.client.get(reverse("start_project") + "?pachet=premium_system")
-        self.assertContains(response, "premium_system")
+        response = self.client.get(reverse("start_project") + "?pachet=produse_sisteme")
+        self.assertContains(response, "produse_sisteme")
 
     def test_thank_you_state_shown_only_after_submit(self):
         response = self.client.get(reverse("start_project"))

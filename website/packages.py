@@ -1,4 +1,10 @@
-"""Single source of truth for the 3 pricing tiers shown on the homepage.
+"""Single source of truth for the 3 pillar packages shown on the homepage.
+
+Each package maps 1:1 to one of the site's 3 commercial pillars (see the
+"Ce fac" section on Acasă): Conținut & Prezență Digitală, AI & Automatizare,
+Produse & Sisteme Digitale. These are parallel offers, not escalating tiers
+of the same service — a visitor picks the one that matches what they need,
+not a bigger/smaller version of the same thing.
 
 Used by:
 - ContactMessage.PACKAGE_CHOICES (models.py) — so admin/email always show
@@ -8,56 +14,54 @@ Used by:
   instead of a second hardcoded copy in the calculator's markup.
 
 `price_value` is the plain number backing the calculator's math (the €
-sign and, for premium_system, the "de la" prefix live only in `price`,
+sign and, for produse_sisteme, the "de la" prefix live only in `price`,
 for display).
 """
 
 PACKAGES = [
     {
-        "key": "digital_presence",
-        "name": "Prezență Digitală",
+        "key": "continut_digital",
+        "name": "Conținut & Prezență Digitală",
         "price": "€150",
         "price_value": 150,
-        "tagline": "Website simplu — prezența ta online",
+        "tagline": "Conținut care spune clar ce faci — gata de publicat",
         "features": [
-            "Website cu paginile de care ai nevoie (acasă, despre, servicii, galerie)",
-            "Poze și descrieri prezentate clar, gata să le vadă clienții",
-            "Formular de contact — mesajele ajung direct la tine",
+            "Postări Instagram și caption-uri",
+            "Calendar editorial",
+            "Concepte vizuale și materiale de promovare",
+            "Website de prezentare (opțional, dacă ai nevoie)",
         ],
-        "description": "Ai un loc unde clienții te găsesc, înțeleg ce faci și te pot contacta — fără să te bazezi doar pe rețele sociale sau recomandări.",
+        "description": "Ai o prezență online care arată și sună ca lumea, nu doar să existe — conținut gata de publicat, gândit pentru brandul tău, nu generic.",
         "duration": "7 zile",
-        "popular": False,
-    },
-    {
-        "key": "full_experience",
-        "name": "Experiență Completă",
-        "price": "€380",
-        "price_value": 380,
-        "tagline": "Site complet, plus un flux care lucrează pentru tine",
-        "features": [
-            "Tot ce include Prezență Digitală, plus:",
-            "Clienții trimit o cerere sau o programare direct de pe site",
-            "Primesc automat o confirmare, fără să scrii tu mesajul",
-            "Recenzii de la clienți, afișate direct pe site",
-            "Un singur loc unde vezi toate cererile primite",
-        ],
-        "description": "Clienții pot acționa direct pe site — trimit o cerere sau o programare — iar tu vezi totul într-un singur loc, fără să mai gestionezi manual fiecare pas.",
-        "duration": "14 zile",
         "popular": True,
     },
     {
-        "key": "premium_system",
-        "name": "Sistem Premium",
+        "key": "ai_automatizare",
+        "name": "AI & Automatizare",
+        "price": "€250",
+        "price_value": 250,
+        "tagline": "Fluxuri care îți dau timpul înapoi",
+        "features": [
+            "Agenți AI pentru generarea și organizarea conținutului",
+            "Automatizarea sarcinilor repetitive",
+            "Sisteme de lucru personalizate pentru afacerea ta",
+        ],
+        "description": "Preiei timpul pierdut pe sarcini repetitive și-l pui înapoi în partea din business care chiar contează.",
+        "duration": "14 zile",
+        "popular": False,
+    },
+    {
+        "key": "produse_sisteme",
+        "name": "Produse & Sisteme Digitale",
         "price": "de la €850",
         "price_value": 850,
         "tagline": "Platformă completă, construită pe fluxul tău real",
         "features": [
-            "Tot ce include Experiență Completă, plus:",
-            "Clienții pot plăti online, direct pe site",
-            "Sistemul e construit pe pașii reali ai afacerii tale, nu pe un șablon",
-            "Panou de control extins, adaptat la ce ai nevoie să vezi și să administrezi",
+            "Website-uri și sisteme de rezervări",
+            "Platforme și instrumente digitale",
+            "Produse proprii și soluții personalizate",
         ],
-        "description": "Întregul flux — de la cerere la plată — se întâmplă în sistemul tău, construit pe fluxul real al business-ului tău, nu pe un șablon generic.",
+        "description": "Întregul flux al afacerii tale, construit pe exact ce ai nevoie — nu pe un șablon generic.",
         "duration": "21 zile",
         "popular": False,
     },

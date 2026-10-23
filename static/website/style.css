@@ -780,6 +780,8 @@ select {
 .home-hero-subtitle { font-size: 1.25rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 28px; }
 @media (min-width: 768px) { .home-hero-subtitle { font-size: 1.5rem; } }
 
+.home-hero-tagline-en { font-size: .875rem; font-style: italic; color: var(--ink-faint); margin-top: -16px; margin-bottom: 24px; }
+
 .home-hero-lede { max-width: 42rem; margin: 0 auto 32px; font-size: 1.125rem; line-height: 1.7; color: var(--ink-faint); }
 @media (min-width: 768px) { .home-hero-lede { font-size: 1.25rem; } }
 
