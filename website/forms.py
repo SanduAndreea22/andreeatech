@@ -60,6 +60,17 @@ class ContactForm(HoneypotFormMixin, forms.ModelForm):
         }
 
 
+class PlaceholderSelect(forms.Select):
+    """A select whose empty option is only a label: it is shown while nothing
+    is chosen but can never be picked again, so "Alege nota" is not an answer."""
+
+    def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
+        option = super().create_option(name, value, label, selected, index, subindex=subindex, attrs=attrs)
+        if value in ("", None):
+            option["attrs"]["disabled"] = True
+        return option
+
+
 class ReviewForm(HoneypotFormMixin, forms.ModelForm):
     class Meta:
         model = Review
@@ -69,6 +80,7 @@ class ReviewForm(HoneypotFormMixin, forms.ModelForm):
             "business_url": forms.URLInput(attrs={"placeholder": "https://..."}),
             "project_note": forms.TextInput(attrs={"placeholder": "ex. Sistem de rezervări"}),
             "message": forms.Textarea(attrs={"rows": 4}),
+            "rating": PlaceholderSelect(),
         }
 
     def __init__(self, *args, **kwargs):

@@ -908,3 +908,23 @@ class ReviewRatingFieldTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "errorlist")
         self.assertEqual(Review.objects.count(), 0)
+
+
+class ReviewPlaceholderOptionTests(TestCase):
+    def test_placeholder_option_is_disabled_so_it_cannot_be_chosen(self):
+        body = self.client.get(reverse("reviews")).content.decode()
+        placeholder = body[body.index("Alege nota") - 80:body.index("Alege nota") + 20]
+        self.assertIn("disabled", placeholder)
+        self.assertIn('value=""', placeholder)
+
+    def test_real_ratings_are_not_disabled(self):
+        body = self.client.get(reverse("reviews")).content.decode()
+        for value in ("1", "2", "3", "4", "5"):
+            with self.subTest(value=value):
+                option = body[body.index(f'<option value="{value}"'):]
+                self.assertNotIn("disabled", option[:option.index(">")])
+
+    def test_submitting_without_a_rating_is_still_rejected(self):
+        response = self.client.post(reverse("reviews"), {"name": "Jane", "message": "Hi", "website": ""})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Review.objects.count(), 0)
