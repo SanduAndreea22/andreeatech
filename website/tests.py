@@ -596,3 +596,22 @@ class ServicesViewTests(TestCase):
             with self.subTest(key=key):
                 response = self.client.get(reverse("start_project") + f"?pachet={key}")
                 self.assertContains(response, key)
+
+
+class ServiceOfferButtonTests(TestCase):
+    """Each service row shows a visible "Vezi oferta" button leading to its page."""
+
+    def test_home_hub_and_direction_pages_show_one_button_per_service(self):
+        expectations = [
+            (reverse("home"), 3),
+            (reverse("services"), 3),
+            (reverse("service_detail", args=["web"]), 2),  # the two other directions
+        ]
+        for url, count in expectations:
+            with self.subTest(url=url):
+                self.assertContains(self.client.get(url), "Vezi oferta", count=count)
+
+    def test_buttons_point_to_the_service_pages(self):
+        response = self.client.get(reverse("services"))
+        for slug in ("web", "ai", "creativ"):
+            self.assertContains(response, f'href="/servicii/{slug}/"')

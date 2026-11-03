@@ -110,6 +110,20 @@ a.row:hover { background: var(--paper-2); padding-inline: 16px; }
 a.row:hover .row-name { color: var(--cobalt-text); }
 .row-name { font-family: var(--f-display); font-size: clamp(1.4rem, 1.6vw + 1rem, 1.95rem); line-height: 1.15; }
 .row-price { font-family: var(--f-mono); font-size: 14px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.row-side { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.row-cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 8px 16px;
+    border: 1px solid var(--ink);
+    border-radius: var(--r-btn);
+    font-weight: 600;
+    font-size: 14.5px;
+    white-space: nowrap;
+    transition: background var(--transition), color var(--transition);
+}
+a.row:hover .row-cta, a.row:focus-visible .row-cta { background: var(--ink); color: var(--paper); }
 
 /* ---------- Audience table ---------- */
 .aud-head, .aud {
@@ -197,6 +211,7 @@ a.row:hover .row-name { color: var(--cobalt-text); }
     .row, .aud, .aud-head, .tech div { grid-template-columns: minmax(0, 1fr); }
     .aud-head { display: none; }
     .row { gap: 6px; padding: 20px 0; }
+    .row-side { flex-direction: row; align-items: center; justify-content: space-between; margin-top: 6px; }
     a.row:hover { padding-inline: 0; background: none; }
     .steps li { grid-template-columns: 36px minmax(0, 1fr); }
     .steps .d { grid-column: 2; }

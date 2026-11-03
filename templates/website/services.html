@@ -17,11 +17,7 @@
     <div class="wrap">
         <div class="rows">
             {% for pkg in packages %}
-            <a class="row" href="{% url 'service_detail' pkg.slug %}">
-                <span class="row-name">{{ pkg.name }}</span>
-                <span class="muted">{{ pkg.tagline }}</span>
-                <span class="row-price">{{ pkg.price }}</span>
-            </a>
+            {% include "partials/service_row.html" with pkg=pkg %}
             {% endfor %}
         </div>
     </div>

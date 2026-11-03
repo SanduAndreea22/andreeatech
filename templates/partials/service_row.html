@@ -1,0 +1,8 @@
+<a class="row" href="{% url 'service_detail' pkg.slug %}">
+    <span class="row-name">{{ pkg.name }}</span>
+    <span class="muted">{{ pkg.tagline }}</span>
+    <span class="row-side">
+        <span class="row-price">{{ pkg.price }}</span>
+        <span class="row-cta">Vezi oferta</span>
+    </span>
+</a>
