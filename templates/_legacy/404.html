@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Pagină negăsită | Andreea Sandu{% endblock %}
+{% block meta_description %}Această pagină nu există. Mergi înapoi acasă sau răsfoiește portofoliul și serviciile.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container-xs">
+        <p class="eyebrow eyebrow-center">Eroare 404</p>
+        <h1 class="page-title gradient-text">Pagină negăsită</h1>
+        <p class="page-subtitle mb-xl">
+            Pagina pe care o cauți nu există sau s-a mutat.
+        </p>
+        <div class="btn-row">
+            <a href="{% url 'home' %}" class="btn-primary home-cta-btn-sm">Înapoi acasă</a>
+            <a href="{% url 'projects' %}" class="btn-outline">Vezi portofoliul</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

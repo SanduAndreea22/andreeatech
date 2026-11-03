@@ -482,3 +482,16 @@ a.fbtn { display: inline-flex; align-items: center; }
 }
 .field input[type="url"]:hover { border-color: var(--ink); }
 .field input[type="url"]:focus { outline: 2px solid var(--cobalt-text); outline-offset: 1px; border-color: var(--cobalt-text); }
+
+/* =========================================
+   PRIVACY POLICY + ERROR PAGES
+========================================= */
+.pol-list { border-top: 1px solid var(--line-strong); }
+.pol { display: grid; grid-template-columns: minmax(180px, 280px) minmax(0, 1fr); gap: clamp(16px, 4vw, 56px); padding: 28px 0; border-bottom: 1px solid var(--line); }
+.pol h2 { font-size: 1.35rem; line-height: 1.25; letter-spacing: 0; }
+.pol .rich { margin: 0; }
+.pol .rich > :last-child { margin-bottom: 0; }
+.err-page { padding-block: clamp(72px, 14vw, 160px); }
+@media (max-width: 900px) {
+    .pol { grid-template-columns: minmax(0, 1fr); }
+}

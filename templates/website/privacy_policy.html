@@ -1,61 +1,68 @@
-{% extends "base.html" %}
-{% block title %}Politica de confidențialitate | Andreea Sandu{% endblock %}
+{% extends "base_v2.html" %}
+
+{% block title %}Politica de confidențialitate | Andreea Tech{% endblock %}
 {% block meta_description %}Cum colectează, folosește și protejează Andreea Sandu datele personale trimise prin formularele Contact, Începe un proiect și Recenzii de pe acest site.{% endblock %}
+{% block og_title %}Politica de confidențialitate | Andreea Tech{% endblock %}
+{% block twitter_title %}Politica de confidențialitate | Andreea Tech{% endblock %}
 
 {% block content %}
-<section class="page-hero about-hero">
-    <div class="hero-glow hero-glow-strong"></div>
-    <div class="container-sm">
+<section class="phead">
+    <div class="wrap">
+        <h1>Politica de confidențialitate.</h1>
+        <p class="lead">Această pagină explică ce date colectează acest site, de ce și cum sunt gestionate.</p>
+    </div>
+</section>
 
-        <div class="mb-xl center">
-            <h1 class="page-title gradient-text">Politica de confidențialitate</h1>
-            <p class="page-subtitle">
-                Această pagină explică ce date colectează acest site, de ce și cum sunt gestionate.
-            </p>
-        </div>
-
-        <div class="glass policy-card">
-
-            <div>
+<section class="sec first" style="padding-top:0;border-top:0">
+    <div class="wrap">
+        <div class="pol-list">
+            <section class="pol">
                 <h2>Cui se aplică</h2>
-                <p>Acest site (andreeastech.pythonanywhere.com) este operat de Andreea Sandu. Această politică acoperă datele personale trimise prin formularele Contact, Începe un proiect și Recenzii.</p>
-            </div>
-
-            <div>
+                <div class="rich">
+                    <p>Acest site (andreeastech.pythonanywhere.com) este operat de Andreea Sandu. Această politică acoperă datele personale trimise prin formularele Contact, Începe un proiect și Recenzii.</p>
+                </div>
+            </section>
+            <section class="pol">
                 <h2>Ce date sunt colectate</h2>
-                <ul>
-                    <li><strong>Formularul de Contact:</strong> nume, adresă de email și mesaj.</li>
-                    <li><strong>Formularul Începe un proiect:</strong> nume, adresă de email, domeniu, descrierea proiectului, detalii de hosting, termen și funcționalități cerute.</li>
-                    <li><strong>Formularul de Recenzii:</strong> nume, companie (opțional), notă și mesajul recenziei.</li>
-                </ul>
-                <p>Nu sunt colectate date de plată, financiare sau de identitate (CI/pașaport) prin acest site.</p>
-            </div>
-
-            <div>
+                <div class="rich">
+                    <ul>
+                        <li><strong>Formularul de Contact:</strong> nume, adresă de email și mesaj.</li>
+                        <li><strong>Formularul Începe un proiect:</strong> nume, adresă de email, domeniu, descrierea proiectului, detalii de hosting, termen și funcționalități cerute.</li>
+                        <li><strong>Formularul de Recenzii:</strong> nume, companie (opțional), notă și mesajul recenziei.</li>
+                    </ul>
+                    <p>Nu sunt colectate date de plată, financiare sau de identitate (CI/pașaport) prin acest site.</p>
+                </div>
+            </section>
+            <section class="pol">
                 <h2>De ce sunt colectate</h2>
-                <p>Datele trimise sunt folosite doar pentru a răspunde la solicitarea ta, a evalua un brief de proiect sau — pentru recenzii — pentru a le lua în calcul pentru publicare pe pagina Ce spun clienții. Nu sunt folosite pentru publicitate și nu sunt vândute sau partajate cu terți, în afara serviciului de email folosit pentru a trimite notificări către proprietara site-ului.</p>
-            </div>
-
-            <div>
+                <div class="rich">
+                    <p>Datele trimise sunt folosite doar pentru a răspunde la solicitarea ta, a evalua un brief de proiect sau — pentru recenzii — pentru a le lua în calcul pentru publicare pe pagina Ce spun clienții. Nu sunt folosite pentru publicitate și nu sunt vândute sau partajate cu terți, în afara serviciului de email folosit pentru a trimite notificări către proprietara site-ului.</p>
+                </div>
+            </section>
+            <section class="pol">
                 <h2>Recenzii publicate</h2>
-                <p>Recenziile sunt private până la aprobarea manuală. Odată aprobate, numele, compania (dacă a fost furnizată), nota și mesajul trimise sunt afișate public pe pagina Ce spun clienții.</p>
-            </div>
-
-            <div>
+                <div class="rich">
+                    <p>Recenziile sunt private până la aprobarea manuală. Odată aprobate, numele, compania (dacă a fost furnizată), nota și mesajul trimise sunt afișate public pe pagina Ce spun clienții.</p>
+                </div>
+            </section>
+            <section class="pol">
                 <h2>Cookie-uri</h2>
-                <p>Acest site folosește doar cookie-urile strict necesare pentru funcționare — un cookie de sesiune și unul de protecție CSRF. Nu sunt folosite cookie-uri de analytics sau publicitate.</p>
-            </div>
-
-            <div>
+                <div class="rich">
+                    <p>Acest site folosește doar cookie-urile strict necesare pentru funcționare — un cookie de sesiune și unul de protecție CSRF. Nu sunt folosite cookie-uri de analytics sau publicitate.</p>
+                </div>
+            </section>
+            <section class="pol">
                 <h2>Cât timp sunt păstrate datele</h2>
-                <p>Datele trimise sunt păstrate atât timp cât e nevoie pentru a răspunde solicitării tale, sau până când ceri ștergerea lor.</p>
-            </div>
-
-            <div>
+                <div class="rich">
+                    <p>Datele trimise sunt păstrate atât timp cât e nevoie pentru a răspunde solicitării tale, sau până când ceri ștergerea lor.</p>
+                </div>
+            </section>
+            <section class="pol">
                 <h2>Drepturile tale</h2>
-                <p>Poți cere oricând să vezi, corectezi sau ștergi datele pe care le-ai trimis. Pentru asta, contactează-mă prin <a href="{% url 'contact' %}" class="link">pagina de Contact</a>.</p>
-            </div>
-
+                <div class="rich">
+                    <p>Poți cere oricând să vezi, corectezi sau ștergi datele pe care le-ai trimis. Pentru asta, contactează-mă prin <a href="{% url 'contact' %}">pagina de Contact</a>.</p>
+                </div>
+            </section>
         </div>
     </div>
 </section>

@@ -928,3 +928,31 @@ class ReviewPlaceholderOptionTests(TestCase):
         response = self.client.post(reverse("reviews"), {"name": "Jane", "message": "Hi", "website": ""})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Review.objects.count(), 0)
+
+
+class PrivacyAndErrorPagesTests(TestCase):
+    def test_privacy_policy_keeps_every_section_of_the_original_text(self):
+        response = self.client.get(reverse("privacy_policy"))
+        for heading in ("Cui se aplică", "Ce date sunt colectate", "De ce sunt colectate", "Recenzii publicate",
+                        "Cookie-uri", "Cât timp sunt păstrate datele", "Drepturile tale"):
+            with self.subTest(heading=heading):
+                self.assertContains(response, f"<h2>{heading}</h2>")
+        self.assertContains(response, "Nu sunt colectate date de plată, financiare sau de identitate")
+        self.assertContains(response, "cookie de sesiune și unul de protecție CSRF")
+
+    def test_privacy_policy_never_uses_the_word_studio(self):
+        self.assertNotIn("studio", self.client.get(reverse("privacy_policy")).content.decode().lower())
+
+    def test_unknown_url_shows_the_designed_404_with_a_way_back(self):
+        response = self.client.get("/nu-exista-aceasta-pagina/")
+        self.assertEqual(response.status_code, 404)
+        self.assertContains(response, "Pagină negăsită", status_code=404)
+        self.assertContains(response, 'href="/"', status_code=404)
+        self.assertContains(response, reverse("projects"), status_code=404)
+
+    def test_500_page_is_standalone_and_renders_without_a_request(self):
+        from django.template.loader import render_to_string
+        html = render_to_string("500.html")
+        self.assertIn("Ceva n-a mers bine", html)
+        self.assertIn('href="/"', html)
+        self.assertNotIn("<nav", html)

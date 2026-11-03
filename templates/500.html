@@ -4,16 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light only">
-    <title>Eroare de server | Andreea Sandu</title>
-    <link rel="stylesheet" href="{% static 'website/style.css' %}">
+    <meta name="color-scheme" content="light dark">
+    <title>Eroare de server | Andreea Tech</title>
+    <link rel="stylesheet" href="{% static 'website/tokens.css' %}">
+    <link rel="stylesheet" href="{% static 'website/base.css' %}">
+    <link rel="stylesheet" href="{% static 'website/components.css' %}">
 </head>
-<body class="error-page">
-    <div class="error-wrap">
-        <p class="error-eyebrow">Eroare 500</p>
-        <h1 class="error-title">Ceva n-a mers bine</h1>
-        <p class="error-desc">A apărut o eroare neașteptată pe acest server. Te rog încearcă din nou peste puțin timp.</p>
-        <a class="error-btn" href="/">Înapoi acasă</a>
-    </div>
+<body>
+    {# Deliberately standalone: no menu, no {% url %}, no database access, so this page cannot fail while the site is already failing. #}
+    <header class="nav">
+        <div class="wrap"><div class="nav-in"><a class="brand" href="/" aria-label="Andreea Tech, acasă">Andreea <i>Tech</i></a></div></div>
+    </header>
+    <main>
+        <section class="sec first err-page">
+            <div class="wrap stack-s">
+                <span class="mono">Eroare 500</span>
+                <h1>Ceva n-a mers bine.</h1>
+                <p class="lead">A apărut o eroare neașteptată pe acest server. Te rog încearcă din nou peste puțin timp.</p>
+                <div class="btn-row" style="margin-top:12px"><a class="btn btn-primary" href="/">Înapoi acasă</a></div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

@@ -1,18 +1,18 @@
-{% extends "base.html" %}
-{% block title %}Pagină negăsită | Andreea Sandu{% endblock %}
+{% extends "base_v2.html" %}
+
+{% block title %}Pagină negăsită | Andreea Tech{% endblock %}
 {% block meta_description %}Această pagină nu există. Mergi înapoi acasă sau răsfoiește portofoliul și serviciile.{% endblock %}
 
 {% block content %}
-<section class="page-hero">
-    <div class="container-xs">
-        <p class="eyebrow eyebrow-center">Eroare 404</p>
-        <h1 class="page-title gradient-text">Pagină negăsită</h1>
-        <p class="page-subtitle mb-xl">
-            Pagina pe care o cauți nu există sau s-a mutat.
-        </p>
-        <div class="btn-row">
-            <a href="{% url 'home' %}" class="btn-primary home-cta-btn-sm">Înapoi acasă</a>
-            <a href="{% url 'projects' %}" class="btn-outline">Vezi portofoliul</a>
+<section class="sec first err-page">
+    <div class="wrap stack-s">
+        <span class="mono">Eroare 404</span>
+        <h1>Pagină negăsită.</h1>
+        <p class="lead">Pagina pe care o cauți nu există sau s-a mutat.</p>
+        <div class="btn-row" style="margin-top:12px">
+            <a class="btn btn-primary" href="{% url 'home' %}">Înapoi acasă</a>
+            <a class="btn btn-line" href="{% url 'projects' %}">Vezi portofoliul</a>
+            <a class="link" href="{% url 'services' %}" style="margin-left:8px">Vezi serviciile</a>
         </div>
     </div>
 </section>
