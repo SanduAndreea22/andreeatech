@@ -892,3 +892,19 @@ class ReviewsRedesignTests(TestCase):
         body = self.client.get(reverse("reviews")).content.decode()
         inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
         self.assertEqual(inline, [])
+
+
+class ReviewRatingFieldTests(TestCase):
+    def test_rating_select_has_a_readable_placeholder_and_all_five_choices(self):
+        body = self.client.get(reverse("reviews")).content.decode()
+        self.assertIn("Alege nota", body)
+        self.assertNotIn("---------", body)
+        for label in ("1 stea", "2 stele", "3 stele", "4 stele", "5 stele"):
+            with self.subTest(label=label):
+                self.assertIn(label, body)
+
+    def test_rating_is_still_required(self):
+        response = self.client.post(reverse("reviews"), {"name": "Jane", "message": "Hi", "rating": "", "website": ""})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "errorlist")
+        self.assertEqual(Review.objects.count(), 0)

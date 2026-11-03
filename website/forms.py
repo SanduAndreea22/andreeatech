@@ -70,3 +70,11 @@ class ReviewForm(HoneypotFormMixin, forms.ModelForm):
             "project_note": forms.TextInput(attrs={"placeholder": "ex. Sistem de rezervări"}),
             "message": forms.Textarea(attrs={"rows": 4}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Django's default empty option reads "---------". Swap it for a real
+        # label; the field stays required and the stored choices are unchanged.
+        self.fields["rating"].choices = [("", "Alege nota")] + [
+            choice for choice in self.fields["rating"].choices if choice[0] != ""
+        ]
