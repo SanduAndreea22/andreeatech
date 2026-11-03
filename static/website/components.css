@@ -91,6 +91,9 @@ dl.spec dt {
 .hero.solo { grid-template-columns: minmax(0, 1fr); }
 .hero-copy { display: flex; flex-direction: column; gap: 28px; padding-top: clamp(0px, 2vw, 24px); }
 .hero-note { font-size: 14.5px; color: var(--ink-2); max-width: 52ch; }
+/* The brand line is a full sentence, so the hero title is one step smaller than the display scale. */
+.hero h1 { font-size: clamp(2.1rem, 3.6vw + .9rem, 3.7rem); line-height: 1.08; }
+.hero-services { font-family: var(--f-display); font-size: clamp(1.25rem, 1vw + 1rem, 1.55rem); line-height: 1.25; color: var(--ink); }
 
 /* ---------- Index rows (services) ---------- */
 .rows { border-top: 1px solid var(--line-strong); }

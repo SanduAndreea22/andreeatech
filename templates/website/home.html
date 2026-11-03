@@ -7,13 +7,14 @@
 <section class="sec first">
     <div class="wrap hero{% if not featured_projects %} solo{% endif %}">
         <div class="hero-copy">
-            <h1>Construiesc site&#8209;uri, sisteme și automatizări pentru afaceri cu clienți reali.</h1>
-            <p class="lead">Andreea Tech este un studio digital condus de o singură persoană. Vorbești direct cu cea care construiește, de la brief până la livrare.</p>
+            <h1>De la o interacțiune obișnuită, la o experiență de care oamenii își amintesc.</h1>
+            <p class="lead">Pentru antreprenorii care vor să-și ducă business-ul la următorul nivel.</p>
+            <p class="hero-services">Site-uri, automatizări și identitate vizuală</p>
             <div class="btn-row">
                 <a class="btn btn-primary" href="{% url 'start_project' %}">Cere o ofertă</a>
                 <a class="btn btn-line" href="{% url 'projects' %}">Vezi proiectele</a>
             </div>
-            <p class="hero-note">Răspund în maximum 24 de ore. Prețurile pornesc de la o sumă clară, iar oferta finală depinde de proiectul tău.</p>
+            <p class="hero-note">Studio condus de o singură persoană: vorbești direct cu cea care construiește. Răspund în maximum 24 de ore, iar oferta finală depinde de proiectul tău.</p>
         </div>
         {% if featured_projects %}
         {% with hero=featured_projects.0 %}
