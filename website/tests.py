@@ -709,3 +709,46 @@ class ProductPagesTests(TestCase):
                 body = self.client.get(reverse(name)).content.decode()
                 inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
                 self.assertEqual(inline, [])
+
+
+class ContactAndBriefRedesignTests(TestCase):
+    def test_contact_page_offers_the_routes_to_the_brief_with_the_package_preselected(self):
+        response = self.client.get(reverse("contact"))
+        for key in ("produse_sisteme", "ai_automatizare", "continut_digital", "not_sure"):
+            with self.subTest(key=key):
+                self.assertContains(response, f"{reverse('start_project')}?pachet={key}")
+
+    def test_form_labels_are_tied_to_their_fields(self):
+        for name in ("contact", "start_project"):
+            with self.subTest(page=name):
+                body = self.client.get(reverse(name)).content.decode()
+                self.assertIn('for="id_name"', body)
+                self.assertIn('id="id_name"', body)
+                self.assertIn('for="id_email"', body)
+
+    def test_contact_form_still_saves_and_confirms(self):
+        response = self.client.post(
+            reverse("contact"),
+            {"name": "Ana", "email": "ana@example.com", "message": "Salut!", "website": ""},
+            follow=True,
+        )
+        self.assertEqual(ContactMessageSimple.objects.count(), 1)
+        self.assertContains(response, "Mesajul tău a ajuns la mine")
+
+    def test_contact_form_shows_errors_in_the_page_on_invalid_input(self):
+        response = self.client.post(reverse("contact"), {"name": "", "email": "not-an-email", "message": "", "website": ""})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "errorlist")
+        self.assertEqual(ContactMessageSimple.objects.count(), 0)
+
+    def test_brief_page_has_the_three_steps_and_the_honeypot(self):
+        body = self.client.get(reverse("start_project")).content.decode()
+        self.assertEqual(body.count("data-step"), 3)
+        self.assertIn('name="website"', body)
+
+    def test_brief_page_has_no_inline_scripts(self):
+        for name in ("contact", "start_project"):
+            with self.subTest(page=name):
+                body = self.client.get(reverse(name)).content.decode()
+                inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
+                self.assertEqual(inline, [])

@@ -211,3 +211,77 @@
         output.hidden = false;
     });
 })();
+
+/* Forms (Contact, brief, reviews):
+   1. Romanian validation messages instead of the browser's own language.
+   2. Visible "Se trimite..." state, because the view sends the notification
+      email before redirecting and a slow connection would look dead. */
+(function () {
+    'use strict';
+    document.querySelectorAll('form[method="POST"], form[method="post"]').forEach(function (form) {
+        form.removeAttribute('novalidate');
+        form.querySelectorAll('input, textarea, select').forEach(function (field) {
+            field.addEventListener('invalid', function () {
+                if (field.validity.valueMissing) {
+                    field.setCustomValidity('Acest câmp este obligatoriu.');
+                } else if (field.validity.typeMismatch && field.type === 'email') {
+                    field.setCustomValidity('Adresa de email nu pare validă. Verific-o și mai încearcă o dată.');
+                } else if (field.validity.tooShort || field.validity.tooLong || field.validity.patternMismatch) {
+                    field.setCustomValidity('Verifică ce ai completat aici: nu pare în formatul așteptat.');
+                } else {
+                    field.setCustomValidity('');
+                }
+            });
+            field.addEventListener('input', function () { field.setCustomValidity(''); });
+        });
+        var button = form.querySelector('button[type="submit"]');
+        if (!button) return;
+        var label = button.textContent;
+        form.addEventListener('submit', function () {
+            button.disabled = true;
+            button.textContent = 'Se trimite...';
+        });
+        window.addEventListener('pageshow', function () {
+            button.disabled = false;
+            button.textContent = label;
+        });
+    });
+})();
+
+/* Brief form: the progress bar reflects how much of each step is actually
+   filled in, not how far the page is scrolled. */
+(function () {
+    'use strict';
+    var form = document.getElementById('briefForm');
+    if (!form) return;
+    var steps = form.querySelectorAll('[data-step]');
+    var fills = document.querySelectorAll('#briefProgress .progress-fill');
+    if (!steps.length || steps.length !== fills.length) return;
+
+    function fieldNames(step) {
+        var names = [];
+        step.querySelectorAll('input, textarea, select').forEach(function (el) {
+            if (el.type === 'hidden' || !el.name || names.indexOf(el.name) !== -1) return;
+            names.push(el.name);
+        });
+        return names;
+    }
+    function isFilled(step, name) {
+        var els = step.querySelectorAll('[name="' + name + '"]');
+        if (!els.length) return false;
+        if (els[0].type === 'checkbox' || els[0].type === 'radio') {
+            return Array.prototype.some.call(els, function (el) { return el.checked; });
+        }
+        return els[0].value.trim() !== '';
+    }
+    var names = Array.prototype.map.call(steps, fieldNames);
+    function update() {
+        steps.forEach(function (step, i) {
+            var filled = names[i].filter(function (n) { return isFilled(step, n); }).length;
+            fills[i].style.width = names[i].length ? Math.round((filled / names[i].length) * 100) + '%' : '100%';
+        });
+    }
+    form.addEventListener('input', update);
+    form.addEventListener('change', update);
+    update();
+})();

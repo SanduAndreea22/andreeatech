@@ -1,190 +1,89 @@
-{% extends "base.html" %}
-{% block title %}Începe un proiect | Andreea Sandu{% endblock %}
-{% block meta_description %}Completează un brief de proiect ca să începem să construim conținutul, website-ul, sistemul sau automatizarea de care are nevoie afacerea ta.{% endblock %}
+{% extends "base_v2.html" %}
+
+{% block title %}Începe un proiect | Andreea Tech{% endblock %}
+{% block meta_description %}Completează un brief de proiect ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
+{% block og_title %}Începe un proiect | Andreea Tech{% endblock %}
+{% block twitter_title %}Începe un proiect | Andreea Tech{% endblock %}
 
 {% block content %}
+<section class="phead">
+    <div class="wrap">
+        <h1>Hai să construim ce ai nevoie.</h1>
+        <p class="lead">Spune-mi despre afacerea ta și despre ce vrei să funcționeze mai bine. Completează brief-ul de mai jos ca să putem începe.</p>
+    </div>
+</section>
 
-<section class="page-hero about-hero">
-    <div class="hero-glow"></div>
-
-    <div class="container-lg">
-
-        <div class="mb-xl center">
-            <h1 class="page-title gradient-text">
-                Hai să construim ce ai nevoie
-            </h1>
-
-            <p class="page-subtitle measure">
-                Spune-mi despre afacerea ta și despre ce vrei să funcționeze mai bine. Completează brief-ul de mai jos ca să putem începe.
-            </p>
-        </div>
-
+<section class="sec first" style="padding-top:0;border-top:0">
+    <div class="wrap" style="max-width:860px">
         {% if just_submitted %}
-        <div class="glass sp-thanks">
-            <svg class="sp-thanks-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <p class="sp-thanks-message">Cerere primită! Îți analizez brief-ul și revin cu un răspuns în maximum 24 de ore.</p>
-            <p class="sp-thanks-note">Verifică-ți emailul în următoarele 24h — răspund personal la fiecare brief, nu e un mesaj automat.</p>
-            <a href="{% url 'home' %}" class="btn-outline">Înapoi acasă</a>
+        <div class="fcard sp-thanks" role="status">
+            <h2 style="font-size:1.9rem;margin-bottom:12px">Cerere primită.</h2>
+            <p class="lead" style="color:var(--ink)">Îți analizez brief-ul și revin cu un răspuns în maximum 24 de ore.</p>
+            <p class="muted" style="margin-top:12px">Verifică-ți emailul în următoarele 24 de ore: răspund personal la fiecare brief, nu e un mesaj automat.</p>
+            <div class="btn-row" style="margin-top:24px"><a class="btn btn-line" href="{% url 'home' %}">Înapoi acasă</a></div>
         </div>
         {% else %}
-
-        {% if messages %}
-            {% for message in messages %}
-            <div class="form-message {% if message.tags == 'error' %}form-message-error{% else %}form-message-success{% endif %}">
-                {% if message.tags == 'error' %}
-                <svg class="form-message-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-                {% else %}
-                <svg class="form-message-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-                {% endif %}
-                {{ message }}
-            </div>
-            {% endfor %}
-        {% endif %}
-
-        <div class="glass form-card">
-
-            <form method="POST" class="sp-form">
+        {% include "partials/messages.html" %}
+        <div class="fcard">
+            <form method="POST" id="briefForm" novalidate>
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
-                <div class="sp-progress" id="spProgress">
-                    <div class="sp-progress-segment"><div class="sp-progress-fill"></div></div>
-                    <div class="sp-progress-segment"><div class="sp-progress-fill"></div></div>
-                    <div class="sp-progress-segment"><div class="sp-progress-fill"></div></div>
+                <div class="progress" id="briefProgress" aria-hidden="true">
+                    <div class="progress-seg"><div class="progress-fill"></div></div>
+                    <div class="progress-seg"><div class="progress-fill"></div></div>
+                    <div class="progress-seg"><div class="progress-fill"></div></div>
                 </div>
 
-                <div class="sp-group" data-sp-step>
-                    <h3 class="sp-step-title">
-                        <span class="sp-step-dot"></span> 01. Identificare
-                    </h3>
-                    <div class="sp-field-row">
-                        <div class="sp-field">
-                            <label class="sp-field-label">Numele tău</label>
-                            {{ form.name }}
-                            {{ form.name.errors }}
-                        </div>
-                        <div class="sp-field">
-                            <label class="sp-field-label">Adresa de email</label>
-                            {{ form.email }}
-                            {{ form.email.errors }}
-                        </div>
+                <fieldset class="step" data-step>
+                    <legend><span class="n">01</span>Identificare</legend>
+                    <div class="f-row">
+                        <div class="field"><label for="{{ form.name.id_for_label }}">Numele tău</label>{{ form.name }}{{ form.name.errors }}</div>
+                        <div class="field"><label for="{{ form.email.id_for_label }}">Adresa de email</label>{{ form.email }}{{ form.email.errors }}</div>
                     </div>
-                    <div class="sp-field-row">
-                        <div class="sp-field">
-                            <label class="sp-field-label">Domeniul afacerii tale</label>
-                            {{ form.industry }}
-                            {{ form.industry.errors }}
-                        </div>
-                        <div class="sp-field">
-                            <label class="sp-field-label">Pachet ales (opțional)</label>
-                            {{ form.selected_package }}
-                            {{ form.selected_package.errors }}
-                        </div>
+                    <div class="f-row">
+                        <div class="field"><label for="{{ form.industry.id_for_label }}">Domeniul afacerii tale</label>{{ form.industry }}{{ form.industry.errors }}</div>
+                        <div class="field"><label for="{{ form.selected_package.id_for_label }}">Direcția aleasă (opțional)</label>{{ form.selected_package }}{{ form.selected_package.errors }}</div>
                     </div>
-                </div>
+                </fieldset>
 
-                <div class="sp-group" data-sp-step>
-                    <h3 class="sp-step-title">
-                        <span class="sp-step-dot"></span> 02. Scopul proiectului
-                    </h3>
-                    <div class="sp-field">
-                        <label class="sp-field-label">Descrierea proiectului și obiective</label>
-                        {{ form.project_description }}
-                        {{ form.project_description.errors }}
-                        <p class="sp-field-hint">Descrie conținutul, website-ul, fluxul de rezervări sau procesul intern de care ai nevoie.</p>
+                <fieldset class="step" data-step>
+                    <legend><span class="n">02</span>Scopul proiectului</legend>
+                    <div class="field">
+                        <label for="{{ form.project_description.id_for_label }}">Descrierea proiectului și obiective</label>
+                        {{ form.project_description }}{{ form.project_description.errors }}
+                        <p class="hint">Descrie site-ul, fluxul de rezervări, automatizarea, identitatea sau procesul intern de care ai nevoie.</p>
                     </div>
-                </div>
+                </fieldset>
 
-                <div class="sp-group" data-sp-step>
-                    <h3 class="sp-step-title">
-                        <span class="sp-step-dot"></span> 03. Ce ai nevoie mai exact
-                    </h3>
-                    <div class="sp-field-row-lg">
-                        <div class="sp-field">
-                            <label class="sp-field-label">Domeniu & hosting (opțional)</label>
-                            {{ form.hosting_info }}
-                            {{ form.hosting_info.errors }}
-                            <p class="sp-field-hint">Domeniul e adresa site-ului tău (ex. numeletau.ro), iar hosting-ul e serviciul care îl ține activ online. Scrie aici dacă le ai deja sau vrei să ți le configurez eu (cost separat de pachet — discutăm exact suma la consultație).</p>
+                <fieldset class="step" data-step>
+                    <legend><span class="n">03</span>Ce ai nevoie mai exact</legend>
+                    <div class="f-row">
+                        <div class="field">
+                            <label for="{{ form.hosting_info.id_for_label }}">Domeniu și hosting (opțional)</label>
+                            {{ form.hosting_info }}{{ form.hosting_info.errors }}
+                            <p class="hint">Domeniul e adresa site-ului tău (ex. numeletau.ro), iar hosting-ul e serviciul care îl ține activ online. Scrie aici dacă le ai deja sau vrei să ți le configurez eu. Costul e separat de pachet, iar suma exactă o stabilim la consultație.</p>
                         </div>
-                        <div class="sp-field">
-                            <label class="sp-field-label">Termen / urgență (opțional)</label>
-                            {{ form.deadline_communication }}
-                            {{ form.deadline_communication.errors }}
+                        <div class="field">
+                            <label for="{{ form.deadline_communication.id_for_label }}">Termen sau urgență (opțional)</label>
+                            {{ form.deadline_communication }}{{ form.deadline_communication.errors }}
                         </div>
                     </div>
-
-                    <div class="sp-features-wrap">
-                        <label class="sp-field-label">Funcționalități necesare (opțional)</label>
-                        <div class="custom-checkboxes">
-                            {{ form.required_features }}
-                        </div>
+                    <div class="field">
+                        <span class="label-like" id="featuresLabel">Funcționalități necesare (opțional)</span>
+                        <div class="checks" role="group" aria-labelledby="featuresLabel">{{ form.required_features }}</div>
                         {{ form.required_features.errors }}
                     </div>
-                </div>
+                </fieldset>
 
-                <div class="sp-submit-wrap">
-                    <button type="submit" class="btn-primary sp-submit">
-                        Trimite proiectul
-                    </button>
-                    <p class="sp-submit-note">
-                        Apăsând „Trimite proiectul", ești de acord cu <a href="{% url 'privacy_policy' %}" class="link">Politica de confidențialitate</a> și primești un răspuns despre brief-ul tău în maximum 24 de ore.
-                    </p>
+                <div class="stack-s">
+                    <div class="btn-row"><button type="submit" class="btn btn-primary">Trimite proiectul</button></div>
+                    <p class="hint">Apăsând „Trimite proiectul", ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a> și primești un răspuns despre brief în maximum 24 de ore.</p>
                 </div>
             </form>
         </div>
-
         {% endif %}
-
     </div>
 </section>
-
-<script>
-    // Progress reflects how much of each step is actually filled in, not
-    // how far you've scrolled — scrolling to the bottom of an empty form
-    // used to show the bar at 100%, which is misleading feedback.
-    document.addEventListener('DOMContentLoaded', () => {
-        const form = document.querySelector('.sp-form');
-        const steps = document.querySelectorAll('[data-sp-step]');
-        const fills = document.querySelectorAll('#spProgress .sp-progress-fill');
-        if (!form || !steps.length || steps.length !== fills.length) return;
-
-        const fieldNamesOf = (step) => {
-            const names = [];
-            step.querySelectorAll('input, textarea, select').forEach((el) => {
-                if (el.type === 'hidden' || !el.name) return;
-                if (!names.includes(el.name)) names.push(el.name);
-            });
-            return names;
-        };
-
-        const isFilled = (step, name) => {
-            const els = step.querySelectorAll(`[name="${name}"]`);
-            if (!els.length) return false;
-            if (els[0].type === 'checkbox' || els[0].type === 'radio') {
-                return Array.from(els).some((el) => el.checked);
-            }
-            return els[0].value.trim() !== '';
-        };
-
-        const stepFieldNames = Array.from(steps).map(fieldNamesOf);
-
-        const update = () => {
-            steps.forEach((step, i) => {
-                const names = stepFieldNames[i];
-                if (!names.length) {
-                    fills[i].style.width = '100%';
-                    return;
-                }
-                const filled = names.filter((name) => isFilled(step, name)).length;
-                fills[i].style.width = Math.round((filled / names.length) * 100) + '%';
-            });
-        };
-
-        form.addEventListener('input', update);
-        form.addEventListener('change', update);
-        update();
-    });
-</script>
-
 {% endblock %}
