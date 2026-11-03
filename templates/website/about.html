@@ -1,121 +1,79 @@
-{% extends "base.html" %}
+{% extends "base_v2.html" %}
 {% load static %}
-{% block title %}Despre mine | Andreea Sandu{% endblock %}
-{% block meta_description %}Digital Products & Experiences — experiența, focusul și certificările din spatele conținutului, automatizărilor și sistemelor construite pentru antreprenori.{% endblock %}
+
+{% block title %}Despre | Andreea Tech{% endblock %}
+{% block meta_description %}Sunt Andreea și construiesc site-uri, automatizări și identitate vizuală pentru antreprenori. Lucrez singură, deci vorbești direct cu cea care construiește.{% endblock %}
+{% block og_title %}Despre | Andreea Tech{% endblock %}
+{% block twitter_title %}Despre | Andreea Tech{% endblock %}
 
 {% block content %}
-
-<section class="page-hero about-hero">
-    <div class="hero-glow"></div>
-    <div class="container-md">
-        <h1 class="page-title">Despre <span class="gradient-text">mine</span></h1>
-        <p class="page-subtitle">
-            Digital Products & Experiences — conținut, automatizare și sisteme care chiar funcționează.
-        </p>
+<section class="phead">
+    <div class="wrap">
+        <h1>Sunt Andreea și construiesc produse digitale pentru afaceri.</h1>
     </div>
 </section>
 
-<section class="section-sm">
-    <div class="container-lg about-bio-grid">
-        <div class="about-bio-photo-wrap">
-            <div class="about-bio-photo">
-                <img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" width="800" height="800">
+<section class="sec first" style="padding-top:clamp(16px,3vw,32px);border-top:0">
+    <div class="wrap about">
+        <div class="portrait"><img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" width="800" height="800"></div>
+        <div class="prose">
+            <p class="lead about-lead">Construiesc site-uri, automatizări și identitate vizuală pentru antreprenori care vor să crească fără să se mai lupte cu partea tehnică.</p>
+            <p class="rich" style="max-width:62ch">Îmi pasă de același lucru la fiecare proiect: să reziste când încep să-l folosească clienți reali, nu să fie un demo care arată bine doar într-un screenshot. Lucrez singură, deci vorbești direct cu cea care scrie codul și ia deciziile de design.</p>
+            <p class="rich" style="max-width:62ch">La majoritatea ofertelor de pe piață, primești un site și atât. Eu am construit și folosesc deja un agent AI intern, SM Writer (Social Media Writer), care îmi scrie postările de social media zilnic, fără să-l ating. Nu e un concept, e ceva ce rulează acum. Plannerul de echilibru personal și trackerul de buget (vezi <a class="link" href="{% url 'products' %}">Produse</a>) sunt aceeași filozofie: construiesc lucruri care chiar rezolvă o problemă, nu doar arată bine într-un portofoliu.</p>
+            <div class="btn-row"><a class="btn btn-primary" href="{% url 'start_project' %}">Cere o ofertă</a><a class="btn btn-line" href="{% url 'projects' %}">Vezi proiectele</a></div>
+        </div>
+    </div>
+</section>
+
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Abordare</div>
+        <div class="stack">
+            <h2>Tehnologie, creativitate și probleme reale.</h2>
+            <div class="three">
+                <div><h3>Tehnologie</h3><p>Django și Python pentru sisteme care rezistă, cu plăți, rezervări și administrare construite de la zero.</p></div>
+                <div><h3>Creativitate</h3><p>Identitate și conținut care arată coerent, ca un site, o postare și un material tipărit să pară făcute de aceeași mână.</p></div>
+                <div><h3>Probleme reale</h3><p>Pornesc de la ce te încurcă acum în afacere, nu de la o listă de funcții pe care să le bifăm.</p></div>
             </div>
         </div>
-        <div class="glass about-bio-card">
-            <p>
-                Sunt Andreea — construiesc conținut, automatizări și sisteme digitale pentru antreprenori care vor
-                să crească fără să se mai lupte cu partea tehnică. Îmi
-                pasă de același lucru la fiecare proiect: ceva care chiar rezistă când încep să-l folosească
-                clienți reali, nu un demo care arată bine doar într-un screenshot.
-            </p>
-            <p>
-                La majoritatea ofertelor de pe piață, primești un site și-atât. Eu am construit și folosesc deja un agent
-                AI intern — SM Writer (Social Media Writer) — care-mi scrie postările de social media zilnic, fără să-l ating. Nu e un
-                concept, e ceva ce rulează acum. Plannerul de echilibru personal și tracker-ul de buget (vezi
-                <a href="{% url 'products' %}" class="link">Produse</a>)
-                sunt aceeași filozofie: construiesc lucruri care chiar rezolvă o problemă, nu doar arată bine
-                într-un portofoliu.
-            </p>
-            <p>
-                Dincolo de proiectele construite pe cont propriu, continui să învăț — certificările de mai jos sunt partea
-                formală a asta; restul se vede în <a href="{% url 'projects' %}" class="link">Portofoliu</a>.
-            </p>
-        </div>
     </div>
 </section>
 
-<section class="section-lg">
-    <div class="container">
-        <div class="about-certs-head">
-            <h2 class="h2-lg">Diplome & Certificări</h2>
-            <p class="text-muted">Cursuri și certificări finalizate pe parcurs.</p>
-        </div>
-
-        {% if certifications %}
-        <div class="about-certs-grid">
-            {% for cert in certifications %}
-            <div class="glass card-hover about-cert-card">
-                <div class="about-cert-image-wrap">
-                    <img src="{{ cert.image.url }}" class="cert-image about-cert-image" alt="{{ cert.title }}" width="{{ cert.image.width }}" height="{{ cert.image.height }}" loading="lazy">
-                </div>
-                <div class="about-cert-body">
-                    <h3 class="about-cert-title">{{ cert.title }}</h3>
-                    {% if cert.issuer %}
-                    <p class="about-cert-issuer">{{ cert.issuer }}</p>
-                    {% endif %}
-                    {% if cert.issue_date %}
-                    <p class="about-cert-date">{{ cert.issue_date|date:"F Y" }}</p>
-                    {% endif %}
-                    {% if cert.credential_url %}
-                    <a href="{{ cert.credential_url }}" target="_blank" rel="noopener noreferrer" class="about-cert-link">
-                        Vezi certificatul <span>→</span>
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Diplome și certificări</div>
+        <div class="stack">
+            <div class="stack-s">
+                <h2>Cursuri și certificări finalizate pe parcurs.</h2>
+                <p class="lead">Continui să învăț. Certificările sunt partea formală a asta, iar restul se vede în <a class="link" href="{% url 'projects' %}">Portofoliu</a>.</p>
+            </div>
+            {% if certifications %}
+            <div class="certs">
+                {% for cert in certifications %}
+                <article class="cert">
+                    <a class="cert-open" href="{{ cert.image.url }}" target="_blank" rel="noopener" data-cert data-alt="{{ cert.title }}" aria-label="Mărește certificatul: {{ cert.title }}">
+                        <img src="{{ cert.image.url }}" alt="{{ cert.title }}" width="{{ cert.image.width }}" height="{{ cert.image.height }}" loading="lazy">
                     </a>
-                    {% endif %}
-                </div>
+                    <div class="cert-body">
+                        <h3>{{ cert.title }}</h3>
+                        {% if cert.issuer %}<p class="muted">{{ cert.issuer }}</p>{% endif %}
+                        {% if cert.issue_date %}<p class="mono">{{ cert.issue_date|date:"F Y" }}</p>{% endif %}
+                        {% if cert.credential_url %}<a class="link" href="{{ cert.credential_url }}" target="_blank" rel="noopener noreferrer">Vezi certificatul</a>{% endif %}
+                    </div>
+                </article>
+                {% endfor %}
             </div>
-            {% endfor %}
+            {% else %}
+            <p class="muted">Certificările vin în curând.</p>
+            {% endif %}
         </div>
-        {% else %}
-        <p class="text-muted center">Certificările vin în curând.</p>
-        {% endif %}
     </div>
 </section>
 
-<section class="section section-lg">
-    <div class="container-lg home-cta-center">
-        <h2 class="h2-lg">Ai un proiect în minte? Hai să vorbim.</h2>
-        <a href="{% url 'start_project' %}" class="btn-primary home-cta-btn-sm">Hai să discutăm proiectul tău</a>
-    </div>
-</section>
+<dialog id="certDialog" class="lightbox" aria-label="Certificat mărit">
+    <img src="" alt="">
+    <button type="button" class="lightbox-close" data-close aria-label="Închide">Închide</button>
+</dialog>
 
-<div id="certLightbox" class="lightbox">
-    <img id="certLightboxImg" src="" alt="">
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const lightbox = document.getElementById('certLightbox');
-        const lightboxImg = document.getElementById('certLightboxImg');
-
-        document.querySelectorAll('.cert-image').forEach((img) => {
-            img.addEventListener('click', () => {
-                lightboxImg.src = img.src;
-                lightboxImg.alt = img.alt;
-                lightbox.classList.add('is-open');
-            });
-        });
-
-        const closeLightbox = () => {
-            lightbox.classList.remove('is-open');
-            lightboxImg.src = '';
-        };
-
-        lightbox.addEventListener('click', closeLightbox);
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeLightbox();
-        });
-    });
-</script>
-
+{% include "partials/cta_band.html" %}
 {% endblock %}

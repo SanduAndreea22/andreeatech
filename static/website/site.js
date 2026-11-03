@@ -285,3 +285,22 @@
     form.addEventListener('change', update);
     update();
 })();
+
+/* About: enlarge a certificate in a native <dialog>. Without JavaScript the
+   link opens the image in a new tab. */
+(function () {
+    'use strict';
+    var dialog = document.getElementById('certDialog');
+    if (!dialog || typeof dialog.showModal !== 'function') return;
+    var img = dialog.querySelector('img');
+    document.querySelectorAll('[data-cert]').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            img.src = link.getAttribute('href');
+            img.alt = link.dataset.alt || '';
+            dialog.showModal();
+        });
+    });
+    dialog.addEventListener('click', function () { dialog.close(); });
+    dialog.addEventListener('close', function () { img.removeAttribute('src'); });
+})();

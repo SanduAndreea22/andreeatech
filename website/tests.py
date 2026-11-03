@@ -752,3 +752,31 @@ class ContactAndBriefRedesignTests(TestCase):
                 body = self.client.get(reverse(name)).content.decode()
                 inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
                 self.assertEqual(inline, [])
+
+
+class AboutRedesignTests(TestCase):
+    def test_about_never_uses_the_word_studio(self):
+        body = self.client.get(reverse("about")).content.decode().lower()
+        self.assertNotIn("studio", body)
+
+    def test_about_stays_strictly_professional(self):
+        body = self.client.get(reverse("about")).content.decode().lower()
+        for word in ("contabil", "finanțe", "full-time"):
+            with self.subTest(word=word):
+                self.assertNotIn(word, body)
+
+    def test_about_shows_certification_details_and_a_link_to_enlarge(self):
+        make_certification(title="Django for Professionals", issuer="Test Academy", credential_url="https://example.com/verify")
+        response = self.client.get(reverse("about"))
+        self.assertContains(response, "Django for Professionals")
+        self.assertContains(response, "Test Academy")
+        self.assertContains(response, "https://example.com/verify")
+        self.assertContains(response, "data-cert")
+
+    def test_about_without_certifications_shows_a_message(self):
+        self.assertContains(self.client.get(reverse("about")), "Certificările vin în curând")
+
+    def test_about_has_no_inline_scripts(self):
+        body = self.client.get(reverse("about")).content.decode()
+        inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
+        self.assertEqual(inline, [])
