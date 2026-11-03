@@ -1,70 +1,55 @@
-{% extends "base.html" %}
+{% extends "base_v2.html" %}
+{% load static %}
 
-{% block title %}Produse | Andreea Sandu{% endblock %}
-{% block meta_description %}Produse proprii construite pentru a rezolva probleme reale — Emotional Planner și Budget Planner, oferite direct, nu construite pentru un client anume.{% endblock %}
+{% block title %}Produse proprii | Andreea Tech{% endblock %}
+{% block meta_description %}Produse proprii construite din nevoi reale: Emotional Planner, pentru organizarea zilei, și MyBudget, pentru buget și finanțe. În early access, gratuite cât timp le testez.{% endblock %}
+{% block og_title %}Produse proprii | Andreea Tech{% endblock %}
+{% block twitter_title %}Produse proprii | Andreea Tech{% endblock %}
 
 {% block content %}
-<section class="page-hero about-hero">
-    <div class="hero-glow hero-glow-strong"></div>
-    <div class="container-md">
-        <div class="badge mb-lg">
-            <span class="badge-dot badge-dot-pulse"></span>
-            Early Access
-        </div>
-        <h1 class="page-title">
-            Instrumente practice pentru o viață mai <span class="gradient-text">echilibrată.</span>
-        </h1>
-        <p class="page-subtitle measure mb-sm">
-            Două aplicații digitale pentru organizarea timpului, gestionarea banilor și obiceiuri zilnice mai bune — încă în early access, gratuite cât timp le testez și le îmbunătățesc.
-        </p>
-        <p class="text-muted measure">
-            Pe lângă proiectele construite pentru clienți (vezi <a href="{% url 'projects' %}" class="link">Portofoliu</a>), astea sunt produsele mele proprii — pornite din nevoi personale, nu dintr-un brief.
-        </p>
+<section class="phead">
+    <div class="wrap">
+        <h1>Produse proprii, construite din nevoi reale.</h1>
+        <p class="lead">Două aplicații digitale pentru organizarea timpului și gestionarea banilor, încă în early access și gratuite cât timp le testez și le îmbunătățesc.</p>
+        <p class="muted measure" style="margin-top:16px">Pe lângă proiectele din <a class="link" href="{% url 'projects' %}">Portofoliu</a>, acestea sunt produsele mele proprii: pornite din nevoi personale, nu dintr-un brief.</p>
     </div>
 </section>
 
-<section class="section-lg">
-    <div class="container-md products-grid">
-        <article class="glass product-card">
-            <div class="product-badge">Early Access</div>
-            <p class="product-eyebrow">Planner digital</p>
-            <h2 class="product-title">Planner de Echilibru Personal & Productivitate</h2>
-            <p class="text-muted lead">Plannerul zilnic care îți urmărește starea alături de task-uri, ca să-ți organizezi ziua în ritmul tău, nu împotriva lui.</p>
-            <ul class="product-features">
-                <li>Planificare zilnică și săptămânală</li>
-                <li>Obiective, obiceiuri și priorități</li>
-                <li>Spațiu pentru reflecție și echilibru</li>
-            </ul>
-            <div class="product-footer">
-                <span class="product-footer-name gradient-text">Planner</span>
-                <a href="{% url 'planner_product' %}" class="btn-primary product-cta">Vezi produsul</a>
-            </div>
+<section class="sec first" style="padding-top:0;border-top:0">
+    <div class="wrap two">
+        <article class="sheet">
+            <div class="sheet-h"><span class="mono">Planner digital</span><span><span class="chip s-produs">Produs propriu</span></span></div>
+            <div class="sheet-img"><div class="shot"><img src="{% static 'website/planner-preview.jpg' %}" alt="Emotional Planner, ecranul de start" width="1165" height="463" loading="lazy"></div></div>
+            <dl class="spec">
+                <dt>Produs</dt><dd>Emotional Planner</dd>
+                <dt>Ce face</dt><dd>Plannerul zilnic care îți urmărește starea alături de task-uri, ca să-ți organizezi ziua în ritmul tău, nu împotriva lui.</dd>
+                <dt>Funcții</dt><dd>Planificare zilnică și săptămânală, obiective, obiceiuri și priorități, spațiu pentru reflecție și echilibru.</dd>
+                <dt>Stare</dt><dd>Early access, gratuit acum</dd>
+            </dl>
+            <div class="sheet-f btn-row"><a class="btn btn-primary" href="{% url 'planner_product' %}">Vezi produsul</a></div>
         </article>
 
-        <article class="glass product-card">
-            <div class="product-badge">Early Access</div>
-            <p class="product-eyebrow">Tracker financiar</p>
-            <h2 class="product-title">Tracker Inteligent de Buget & Finanțe</h2>
-            <p class="text-muted lead">Aplicația care îți urmărește veniturile, cheltuielile și limitele de buget, ca să știi mereu unde stai.</p>
-            <ul class="product-features">
-                <li>Evidența veniturilor și cheltuielilor</li>
-                <li>Privire de ansamblu asupra bugetului</li>
-                <li>Urmărirea economiilor și obiectivelor financiare</li>
-            </ul>
-            <div class="product-footer">
-                <span class="product-footer-name gradient-text">Budget</span>
-                <a href="{% url 'budget_product' %}" class="btn-primary product-cta">Vezi produsul</a>
-            </div>
+        <article class="sheet">
+            <div class="sheet-h"><span class="mono">Tracker financiar</span><span><span class="chip s-produs">Produs propriu</span></span></div>
+            <div class="sheet-img"><div class="shot"><img src="{% static 'website/budget-preview.jpg' %}" alt="MyBudget, ecranul de start" width="1041" height="428" loading="lazy"></div></div>
+            <dl class="spec">
+                <dt>Produs</dt><dd>MyBudget</dd>
+                <dt>Ce face</dt><dd>Aplicația care îți urmărește veniturile, cheltuielile și limitele de buget, ca să știi mereu unde stai.</dd>
+                <dt>Funcții</dt><dd>Evidența veniturilor și cheltuielilor, privire de ansamblu asupra bugetului, urmărirea economiilor și a obiectivelor.</dd>
+                <dt>Stare</dt><dd>Early access, gratuit acum</dd>
+            </dl>
+            <div class="sheet-f btn-row"><a class="btn btn-primary" href="{% url 'budget_product' %}">Vezi produsul</a></div>
         </article>
     </div>
 </section>
 
-<section class="section-lg">
-    <div class="container-sm center">
-        <div class="glass home-products-panel">
-            <h2 class="h2-xl">Vrei ceva similar, dar pentru business-ul tău?</h2>
-            <p class="text-muted lead">Astea sunt produse personale — dar aceeași filozofie (pornesc de la o nevoie reală, nu de la un șablon) stă și în spatele a ce construiesc pentru afaceri.</p>
-            <a href="{% url 'start_project' %}?pachet=not_sure" class="btn-primary home-cta-btn-sm">Hai să discutăm →</a>
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Pentru afacerea ta</div>
+        <div class="stack-s">
+            <h2>Vrei ceva similar, dar pentru business-ul tău?</h2>
+            <p class="lead">Acestea sunt produse personale, dar aceeași metodă stă în spatele a ce construiesc pentru afaceri: pornesc de la o nevoie reală, nu de la un șablon.</p>
+            <div class="btn-row"><a class="btn btn-primary" href="{% url 'start_project' %}?pachet=not_sure">Hai să discutăm</a></div>
         </div>
     </div>
 </section>

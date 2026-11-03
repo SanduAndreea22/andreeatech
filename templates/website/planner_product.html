@@ -1,173 +1,105 @@
-{% extends "base.html" %}
+{% extends "base_v2.html" %}
 {% load static %}
-{% block title %}Planner de Echilibru Personal & Productivitate | Andreea Sandu{% endblock %}
-{% block meta_description %}Emotional Planner — un planner de echilibru personal și productivitate, construit ca să-ți urmărești starea, obiceiurile și obiectivele într-un singur loc.{% endblock %}
+
+{% block title %}Emotional Planner | Andreea Tech{% endblock %}
+{% block meta_description %}Emotional Planner: un planner de echilibru personal și productivitate, construit ca să-ți urmărești starea, obiceiurile și obiectivele într-un singur loc.{% endblock %}
+{% block og_title %}Emotional Planner | Andreea Tech{% endblock %}
+{% block twitter_title %}Emotional Planner | Andreea Tech{% endblock %}
 
 {% block content %}
-<section class="page-hero about-hero">
-    <div class="hero-glow hero-glow-strong"></div>
-    <div class="container-lg center">
-        <div class="badge mb-lg">
-            <span class="badge-dot badge-dot-pulse"></span>
-            Early Access
-        </div>
-        <h1 class="pp-hero-title">Planifică-ți ziua fără să te lupți cu tine.</h1>
-        <p class="pp-hero-lede">Plannerul zilnic care îți urmărește starea alături de task-uri, ca să-ți organizezi ziua fără să te forțezi să fii productiv(ă) în zilele grele.</p>
-        <a href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary pp-hero-cta">Încearcă gratuit acum</a>
-        <p class="pp-hero-note">Produs în early access — complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
+<section class="phead">
+    <div class="wrap">
+        <a class="back" href="{% url 'products' %}">Toate produsele</a>
+        <div class="btn-row" style="gap:10px;margin-bottom:20px"><span class="chip s-produs">Produs propriu</span><span class="mono">Early access</span></div>
+        <h1>Planifică-ți ziua fără să te lupți cu tine.</h1>
+        <p class="lead">Plannerul zilnic care îți urmărește starea alături de task-uri, ca să-ți organizezi ziua fără să te forțezi să fii productiv(ă) în zilele grele.</p>
+        <div class="btn-row" style="margin-top:28px"><a class="btn btn-primary" href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer">Încearcă gratuit acum</a></div>
+        <p class="hero-note" style="margin-top:16px">Produs în early access, complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
     </div>
 </section>
 
-<section class="section-sm">
-    <div class="container-md">
-        <div class="pp-preview-wrap">
-            <img src="{% static 'website/planner-preview.jpg' %}" alt="Emotional Planner — ecranul de start" width="1165" height="463" loading="lazy">
-        </div>
-    </div>
+<section class="sec first" style="padding-top:0;border-top:0">
+    <div class="wrap"><div class="shot"><img src="{% static 'website/planner-preview.jpg' %}" alt="Emotional Planner, ecranul de start" width="1165" height="463"></div></div>
 </section>
 
-<section class="section section-tint">
-    <div class="container-md">
-        <p class="eyebrow">De ce ai nevoie de el</p>
-        <h2 class="h2-lg h2-left">De ce planner-ul obișnuit te lasă baltă exact în zilele grele</h2>
-        <div class="pp-story-body">
-            <p>Ai încercat probabil deja o agendă clasică sau o aplicație de task-uri. Funcționează bine când ai energie. Dar în zilele în care ești copleșit(ă) sau obosit(ă), același sistem rigid devine o presiune în plus.</p>
-            <p>Majoritatea planner-elor tratează fiecare zi la fel. Emotional Planner pornește invers: înainte de listă, îți notezi starea și energia. Apoi alegi ce e realist pentru ziua pe care chiar o ai, nu pentru ziua în care crezi că ar trebui să fii.</p>
-            <p>La final, două întrebări simple te ajută să închei ziua cu claritate: ce te-a epuizat și ce mică victorie ai avut. În timp, începi să vezi tipare, nu doar task-uri nebifate.</p>
-            <p>Nu trebuie să fii productiv(ă) în fiecare zi ca sistemul să funcționeze. Trebuie doar să fii sincer(ă) cu tine, o dată pe zi.</p>
-        </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="container-md">
-        <p class="eyebrow">Povestea produsului</p>
-        <h2 class="h2-lg h2-left">Am transformat o perioadă grea într-un produs care îți face loc.</h2>
-        <div class="pp-story-body">
-            <p>Ideea s-a născut într-o perioadă în care o listă de obiective a încetat să mai ajute. Scrisul a devenit un mod de a pune ordine în gânduri, fără presiunea de a rezolva totul într-o singură zi.</p>
-            <p>Am pornit de la o întrebare simplă: dacă o problemă poate fi înțeleasă, se poate construi și o soluție în jurul ei. Așa a apărut un planner care urmărește deopotrivă timpul și starea din spatele lui.</p>
-            <p>Astăzi, Planner de Echilibru Personal & Productivitate e un spațiu digital pentru zilele bune, zilele pline și zilele în care ai nevoie s-o iei mai încet.</p>
-        </div>
-    </div>
-</section>
-
-<section class="section section-tint">
-    <div class="container">
-        <p class="eyebrow eyebrow-center">Ce îl face diferit</p>
-        <h2 class="h2-lg">Mai mult decât o listă de task-uri.</h2>
-        <div class="pp-features-grid">
-            <article class="glass pp-feature-card">
-                <h3 class="pp-feature-title">Ziua ta începe cu starea ta</h3>
-                <p class="pp-feature-body">Îți notezi energia și starea de spirit înainte să-ți alegi prioritățile, pentru un plan potrivit cu ziua reală.</p>
-            </article>
-            <article class="glass pp-feature-card">
-                <h3 class="pp-feature-title">Reflecție de seară în două minute</h3>
-                <p class="pp-feature-body">Observi ce te-a epuizat și ce mică victorie ai avut, fără un jurnal lung sau o rutină imposibil de ținut.</p>
-            </article>
-            <article class="glass pp-feature-card">
-                <h3 class="pp-feature-title">Mesaje potrivite cu starea ta</h3>
-                <p class="pp-feature-body">Primești un gând relevant pentru ziua ta — blândețe în zilele grele și încurajare în cele bune.</p>
-            </article>
-            <article class="glass pp-feature-card">
-                <h3 class="pp-feature-title">Vezi tiparul, nu doar ziua de azi</h3>
-                <p class="pp-feature-body">Scorul săptămânal și graficul lunar îți dau context, fără să transforme echilibrul tău într-o competiție.</p>
-            </article>
-        </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="container-md">
-        <p class="eyebrow eyebrow-center">Încearcă chiar tu</p>
-        <h2 class="h2-lg">Vezi cum arată o zi planificată cu Emotional Planner.</h2>
-        <div class="glass pp-demo-card">
-            <div class="pp-demo-mood">
-                <p class="pp-demo-label">Cum te simți azi?</p>
-                <div class="pp-demo-mood-options" id="plannerMood">
-                    <button type="button" class="pp-demo-mood-btn" data-mood="grea">😮‍💨 Grea</button>
-                    <button type="button" class="pp-demo-mood-btn is-active" data-mood="ok">🙂 Ok</button>
-                    <button type="button" class="pp-demo-mood-btn" data-mood="buna">😄 Bună</button>
-                </div>
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">De ce ai nevoie de el</div>
+        <div class="stack-s">
+            <h2>De ce plannerul obișnuit te lasă baltă exact în zilele grele</h2>
+            <div class="rich measure">
+                <p>Ai încercat probabil deja o agendă clasică sau o aplicație de task-uri. Funcționează bine când ai energie. Dar în zilele în care ești copleșit(ă) sau obosit(ă), același sistem rigid devine o presiune în plus.</p>
+                <p>Majoritatea planner-elor tratează fiecare zi la fel. Emotional Planner pornește invers: înainte de listă, îți notezi starea și energia. Apoi alegi ce e realist pentru ziua pe care chiar o ai, nu pentru ziua în care crezi că ar trebui să fii.</p>
+                <p>La final, două întrebări simple te ajută să închei ziua cu claritate: ce te-a epuizat și ce mică victorie ai avut. În timp, începi să vezi tipare, nu doar task-uri nebifate.</p>
+                <p>Nu trebuie să fii productiv(ă) în fiecare zi ca sistemul să funcționeze. Trebuie doar să fii sincer(ă) cu tine, o dată pe zi.</p>
             </div>
-            <div class="pp-demo-field">
-                <label class="pp-demo-label" for="plannerTask">Ce ai de făcut azi? (un task)</label>
-                <input type="text" id="plannerTask" placeholder="Ex. Trimit oferta către client" maxlength="60">
-            </div>
-            <button type="button" class="btn-primary pp-demo-submit" id="plannerGenerate">Vezi planul de azi →</button>
-            <div class="pp-demo-output hidden" id="plannerOutput"></div>
-            <p class="pp-demo-note">100% simulare — nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
         </div>
     </div>
 </section>
 
-<section class="section-lg">
-    <div class="container-md pp-cta-section">
-        <h2 class="h2-lg">Încearcă-l gratuit și organizează-ți ziua în ritmul tău.</h2>
-        <p class="text-muted lead">Fă loc pentru planuri, stări și progresul care contează pentru tine.</p>
-        <a href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary pp-hero-cta">Încearcă gratuit acum</a>
-        <p class="pp-cta-note">Ai o afacere, nu doar nevoi personale? <a href="{% url 'start_project' %}" class="link">Vezi ce pot construi pentru tine →</a></p>
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Povestea produsului</div>
+        <div class="stack-s">
+            <h2>Am transformat o perioadă grea într-un produs care îți face loc.</h2>
+            <div class="rich measure">
+                <p>Ideea s-a născut într-o perioadă în care o listă de obiective a încetat să mai ajute. Scrisul a devenit un mod de a pune ordine în gânduri, fără presiunea de a rezolva totul într-o singură zi.</p>
+                <p>Am pornit de la o întrebare simplă: dacă o problemă poate fi înțeleasă, se poate construi și o soluție în jurul ei. Așa a apărut un planner care urmărește deopotrivă timpul și starea din spatele lui.</p>
+                <p>Astăzi, Planner de Echilibru Personal &amp; Productivitate e un spațiu digital pentru zilele bune, zilele pline și zilele în care ai nevoie s-o iei mai încet.</p>
+            </div>
+        </div>
     </div>
 </section>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const moodWrap = document.getElementById('plannerMood');
-        const taskInput = document.getElementById('plannerTask');
-        const generateBtn = document.getElementById('plannerGenerate');
-        const output = document.getElementById('plannerOutput');
-        if (!moodWrap || !generateBtn) return;
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Ce îl face diferit</div>
+        <div class="stack">
+            <h2>Mai mult decât o listă de task-uri.</h2>
+            <div class="why">
+                <div><h3>Ziua ta începe cu starea ta</h3><p>Îți notezi energia și starea de spirit înainte să-ți alegi prioritățile, pentru un plan potrivit cu ziua reală.</p></div>
+                <div><h3>Reflecție de seară în două minute</h3><p>Observi ce te-a epuizat și ce mică victorie ai avut, fără un jurnal lung sau o rutină imposibil de ținut.</p></div>
+                <div><h3>Mesaje potrivite cu starea ta</h3><p>Primești un gând relevant pentru ziua ta: blândețe în zilele grele și încurajare în cele bune.</p></div>
+                <div><h3>Vezi tiparul, nu doar ziua de azi</h3><p>Scorul săptămânal și graficul lunar îți dau context, fără să transforme echilibrul tău într-o competiție.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-        let mood = 'ok';
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Încearcă chiar tu</div>
+        <div class="stack">
+            <h2>Vezi cum arată o zi planificată cu Emotional Planner.</h2>
+            <div class="fcard">
+                <form id="plannerForm" novalidate>
+                    <fieldset class="field">
+                        <legend>Cum te simți azi?</legend>
+                        <div class="filters" id="plannerMood" role="group" aria-label="Cum te simți azi?" style="margin:6px 0 0">
+                            <button type="button" class="fbtn" data-mood="grea" aria-pressed="false">Grea</button>
+                            <button type="button" class="fbtn" data-mood="ok" aria-pressed="true">Ok</button>
+                            <button type="button" class="fbtn" data-mood="buna" aria-pressed="false">Bună</button>
+                        </div>
+                    </fieldset>
+                    <div class="field"><label for="plannerTask">Ce ai de făcut azi? (un task)</label><input type="text" id="plannerTask" placeholder="Ex. Trimit oferta către client" maxlength="60"></div>
+                    <div class="btn-row"><button type="submit" class="btn btn-primary">Vezi planul de azi</button></div>
+                </form>
+                <div class="demo-out" id="plannerOutput" aria-live="polite" hidden></div>
+                <p class="muted" style="font-size:14.5px;margin-top:16px">Simulare: nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-        moodWrap.querySelectorAll('.pp-demo-mood-btn').forEach((btn) => {
-            btn.addEventListener('click', () => {
-                moodWrap.querySelectorAll('.pp-demo-mood-btn').forEach((b) => b.classList.remove('is-active'));
-                btn.classList.add('is-active');
-                mood = btn.dataset.mood;
-            });
-        });
-
-        const copy = {
-            grea: {
-                intro: 'Azi pare o zi grea. E ok să mergi mai încet — un singur pas contează.',
-                closing: 'Nu trebuie să fii productiv(ă) azi. Trebuie doar să fii sincer(ă) cu tine.',
-            },
-            ok: {
-                intro: 'O zi obișnuită — poți avansa în ritmul tău, fără presiune.',
-                closing: 'Bifează ce poți azi, restul rămâne pentru mâine.',
-            },
-            buna: {
-                intro: 'Ai energie azi — e un moment bun să avansezi cu ce contează.',
-                closing: 'O victorie mică tot contează la fel de mult ca una mare.',
-            },
-        };
-
-        generateBtn.addEventListener('click', () => {
-            const task = taskInput.value.trim() || 'Un task important pentru azi';
-            const c = copy[mood];
-
-            output.innerHTML = '';
-            output.classList.remove('hidden');
-
-            const intro = document.createElement('p');
-            intro.className = 'text-body';
-            intro.textContent = c.intro;
-            output.appendChild(intro);
-
-            const taskRow = document.createElement('div');
-            taskRow.className = 'glass pp-demo-task-row';
-            const taskMark = document.createElement('span');
-            taskMark.className = 'mark';
-            taskMark.textContent = '☐';
-            taskRow.appendChild(taskMark);
-            taskRow.appendChild(document.createTextNode(task));
-            output.appendChild(taskRow);
-
-            const closing = document.createElement('p');
-            closing.className = 'text-muted';
-            closing.textContent = c.closing;
-            output.appendChild(closing);
-        });
-    });
-</script>
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Începe</div>
+        <div class="stack-s">
+            <h2>Încearcă-l gratuit și organizează-ți ziua în ritmul tău.</h2>
+            <p class="lead">Fă loc pentru planuri, stări și progresul care contează pentru tine.</p>
+            <div class="btn-row"><a class="btn btn-primary" href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer">Încearcă gratuit acum</a></div>
+            <p class="muted">Ai o afacere, nu doar nevoi personale? <a class="link" href="{% url 'services' %}">Vezi ce pot construi pentru tine</a></p>
+        </div>
+    </div>
+</section>
 {% endblock %}

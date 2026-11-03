@@ -246,7 +246,7 @@ a.row:hover .row-cta, a.row:focus-visible .row-cta { background: var(--ink); col
 .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .field label, .field legend { font-weight: 600; font-size: 15px; padding: 0; }
 fieldset.field { border: 0; margin: 0; padding: 0; }
-.field input[type="text"], .field input[type="email"], .field select, .field textarea {
+.field input[type="text"], .field input[type="email"], .field input[type="number"], .field select, .field textarea {
     width: 100%;
     font: inherit;
     font-size: 16px;
@@ -345,3 +345,17 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
     .prow-meta { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: center; }
     .prow:hover { padding-inline: 0; background: none; }
 }
+
+/* Product demos (Planner, MyBudget) */
+.demo-out { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; }
+.demo-out[hidden] { display: none; }
+.demo-task { border: 1px solid var(--line-strong); border-radius: var(--r-card); padding: 12px 14px; background: var(--paper); }
+.balance { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.balance strong { font-family: var(--f-display); font-weight: 400; font-size: 2.4rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.balance strong.is-positive { color: var(--ok); }
+.balance strong.is-negative { color: var(--err); }
+.bar-track { height: 10px; border: 1px solid var(--border-ui); border-radius: var(--r-pill); overflow: hidden; background: var(--paper); }
+.bar-fill { height: 100%; width: 0; background: var(--cobalt); }
+.status { font-weight: 600; }
+.status.is-negative { color: var(--err); }
+@media (prefers-reduced-motion: no-preference) { .bar-fill { transition: width .4s ease; } }

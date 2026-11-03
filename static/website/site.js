@@ -133,3 +133,81 @@
         if (empty) empty.hidden = shown !== 0;
     });
 })();
+
+/* Products: Emotional Planner demo. Simulation only, nothing is saved. */
+(function () {
+    'use strict';
+    var form = document.getElementById('plannerForm');
+    if (!form) return;
+    var moodGroup = document.getElementById('plannerMood');
+    var output = document.getElementById('plannerOutput');
+    var mood = 'ok';
+    var copy = {
+        grea: {
+            intro: 'Azi pare o zi grea. E ok să mergi mai încet: un singur pas contează.',
+            closing: 'Nu trebuie să fii productiv(ă) azi. Trebuie doar să fii sincer(ă) cu tine.'
+        },
+        ok: {
+            intro: 'O zi obișnuită: poți avansa în ritmul tău, fără presiune.',
+            closing: 'Bifează ce poți azi, restul rămâne pentru mâine.'
+        },
+        buna: {
+            intro: 'Ai energie azi: e un moment bun să avansezi cu ce contează.',
+            closing: 'O victorie mică contează la fel de mult ca una mare.'
+        }
+    };
+    moodGroup.addEventListener('click', function (event) {
+        var btn = event.target.closest('[data-mood]');
+        if (!btn) return;
+        mood = btn.dataset.mood;
+        moodGroup.querySelectorAll('[data-mood]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+    });
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var task = document.getElementById('plannerTask').value.trim() || 'Un task important pentru azi';
+        var text = copy[mood];
+        output.textContent = '';
+        [['p', text.intro, ''], ['div', task, 'demo-task'], ['p', text.closing, 'muted']].forEach(function (item) {
+            var el = document.createElement(item[0]);
+            el.textContent = item[1];
+            if (item[2]) el.className = item[2];
+            output.appendChild(el);
+        });
+        output.hidden = false;
+    });
+})();
+
+/* Products: MyBudget demo. Simulation only, nothing is saved. */
+(function () {
+    'use strict';
+    var form = document.getElementById('budgetForm');
+    if (!form) return;
+    var output = document.getElementById('budgetOutput');
+    var balanceEl = document.getElementById('budgetBalance');
+    var bar = document.getElementById('budgetBar');
+    var barLabel = document.getElementById('budgetBarLabel');
+    var status = document.getElementById('budgetStatus');
+    var euro = function (n) { return '€' + Math.round(n).toLocaleString('ro-RO'); };
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var income = parseFloat(document.getElementById('budgetIncome').value) || 0;
+        var spent = (parseFloat(document.getElementById('budgetFixed').value) || 0) +
+                    (parseFloat(document.getElementById('budgetVariable').value) || 0);
+        var balance = income - spent;
+        var pct = income > 0 ? Math.min(100, (spent / income) * 100) : 0;
+        balanceEl.textContent = (balance < 0 ? '-' : '') + euro(Math.abs(balance));
+        balanceEl.className = balance < 0 ? 'is-negative' : 'is-positive';
+        bar.style.width = pct + '%';
+        barLabel.textContent = Math.round(pct) + '% din venit cheltuit';
+        if (balance < 0) {
+            status.textContent = 'Cheltuielile depășesc venitul cu ' + euro(Math.abs(balance)) + '.';
+            status.className = 'status is-negative';
+        } else {
+            status.textContent = '';
+            status.className = 'status';
+        }
+        output.hidden = false;
+    });
+})();

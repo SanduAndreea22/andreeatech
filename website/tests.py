@@ -670,3 +670,42 @@ class PortfolioRedesignTests(TestCase):
         response = self.client.get(reverse("project_detail", args=[project.slug]))
         for text in ("Context text", "Built text", "Result text"):
             self.assertContains(response, text)
+
+
+class ProductPagesTests(TestCase):
+    PLANNER_APP = "https://day-planner-e2sv.onrender.com"
+    BUDGET_APP = "https://my-budget-or3r.onrender.com"
+
+    def test_index_lists_both_products_with_links_to_their_pages(self):
+        response = self.client.get(reverse("products"))
+        self.assertContains(response, "Emotional Planner")
+        self.assertContains(response, "MyBudget")
+        self.assertContains(response, reverse("planner_product"))
+        self.assertContains(response, reverse("budget_product"))
+        self.assertContains(response, "Early access")
+
+    def test_planner_page_keeps_the_app_link_and_the_demo(self):
+        response = self.client.get(reverse("planner_product"))
+        self.assertContains(response, self.PLANNER_APP)
+        self.assertContains(response, 'id="plannerForm"')
+        self.assertContains(response, "Povestea produsului")
+
+    def test_budget_page_keeps_the_app_link_and_the_demo(self):
+        response = self.client.get(reverse("budget_product"))
+        self.assertContains(response, self.BUDGET_APP)
+        self.assertContains(response, 'id="budgetForm"')
+
+    def test_external_app_links_open_safely_in_a_new_tab(self):
+        for name, url in (("planner_product", self.PLANNER_APP), ("budget_product", self.BUDGET_APP)):
+            with self.subTest(page=name):
+                self.assertContains(
+                    self.client.get(reverse(name)),
+                    f'href="{url}" target="_blank" rel="noopener noreferrer"',
+                )
+
+    def test_product_pages_have_no_inline_scripts(self):
+        for name in ("products", "planner_product", "budget_product"):
+            with self.subTest(page=name):
+                body = self.client.get(reverse(name)).content.decode()
+                inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
+                self.assertEqual(inline, [])

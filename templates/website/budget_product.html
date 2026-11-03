@@ -1,144 +1,91 @@
-{% extends "base.html" %}
+{% extends "base_v2.html" %}
 {% load static %}
-{% block title %}Tracker Inteligent de Buget & Finanțe | Andreea Sandu{% endblock %}
-{% block meta_description %}Budget Planner — un tracker inteligent de buget și finanțe, construit pentru o vizibilitate clară și simplă asupra veniturilor, cheltuielilor și economiilor tale.{% endblock %}
+
+{% block title %}MyBudget | Andreea Tech{% endblock %}
+{% block meta_description %}MyBudget: un tracker de buget și finanțe, construit pentru o vizibilitate clară și simplă asupra veniturilor, cheltuielilor și economiilor tale.{% endblock %}
+{% block og_title %}MyBudget | Andreea Tech{% endblock %}
+{% block twitter_title %}MyBudget | Andreea Tech{% endblock %}
 
 {% block content %}
-<section class="page-hero about-hero">
-    <div class="hero-glow hero-glow-strong"></div>
-    <div class="container-lg center">
-        <div class="badge mb-lg">
-            <span class="badge-dot badge-dot-pulse"></span>
-            Early Access
-        </div>
-        <p class="eyebrow eyebrow-center">Tracker Inteligent de Buget & Finanțe</p>
-        <h1 class="pp-hero-title">Vezi exact unde se duc banii tăi, fără calcule complicate.</h1>
-        <p class="pp-hero-lede">Un tracker financiar simplu, construit ca să-ți arate clar unde se duc banii și să te ajute să iei decizii mai calme, lună de lună.</p>
-        <a href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary pp-hero-cta">Îmi organizez bugetul</a>
-        <p class="pp-hero-note">Produs în early access — complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
+<section class="phead">
+    <div class="wrap">
+        <a class="back" href="{% url 'products' %}">Toate produsele</a>
+        <div class="btn-row" style="gap:10px;margin-bottom:20px"><span class="chip s-produs">Produs propriu</span><span class="mono">Early access</span></div>
+        <h1>Vezi exact unde se duc banii tăi, fără calcule complicate.</h1>
+        <p class="lead">Un tracker financiar simplu, construit ca să-ți arate clar unde se duc banii și să te ajute să iei decizii mai calme, lună de lună.</p>
+        <div class="btn-row" style="margin-top:28px"><a class="btn btn-primary" href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer">Îmi organizez bugetul</a></div>
+        <p class="hero-note" style="margin-top:16px">Produs în early access, complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
     </div>
 </section>
 
-<section class="section-sm">
-    <div class="container-md">
-        <div class="pp-preview-wrap">
-            <img src="{% static 'website/budget-preview.jpg' %}" alt="Budget Planner — ecranul de start" width="1041" height="428" loading="lazy">
-        </div>
-    </div>
+<section class="sec first" style="padding-top:0;border-top:0">
+    <div class="wrap"><div class="shot"><img src="{% static 'website/budget-preview.jpg' %}" alt="MyBudget, ecranul de start" width="1041" height="428"></div></div>
 </section>
 
-<section class="section section-tint">
-    <div class="container-md">
-        <p class="eyebrow">Mai multă claritate financiară</p>
-        <h2 class="h2-lg h2-left">Un buget n-ar trebui să te facă să te simți vinovat(ă).</h2>
-        <div class="pp-story-body">
-            <p>Când nu vezi imaginea completă, fiecare cheltuială pare o surpriză. Iar un Excel complicat sau o listă de cifre greu de urmărit ajunge abandonată după câteva zile.</p>
-            <p>Tracker Inteligent de Buget & Finanțe îți aduce veniturile, cheltuielile și obiectivele într-un singur loc. Vezi dintr-o privire ce se întâmplă cu banii tăi, fără formule complicate și fără să verifici aplicații diferite.</p>
-            <p>În loc să te întrebi unde s-au dus toți banii, începi să-ți observi obiceiurile, să planifici luna următoare și să faci loc pentru lucrurile care contează pentru tine.</p>
-        </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="container">
-        <p class="eyebrow eyebrow-center">Ce primești</p>
-        <h2 class="h2-lg">Un dashboard pentru decizii mai simple.</h2>
-        <div class="pp-features-grid">
-            <article class="glass pp-feature-card">
-                <h3 class="pp-feature-title">Venituri și cheltuieli într-un singur loc</h3>
-                <p class="pp-feature-body">Adaugi tranzacții rapid și ții la zi imaginea lunii curente.</p>
-            </article>
-            <article class="glass pp-feature-card">
-                <h3 class="pp-feature-title">Categorii care dezvăluie tipare</h3>
-                <p class="pp-feature-body">Înțelegi ce categorii îți consumă cel mai mult din buget și unde poți ajusta.</p>
-            </article>
-            <article class="glass pp-feature-card">
-                <h3 class="pp-feature-title">Obiective financiare vizibile</h3>
-                <p class="pp-feature-body">Urmărești economiile și progresul spre obiectivele care contează pentru tine.</p>
-            </article>
-            <article class="glass pp-feature-card">
-                <h3 class="pp-feature-title">Claritate, nu perfecțiune</h3>
-                <p class="pp-feature-body">Tracker-ul e aici ca să te ajute să observi și să alegi mai bine, nu să te judece.</p>
-            </article>
-        </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="container-md">
-        <p class="eyebrow eyebrow-center">Încearcă chiar tu</p>
-        <h2 class="h2-lg">Vezi cât îți rămâne, dintr-o privire.</h2>
-        <div class="glass pp-demo-card">
-            <div class="pp-demo-row">
-                <div class="pp-demo-field-inline">
-                    <label class="pp-demo-label" for="budgetIncome">Venit lunar (€)</label>
-                    <input type="number" id="budgetIncome" placeholder="Ex. 2500" min="0">
-                </div>
-                <div class="pp-demo-field-inline">
-                    <label class="pp-demo-label" for="budgetFixed">Cheltuieli fixe (€)</label>
-                    <input type="number" id="budgetFixed" placeholder="Chirie, utilități..." min="0">
-                </div>
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Mai multă claritate</div>
+        <div class="stack-s">
+            <h2>Un buget n-ar trebui să te facă să te simți vinovat(ă).</h2>
+            <div class="rich measure">
+                <p>Când nu vezi imaginea completă, fiecare cheltuială pare o surpriză. Iar un Excel complicat sau o listă de cifre greu de urmărit ajunge abandonată după câteva zile.</p>
+                <p>Tracker Inteligent de Buget &amp; Finanțe îți aduce veniturile, cheltuielile și obiectivele într-un singur loc. Vezi dintr-o privire ce se întâmplă cu banii tăi, fără formule complicate și fără să verifici aplicații diferite.</p>
+                <p>În loc să te întrebi unde s-au dus toți banii, începi să-ți observi obiceiurile, să planifici luna următoare și să faci loc pentru lucrurile care contează pentru tine.</p>
             </div>
-            <div class="pp-demo-field">
-                <label class="pp-demo-label" for="budgetVariable">Cheltuieli variabile (€)</label>
-                <input type="number" id="budgetVariable" placeholder="Mâncare, ieșiri, altele..." min="0">
-            </div>
-            <button type="button" class="btn-primary pp-demo-submit" id="budgetGenerate">Calculează →</button>
-            <div class="pp-demo-output hidden" id="budgetOutput">
-                <div class="pp-demo-balance">
-                    <span class="pp-demo-balance-label">Îți rămâne</span>
-                    <span class="pp-demo-balance-value" id="budgetBalance">€0</span>
-                </div>
-                <div class="pp-demo-bar-track">
-                    <div class="pp-demo-bar-fill" id="budgetBar"></div>
-                </div>
-                <p class="pp-demo-bar-label" id="budgetBarLabel">0% din venit cheltuit</p>
-            </div>
-            <p class="pp-demo-note">100% simulare — nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
         </div>
     </div>
 </section>
 
-<section class="section-lg section-tint">
-    <div class="container-md pp-cta-section">
-        <h2 class="h2-lg">Fă din bani un subiect mai clar, mai calm.</h2>
-        <p class="text-muted lead">Începe cu o privire de ansamblu și construiește un sistem financiar care te susține.</p>
-        <a href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-primary pp-hero-cta">Îmi organizez bugetul</a>
-        <p class="pp-cta-note">Ai o afacere, nu doar nevoi personale? <a href="{% url 'start_project' %}" class="link">Vezi ce pot construi pentru tine →</a></p>
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Ce primești</div>
+        <div class="stack">
+            <h2>Un dashboard pentru decizii mai simple.</h2>
+            <div class="why">
+                <div><h3>Venituri și cheltuieli într-un singur loc</h3><p>Adaugi tranzacții rapid și ții la zi imaginea lunii curente.</p></div>
+                <div><h3>Categorii care dezvăluie tipare</h3><p>Înțelegi ce categorii îți consumă cel mai mult din buget și unde poți ajusta.</p></div>
+                <div><h3>Obiective financiare vizibile</h3><p>Urmărești economiile și progresul spre obiectivele care contează pentru tine.</p></div>
+                <div><h3>Claritate, nu perfecțiune</h3><p>Trackerul e aici ca să te ajute să observi și să alegi mai bine, nu să te judece.</p></div>
+            </div>
+        </div>
     </div>
 </section>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const generateBtn = document.getElementById('budgetGenerate');
-        if (!generateBtn) return;
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Încearcă chiar tu</div>
+        <div class="stack">
+            <h2>Vezi cât îți rămâne, dintr-o privire.</h2>
+            <div class="fcard">
+                <form id="budgetForm" novalidate>
+                    <div class="f-row">
+                        <div class="field"><label for="budgetIncome">Venit lunar (€)</label><input type="number" id="budgetIncome" placeholder="Ex. 2500" min="0" inputmode="decimal"></div>
+                        <div class="field"><label for="budgetFixed">Cheltuieli fixe (€)</label><input type="number" id="budgetFixed" placeholder="Chirie, utilități..." min="0" inputmode="decimal"></div>
+                    </div>
+                    <div class="field"><label for="budgetVariable">Cheltuieli variabile (€)</label><input type="number" id="budgetVariable" placeholder="Mâncare, ieșiri, altele..." min="0" inputmode="decimal"></div>
+                    <div class="btn-row"><button type="submit" class="btn btn-primary">Calculează</button></div>
+                </form>
+                <div class="demo-out" id="budgetOutput" aria-live="polite" hidden>
+                    <div class="balance"><span class="sub" style="margin:0">Îți rămâne</span><strong id="budgetBalance">€0</strong></div>
+                    <div class="bar-track"><div class="bar-fill" id="budgetBar"></div></div>
+                    <p class="muted" id="budgetBarLabel">0% din venit cheltuit</p>
+                    <p class="status" id="budgetStatus"></p>
+                </div>
+                <p class="muted" style="font-size:14.5px;margin-top:16px">Simulare: nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-        const incomeInput = document.getElementById('budgetIncome');
-        const fixedInput = document.getElementById('budgetFixed');
-        const variableInput = document.getElementById('budgetVariable');
-        const output = document.getElementById('budgetOutput');
-        const balanceEl = document.getElementById('budgetBalance');
-        const barEl = document.getElementById('budgetBar');
-        const barLabelEl = document.getElementById('budgetBarLabel');
-
-        const formatEUR = (n) => '€' + Math.round(n).toLocaleString('ro-RO');
-
-        generateBtn.addEventListener('click', () => {
-            const income = parseFloat(incomeInput.value) || 0;
-            const fixed = parseFloat(fixedInput.value) || 0;
-            const variable = parseFloat(variableInput.value) || 0;
-            const spent = fixed + variable;
-            const balance = income - spent;
-            const pctSpent = income > 0 ? Math.min(100, (spent / income) * 100) : 0;
-
-            output.classList.remove('hidden');
-            balanceEl.textContent = formatEUR(balance);
-            balanceEl.classList.remove('is-negative', 'is-positive');
-            balanceEl.classList.add(balance < 0 ? 'is-negative' : 'is-positive');
-
-            barEl.style.width = pctSpent + '%';
-            barLabelEl.textContent = Math.round(pctSpent) + '% din venit cheltuit';
-        });
-    });
-</script>
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Începe</div>
+        <div class="stack-s">
+            <h2>Fă din bani un subiect mai clar, mai calm.</h2>
+            <p class="lead">Începe cu o privire de ansamblu și construiește un sistem financiar care te susține.</p>
+            <div class="btn-row"><a class="btn btn-primary" href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer">Îmi organizez bugetul</a></div>
+            <p class="muted">Ai o afacere, nu doar nevoi personale? <a class="link" href="{% url 'services' %}">Vezi ce pot construi pentru tine</a></p>
+        </div>
+    </div>
+</section>
 {% endblock %}
