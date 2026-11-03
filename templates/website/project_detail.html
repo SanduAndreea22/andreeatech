@@ -1,13 +1,19 @@
 {% extends "base_v2.html" %}
+{% load seo_tags %}
 
 {% block title %}{{ project.title }} | Portofoliu Andreea Tech{% endblock %}
-{% block meta_description %}{{ project.short_description }}{% endblock %}
-{% block og_title %}{{ project.title }} | Andreea Tech{% endblock %}
-{% block og_description %}{{ project.short_description }}{% endblock %}
-{% block twitter_title %}{{ project.title }} | Andreea Tech{% endblock %}
-{% block twitter_description %}{{ project.short_description }}{% endblock %}
+{% block meta_description %}{{ project.short_description|truncatechars:160 }}{% endblock %}
+{% block og_title %}{{ project.title }} | Portofoliu Andreea Tech{% endblock %}
+{% block og_description %}{{ project.short_description|truncatechars:160 }}{% endblock %}
+{% block twitter_title %}{{ project.title }} | Portofoliu Andreea Tech{% endblock %}
+{% block twitter_description %}{{ project.short_description|truncatechars:160 }}{% endblock %}
 {% block og_image %}{{ share_image_url }}{% endblock %}
 {% block twitter_image %}{{ share_image_url }}{% endblock %}
+{% block og_image_meta %}{% if project.image %}<meta property="og:image:width" content="{{ project.image.width }}">
+    <meta property="og:image:height" content="{{ project.image.height }}">
+    <meta property="og:image:alt" content="Captură din proiectul {{ project.title }}">
+    <meta name="twitter:image:alt" content="Captură din proiectul {{ project.title }}">{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block jsonld %}{% project_jsonld project %}{% endblock %}
 
 {% block content %}
 <section class="phead">

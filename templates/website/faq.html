@@ -1,9 +1,14 @@
 {% extends "base_v2.html" %}
+{% load seo_tags %}
 
 {% block title %}Întrebări frecvente | Andreea Tech{% endblock %}
 {% block meta_description %}Răspunsuri despre colaborare, prețuri, termene, web și sisteme, automatizare AI și design creativ, înainte să începem un proiect.{% endblock %}
+{% block twitter_description %}Răspunsuri despre colaborare, prețuri, termene, web și sisteme, automatizare AI și design creativ, înainte să începem un proiect.{% endblock %}
+{% block og_description %}Răspunsuri despre colaborare, prețuri, termene, web și sisteme, automatizare AI și design creativ, înainte să începem un proiect.{% endblock %}
 {% block og_title %}Întrebări frecvente | Andreea Tech{% endblock %}
 {% block twitter_title %}Întrebări frecvente | Andreea Tech{% endblock %}
+
+{% block jsonld %}{% faq_jsonld %}{% endblock %}
 
 {% block content %}
 <section class="phead">
@@ -22,44 +27,15 @@
             <a class="fbtn" href="#faq-ai">Automatizare AI</a>
             <a class="fbtn" href="#faq-creativ">Design creativ</a>
         </nav>
-        <div class="qgroup" id="faq-colaborare">
-            <h2 class="sub">Colaborare</h2>
-            <details class="qa"><summary>De ce să te aleg pe tine și nu o agenție?</summary><p>Lucrezi direct cu mine, de la primul mesaj până la livrare, fără un account manager care transmite mai departe unei echipe. Eu construiesc, eu răspund la mesaje și eu știu în ce stadiu e proiectul tău în orice moment.</p></details>
-            <details class="qa"><summary>Cum arată colaborarea, pas cu pas?</summary><p>Pornim cu un call inițial în care clarificăm exact ce ai nevoie. Pe parcursul proiectului comunicăm prin mesaje: îți arăt progresul și iau feedback fără să fie nevoie de call-uri programate. La final ai 7 zile de stabilizare gratuită după livrare.</p></details>
-            <details class="qa"><summary>Ce se întâmplă dacă dispari după ce livrezi proiectul?</summary><p>Fiecare proiect are 7 zile de stabilizare gratuită după livrare: orice bug găsești în perioada asta, îl repar fără cost suplimentar. Rămân contactabilă și după. Dacă apare o problemă mai târziu sau vrei mentenanță continuă, discutăm separat, dar nu dispar odată ce ai plătit.</p></details>
-            <details class="qa"><summary>Nu știu exact de ce am nevoie. De unde pornim?</summary><p>Complet normal. Alege „Nu sunt sigur/ă, hai să discutăm” din formular și stabilim împreună, pe situația reală a afacerii tale, dacă ai nevoie de un site sau un sistem, de o automatizare sau de partea creativă, și cât de complex ar fi. Nu te împing spre varianta cea mai scumpă.</p></details>
-            <details class="qa"><summary>Ce ai nevoie de la mine?</summary><p>Îmi dai contextul afacerii tale, fluxul de lucru actual, obiectivele și orice materiale existente. Transform asta într-un plan clar, cu termen de livrare stabilit.</p></details>
-            <details class="qa"><summary>Oferi suport după lansare?</summary><p>Da. Ai 7 zile de stabilizare gratuită după livrare: orice bug apare în perioada asta, îl repar fără cost suplimentar. Mentenanța continuă, dincolo de bug-uri, se poate stabili separat, atunci când e nevoie.</p></details>
+        {% faq_groups as groups %}
+        {% for anchor, title, questions in groups %}
+        <div class="qgroup" id="faq-{{ anchor }}">
+            <h2 class="sub">{{ title }}</h2>
+            {% for question, answer in questions %}
+            <details class="qa"><summary>{{ question }}</summary><p>{{ answer }}</p></details>
+            {% endfor %}
         </div>
-        <div class="qgroup" id="faq-pret">
-            <h2 class="sub">Preț și termene</h2>
-            <details class="qa"><summary>Cât costă un proiect?</summary><p>Fiecare direcție are un preț de plecare: de la €150 pentru design creativ, de la €250 pentru automatizare AI și de la €850 pentru web și produse digitale. Prețul final depinde de cerințe și îl primești într-o ofertă personalizată, cu preț fix, nu tarif orar.</p></details>
-            <details class="qa"><summary>Cât durează un proiect?</summary><p>Între 7 și 21 de zile, în funcție de direcție și de complexitate: de la 7 zile pentru design creativ, de la 14 pentru automatizare AI și de la 21 pentru web și produse digitale. Termenul exact îl stabilim în ofertă, înainte să începem.</p></details>
-            <details class="qa"><summary>Poți integra plăți online?</summary><p>Da. Integrările de plăți securizate pot include Stripe, PayPal și alți furnizori potriviți pentru regiunea ta.</p></details>
-        </div>
-        <div class="qgroup" id="faq-web">
-            <h2 class="sub">Web și sisteme</h2>
-            <details class="qa"><summary>Construiești sisteme de rezervări?</summary><p>Da. Fluxurile de rezervări pot fi construite în jurul serviciilor tale, al regulilor de disponibilitate și al modului în care lucrează echipa ta.</p></details>
-            <details class="qa"><summary>De ce Django și nu un website builder (Wix, Shopify etc.)?</summary><p>Django e stabil și verificat pe proiecte mari: nu se blochează când ai mai mulți vizitatori sau mai multe cereri deodată. Îmi permite să construiesc exact fluxul afacerii tale, nu să te forțez într-un șablon generic, ca la un website builder.</p></details>
-            <details class="qa"><summary>Pot cere funcționalități personalizate?</summary><p>Absolut. Fiecare proiect poate fi construit în jurul procesului real al afacerii tale, nu forțat într-un instrument generic.</p></details>
-            <details class="qa"><summary>Care e diferența dintre Portofoliu și Produse?</summary><p>Proiectele din Portofoliu sunt exemple din ce pot construi, fiecare cu eticheta ei: demo funcțional, produs propriu, instrument propriu sau concept. Nu sunt produse de vânzare. Plannerul de echilibru personal și trackerul de buget, din Produse, sunt produsele mele proprii, oferite direct.</p></details>
-        </div>
-        <div class="qgroup" id="faq-ai">
-            <h2 class="sub">Automatizare AI</h2>
-            <details class="qa"><summary>Ce face mai exact automatizarea AI?</summary><p>Un agent AI poate prelua telefonul și WhatsApp-ul afacerii tale: răspunde la întrebări despre servicii, prețuri și program, preia rezervări sau programări și le confirmă automat, non-stop.</p></details>
-            <details class="qa"><summary>Îmi înlocuiește complet telefonul?</summary><p>Nu. Preia partea repetitivă, ca tu să nu ridici telefonul între doi clienți. Rămâi disponibilă pentru situațiile care chiar au nevoie de tine, iar sistemul se integrează cu calendarul din proiectul ales.</p></details>
-            <details class="qa"><summary>De ce există un cost lunar separat?</summary><p>Configurarea e o singură dată: de la €15 pentru o automatizare simplă și de la €25 pentru un agent AI care preia și sortează cererile, ca extra la un proiect. Pe lângă asta, mai există un cost separat de utilizare, de câțiva euro până la câteva zeci de euro lunar, în funcție de volum, plătit direct firmelor care oferă tehnologia din spate, nu mie. Mentenanța lunară e opțională și separată.</p></details>
-            <details class="qa"><summary>Se adaugă peste orice proiect?</summary><p>Da. Poți adăuga o automatizare simplă sau un agent AI peste un proiect web, sau o poți cere separat, ca direcție de sine stătătoare, de la €250.</p></details>
-        </div>
-        <div class="qgroup" id="faq-creativ">
-            <h2 class="sub">Design creativ</h2>
-            <details class="qa"><summary>Care e diferența dintre partea tehnică și partea creativă?</summary><p>Partea tehnică înseamnă web development (Django, Python, aplicații web, sisteme de rezervări), automatizare AI (agenți, automatizări, integrări API) și arhitectura produsului, adică felul în care funcționează în spate. Partea creativă înseamnă identitate vizuală și branding, design pentru social media, campanii și materiale vizuale, direcție creativă. Identitatea vizuală este un serviciu creativ separat, nu o componentă a dezvoltării tehnice, iar cele două se pot combina într-un singur proiect.</p></details>
-            <details class="qa"><summary>Ce înseamnă direcție creativă?</summary><p>Direcția creativă stabilește cum arată și cum sună brandul tău în toate materialele: alegeri de stil, ton și imagine, ca postările, campaniile și materialele să pară făcute de aceeași mână.</p></details>
-            <details class="qa"><summary>Ce include un proiect creativ?</summary><p>Identitate vizuală și branding, design pentru social media, campanii și materiale vizuale, direcție creativă. Le aleg împreună, în funcție de ce are nevoie brandul tău. Textele sunt incluse în proiect, nu se vând separat.</p></details>
-            <details class="qa"><summary>Pot cere doar partea creativă, fără un site sau un sistem?</summary><p>Da. Design creativ este un serviciu separat de partea tehnică. Se poate combina cu un site sau un sistem într-un singur proiect, dar nu depinde de ele.</p></details>
-            <details class="qa"><summary>Cât costă și cât durează un proiect creativ?</summary><p>Pornește de la €150 și durează de la 7 zile. Pentru proiecte mai mari, cu volum mare de materiale sau o identitate construită de la zero, discutăm exact ce ai nevoie la primul mesaj și stabilim un preț fix, nu tarif orar.</p></details>
-            <details class="qa"><summary>Pot vedea un exemplu înainte să decid?</summary><p>Da. În Portofoliu găsești concepte creative marcate „Concept”, ca să vezi tipul de lucru înainte să decizi.</p></details>
-        </div>
+        {% endfor %}
     </div>
 </section>
 

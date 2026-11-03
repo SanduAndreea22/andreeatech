@@ -104,6 +104,9 @@ def robots_txt(request):
     lines = [
         "User-agent: *",
         "Allow: /",
+        # Asks well-behaved crawlers not to list the admin. This is only a
+        # request: the admin is protected by login and lockout, not by this file.
+        "Disallow: /panou-admin/",
         f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
@@ -134,7 +137,7 @@ def projects_list(request):
 
 def project_detail(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    image_path = project.image.url if project.image else static("website/poza_me.JPG")
+    image_path = project.image.url if project.image else static("website/og-default.jpg")
     return render(request, "website/project_detail.html", {
         "project": project,
         "share_image_url": request.build_absolute_uri(image_path),

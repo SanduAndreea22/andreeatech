@@ -3,6 +3,8 @@
 
 {% block title %}Despre | Andreea Tech{% endblock %}
 {% block meta_description %}Sunt Andreea și construiesc site-uri, automatizări și identitate vizuală pentru antreprenori. Lucrez singură, deci vorbești direct cu cea care construiește.{% endblock %}
+{% block twitter_description %}Sunt Andreea și construiesc site-uri, automatizări și identitate vizuală pentru antreprenori. Lucrez singură, deci vorbești direct cu cea care construiește.{% endblock %}
+{% block og_description %}Sunt Andreea și construiesc site-uri, automatizări și identitate vizuală pentru antreprenori. Lucrez singură, deci vorbești direct cu cea care construiește.{% endblock %}
 {% block og_title %}Despre | Andreea Tech{% endblock %}
 {% block twitter_title %}Despre | Andreea Tech{% endblock %}
 
@@ -15,7 +17,12 @@
 
 <section class="sec first" style="padding-top:clamp(16px,3vw,32px);border-top:0">
     <div class="wrap about">
-        <div class="portrait"><img src="{% static 'website/poza_me.JPG' %}" alt="Andreea Sandu" width="800" height="800"></div>
+        <div class="portrait">
+            <picture>
+                <source type="image/webp" srcset="{% static 'website/poza_me-480.webp' %} 480w, {% static 'website/poza_me-800.webp' %} 800w" sizes="(max-width: 900px) 360px, 400px">
+                <img src="{% static 'website/poza_me-800.jpg' %}" srcset="{% static 'website/poza_me-480.jpg' %} 480w, {% static 'website/poza_me-800.jpg' %} 800w" sizes="(max-width: 900px) 360px, 400px" alt="Andreea Sandu" width="800" height="800" fetchpriority="high" decoding="async">
+            </picture>
+        </div>
         <div class="prose">
             <p class="lead about-lead">Construiesc site-uri, sisteme de rezervări și automatizări pentru antreprenori care vor să crească fără să se mai lupte cu partea tehnică. Pe partea creativă, fac identitate vizuală, design pentru social media și materiale de campanie.</p>
             <p class="rich" style="max-width:62ch">Îmi pasă de același lucru la fiecare proiect: să reziste când încep să-l folosească clienți reali, nu să fie un demo care arată bine doar într-un screenshot. Lucrez singură, deci vorbești direct cu cea care scrie codul și ia deciziile de design.</p>

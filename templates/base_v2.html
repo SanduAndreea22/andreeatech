@@ -1,27 +1,38 @@
 <!DOCTYPE html>
-{% load static %}
+{% load static seo_tags %}
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
     <meta name="google-site-verification" content="NNJQMgpVm0b8DuLGPSeNEAeebRlijHITiIZ3J8orgsU" />
-    <title>{% block title %}Andreea Tech | Site-uri, sisteme și automatizări pentru afaceri{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}Site-uri, sisteme de rezervări, automatizări și identitate vizuală pentru afaceri, construite direct de Andreea, fără intermediari.{% endblock %}">
+    <title>{% block title %}Andreea Tech | Site-uri, automatizări și identitate vizuală{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Site-uri, sisteme de rezervări, automatizări AI și identitate vizuală pentru antreprenori. Prețuri de la €150, răspuns în maximum 24 de ore.{% endblock %}">
 
     <link rel="icon" type="image/png" href="{% static 'website/favicon.png' %}">
 
+    {% block canonical_tag %}<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">{% endblock %}
+    {% block robots %}{% endblock %}
+
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="ro_RO">
     <meta property="og:site_name" content="Andreea Tech">
-    <meta property="og:title" content="{% block og_title %}Andreea Tech | Site-uri, sisteme și automatizări pentru afaceri{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}Site-uri, sisteme de rezervări, automatizări și identitate vizuală pentru afaceri, construite direct de Andreea, fără intermediari.{% endblock %}">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/poza_me.JPG' %}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Andreea Tech | Site-uri, automatizări și identitate vizuală{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Site-uri, sisteme de rezervări, automatizări AI și identitate vizuală pentru antreprenori. Prețuri de la €150, răspuns în maximum 24 de ore.{% endblock %}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/og-default.jpg' %}{% endblock %}">
+    {% block og_image_meta %}<meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Andreea Tech: site-uri, automatizări și identitate vizuală pentru afaceri.">
+    <meta name="twitter:image:alt" content="Andreea Tech: site-uri, automatizări și identitate vizuală pentru afaceri.">{% endblock %}
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{% block twitter_title %}Andreea Tech | Site-uri, sisteme și automatizări pentru afaceri{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}Site-uri, sisteme de rezervări, automatizări și identitate vizuală pentru afaceri, construite direct de Andreea, fără intermediari.{% endblock %}">
-    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/poza_me.JPG' %}{% endblock %}">
+    <meta name="twitter:title" content="{% block twitter_title %}Andreea Tech | Site-uri, automatizări și identitate vizuală{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Site-uri, sisteme de rezervări, automatizări AI și identitate vizuală pentru antreprenori. Prețuri de la €150, răspuns în maximum 24 de ore.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/og-default.jpg' %}{% endblock %}">
+
+    {% site_jsonld %}
+    {% block jsonld %}{% endblock %}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

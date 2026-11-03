@@ -1,4 +1,5 @@
 {% extends "base_v2.html" %}
+{% load seo_tags %}
 
 {% block title %}{{ package.name }} | Andreea Tech{% endblock %}
 {% block meta_description %}{{ service.meta_description }}{% endblock %}
@@ -6,6 +7,8 @@
 {% block og_description %}{{ service.meta_description }}{% endblock %}
 {% block twitter_title %}{{ package.name }} | Andreea Tech{% endblock %}
 {% block twitter_description %}{{ service.meta_description }}{% endblock %}
+
+{% block jsonld %}{% service_jsonld package service %}{% endblock %}
 
 {% block content %}
 <section class="phead">

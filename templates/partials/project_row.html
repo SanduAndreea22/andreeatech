@@ -3,7 +3,7 @@
     <div class="shot"><img src="{{ project.image.url }}" alt="" width="{{ project.image.width }}" height="{{ project.image.height }}" loading="lazy"></div>
     {% endif %}
     <div>
-        <h3>{{ project.title }}</h3>
+        <h2 class="prow-title">{{ project.title }}</h2>
         <p>{{ project.short_description|truncatewords:28 }}</p>
         {% if project.result_highlight %}<p class="prow-result">{{ project.result_highlight }}</p>{% endif %}
     </div>

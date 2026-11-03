@@ -268,10 +268,11 @@ class ProjectDetailViewTests(TestCase):
         response = self.client.get(reverse("project_detail", args=["does-not-exist"]))
         self.assertEqual(response.status_code, 404)
 
-    def test_og_image_falls_back_to_default_without_project_image(self):
+    def test_og_image_falls_back_to_the_brand_image_never_the_personal_photo(self):
         project = make_project(title="No Image Project")
         response = self.client.get(reverse("project_detail", args=[project.slug]))
-        self.assertContains(response, "poza_me")
+        self.assertContains(response, "og-default.jpg")
+        self.assertNotContains(response, "poza_me")
 
     def test_download_button_shown_when_pdf_attached(self):
         project = make_project(title="With PDF", portfolio_pdf=make_test_pdf())
@@ -707,7 +708,7 @@ class ProductPagesTests(TestCase):
         for name in ("products", "planner_product", "budget_product"):
             with self.subTest(page=name):
                 body = self.client.get(reverse(name)).content.decode()
-                inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
+                inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0] and "ld+json" not in s.split(">")[0]]
                 self.assertEqual(inline, [])
 
 
@@ -750,7 +751,7 @@ class ContactAndBriefRedesignTests(TestCase):
         for name in ("contact", "start_project"):
             with self.subTest(page=name):
                 body = self.client.get(reverse(name)).content.decode()
-                inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
+                inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0] and "ld+json" not in s.split(">")[0]]
                 self.assertEqual(inline, [])
 
 
@@ -778,7 +779,7 @@ class AboutRedesignTests(TestCase):
 
     def test_about_has_no_inline_scripts(self):
         body = self.client.get(reverse("about")).content.decode()
-        inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
+        inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0] and "ld+json" not in s.split(">")[0]]
         self.assertEqual(inline, [])
 
 
@@ -820,7 +821,7 @@ class FaqRedesignTests(TestCase):
 
     def test_faq_has_no_inline_scripts(self):
         body = self.client.get(reverse("faq")).content.decode()
-        inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
+        inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0] and "ld+json" not in s.split(">")[0]]
         self.assertEqual(inline, [])
 
     def test_faq_prices_match_the_service_directions(self):
@@ -890,7 +891,7 @@ class ReviewsRedesignTests(TestCase):
 
     def test_reviews_page_has_no_inline_scripts(self):
         body = self.client.get(reverse("reviews")).content.decode()
-        inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
+        inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0] and "ld+json" not in s.split(">")[0]]
         self.assertEqual(inline, [])
 
 
@@ -956,3 +957,261 @@ class PrivacyAndErrorPagesTests(TestCase):
         self.assertIn("Ceva n-a mers bine", html)
         self.assertIn('href="/"', html)
         self.assertNotIn("<nav", html)
+
+
+# ---------------------------------------------------------------------------
+# SEO and performance (Stage 7, group 1)
+# ---------------------------------------------------------------------------
+import json
+import re
+from html import unescape
+from pathlib import Path
+
+from django.conf import settings
+
+from .faq import FAQ_GROUPS
+from .packages import PACKAGES
+
+
+def _meta(body, attr, name):
+    match = re.search(rf'<meta {attr}="{re.escape(name)}" content="(.*?)">', body, re.S)
+    return unescape(match.group(1)) if match else None
+
+
+def _title(body):
+    return unescape(re.search(r"<title>(.*?)</title>", body, re.S).group(1))
+
+
+def _jsonld(body):
+    return [json.loads(m) for m in re.findall(r'<script type="application/ld\+json">(.*?)</script>', body, re.S)]
+
+
+def _visible_text(body):
+    """Page text without the head, scripts and tags, entities decoded."""
+    body = body[body.index("<body"):]
+    body = re.sub(r"<script.*?</script>", "", body, flags=re.S)
+    return unescape(re.sub(r"<[^>]+>", " ", body))
+
+
+class SeoTestBase(TestCase):
+    def setUp(self):
+        self.project = make_project(title="SEO Project", short_description="Un proiect de test pentru verificările SEO, cu o descriere de lungime normală.")
+        self.with_image = make_project(title="SEO With Image", image=make_test_png(), short_description="Un al doilea proiect de test, cu imagine proprie, pentru verificările SEO.")
+
+    def public_urls(self):
+        return [
+            reverse("home"), reverse("services"),
+            *[reverse("service_detail", args=[s]) for s in ("web", "ai", "creativ")],
+            reverse("projects"), reverse("project_detail", args=[self.project.slug]),
+            reverse("products"), reverse("planner_product"), reverse("budget_product"),
+            reverse("about"), reverse("contact"), reverse("start_project"),
+            reverse("faq"), reverse("reviews"), reverse("privacy_policy"),
+        ]
+
+
+class CanonicalTests(SeoTestBase):
+    def test_every_public_page_has_exactly_one_absolute_canonical_for_its_own_url(self):
+        for url in self.public_urls():
+            with self.subTest(url=url):
+                body = self.client.get(url).content.decode()
+                canonicals = re.findall(r'<link rel="canonical" href="(.*?)">', body)
+                self.assertEqual(canonicals, [f"http://testserver{url}"])
+
+    def test_query_strings_never_leak_into_the_canonical(self):
+        for url in (reverse("start_project") + "?pachet=ai_automatizare", reverse("start_project") + "?sent=1"):
+            with self.subTest(url=url):
+                body = self.client.get(url).content.decode()
+                self.assertIn(f'<link rel="canonical" href="http://testserver{reverse("start_project")}">', body)
+                self.assertEqual(_meta(body, "property", "og:url"), f"http://testserver{reverse('start_project')}")
+
+    def test_404_is_not_indexable_and_has_no_canonical(self):
+        body = self.client.get("/nu-exista-nimic/").content.decode()
+        self.assertIn('<meta name="robots" content="noindex">', body)
+        self.assertNotIn('rel="canonical"', body)
+
+    def test_canonical_urls_are_in_the_sitemap_format_with_trailing_slash(self):
+        for url in self.public_urls():
+            with self.subTest(url=url):
+                self.assertTrue(url.endswith("/"))
+
+
+class TitlesAndDescriptionsTests(SeoTestBase):
+    def pages(self):
+        return {url: self.client.get(url).content.decode() for url in self.public_urls()}
+
+    def test_every_page_has_a_unique_title_and_a_unique_description(self):
+        pages = self.pages()
+        titles = {url: _title(body) for url, body in pages.items()}
+        descriptions = {url: _meta(body, "name", "description") for url, body in pages.items()}
+        self.assertEqual(len(set(titles.values())), len(titles), f"duplicate titles: {titles}")
+        self.assertEqual(len(set(descriptions.values())), len(descriptions), f"duplicate descriptions: {descriptions}")
+
+    def test_titles_and_descriptions_have_sensible_lengths(self):
+        for url, body in self.pages().items():
+            with self.subTest(url=url):
+                self.assertLessEqual(len(_title(body)), 65)
+                self.assertGreaterEqual(len(_title(body)), 10)
+                description = _meta(body, "name", "description")
+                self.assertTrue(50 <= len(description) <= 175, f"{len(description)}: {description}")
+
+    def test_social_tags_repeat_the_pages_own_title_and_description(self):
+        for url, body in self.pages().items():
+            with self.subTest(url=url):
+                title, description = _title(body), _meta(body, "name", "description")
+                self.assertEqual(_meta(body, "property", "og:title"), title)
+                self.assertEqual(_meta(body, "name", "twitter:title"), title)
+                self.assertEqual(_meta(body, "property", "og:description"), description)
+                self.assertEqual(_meta(body, "name", "twitter:description"), description)
+
+    def test_every_page_has_exactly_one_h1(self):
+        for url, body in self.pages().items():
+            with self.subTest(url=url):
+                self.assertEqual(len(re.findall(r"<h1[ >]", body)), 1)
+
+    def test_long_project_descriptions_are_trimmed_in_the_head_but_not_on_the_page(self):
+        long_text = " ".join(["Cuvânt"] * 60)
+        project = make_project(title="Long One", short_description=long_text)
+        body = self.client.get(reverse("project_detail", args=[project.slug])).content.decode()
+        self.assertLessEqual(len(_meta(body, "name", "description")), 160)
+        self.assertIn(long_text, re.sub(r"\s+", " ", body))
+
+
+class ShareImageTests(SeoTestBase):
+    def test_default_share_image_is_the_brand_card_not_the_personal_photo(self):
+        for url in self.public_urls():
+            with self.subTest(url=url):
+                body = self.client.get(url).content.decode()
+                head = body[:body.index("</head>")]
+                self.assertNotIn("poza_me", head)
+                self.assertIn("og-default.jpg", _meta(head, "property", "og:image"))
+                self.assertEqual(_meta(head, "property", "og:image:width"), "1200")
+                self.assertEqual(_meta(head, "property", "og:image:height"), "630")
+                self.assertTrue(_meta(head, "property", "og:image:alt"))
+
+    def test_project_with_its_own_image_shares_that_image(self):
+        body = self.client.get(reverse("project_detail", args=[self.with_image.slug])).content.decode()
+        head = body[:body.index("</head>")]
+        self.assertIn(self.with_image.image.url, _meta(head, "property", "og:image"))
+        self.assertNotIn("poza_me", head)
+        self.assertIn(self.with_image.title, _meta(head, "property", "og:image:alt"))
+
+    def test_brand_card_exists_with_the_standard_size_and_stays_small(self):
+        from PIL import Image
+        path = Path(settings.BASE_DIR) / "static" / "website" / "og-default.jpg"
+        with Image.open(path) as image:
+            self.assertEqual(image.size, (1200, 630))
+        self.assertLess(path.stat().st_size, 150 * 1024)
+
+
+class OptimizedImagesTests(TestCase):
+    STATIC = Path(settings.BASE_DIR) / "static" / "website"
+
+    def test_the_original_photo_is_still_there(self):
+        self.assertTrue((self.STATIC / "poza_me.JPG").exists())
+
+    def test_optimized_variants_exist_and_are_much_smaller_than_the_original(self):
+        original = (self.STATIC / "poza_me.JPG").stat().st_size
+        for name in ("poza_me-480.webp", "poza_me-800.webp", "poza_me-480.jpg", "poza_me-800.jpg"):
+            with self.subTest(name=name):
+                self.assertLess((self.STATIC / name).stat().st_size, original / 5)
+
+    def test_about_serves_the_optimized_picture_with_a_fallback_and_dimensions(self):
+        body = self.client.get(reverse("about")).content.decode()
+        self.assertIn("poza_me-800.webp", body)
+        self.assertIn("poza_me-800.jpg", body)
+        self.assertNotIn("poza_me.JPG", body)
+        self.assertRegex(body, r'<img src="[^"]*poza_me-800\.jpg"[^>]*width="800" height="800"')
+        self.assertIn('fetchpriority="high"', body)
+
+
+class StructuredDataTests(SeoTestBase):
+    FORBIDDEN_KEYS = {"address", "telephone", "aggregateRating", "review", "priceRange", "openingHours",
+                      "areaServed", "geo", "foundingDate", "numberOfEmployees"}
+
+    def collect_keys(self, node):
+        if isinstance(node, dict):
+            for key, value in node.items():
+                yield key
+                yield from self.collect_keys(value)
+        elif isinstance(node, list):
+            for item in node:
+                yield from self.collect_keys(item)
+
+    def test_every_page_carries_valid_json_ld_without_invented_fields(self):
+        for url in self.public_urls():
+            with self.subTest(url=url):
+                blocks = _jsonld(self.client.get(url).content.decode())
+                self.assertGreaterEqual(len(blocks), 1)
+                for block in blocks:
+                    self.assertEqual(block["@context"], "https://schema.org")
+                    self.assertFalse(self.FORBIDDEN_KEYS & set(self.collect_keys(block)))
+
+    def test_organization_only_states_what_the_footer_shows(self):
+        body = self.client.get(reverse("home")).content.decode()
+        graph = _jsonld(body)[0]["@graph"]
+        org = next(n for n in graph if n["@type"] == "Organization")
+        visible = _visible_text(body)
+        self.assertEqual(org["name"], "Andreea Tech")
+        self.assertIn(org["email"], visible)
+        self.assertIn(org["sameAs"][0], body)
+        self.assertEqual(set(org) - {"@type", "@id"}, {"name", "url", "email", "sameAs"})
+        self.assertEqual(org["url"], "http://testserver/")
+        site = next(n for n in graph if n["@type"] == "WebSite")
+        self.assertEqual(site["inLanguage"], "ro")
+
+    def test_service_data_matches_the_visible_name_text_and_price(self):
+        for package in PACKAGES:
+            with self.subTest(slug=package["slug"]):
+                url = reverse("service_detail", args=[package["slug"]])
+                body = self.client.get(url).content.decode()
+                service = next(b for b in _jsonld(body) if b.get("@type") == "Service")
+                visible = _visible_text(body)
+                self.assertIn(service["name"], visible)
+                self.assertIn(service["description"], visible)
+                self.assertIn(package["price"], visible)
+                self.assertEqual(service["offers"]["priceSpecification"]["minPrice"], package["price_value"])
+                self.assertEqual(service["offers"]["priceSpecification"]["priceCurrency"], "EUR")
+                self.assertEqual(service["url"], f"http://testserver{url}")
+
+    def test_faq_data_is_exactly_the_visible_questions_and_answers(self):
+        body = self.client.get(reverse("faq")).content.decode()
+        faq = next(b for b in _jsonld(body) if b.get("@type") == "FAQPage")
+        visible = _visible_text(body)
+        expected = [(q, a) for _, _, qs in FAQ_GROUPS for q, a in qs]
+        self.assertEqual(len(faq["mainEntity"]), len(expected))
+        self.assertEqual(body.count('<details class="qa">'), len(expected))
+        for entity, (question, answer) in zip(faq["mainEntity"], expected):
+            self.assertEqual(entity["name"], question)
+            self.assertEqual(entity["acceptedAnswer"]["text"], answer)
+            self.assertIn(question, visible)
+            self.assertIn(re.sub(r"\s+", " ", answer), re.sub(r"\s+", " ", visible))
+
+    def test_project_data_matches_the_visible_title_description_and_image(self):
+        body = self.client.get(reverse("project_detail", args=[self.with_image.slug])).content.decode()
+        work = next(b for b in _jsonld(body) if b.get("@type") == "CreativeWork")
+        self.assertEqual(work["name"], self.with_image.title)
+        self.assertEqual(work["description"], self.with_image.short_description)
+        self.assertIn(work["description"], _visible_text(body))
+        self.assertTrue(work["image"].endswith(self.with_image.image.url))
+        plain = self.client.get(reverse("project_detail", args=[self.project.slug])).content.decode()
+        self.assertNotIn("image", next(b for b in _jsonld(plain) if b.get("@type") == "CreativeWork"))
+
+    def test_json_ld_cannot_break_out_of_its_script_element(self):
+        project = make_project(title="Tag </script><b>x", short_description="a & b </script> c")
+        body = self.client.get(reverse("project_detail", args=[project.slug])).content.decode()
+        block = re.findall(r'<script type="application/ld\+json">(.*?)</script>', body, re.S)
+        self.assertTrue(all("</script" not in b for b in block))
+        self.assertEqual(next(b for b in _jsonld(body) if b.get("@type") == "CreativeWork")["name"], project.title)
+
+
+class RobotsTxtTests(TestCase):
+    def test_robots_allows_the_site_asks_crawlers_to_skip_the_admin_and_points_to_the_sitemap(self):
+        body = self.client.get("/robots.txt").content.decode()
+        self.assertIn("Allow: /", body)
+        self.assertIn("Disallow: /panou-admin/", body)
+        self.assertIn("Sitemap: http://testserver/sitemap.xml", body)
+
+    def test_the_admin_is_protected_by_login_not_by_robots_txt(self):
+        response = self.client.get("/panou-admin/")
+        self.assertEqual(response.status_code, 302)
+        self.assertIn("login", response["Location"])
