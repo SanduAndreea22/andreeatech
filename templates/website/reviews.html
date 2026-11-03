@@ -1,143 +1,77 @@
-{% extends "base.html" %}
-{% block title %}Ce spun clienții | Andreea Sandu{% endblock %}
-{% block meta_description %}Recenzii despre conținut, produse digitale și sisteme construite de Andreea Sandu.{% endblock %}
+{% extends "base_v2.html" %}
+
+{% block title %}Ce spun clienții | Andreea Tech{% endblock %}
+{% block meta_description %}Recenzii despre site-urile, automatizările și proiectele creative construite de Andreea Tech, aprobate manual, cu numele firmei și linkul site-ului pentru verificare.{% endblock %}
+{% block og_title %}Ce spun clienții | Andreea Tech{% endblock %}
+{% block twitter_title %}Ce spun clienții | Andreea Tech{% endblock %}
 
 {% block content %}
-<section class="page-hero">
-    <div class="container">
-
-        <div class="mb-xl">
-            <h1 class="page-title gradient-text">
-                Ce spun clienții
-            </h1>
-            <p class="text-muted">Păreri de la afaceri care au trecut de la haos la structură.</p>
-        </div>
-
-        <div class="reviews-grid">
-            {% for review in reviews %}
-            <div class="glass card-hover review-card">
-                <div>
-                    <div class="review-stars">
-                        {% for i in "12345"|make_list %}
-                            {% if forloop.counter <= review.rating %}
-                                <span class="review-star-filled">★</span>
-                            {% else %}
-                                <span class="review-star-empty">★</span>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-
-                    <p class="review-quote">
-                        „{{ review.message }}"
-                    </p>
-                </div>
-
-                <div>
-                    <div class="review-name">
-                        {{ review.name }}{% if review.role %}, {{ review.role }}{% endif %}
-                    </div>
-                    {% if review.company %}
-                    <div class="review-company">
-                        {% if review.business_url %}<a href="{{ review.business_url }}" target="_blank" rel="noopener noreferrer nofollow" class="link">{{ review.company }} ↗</a>{% else %}{{ review.company }}{% endif %}
-                    </div>
-                    {% endif %}
-                    {% if review.project_note %}
-                    <div class="review-project-note">{{ review.project_note }}</div>
-                    {% endif %}
-                </div>
-            </div>
-            {% empty %}
-            <div class="glass reviews-empty">
-                <p>Nu există recenzii încă. Fii primul care lasă una!</p>
-            </div>
-            {% endfor %}
-        </div>
-
-        <div class="container-sm reviews-form-section">
-            <p class="eyebrow eyebrow-center">Pentru clienți</p>
-            <div class="glass form-card">
-
-                <h2 class="h2 center">
-                    Ai lucrat cu mine? Împărtășește experiența ta
-                </h2>
-
-                {% if messages %}
-                    {% for message in messages %}
-                    <div class="form-message {% if message.tags == 'error' %}form-message-error{% else %}form-message-success{% endif %}">
-                        {% if message.tags == 'error' %}
-                        <svg class="form-message-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-                        {% else %}
-                        <svg class="form-message-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-                        {% endif %}
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-                {% endif %}
-
-                <form method="POST" class="form-fields">
-                    {% csrf_token %}
-                    {{ form.non_field_errors }}
-                    <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
-
-                    <div class="review-form-grid">
-                        <div class="form-field">
-                            <label class="form-label">Nume</label>
-                            {{ form.name }}
-                            {{ form.name.errors }}
-                        </div>
-                        <div class="form-field">
-                            <label class="form-label">Rol/funcție (opțional)</label>
-                            {{ form.role }}
-                            {{ form.role.errors }}
-                        </div>
-                    </div>
-
-                    <div class="review-form-grid">
-                        <div class="form-field">
-                            <label class="form-label">Afacerea ta (opțional)</label>
-                            {{ form.company }}
-                            {{ form.company.errors }}
-                        </div>
-                        <div class="form-field">
-                            <label class="form-label">Site-ul afacerii (opțional)</label>
-                            {{ form.business_url }}
-                            {{ form.business_url.errors }}
-                        </div>
-                    </div>
-
-                    <div class="form-field">
-                        <label class="form-label">Ce am construit pentru tine (opțional)</label>
-                        {{ form.project_note }}
-                        {{ form.project_note.errors }}
-                    </div>
-
-                    <div class="form-field">
-                        <label class="form-label">Notă (1-5)</label>
-                        <div class="review-rating-field">
-                             {{ form.rating }}
-                        </div>
-                        {{ form.rating.errors }}
-                    </div>
-
-                    <div class="form-field">
-                        <label class="form-label">Mesajul tău</label>
-                        {{ form.message }}
-                        {{ form.message.errors }}
-                    </div>
-
-                    <button type="submit" class="btn-primary form-submit">
-                        Trimite recenzia
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <div class="home-cta-center mt-lg">
-            <h2 class="h2-xl">Vrei o experiență la fel de bună pentru clienții tăi?</h2>
-            <a href="{% url 'start_project' %}" class="btn-primary home-cta-btn-sm">Hai să discutăm proiectul tău →</a>
-        </div>
-
+<section class="phead">
+    <div class="wrap">
+        <h1>Ce spun clienții.</h1>
+        <p class="lead">Recenziile apar pe site doar după ce le aprob. Fiecare poate avea numele firmei și linkul site-ului, ca să poți verifica.</p>
     </div>
 </section>
 
+<section class="sec first" style="padding-top:0;border-top:0">
+    <div class="wrap mg">
+        <div class="mg-l mono">Recenzii</div>
+        <div>
+            {% for review in reviews %}
+            <article class="review">
+                <p class="stars-row">
+                    <span class="stars" aria-hidden="true">{% for i in "12345" %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %}</span>
+                    <span class="vh">Nota: {{ review.rating }} din 5</span>
+                </p>
+                <blockquote class="review-quote">„{{ review.message }}”</blockquote>
+                <p class="review-by">
+                    <strong>{{ review.name }}</strong>{% if review.role %}, {{ review.role }}{% endif %}
+                    {% if review.company %}
+                    <span class="muted">
+                        {% if review.business_url %}<a class="link" href="{{ review.business_url }}" target="_blank" rel="noopener noreferrer nofollow">{{ review.company }}</a>{% else %}{{ review.company }}{% endif %}
+                    </span>
+                    {% endif %}
+                </p>
+                {% if review.project_note %}<p class="muted review-note">{{ review.project_note }}</p>{% endif %}
+            </article>
+            {% empty %}
+            <div class="note">Nu sunt încă recenzii aprobate. Dacă ai lucrat cu mine, poți lăsa prima mai jos.</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Lasă o recenzie</div>
+        <div class="stack-s">
+            <h2>Ai lucrat cu mine? Împărtășește experiența ta.</h2>
+            {% include "partials/messages.html" %}
+            <div class="fcard">
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
+                    <div class="f-row">
+                        <div class="field"><label for="{{ form.name.id_for_label }}">Nume</label>{{ form.name }}{{ form.name.errors }}</div>
+                        <div class="field"><label for="{{ form.role.id_for_label }}">Rol sau funcție (opțional)</label>{{ form.role }}{{ form.role.errors }}</div>
+                    </div>
+                    <div class="f-row">
+                        <div class="field"><label for="{{ form.company.id_for_label }}">Afacerea ta (opțional)</label>{{ form.company }}{{ form.company.errors }}</div>
+                        <div class="field"><label for="{{ form.business_url.id_for_label }}">Site-ul afacerii (opțional)</label>{{ form.business_url }}{{ form.business_url.errors }}</div>
+                    </div>
+                    <div class="f-row">
+                        <div class="field"><label for="{{ form.project_note.id_for_label }}">Ce am construit pentru tine (opțional)</label>{{ form.project_note }}{{ form.project_note.errors }}</div>
+                        <div class="field"><label for="{{ form.rating.id_for_label }}">Nota (1 la 5)</label>{{ form.rating }}{{ form.rating.errors }}</div>
+                    </div>
+                    <div class="field"><label for="{{ form.message.id_for_label }}">Mesajul tău</label>{{ form.message }}{{ form.message.errors }}</div>
+                    <div class="btn-row"><button type="submit" class="btn btn-primary">Trimite recenzia</button></div>
+                    <p class="hint">Recenzia apare pe site după ce o aprob.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include "partials/cta_band.html" %}
 {% endblock %}

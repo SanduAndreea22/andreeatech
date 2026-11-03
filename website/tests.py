@@ -848,3 +848,47 @@ class FaqCreativeVisibilityTests(TestCase):
         response = self.client.get(reverse("faq"))
         self.assertContains(response, "diferența dintre partea tehnică și partea creativă")
         self.assertContains(response, "Ce înseamnă direcție creativă?")
+
+
+class ReviewsRedesignTests(TestCase):
+    def test_empty_state_is_honest_and_invites_the_first_review(self):
+        response = self.client.get(reverse("reviews"))
+        self.assertContains(response, "Nu sunt încă recenzii aprobate")
+        self.assertNotContains(response, "haos la structură")
+
+    def test_approved_review_shows_its_details_and_a_nofollow_link(self):
+        Review.objects.create(
+            name="Ana Pop", role="Fondator", company="Salon Demo", business_url="https://example.com",
+            project_note="Sistem de programări", message="Foarte bine.", rating=4, is_approved=True,
+        )
+        response = self.client.get(reverse("reviews"))
+        for text in ("Ana Pop", "Fondator", "Salon Demo", "Sistem de programări", "Foarte bine."):
+            with self.subTest(text=text):
+                self.assertContains(response, text)
+        self.assertContains(response, 'href="https://example.com" target="_blank" rel="noopener noreferrer nofollow"')
+
+    def test_rating_is_available_as_text_not_only_as_stars(self):
+        Review.objects.create(name="A", message="x", rating=4, is_approved=True)
+        self.assertContains(self.client.get(reverse("reviews")), "Nota: 4 din 5")
+
+    def test_unapproved_review_text_is_not_rendered(self):
+        Review.objects.create(name="Hidden Person", message="Secret text", rating=5, is_approved=False)
+        self.assertNotContains(self.client.get(reverse("reviews")), "Secret text")
+
+    def test_submission_shows_the_thank_you_message_and_stays_pending(self):
+        response = self.client.post(reverse("reviews"), {
+            "name": "Jane", "company": "", "rating": 5, "message": "Great.", "website": "",
+        }, follow=True)
+        self.assertContains(response, "Mulțumesc pentru recenzie")
+        self.assertFalse(Review.objects.get().is_approved)
+
+    def test_form_has_the_honeypot_and_labels_tied_to_fields(self):
+        body = self.client.get(reverse("reviews")).content.decode()
+        self.assertIn('name="website"', body)
+        self.assertIn('for="id_rating"', body)
+        self.assertIn('id="id_message"', body)
+
+    def test_reviews_page_has_no_inline_scripts(self):
+        body = self.client.get(reverse("reviews")).content.decode()
+        inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
+        self.assertEqual(inline, [])
