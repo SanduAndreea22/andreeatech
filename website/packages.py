@@ -1,68 +1,76 @@
-"""Single source of truth for the 3 pillar packages shown on the homepage.
+"""Single source of truth for the 3 service directions shown on the site.
 
-Each package maps 1:1 to one of the site's 3 commercial pillars (see the
-"Ce fac" section on Acasă): Conținut & Prezență Digitală, AI & Automatizare,
-Produse & Sisteme Digitale. These are parallel offers, not escalating tiers
-of the same service — a visitor picks the one that matches what they need,
-not a bigger/smaller version of the same thing.
+Each entry maps 1:1 to one of the site's 3 service directions: Web & produse
+digitale, Automatizare AI, Design creativ. They are parallel offers, not
+escalating tiers of the same service — a visitor picks the direction that
+matches what they need.
+
+Prices are starting points ("de la"), not fixed rates: every project gets a
+personalised offer after the brief.
+
+The `key` values are stored on existing ContactMessage rows (selected_package),
+so they stay unchanged even though the visible names were updated. The
+historical names were "Conținut & Prezență Digitală" (continut_digital),
+"AI & Automatizare" (ai_automatizare) and "Produse & Sisteme Digitale"
+(produse_sisteme).
 
 Used by:
 - ContactMessage.PACKAGE_CHOICES (models.py) — so admin/email always show
-  the same name+price as the homepage, without a second hardcoded copy.
-- home.html, via the `packages` context variable from views.home — so the
-  pricing cards AND the price calculator render name/price/CTA from here
-  instead of a second hardcoded copy in the calculator's markup.
+  the same name+price as the site, without a second hardcoded copy.
+- home.html, via the `packages` context variable from views.home.
 
-`price_value` is the plain number backing the calculator's math (the €
-sign and, for produse_sisteme, the "de la" prefix live only in `price`,
-for display).
+`price_value` is the plain number backing any price estimate (the € sign and
+the "de la" prefix live only in `price`, for display).
 """
 
 PACKAGES = [
     {
-        "key": "continut_digital",
-        "name": "Conținut & Prezență Digitală",
-        "price": "€150",
-        "price_value": 150,
-        "tagline": "Conținut care spune clar ce faci — gata de publicat",
+        "key": "produse_sisteme",
+        "name": "Web & produse digitale",
+        "price": "de la €850",
+        "price_value": 850,
+        "tagline": "Site-uri, sisteme de rezervări și aplicații web la comandă.",
         "features": [
-            "Postări Instagram și caption-uri",
-            "Calendar editorial",
-            "Concepte vizuale și materiale de promovare",
-            "Website de prezentare (opțional, dacă ai nevoie)",
+            "Website de prezentare",
+            "Sistem de rezervări sau programări",
+            "Aplicație web la comandă, în Django și Python",
+            "Panou de administrare",
+            "Plăți online cu Stripe, acolo unde au sens",
         ],
-        "description": "Ai o prezență online care arată și sună ca lumea, nu doar să existe — conținut gata de publicat, gândit pentru brandul tău, nu generic.",
-        "duration": "7 zile",
+        "description": "Întregul flux al afacerii tale, construit pe exact ce ai nevoie, nu pe un șablon generic.",
+        "duration": "de la 21 de zile",
         "popular": True,
     },
     {
         "key": "ai_automatizare",
-        "name": "AI & Automatizare",
-        "price": "€250",
+        "name": "Automatizare AI",
+        "price": "de la €250",
         "price_value": 250,
-        "tagline": "Fluxuri care îți dau timpul înapoi",
+        "tagline": "Agenți și automatizări care preiau munca repetitivă.",
         "features": [
-            "Agenți AI pentru generarea și organizarea conținutului",
+            "Asistenți și agenți AI pentru conversații și conținut",
             "Automatizarea sarcinilor repetitive",
-            "Sisteme de lucru personalizate pentru afacerea ta",
+            "Confirmări și remindere pentru clienți",
+            "Integrări prin API cu serviciile pe care le folosești",
         ],
         "description": "Preiei timpul pierdut pe sarcini repetitive și-l pui înapoi în partea din business care chiar contează.",
-        "duration": "14 zile",
+        "duration": "de la 14 zile",
         "popular": False,
     },
     {
-        "key": "produse_sisteme",
-        "name": "Produse & Sisteme Digitale",
-        "price": "de la €850",
-        "price_value": 850,
-        "tagline": "Platformă completă, construită pe fluxul tău real",
+        "key": "continut_digital",
+        "name": "Design creativ",
+        "price": "de la €150",
+        "price_value": 150,
+        "tagline": "Identitate, conținut și materiale de promovare coerente.",
         "features": [
-            "Website-uri și sisteme de rezervări",
-            "Platforme și instrumente digitale",
-            "Produse proprii și soluții personalizate",
+            "Concepte de identitate de brand",
+            "Conținut pentru social media",
+            "Campanii digitale și materiale de promovare",
+            "Direcție creativă",
         ],
-        "description": "Întregul flux al afacerii tale, construit pe exact ce ai nevoie — nu pe un șablon generic.",
-        "duration": "21 zile",
+        "description": "O prezență online care arată și sună ca brandul tău, nu ca un șablon. Textele sunt incluse în proiect.",
+        "duration": "de la 7 zile",
         "popular": False,
     },
 ]

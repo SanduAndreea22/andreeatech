@@ -72,6 +72,40 @@ class Project(models.Model):
         help_text="Sistem = website/platformă construită. Conținut creativ = concept de conținut/strategie, fără stack tehnic.",
     )
 
+    DIRECTION_WEB = "web"
+    DIRECTION_AI = "ai"
+    DIRECTION_CREATIV = "creativ"
+    DIRECTION_CHOICES = [
+        (DIRECTION_WEB, "Web & produse digitale"),
+        (DIRECTION_AI, "Automatizare AI"),
+        (DIRECTION_CREATIV, "Design creativ"),
+    ]
+    direction = models.CharField(
+        max_length=10,
+        choices=DIRECTION_CHOICES,
+        default=DIRECTION_WEB,
+        help_text="Direcția de servicii din care face parte proiectul. Apare ca filtru în Portofoliu.",
+    )
+
+    STATUS_DEMO = "demo"
+    STATUS_PRODUS = "produs"
+    STATUS_INSTRUMENT = "instrument"
+    STATUS_CONCEPT = "concept"
+    STATUS_CHOICES = [
+        (STATUS_DEMO, "Demo funcțional"),
+        (STATUS_PRODUS, "Produs propriu"),
+        (STATUS_INSTRUMENT, "Instrument propriu"),
+        (STATUS_CONCEPT, "Concept"),
+    ]
+    status = models.CharField(
+        max_length=12,
+        choices=STATUS_CHOICES,
+        default=STATUS_DEMO,
+        help_text="Eticheta onestă afișată pe site: Demo = sistem complet construit de tine ca exemplu. "
+                  "Produs propriu = aplicație publică. Instrument propriu = construit pentru Andreea Tech. "
+                  "Concept = idee prezentată vizual, nelivrată unui client.",
+    )
+
     short_description = models.TextField()
 
     result_highlight = models.CharField(

@@ -1,0 +1,104 @@
+/* =========================================
+   TOKENS — Andreea Tech design system (Spec + Atelier, cobalt accent)
+   Light and dark. The dark theme follows the visitor's system setting;
+   [data-theme] overrides are ready for an optional manual toggle later.
+   Contrast ratios for every text/UI pair are listed in the design system
+   and checked by scripts/check_contrast.py.
+========================================= */
+
+:root {
+    color-scheme: light dark;
+
+    /* Surfaces */
+    --paper: #F6F6F2;
+    --paper-2: #ECECE6;
+    --raised: #FFFFFF;
+
+    /* Text */
+    --ink: #11142A;
+    --ink-2: #464B66;
+
+    /* Lines */
+    --line: #D6D6CC;          /* decorative separators */
+    --line-strong: #B4B7C8;   /* decorative card / row outlines */
+    --border-ui: #7A7F99;     /* borders of controls (>= 3:1 on paper) */
+
+    /* Accent */
+    --cobalt: #2F4BDB;        /* fill for primary actions */
+    --cobalt-text: #2340C7;   /* links, active state, focus */
+    --on-cobalt: #FFFFFF;
+    --band: #2F4BDB;
+    --on-band-2: #DCE2FF;
+
+    /* Feedback (always paired with text) */
+    --ok: #1F6B3A;
+    --err: #B3261E;
+
+    /* Type */
+    --f-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --f-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --f-mono: 'DM Mono', ui-monospace, Menlo, monospace;
+
+    /* Spacing (4px base) */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 24px;
+    --sp-6: 32px;
+    --sp-7: 48px;
+    --sp-8: 64px;
+    --sp-9: 96px;
+    --sp-10: 128px;
+
+    /* Radii */
+    --r-img: 2px;
+    --r-card: 4px;
+    --r-btn: 6px;
+    --r-pill: 999px;
+
+    /* Layout */
+    --wrap: 1180px;
+    --gut: clamp(20px, 5.5vw, 72px);
+    --nav-h: 68px;
+    --transition: .15s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --paper: #0E1020;
+        --paper-2: #151932;
+        --raised: #1A1F3B;
+        --ink: #ECEDF5;
+        --ink-2: #A8ADC8;
+        --line: #2B3050;
+        --line-strong: #454C75;
+        --border-ui: #6C74A3;
+        --cobalt: #3A55E8;
+        --cobalt-text: #93A6FF;
+        --band: #2B43C4;
+        --ok: #6FCF97;
+        --err: #FF8A80;
+    }
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #0E1020;
+    --paper-2: #151932;
+    --raised: #1A1F3B;
+    --ink: #ECEDF5;
+    --ink-2: #A8ADC8;
+    --line: #2B3050;
+    --line-strong: #454C75;
+    --border-ui: #6C74A3;
+    --cobalt: #3A55E8;
+    --cobalt-text: #93A6FF;
+    --band: #2B43C4;
+    --ok: #6FCF97;
+    --err: #FF8A80;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+}

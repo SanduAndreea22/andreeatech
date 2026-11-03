@@ -1,0 +1,43 @@
+<footer class="foot">
+    <div class="wrap">
+        <div class="foot-g">
+            <div class="stack-s">
+                <span class="brand">Andreea <i>Tech</i></span>
+                <p class="muted measure">Produse digitale și experiențe pentru afaceri.</p>
+            </div>
+            <div>
+                <h2>Servicii</h2>
+                <ul>
+                    <li><a href="{% url 'home' %}#servicii">Web &amp; produse digitale</a></li>
+                    <li><a href="{% url 'home' %}#servicii">Automatizare AI</a></li>
+                    <li><a href="{% url 'home' %}#servicii">Design creativ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2>Studio</h2>
+                <ul>
+                    <li><a href="{% url 'projects' %}">Portofoliu</a></li>
+                    <li><a href="{% url 'products' %}">Produse proprii</a></li>
+                    <li><a href="{% url 'about' %}">Despre</a></li>
+                    <li><a href="{% url 'reviews' %}">Ce spun clienții</a></li>
+                    <li><a href="{% url 'faq' %}">Întrebări frecvente</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2>Contact</h2>
+                <ul>
+                    <li class="copy">
+                        <a href="mailto:andreea.tech@outlook.com">andreea.tech@outlook.com</a>
+                        <button type="button" data-copy="andreea.tech@outlook.com" aria-label="Copiază adresa de email">Copiază</button>
+                    </li>
+                    <li><a href="https://www.linkedin.com/in/andreeasandu22" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="foot-b">
+            <span>© {% now "Y" %} Andreea Tech</span>
+            <a href="{% url 'privacy_policy' %}">Politica de confidențialitate</a>
+        </div>
+    </div>
+</footer>

@@ -71,7 +71,14 @@ def _reject_spam_submission(request, form, form_name, rate_limit_message):
 
 
 def home(request):
-    return render(request, 'website/home.html', {"packages": PACKAGES})
+    # Up to 4 projects for the "Proiecte alese" section: the ones marked as
+    # featured, or the newest ones if none are marked yet. Read-only; the
+    # section is simply hidden when there are no projects at all.
+    featured_projects = list(Project.objects.filter(is_featured=True)[:4]) or list(Project.objects.all()[:4])
+    return render(request, 'website/home.html', {
+        "packages": PACKAGES,
+        "featured_projects": featured_projects,
+    })
 
 
 def robots_txt(request):

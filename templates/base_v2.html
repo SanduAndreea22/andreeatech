@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="google-site-verification" content="NNJQMgpVm0b8DuLGPSeNEAeebRlijHITiIZ3J8orgsU" />
+    <title>{% block title %}Andreea Tech | Site-uri, sisteme și automatizări pentru afaceri{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Andreea Tech este un studio digital condus de o singură persoană: construiesc site-uri, sisteme de rezervări, automatizări și identitate vizuală pentru afaceri cu clienți reali.{% endblock %}">
+
+    <link rel="icon" type="image/png" href="{% static 'website/favicon.png' %}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Andreea Tech">
+    <meta property="og:title" content="{% block og_title %}Andreea Tech | Site-uri, sisteme și automatizări pentru afaceri{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Studio digital condus de o singură persoană: site-uri, sisteme de rezervări, automatizări și identitate vizuală pentru afaceri cu clienți reali.{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/poza_me.JPG' %}{% endblock %}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Andreea Tech | Site-uri, sisteme și automatizări pentru afaceri{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Studio digital condus de o singură persoană: site-uri, sisteme de rezervări, automatizări și identitate vizuală pentru afaceri cu clienți reali.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'website/poza_me.JPG' %}{% endblock %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Hanken+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'website/tokens.css' %}">
+    <link rel="stylesheet" href="{% static 'website/base.css' %}">
+    <link rel="stylesheet" href="{% static 'website/components.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <a class="skip" href="#main">Sari la conținut</a>
+    {% include "partials/nav.html" %}
+
+    <main id="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "partials/footer.html" %}
+
+    <script src="{% static 'website/site.js' %}" defer></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

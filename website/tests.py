@@ -480,3 +480,67 @@ class ClientIpTests(TestCase):
     def test_falls_back_to_remote_addr_without_header(self):
         request = RequestFactory().get("/", REMOTE_ADDR="127.0.0.1")
         self.assertEqual(_client_ip(request), "127.0.0.1")
+
+
+class ProjectDirectionAndStatusTests(TestCase):
+    def test_defaults_are_web_direction_and_demo_status(self):
+        project = make_project()
+        self.assertEqual(project.direction, Project.DIRECTION_WEB)
+        self.assertEqual(project.status, Project.STATUS_DEMO)
+
+    def test_display_labels_are_the_site_labels(self):
+        project = make_project(direction=Project.DIRECTION_CREATIV, status=Project.STATUS_CONCEPT)
+        self.assertEqual(project.get_direction_display(), "Design creativ")
+        self.assertEqual(project.get_status_display(), "Concept")
+
+
+class ServicePackagesTests(TestCase):
+    """The visible names and prices changed, but the stored keys must not:
+    existing ContactMessage rows reference them."""
+
+    def test_package_keys_are_unchanged(self):
+        from .packages import PACKAGES
+        self.assertEqual(
+            {p["key"] for p in PACKAGES},
+            {"continut_digital", "ai_automatizare", "produse_sisteme"},
+        )
+
+    def test_prices_are_starting_prices(self):
+        from .packages import PACKAGES
+        for package in PACKAGES:
+            with self.subTest(package=package["key"]):
+                self.assertTrue(package["price"].startswith("de la €"))
+
+
+class HomeViewTests(TestCase):
+    def test_home_without_projects_renders_and_hides_the_projects_section(self):
+        response = self.client.get(reverse("home"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["featured_projects"], [])
+        self.assertNotContains(response, "Proiecte alese")
+
+    def test_home_lists_featured_projects_with_their_status_label(self):
+        make_project(title="Featured One", is_featured=True, status=Project.STATUS_CONCEPT)
+        make_project(title="Not Featured")
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, "Featured One")
+        self.assertContains(response, "Concept")
+        self.assertNotContains(response, "Not Featured")
+
+    def test_home_falls_back_to_newest_projects_when_none_is_featured(self):
+        make_project(title="Only Project")
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, "Only Project")
+
+    def test_home_shows_at_most_four_projects(self):
+        for i in range(6):
+            make_project(title=f"Project {i}", is_featured=True)
+        response = self.client.get(reverse("home"))
+        self.assertEqual(len(response.context["featured_projects"]), 4)
+
+    def test_home_lists_the_three_service_directions_from_packages(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, "Web &amp; produse digitale")
+        self.assertContains(response, "Automatizare AI")
+        self.assertContains(response, "Design creativ")
+        self.assertContains(response, "de la €850")

@@ -4,9 +4,9 @@ from .models import Project, ContactMessage, ContactMessageSimple, Certification
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "link", "is_featured", "order", "created_at")
-    list_editable = ("is_featured", "order")
-    list_filter = ("category", "is_featured")
+    list_display = ("title", "direction", "status", "category", "link", "is_featured", "order", "created_at")
+    list_editable = ("direction", "status", "is_featured", "order")
+    list_filter = ("direction", "status", "category", "is_featured")
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ("title",)
 
