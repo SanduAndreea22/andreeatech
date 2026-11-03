@@ -809,3 +809,28 @@ class TechnicalVersusCreativeTests(TestCase):
             with self.subTest(item=item):
                 self.assertContains(response, item)
         self.assertContains(response, "serviciu creativ separat")
+
+
+class FaqRedesignTests(TestCase):
+    def test_answers_are_in_the_html_not_hidden_in_javascript(self):
+        body = self.client.get(reverse("faq")).content.decode()
+        self.assertIn("7 zile de stabilizare gratuită", body)
+        self.assertIn("Django e stabil", body)
+        self.assertGreaterEqual(body.count('<details class="qa">'), 20)
+
+    def test_faq_has_no_inline_scripts(self):
+        body = self.client.get(reverse("faq")).content.decode()
+        inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
+        self.assertEqual(inline, [])
+
+    def test_faq_prices_match_the_service_directions(self):
+        body = self.client.get(reverse("faq")).content.decode()
+        for price in ("€150", "€250", "€850"):
+            with self.subTest(price=price):
+                self.assertIn(price, body)
+
+    def test_faq_never_uses_the_word_studio(self):
+        self.assertNotIn("studio", self.client.get(reverse("faq")).content.decode().lower())
+
+    def test_faq_keeps_creative_separate_from_the_technical_side(self):
+        self.assertContains(self.client.get(reverse("faq")), "serviciu separat de partea tehnică")
