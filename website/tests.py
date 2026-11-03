@@ -834,3 +834,17 @@ class FaqRedesignTests(TestCase):
 
     def test_faq_keeps_creative_separate_from_the_technical_side(self):
         self.assertContains(self.client.get(reverse("faq")), "serviciu separat de partea tehnică")
+
+
+class FaqCreativeVisibilityTests(TestCase):
+    def test_faq_has_a_jump_menu_to_every_group_including_the_creative_one(self):
+        response = self.client.get(reverse("faq"))
+        for anchor in ("colaborare", "pret", "web", "ai", "creativ"):
+            with self.subTest(anchor=anchor):
+                self.assertContains(response, f'href="#faq-{anchor}"')
+                self.assertContains(response, f'id="faq-{anchor}"')
+
+    def test_creative_group_explains_the_technical_versus_creative_split(self):
+        response = self.client.get(reverse("faq"))
+        self.assertContains(response, "diferența dintre partea tehnică și partea creativă")
+        self.assertContains(response, "Ce înseamnă direcție creativă?")

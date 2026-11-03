@@ -442,7 +442,7 @@ dialog.lightbox img { max-width: 94vw; max-height: 86vh; width: auto; height: au
 /* =========================================
    FAQ
 ========================================= */
-.qgroup { margin-bottom: 48px; }
+.qgroup { margin-bottom: 48px; scroll-margin-top: calc(var(--nav-h) + 16px); }
 .qgroup h2.sub { font-size: 12.5px; letter-spacing: .06em; font-family: var(--f-mono); line-height: 1.6; margin-bottom: 6px; }
 .qa { border-bottom: 1px solid var(--line); }
 .qgroup .qa:first-of-type { border-top: 1px solid var(--line-strong); }
@@ -461,3 +461,5 @@ dialog.lightbox img { max-width: 94vw; max-height: 86vh; width: auto; height: au
 .qa[open] summary::after { content: "\2212"; }
 .qa summary:hover { color: var(--cobalt-text); }
 .qa p { padding: 0 0 20px; color: var(--ink-2); max-width: 64ch; }
+
+a.fbtn { display: inline-flex; align-items: center; }
