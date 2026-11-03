@@ -1,5 +1,5 @@
 {% extends "base_v2.html" %}
-{% load seo_tags %}
+{% load seo_tags rich_text %}
 
 {% block title %}{{ project.title }} | Portofoliu Andreea Tech{% endblock %}
 {% block meta_description %}{{ project.short_description|truncatechars:160 }}{% endblock %}
@@ -36,9 +36,9 @@
             <div class="shot"><img src="{{ project.image.url }}" alt="Captură din proiectul {{ project.title }}" width="{{ project.image.width }}" height="{{ project.image.height }}"></div>
             {% endif %}
             <div class="prose">
-                <div><h2>Contextul</h2><div class="rich">{{ project.problem|safe }}</div></div>
-                <div><h2>Ce am construit</h2><div class="rich">{{ project.solution|safe }}</div></div>
-                <div><h2>Rezultatul</h2><div class="rich">{{ project.outcome|safe }}</div></div>
+                <div><h2>Contextul</h2><div class="rich">{{ project.problem|sanitize_html }}</div></div>
+                <div><h2>Ce am construit</h2><div class="rich">{{ project.solution|sanitize_html }}</div></div>
+                <div><h2>Rezultatul</h2><div class="rich">{{ project.outcome|sanitize_html }}</div></div>
             </div>
         </div>
 

