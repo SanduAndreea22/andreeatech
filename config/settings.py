@@ -188,7 +188,33 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# The old STATICFILES_STORAGE setting was removed in Django 5.1 and is silently
+# ignored in Django 6, which meant static files were never hashed or
+# compressed. STORAGES is the current way to set it.
+#
+# website.storage.ForgivingManifestStaticFilesStorage is WhiteNoise's
+# CompressedManifestStaticFilesStorage: every collected file gets a content hash
+# in its name (components.3f9a1c2b7d4e.css), is served with a one-year immutable
+# cache header and has a gzip copy. After a deploy the browser fetches the new
+# file because the name changed, so old CSS can never stay in the cache. It needs
+# `collectstatic`, which deploy.sh already runs. The "forgiving" part: if a
+# file was not collected, the page still renders (plain URL + a logged warning)
+# instead of failing with a 500.
+#
+# `manage.py test` keeps the plain storage because the manifest only exists
+# after collectstatic. StaticFilesPipelineTests (website/tests.py) runs
+# collectstatic into a temporary folder and renders every public page with the
+# real storage, so a broken {% static %} reference is caught there.
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {
+        "BACKEND": (
+            "django.contrib.staticfiles.storage.StaticFilesStorage"
+            if "test" in sys.argv
+            else "website.storage.ForgivingManifestStaticFilesStorage"
+        ),
+    },
+}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

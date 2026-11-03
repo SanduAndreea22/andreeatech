@@ -1215,3 +1215,260 @@ class RobotsTxtTests(TestCase):
         response = self.client.get("/panou-admin/")
         self.assertEqual(response.status_code, 302)
         self.assertIn("login", response["Location"])
+
+
+# ---------------------------------------------------------------------------
+# Stage 7, group 2: static files pipeline (A), local fonts (B), CSP (C)
+# ---------------------------------------------------------------------------
+import tempfile
+
+from django.contrib.staticfiles import finders
+from django.core.management import call_command
+from django.templatetags.static import static
+from django.test import override_settings
+
+from .middleware import CSP_ADMIN, CSP_PUBLIC
+
+ROOT = Path(settings.BASE_DIR)
+MANIFEST_STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "website.storage.ForgivingManifestStaticFilesStorage"},
+}
+HASHED = re.compile(r"\.[0-9a-f]{12}\.[a-z0-9]+$")
+
+
+def _public_urls():
+    project = Project.objects.create(
+        title="Pipeline Project", short_description="Un proiect de test pentru fluxul de fișiere statice.",
+        problem="p", solution="s", outcome="o",
+    )
+    return [
+        reverse("home"), reverse("services"),
+        *[reverse("service_detail", args=[s]) for s in ("web", "ai", "creativ")],
+        reverse("projects"), reverse("project_detail", args=[project.slug]),
+        reverse("products"), reverse("planner_product"), reverse("budget_product"),
+        reverse("about"), reverse("contact"), reverse("start_project"),
+        reverse("faq"), reverse("reviews"), reverse("privacy_policy"),
+    ]
+
+
+class StaticReferencesTests(TestCase):
+    """Every {% static '...' %} written in a live template must point at a real file."""
+
+    def live_templates(self):
+        return [p for p in (ROOT / "templates").rglob("*.html") if "_legacy" not in p.parts]
+
+    def test_every_static_reference_in_the_live_templates_exists(self):
+        pattern = re.compile(r"""\{%\s*static\s+['"]([^'"]+)['"]\s*%\}""")
+        missing, checked = [], 0
+        for template in self.live_templates():
+            for ref in pattern.findall(template.read_text(encoding="utf-8")):
+                checked += 1
+                if not finders.find(ref):
+                    missing.append(f"{template.relative_to(ROOT)} -> {ref}")
+        self.assertGreater(checked, 15)
+        self.assertEqual(missing, [])
+
+    def test_every_url_inside_the_stylesheets_exists(self):
+        css_dir = ROOT / "static" / "website"
+        missing = []
+        for css in ("fonts.css", "tokens.css", "base.css", "components.css"):
+            for ref in re.findall(r"url\(['\"]?([^'\")]+)['\"]?\)", (css_dir / css).read_text(encoding="utf-8")):
+                if not ref.startswith(("data:", "http")) and not (css_dir / ref).exists():
+                    missing.append(f"{css} -> {ref}")
+        self.assertEqual(missing, [])
+
+    def test_the_old_settings_name_is_gone_and_the_current_one_is_used(self):
+        source = (ROOT / "config" / "settings.py").read_text(encoding="utf-8")
+        self.assertNotIn('STATICFILES_STORAGE = "', source)
+        self.assertIn("ForgivingManifestStaticFilesStorage", source)
+
+    def test_deploy_script_still_collects_static_files(self):
+        self.assertIn("collectstatic", (ROOT / "deploy.sh").read_text(encoding="utf-8"))
+
+
+class StaticFilesPipelineTests(TestCase):
+    """Runs the real thing: collectstatic into a temporary folder with the
+    hashing and compressing storage, then renders every public page."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls._tmp = tempfile.TemporaryDirectory()
+        cls.static_root = Path(cls._tmp.name)
+        with override_settings(STORAGES=MANIFEST_STORAGES, STATIC_ROOT=str(cls.static_root)):
+            # admin and ckeditor are skipped only to keep the test fast; the
+            # site's own files (static/website) are all collected and hashed.
+            call_command("collectstatic", interactive=False, verbosity=0, ignore_patterns=["admin", "ckeditor"])
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._tmp.cleanup()
+        super().tearDownClass()
+
+    def test_collectstatic_writes_a_manifest_with_hashed_names(self):
+        manifest = json.loads((self.static_root / "staticfiles.json").read_text())["paths"]
+        for name in ("website/tokens.css", "website/base.css", "website/components.css", "website/fonts.css",
+                     "website/site.js", "website/og-default.jpg", "website/fonts/fraunces-latin.woff2"):
+            with self.subTest(name=name):
+                self.assertIn(name, manifest)
+                self.assertRegex(manifest[name], HASHED)
+                self.assertTrue((self.static_root / manifest[name]).exists())
+
+    def test_text_assets_get_a_gzip_copy(self):
+        manifest = json.loads((self.static_root / "staticfiles.json").read_text())["paths"]
+        for name in ("website/components.css", "website/site.js", "website/fonts.css"):
+            with self.subTest(name=name):
+                self.assertTrue((self.static_root / (manifest[name] + ".gz")).exists())
+
+    def test_the_font_stylesheet_points_at_the_hashed_font_files(self):
+        manifest = json.loads((self.static_root / "staticfiles.json").read_text())["paths"]
+        css = (self.static_root / manifest["website/fonts.css"]).read_text()
+        urls = re.findall(r"url\(['\"]?([^'\")]+)", css)
+        self.assertGreaterEqual(len(urls), 8)
+        for url in urls:
+            with self.subTest(url=url):
+                self.assertRegex(url, HASHED)
+                self.assertTrue((self.static_root / "website" / url).exists())
+
+    def test_every_public_page_renders_and_uses_only_hashed_site_assets(self):
+        with override_settings(STORAGES=MANIFEST_STORAGES, STATIC_ROOT=str(self.static_root)):
+            for url in _public_urls():
+                with self.subTest(url=url):
+                    response = self.client.get(url)
+                    self.assertEqual(response.status_code, 200)
+                    body = response.content.decode()
+                    refs = re.findall(r'(?:href|src)="(/static/website/[^"]+)"', body)
+                    self.assertGreater(len(refs), 5)
+                    for ref in refs:
+                        self.assertRegex(ref, HASHED, f"unhashed static URL on {url}: {ref}")
+                        self.assertTrue((self.static_root / ref.removeprefix("/static/")).exists(), ref)
+
+    def test_a_source_file_that_was_not_collected_degrades_instead_of_breaking_the_page(self):
+        # admin/css/base.css exists in Django's source static folder but the
+        # collectstatic run above skipped "admin", like a deploy that forgot it.
+        self.assertTrue(finders.find("admin/css/base.css"))
+        with override_settings(STORAGES=MANIFEST_STORAGES, STATIC_ROOT=str(self.static_root)):
+            with self.assertLogs("website.storage", level="WARNING") as logs:
+                self.assertEqual(static("admin/css/base.css"), "/static/admin/css/base.css")
+            self.assertIn("Run `collectstatic`", logs.output[0])
+            # a collected file still gets its hashed name
+            self.assertRegex(static("website/site.js"), HASHED)
+
+    def test_a_name_that_exists_nowhere_keeps_the_standard_error(self):
+        """WhiteNoise probes file names at start-up and relies on this error, and
+        a typo in a template must stay loud (StaticReferencesTests catches it)."""
+        with override_settings(STORAGES=MANIFEST_STORAGES, STATIC_ROOT=str(self.static_root)):
+            with self.assertRaises(ValueError):
+                static("website/this-file-does-not-exist.css")
+
+
+class LocalFontsTests(TestCase):
+    FONTS = ROOT / "static" / "website" / "fonts"
+
+    def test_the_fonts_are_valid_woff2_files(self):
+        files = list(self.FONTS.glob("*.woff2"))
+        self.assertEqual(len(files), 8)
+        for font in files:
+            with self.subTest(font=font.name):
+                self.assertEqual(font.read_bytes()[:4], b"wOF2")
+
+    def test_the_same_three_families_are_declared_with_swap(self):
+        css = (ROOT / "static" / "website" / "fonts.css").read_text(encoding="utf-8")
+        self.assertEqual(set(re.findall(r"font-family: '([^']+)'", css)), {"Fraunces", "Hanken Grotesk", "DM Mono"})
+        self.assertEqual(css.count("@font-face"), css.count("font-display: swap"))
+
+    def test_romanian_letters_are_covered_by_a_declared_subset(self):
+        css = (ROOT / "static" / "website" / "fonts.css").read_text(encoding="utf-8")
+        ranges = re.findall(r"unicode-range: ([^;]+);", css)
+
+        def covered(codepoint):
+            for rng in ranges:
+                for part in rng.split(","):
+                    part = part.strip().removeprefix("U+")
+                    low, _, high = part.partition("-")
+                    if int(low, 16) <= codepoint <= int(high or low, 16):
+                        return True
+            return False
+
+        for char in "ăâîșțĂÂÎȘȚ„”":
+            with self.subTest(char=char):
+                self.assertTrue(covered(ord(char)))
+
+    def test_pages_request_no_outside_font_host_and_preload_the_main_fonts(self):
+        body = self.client.get(reverse("home")).content.decode()
+        self.assertNotIn("googleapis", body)
+        self.assertNotIn("gstatic", body)
+        self.assertEqual(body.count('rel="preload" as="font"'), 4)
+        for name in re.findall(r'rel="preload" as="font" type="font/woff2" href="/static/website/fonts/([^"]+)"', body):
+            self.assertTrue((self.FONTS / name).exists())
+
+    def test_the_500_page_uses_the_local_fonts_too(self):
+        from django.template.loader import render_to_string
+        html = render_to_string("500.html")
+        self.assertIn("website/fonts.css", html)
+        self.assertNotIn("googleapis", html)
+
+
+class ContentSecurityPolicyTests(TestCase):
+    def directive(self, header, name):
+        return next((d.strip() for d in header.split(";") if d.strip().startswith(name + " ")), "")
+
+    def test_public_pages_send_the_strict_policy(self):
+        for url in _public_urls():
+            with self.subTest(url=url):
+                self.assertEqual(self.client.get(url)["Content-Security-Policy"], CSP_PUBLIC)
+
+    def test_public_policy_allows_no_inline_scripts_and_no_outside_hosts(self):
+        self.assertEqual(self.directive(CSP_PUBLIC, "script-src"), "script-src 'self'")
+        self.assertNotIn("http", CSP_PUBLIC)
+        self.assertEqual(self.directive(CSP_PUBLIC, "font-src"), "font-src 'self'")
+        self.assertEqual(self.directive(CSP_PUBLIC, "style-src"), "style-src 'self'")
+        for required in ("object-src 'none'", "base-uri 'self'", "form-action 'self'", "frame-ancestors 'none'"):
+            self.assertIn(required, CSP_PUBLIC)
+
+    def test_the_admin_keeps_its_own_policy(self):
+        for url in ("/panou-admin/login/", "/panou-admin/"):
+            with self.subTest(url=url):
+                self.assertEqual(self.client.get(url)["Content-Security-Policy"], CSP_ADMIN)
+        self.assertIn("script-src 'self' 'unsafe-inline'", CSP_ADMIN)
+
+    def test_the_404_page_and_robots_use_the_public_policy(self):
+        self.assertEqual(self.client.get("/nu-exista/")["Content-Security-Policy"], CSP_PUBLIC)
+        self.assertEqual(self.client.get("/robots.txt")["Content-Security-Policy"], CSP_PUBLIC)
+
+    def test_a_policy_set_by_a_view_is_not_overwritten(self):
+        from django.http import HttpResponse
+        from django.test import RequestFactory
+        from .middleware import ContentSecurityPolicyMiddleware
+
+        def view(request):
+            response = HttpResponse("x")
+            response["Content-Security-Policy"] = "default-src 'none'"
+            return response
+
+        response = ContentSecurityPolicyMiddleware(view)(RequestFactory().get("/"))
+        self.assertEqual(response["Content-Security-Policy"], "default-src 'none'")
+
+    def test_public_pages_contain_nothing_the_policy_would_block(self):
+        """No inline event handlers, javascript: links, <style> elements or
+        executable inline scripts, and no CSS, script, font or image from
+        another host. If one slips in, the page would silently break."""
+        for url in _public_urls():
+            with self.subTest(url=url):
+                body = self.client.get(url).content.decode()
+                self.assertIsNone(re.search(r"<[^>]+\son\w+\s*=", body), "inline event handler")
+                self.assertNotIn("javascript:", body.lower())
+                self.assertNotIn("<style", body.lower())
+                scripts = [s for s in body.split("<script")[1:]
+                           if "src=" not in s.split(">")[0] and "ld+json" not in s.split(">")[0]]
+                self.assertEqual(scripts, [])
+                for tag in re.findall(r"<(?:link|script|img|source)\b[^>]*>", body):
+                    for attr in re.findall(r'(?:href|src|srcset)="([^"]+)"', tag):
+                        if "canonical" in tag:
+                            continue
+                        self.assertTrue(attr.startswith(("/", "data:")), f"outside resource: {tag}")
+
+    def test_the_site_script_is_a_file_not_inline_code(self):
+        body = self.client.get(reverse("home")).content.decode()
+        self.assertEqual(len(re.findall(r'<script src="/static/website/site\.js"', body)), 1)

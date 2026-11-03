@@ -34,9 +34,12 @@
     {% site_jsonld %}
     {% block jsonld %}{% endblock %}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Hanken+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    {# Fonts are served from this site. The four files below are the ones almost every page needs (Romanian uses both the latin and latin-ext subsets), so they are requested early to avoid a visible swap. #}
+    <link rel="preload" as="font" type="font/woff2" href="{% static 'website/fonts/fraunces-latin.woff2' %}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{% static 'website/fonts/fraunces-latin-ext.woff2' %}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{% static 'website/fonts/hanken-grotesk-latin.woff2' %}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{% static 'website/fonts/hanken-grotesk-latin-ext.woff2' %}" crossorigin>
+    <link rel="stylesheet" href="{% static 'website/fonts.css' %}">
     <link rel="stylesheet" href="{% static 'website/tokens.css' %}">
     <link rel="stylesheet" href="{% static 'website/base.css' %}">
     <link rel="stylesheet" href="{% static 'website/components.css' %}">
