@@ -544,3 +544,55 @@ class HomeViewTests(TestCase):
         self.assertContains(response, "Automatizare AI")
         self.assertContains(response, "Design creativ")
         self.assertContains(response, "de la €850")
+
+
+class ServicesViewTests(TestCase):
+    def test_hub_and_all_three_direction_pages_return_200(self):
+        self.assertEqual(self.client.get(reverse("services")).status_code, 200)
+        for slug in ("web", "ai", "creativ"):
+            with self.subTest(slug=slug):
+                self.assertEqual(self.client.get(reverse("service_detail", args=[slug])).status_code, 200)
+
+    def test_unknown_direction_is_404(self):
+        self.assertEqual(self.client.get("/servicii/nu-exista/").status_code, 404)
+
+    def test_urls_are_the_agreed_ones(self):
+        self.assertEqual(reverse("services"), "/servicii/")
+        self.assertEqual(reverse("service_detail", args=["web"]), "/servicii/web/")
+
+    def test_direction_page_links_to_the_brief_with_its_package_preselected(self):
+        response = self.client.get(reverse("service_detail", args=["ai"]))
+        self.assertContains(response, "?pachet=ai_automatizare")
+        self.assertContains(response, "de la €250")
+
+    def test_examples_show_only_projects_of_that_direction(self):
+        make_project(title="Web Example", direction=Project.DIRECTION_WEB)
+        make_project(title="Creative Example", direction=Project.DIRECTION_CREATIV, status=Project.STATUS_CONCEPT)
+        web = self.client.get(reverse("service_detail", args=["web"]))
+        self.assertContains(web, "Web Example")
+        self.assertNotContains(web, "Creative Example")
+
+    def test_examples_block_is_hidden_when_the_direction_has_no_projects(self):
+        response = self.client.get(reverse("service_detail", args=["creativ"]))
+        self.assertNotContains(response, "Exemple")
+
+    def test_only_the_ai_page_has_the_booking_demo(self):
+        self.assertContains(self.client.get(reverse("service_detail", args=["ai"])), 'id="demoForm"')
+        self.assertNotContains(self.client.get(reverse("service_detail", args=["web"])), 'id="demoForm"')
+
+    def test_hub_has_the_price_estimate_with_the_extras(self):
+        response = self.client.get(reverse("services"))
+        self.assertContains(response, 'id="est"')
+        self.assertContains(response, "Agent AI, de la €25")
+
+    def test_service_pages_are_in_the_sitemap(self):
+        body = self.client.get("/sitemap.xml").content.decode()
+        for path in ("/servicii/", "/servicii/web/", "/servicii/ai/", "/servicii/creativ/"):
+            with self.subTest(path=path):
+                self.assertIn(path, body)
+
+    def test_start_project_accepts_the_package_keys_used_by_the_service_pages(self):
+        for key in ("produse_sisteme", "ai_automatizare", "continut_digital"):
+            with self.subTest(key=key):
+                response = self.client.get(reverse("start_project") + f"?pachet={key}")
+                self.assertContains(response, key)

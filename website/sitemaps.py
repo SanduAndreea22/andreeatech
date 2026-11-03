@@ -1,6 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from .models import Project
+from .services import SERVICES
 
 
 class StaticViewSitemap(Sitemap):
@@ -10,6 +11,7 @@ class StaticViewSitemap(Sitemap):
     def items(self):
         return [
             "home",
+            "services",
             "about",
             "products",
             "planner_product",
@@ -38,3 +40,14 @@ class ProjectSitemap(Sitemap):
 
     def location(self, obj):
         return reverse("project_detail", args=[obj.slug])
+
+
+class ServiceSitemap(Sitemap):
+    priority = 0.8
+    changefreq = "monthly"
+
+    def items(self):
+        return list(SERVICES)
+
+    def location(self, slug):
+        return reverse("service_detail", args=[slug])

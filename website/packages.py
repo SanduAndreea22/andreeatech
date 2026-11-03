@@ -19,6 +19,7 @@ Used by:
   the same name+price as the site, without a second hardcoded copy.
 - home.html, via the `packages` context variable from views.home.
 
+`slug` is the URL segment of the matching Services page (/servicii/<slug>/).
 `price_value` is the plain number backing any price estimate (the € sign and
 the "de la" prefix live only in `price`, for display).
 """
@@ -26,6 +27,7 @@ the "de la" prefix live only in `price`, for display).
 PACKAGES = [
     {
         "key": "produse_sisteme",
+        "slug": "web",
         "name": "Web & produse digitale",
         "price": "de la €850",
         "price_value": 850,
@@ -43,6 +45,7 @@ PACKAGES = [
     },
     {
         "key": "ai_automatizare",
+        "slug": "ai",
         "name": "Automatizare AI",
         "price": "de la €250",
         "price_value": 250,
@@ -59,6 +62,7 @@ PACKAGES = [
     },
     {
         "key": "continut_digital",
+        "slug": "creativ",
         "name": "Design creativ",
         "price": "de la €150",
         "price_value": 150,
@@ -77,3 +81,10 @@ PACKAGES = [
 
 NOT_SURE_KEY = "not_sure"
 NOT_SURE_LABEL = "Nu sunt sigur/ă, hai să discutăm"
+
+# Optional extras that can be added on top of any direction. Used by the
+# quick price estimate on the Services page.
+ADDONS = [
+    {"key": "automation", "name": "Automatizare simplă", "price_value": 15},
+    {"key": "agent", "name": "Agent AI", "price_value": 25},
+]

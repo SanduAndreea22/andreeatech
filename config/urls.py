@@ -3,11 +3,12 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.views.static import serve
 from django.contrib.sitemaps.views import sitemap
-from website.sitemaps import StaticViewSitemap, ProjectSitemap
+from website.sitemaps import ProjectSitemap, ServiceSitemap, StaticViewSitemap
 from website.views import robots_txt
 
 sitemaps = {
     "static": StaticViewSitemap,
+    "services": ServiceSitemap,
     "projects": ProjectSitemap,
 }
 

@@ -1,0 +1,80 @@
+{% extends "base_v2.html" %}
+
+{% block title %}Servicii | Andreea Tech{% endblock %}
+{% block meta_description %}Trei direcții de lucru: web și produse digitale, automatizare AI și design creativ. Prețurile pornesc de la €150, iar oferta finală depinde de proiectul tău.{% endblock %}
+{% block og_title %}Servicii | Andreea Tech{% endblock %}
+{% block twitter_title %}Servicii | Andreea Tech{% endblock %}
+
+{% block content %}
+<section class="phead">
+    <div class="wrap">
+        <h1>Ce construiesc, pe direcții.</h1>
+        <p class="lead">Trei direcții de lucru. Prețurile sunt puncte de plecare: după brief primești o ofertă personalizată.</p>
+    </div>
+</section>
+
+<section class="sec first" style="padding-top:0;border-top:0">
+    <div class="wrap">
+        <div class="rows">
+            {% for pkg in packages %}
+            <a class="row" href="{% url 'service_detail' pkg.slug %}">
+                <span class="row-name">{{ pkg.name }}</span>
+                <span class="muted">{{ pkg.tagline }}</span>
+                <span class="row-price">{{ pkg.price }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Estimare rapidă</div>
+        <div class="stack">
+            <h2>Vezi de unde pornește prețul pentru ce ai nevoie.</h2>
+            <div class="fcard">
+                <form id="est">
+                    <div class="est-opts">
+                        <fieldset class="field">
+                            <legend>Direcția</legend>
+                            {% for pkg in packages %}
+                            <label class="opt" for="est-{{ pkg.slug }}">
+                                <input type="radio" name="direction" id="est-{{ pkg.slug }}" value="{{ pkg.price_value }}" data-url="{% url 'start_project' %}?pachet={{ pkg.key }}"{% if pkg.popular %} checked{% endif %}>
+                                {{ pkg.name }}, {{ pkg.price }}
+                            </label>
+                            {% endfor %}
+                        </fieldset>
+                        <fieldset class="field">
+                            <legend>Adaugi și, opțional</legend>
+                            {% for addon in addons %}
+                            <label class="opt" for="est-addon-{{ addon.key }}">
+                                <input type="checkbox" class="addon" id="est-addon-{{ addon.key }}" value="{{ addon.price_value }}">
+                                {{ addon.name }}, de la €{{ addon.price_value }}
+                            </label>
+                            {% endfor %}
+                        </fieldset>
+                    </div>
+                    <div class="est-out">
+                        <div><span class="sub" style="display:block">Estimare orientativă</span><strong id="estTotal">{% for pkg in packages %}{% if pkg.popular %}{{ pkg.price }}{% endif %}{% endfor %}</strong></div>
+                        <a class="btn btn-primary" id="estCta" href="{% url 'start_project' %}">Cere oferta personalizată</a>
+                    </div>
+                    <p class="muted" style="font-size:14.5px">Suma exactă se stabilește după brief, în funcție de ce alegi.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="sec alt-bg">
+    <div class="wrap mg">
+        <div class="mg-l mono">Ofertă personalizată</div>
+        <div class="stack-s">
+            <h2>Ai nevoie de ceva care combină mai multe direcții?</h2>
+            <p class="lead">Un site cu rezervări și un agent care confirmă programările, de exemplu. Descrie-mi situația și îți propun un pachet construit pentru ea, cu preț stabilit înainte de start.</p>
+            <div class="btn-row"><a class="btn btn-primary" href="{% url 'start_project' %}?pachet=not_sure">Cere o consultație</a></div>
+        </div>
+    </div>
+</section>
+
+{% include "partials/cta_band.html" %}
+{% endblock %}

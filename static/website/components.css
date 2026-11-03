@@ -206,3 +206,59 @@ a.row:hover .row-name { color: var(--cobalt-text); }
     dl.spec dt { padding-bottom: 0; }
     dl.spec dd { border-top: 0; padding-top: 2px; }
 }
+
+/* =========================================
+   SERVICES PAGES + FORMS (estimate, demo)
+========================================= */
+.sub { font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 10px; }
+.back { font-size: 15px; color: var(--ink-2); display: inline-block; margin-bottom: 28px; border-bottom: 1px solid var(--line-strong); }
+.back:hover { color: var(--ink); }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px clamp(24px, 4vw, 56px); }
+.svc-meta { display: flex; flex-direction: column; gap: 6px; position: sticky; top: calc(var(--nav-h) + 24px); align-self: start; }
+.svc-meta .price { font-family: var(--f-display); font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.svc-meta small { color: var(--ink-2); font-size: 14px; line-height: 1.45; }
+.flist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.flist li { padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+.mini { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.mini a { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+.mini a:hover { color: var(--cobalt-text); }
+.note { border: 1px solid var(--line-strong); border-radius: var(--r-card); padding: 14px 16px; font-size: 15px; color: var(--ink-2); background: var(--raised); }
+.alt-bg { background: var(--paper-2); }
+
+/* Forms */
+.fcard { border: 1px solid var(--line-strong); border-radius: var(--r-card); background: var(--raised); padding: clamp(20px, 3.5vw, 40px); }
+.fcard form { display: flex; flex-direction: column; gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field label, .field legend { font-weight: 600; font-size: 15px; padding: 0; }
+fieldset.field { border: 0; margin: 0; padding: 0; }
+.field input[type="text"], .field input[type="email"], .field select, .field textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--border-ui);
+    border-radius: var(--r-card);
+    padding: 11px 12px;
+    min-height: 46px;
+}
+.field input:hover, .field select:hover, .field textarea:hover { border-color: var(--ink); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--cobalt-text); outline-offset: 1px; border-color: var(--cobalt-text); }
+.f-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.opt { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; font-size: 16px; padding: 6px 0; min-height: 32px; }
+.opt input { margin-top: 5px; accent-color: var(--cobalt); width: 18px; height: 18px; flex: none; }
+.est-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.est-out { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 20px; }
+.est-out strong { display: block; font-family: var(--f-display); font-weight: 400; font-size: 2.4rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.est-out .sub { margin: 0 0 4px; }
+.log { list-style: none; margin: 20px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.log:empty { display: none; }
+.log li { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; }
+.log li::before { content: "OK  "; font-family: var(--f-mono); font-size: 12px; color: var(--cobalt-text); }
+
+@media (max-width: 900px) {
+    .svc-meta { position: static; }
+}
+@media (max-width: 640px) {
+    .two, .f-row, .est-opts { grid-template-columns: minmax(0, 1fr); }
+}

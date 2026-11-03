@@ -1,0 +1,102 @@
+{% extends "base_v2.html" %}
+
+{% block title %}{{ package.name }} | Andreea Tech{% endblock %}
+{% block meta_description %}{{ service.meta_description }}{% endblock %}
+{% block og_title %}{{ package.name }} | Andreea Tech{% endblock %}
+{% block og_description %}{{ service.meta_description }}{% endblock %}
+{% block twitter_title %}{{ package.name }} | Andreea Tech{% endblock %}
+{% block twitter_description %}{{ service.meta_description }}{% endblock %}
+
+{% block content %}
+<section class="phead">
+    <div class="wrap">
+        <a class="back" href="{% url 'services' %}">Toate serviciile</a>
+        <h1>{{ service.title }}</h1>
+        <p class="lead">{{ service.lead }}</p>
+    </div>
+</section>
+
+<section class="sec first" style="padding-top:0;border-top:0">
+    <div class="wrap mg">
+        <div class="svc-meta">
+            <span class="mono">{{ package.name }}</span>
+            <span class="price">{{ package.price }}</span>
+            <small>Timp estimat: {{ package.duration }}, în funcție de proiect.</small>
+            {% if slug == "ai" %}<small>Ca extra la un proiect web, automatizările simple pornesc de la €15, iar un agent AI de la €25.</small>{% endif %}
+        </div>
+        <div class="stack">
+            <div class="two">
+                <div>
+                    <div class="sub">Ce primești</div>
+                    <ul class="flist">
+                        {% for item in service.benefits %}<li>{{ item }}</li>{% endfor %}
+                    </ul>
+                </div>
+                <div class="stack-s">
+                    {% if examples %}
+                    <div>
+                        <div class="sub">Exemple</div>
+                        <div class="mini">
+                            {% for p in examples %}
+                            <a href="{% url 'project_detail' p.slug %}"><span>{{ p.title }}</span>{% include "partials/status_chip.html" with project=p %}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <div class="sub">Ce influențează prețul</div>
+                        <p class="muted">{{ service.price_factors }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-row">
+                <a class="btn btn-primary" href="{% url 'start_project' %}?pachet={{ package.key }}">{{ service.cta }}</a>
+                <a class="btn btn-line" href="{% url 'projects' %}">{{ service.cta_secondary }}</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if service.has_demo %}
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Demo</div>
+        <div class="stack">
+            <h2>Vezi cum confirmă un agent o programare.</h2>
+            <p class="lead">Completează câmpurile și urmărește pașii. Este o simulare: nimic nu se trimite și nu se salvează.</p>
+            <div class="fcard">
+                <form id="demoForm" novalidate>
+                    <div class="f-row">
+                        <div class="field"><label for="demo-name">Numele clientului</label><input id="demo-name" name="name" type="text" autocomplete="off"></div>
+                        <div class="field"><label for="demo-service">Serviciul</label><input id="demo-service" name="service" type="text" placeholder="ex. masă pentru 2, tuns, consultație" autocomplete="off"></div>
+                    </div>
+                    <div class="field"><label for="demo-when">Ziua și ora</label><input id="demo-when" name="when" type="text" placeholder="ex. mâine, 14:00" autocomplete="off"></div>
+                    <div class="btn-row">
+                        <button class="btn btn-primary" type="submit">Trimite cererea (simulare)</button>
+                        <span id="demoReset" hidden><button class="btn btn-line" type="button">Încearcă din nou</button></span>
+                    </div>
+                </form>
+                <ul class="log" id="demoLog" aria-live="polite"></ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Alte direcții</div>
+        <div class="rows">
+            {% for pkg in other_packages %}
+            <a class="row" href="{% url 'service_detail' pkg.slug %}">
+                <span class="row-name">{{ pkg.name }}</span>
+                <span class="muted">{{ pkg.tagline }}</span>
+                <span class="row-price">{{ pkg.price }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% include "partials/cta_band.html" %}
+{% endblock %}

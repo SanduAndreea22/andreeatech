@@ -64,9 +64,8 @@
         <div class="stack">
             <h2>Trei direcții de lucru. Alegi una sau le combini.</h2>
             <div class="rows">
-                {% comment %}Links go to the brief with the direction preselected until the dedicated Services pages exist.{% endcomment %}
-                {% for pkg in packages %}
-                <a class="row" href="{% url 'start_project' %}?pachet={{ pkg.key }}">
+                                 {% for pkg in packages %}
+                <a class="row" href="{% url 'service_detail' pkg.slug %}">
                     <span class="row-name">{{ pkg.name }}</span>
                     <span class="muted">{{ pkg.tagline }}</span>
                     <span class="row-price">{{ pkg.price }}</span>

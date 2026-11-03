@@ -36,3 +36,74 @@
         });
     }
 })();
+
+/* Services: quick price estimate. Radios carry the base price and the target
+   URL; checkboxes add the optional extras. */
+(function () {
+    'use strict';
+    var form = document.getElementById('est');
+    if (!form) return;
+    var total = document.getElementById('estTotal');
+    var cta = document.getElementById('estCta');
+    function update() {
+        var choice = form.querySelector('input[name="direction"]:checked');
+        if (!choice) return;
+        var sum = Number(choice.value);
+        form.querySelectorAll('input.addon:checked').forEach(function (box) { sum += Number(box.value); });
+        total.textContent = 'de la €' + sum;
+        cta.setAttribute('href', choice.dataset.url);
+    }
+    form.addEventListener('change', update);
+    form.addEventListener('submit', function (e) { e.preventDefault(); });
+    update();
+})();
+
+/* Services (AI): booking-confirmation demo. Pure simulation, nothing is sent
+   or stored. Steps appear one by one unless the visitor prefers reduced motion. */
+(function () {
+    'use strict';
+    var form = document.getElementById('demoForm');
+    if (!form) return;
+    var log = document.getElementById('demoLog');
+    var reset = document.getElementById('demoReset');
+    var submit = form.querySelector('button[type="submit"]');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name = form.elements.name.value.trim();
+        var service = form.elements.service.value.trim();
+        var when = form.elements.when.value.trim();
+        if (!name || !service || !when) {
+            [form.elements.name, form.elements.service, form.elements.when].some(function (field) {
+                if (!field.value.trim()) { field.focus(); return true; }
+                return false;
+            });
+            return;
+        }
+        var steps = [
+            'Cerere primită de la ' + name + '.',
+            'Disponibilitatea a fost verificată în calendar.',
+            'Confirmare trimisă clientului: ' + service + ', ' + when + '.',
+            'Programarea a apărut în panoul de administrare.'
+        ];
+        log.textContent = '';
+        submit.disabled = true;
+        steps.forEach(function (text, i) {
+            setTimeout(function () {
+                var li = document.createElement('li');
+                li.textContent = text;
+                log.appendChild(li);
+                if (i === steps.length - 1) reset.hidden = false;
+            }, reduce ? 0 : i * 600);
+        });
+    });
+
+    reset.querySelector('button').addEventListener('click', function () {
+        log.textContent = '';
+        reset.hidden = true;
+        form.reset();
+        submit.disabled = false;
+        form.elements.name.focus();
+    });
+})();

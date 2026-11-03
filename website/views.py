@@ -4,14 +4,15 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.cache import cache
 from django.core.mail import send_mail
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.templatetags.static import static
 from django.urls import reverse
 
 from .forms import ContactForm, ReviewForm, StartProjectForm
 from .models import Certification, ContactMessage, Project, Review
-from .packages import PACKAGES
+from .packages import ADDONS, PACKAGES
+from .services import SERVICES
 
 logger = logging.getLogger(__name__)
 
@@ -78,6 +79,24 @@ def home(request):
     return render(request, 'website/home.html', {
         "packages": PACKAGES,
         "featured_projects": featured_projects,
+    })
+
+
+def services(request):
+    return render(request, "website/services.html", {"packages": PACKAGES, "addons": ADDONS})
+
+
+def service_detail(request, slug):
+    service = SERVICES.get(slug)
+    if service is None:
+        raise Http404("Direcția nu există.")
+    package = next(p for p in PACKAGES if p["key"] == service["package_key"])
+    return render(request, "website/service_detail.html", {
+        "service": service,
+        "package": package,
+        "slug": slug,
+        "examples": Project.objects.filter(direction=service["direction"])[:4],
+        "other_packages": [p for p in PACKAGES if p["slug"] != slug],
     })
 
 
