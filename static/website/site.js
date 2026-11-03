@@ -107,3 +107,29 @@
         form.elements.name.focus();
     });
 })();
+
+/* Portfolio: filter the list by direction. The filter buttons are hidden in
+   the HTML and revealed here, so without JavaScript the full list shows. */
+(function () {
+    'use strict';
+    var group = document.getElementById('pFilters');
+    var list = document.getElementById('pList');
+    if (!group || !list) return;
+    var empty = document.getElementById('pEmpty');
+    group.hidden = false;
+    group.addEventListener('click', function (event) {
+        var btn = event.target.closest('[data-filter]');
+        if (!btn) return;
+        var wanted = btn.dataset.filter;
+        group.querySelectorAll('[data-filter]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+        var shown = 0;
+        list.querySelectorAll('.prow').forEach(function (row) {
+            var match = wanted === 'all' || row.dataset.direction === wanted;
+            row.hidden = !match;
+            if (match) shown += 1;
+        });
+        if (empty) empty.hidden = shown !== 0;
+    });
+})();

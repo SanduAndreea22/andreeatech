@@ -615,3 +615,58 @@ class ServiceOfferButtonTests(TestCase):
         response = self.client.get(reverse("services"))
         for slug in ("web", "ai", "creativ"):
             self.assertContains(response, f'href="/servicii/{slug}/"')
+
+
+class PortfolioRedesignTests(TestCase):
+    def test_package_key_matches_the_projects_direction(self):
+        expected = {
+            Project.DIRECTION_WEB: "produse_sisteme",
+            Project.DIRECTION_AI: "ai_automatizare",
+            Project.DIRECTION_CREATIV: "continut_digital",
+        }
+        for direction, key in expected.items():
+            with self.subTest(direction=direction):
+                self.assertEqual(make_project(title=f"P {direction}", direction=direction).package_key, key)
+
+    def test_list_shows_status_label_direction_and_filters_for_every_project(self):
+        make_project(title="Featured", is_featured=True, status=Project.STATUS_PRODUS)
+        make_project(title="Regular", direction=Project.DIRECTION_AI, status=Project.STATUS_CONCEPT)
+        response = self.client.get(reverse("projects"))
+        for text in ("Featured", "Regular", "Produs propriu", "Concept", "Automatizare AI", 'data-filter="creativ"'):
+            with self.subTest(text=text):
+                self.assertContains(response, text)
+        self.assertContains(response, 'data-direction="ai"')
+
+    def test_list_without_projects_shows_a_message_and_no_filters(self):
+        response = self.client.get(reverse("projects"))
+        self.assertContains(response, "Portofoliul se completează")
+        self.assertNotContains(response, 'id="pFilters"')
+
+    def test_list_keeps_the_result_highlight(self):
+        make_project(title="With Result", result_highlight="+40% programări online")
+        self.assertContains(self.client.get(reverse("projects")), "+40% programări online")
+
+    def test_detail_shows_the_spec_sheet(self):
+        project = make_project(title="Sheet Project", status=Project.STATUS_INSTRUMENT, direction=Project.DIRECTION_AI)
+        response = self.client.get(reverse("project_detail", args=[project.slug]))
+        self.assertContains(response, "Fișă de proiect")
+        self.assertContains(response, "Instrument propriu")
+        self.assertContains(response, "Automatizare AI")
+        self.assertContains(response, "Django, PostgreSQL, Redis")
+
+    def test_detail_cta_preselects_the_package_of_the_direction(self):
+        project = make_project(title="Creative", direction=Project.DIRECTION_CREATIV)
+        response = self.client.get(reverse("project_detail", args=[project.slug]))
+        self.assertContains(response, "?pachet=continut_digital")
+
+    def test_detail_shows_live_link_only_when_set(self):
+        with_link = make_project(title="Live One", link="https://example.com/demo")
+        without = make_project(title="Offline One")
+        self.assertContains(self.client.get(reverse("project_detail", args=[with_link.slug])), "Vezi proiectul live")
+        self.assertNotContains(self.client.get(reverse("project_detail", args=[without.slug])), "Vezi proiectul live")
+
+    def test_detail_renders_the_three_rich_text_blocks(self):
+        project = make_project(title="Blocks", problem="<p>Context text</p>", solution="<p>Built text</p>", outcome="<p>Result text</p>")
+        response = self.client.get(reverse("project_detail", args=[project.slug]))
+        for text in ("Context text", "Built text", "Result text"):
+            self.assertContains(response, text)

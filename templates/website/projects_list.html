@@ -1,135 +1,55 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %}Portofoliu | Andreea Sandu{% endblock %}
-{% block meta_description %}Un portofoliu de sisteme, platforme și concepte de conținut — construite pentru clienți reali și pentru propriile mele proiecte — dovadă clară a ce pot construi și pentru afacerea ta.{% endblock %}
+{% extends "base_v2.html" %}
+
+{% block title %}Portofoliu | Andreea Tech{% endblock %}
+{% block meta_description %}Proiecte de web, automatizare AI și design creativ, fiecare cu eticheta ei reală: demo funcțional, produs propriu, instrument propriu sau concept.{% endblock %}
+{% block og_title %}Portofoliu | Andreea Tech{% endblock %}
+{% block twitter_title %}Portofoliu | Andreea Tech{% endblock %}
 
 {% block content %}
-
-<section class="page-hero page-hero-tight about-hero">
-    <div class="hero-glow"></div>
-    <div class="container-md center">
-        <h1 class="page-title">
-            Sisteme, platforme și conținut <span class="gradient-text">construite pentru clienți și proiecte proprii</span>
-        </h1>
-        <p class="page-subtitle measure">
-            De la sisteme de rezervări/programări la concepte de conținut — principiul din spate e același: o direcție clară, gândită pentru afacerea ta, nu pentru un șablon generic.
-        </p>
-    </div>
-</section>
-
-{% if featured_projects %}
-<section class="section-sm">
-    <div class="container pl-featured-stack{% if featured_projects|length > 1 %} is-multiple{% endif %}">
-        {% for featured in featured_projects %}
-        <div class="glass pl-featured-card">
-            <div class="pl-featured-glow"></div>
-
-            <div class="pl-featured-inner">
-                <div>
-                    <div class="pl-featured-badge-row">
-                        <span class="badge-dot badge-dot-pulse"></span>
-                        <span class="pl-featured-badge-label">{% if featured.category == "continut_creativ" %}Concept recomandat{% else %}Studiu de caz recomandat{% endif %}</span>
-                    </div>
-
-                    <h2 class="pl-featured-title">
-                        {{ featured.title }}
-                    </h2>
-
-                    <p class="pl-featured-desc">
-                        {{ featured.short_description }}
-                    </p>
-
-                    <div class="pl-featured-actions">
-                        <a href="{% url 'project_detail' featured.slug %}" class="btn-primary pl-featured-cta">
-                            {% if featured.category == "continut_creativ" %}Vezi proiectul{% else %}Vezi studiul de caz{% endif %}
-                        </a>
-
-                        {% if featured.link %}
-                        <a href="{{ featured.link }}" target="_blank" rel="noopener noreferrer" class="pl-featured-live">
-                            <span>Vezi live</span>
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-
-                {% if featured.image %}
-                <div class="pl-featured-image-wrap">
-                    <img src="{{ featured.image.url }}" alt="{{ featured.title }}" width="{{ featured.image.width }}" height="{{ featured.image.height }}" class="img-fade">
-                </div>
-                {% endif %}
-            </div>
+<section class="phead">
+    <div class="wrap">
+        <h1>Proiecte, cu eticheta lor reală.</h1>
+        <p class="lead">Demo-urile, produsele proprii și conceptele sunt marcate separat. Fiecare proiect spune clar ce este.</p>
+        <div class="legend" aria-label="Legenda etichetelor">
+            <div><span class="chip">Demo funcțional</span><span>Sistem complet construit de mine, ca exemplu.</span></div>
+            <div><span class="chip s-produs">Produs propriu</span><span>Aplicație publică, în early access.</span></div>
+            <div><span class="chip s-instrument">Instrument propriu</span><span>Construit pentru Andreea Tech și folosit de mine.</span></div>
+            <div><span class="chip s-concept">Concept</span><span>Idee prezentată vizual, nelivrată unui client.</span></div>
         </div>
-        {% endfor %}
     </div>
 </section>
-{% endif %}
 
-<section class="section-lg">
-    <div class="container projects-grid">
-
-        {% for project in projects %}
-        <div class="glass card-hover project-card">
-            {% if project.image %}
-            <a href="{% url 'project_detail' project.slug %}" class="project-card-image">
-                {% if project.link %}
-                <span class="live-badge"><span class="dot"></span>Live</span>
-                {% endif %}
-                <img src="{{ project.image.url }}" alt="{{ project.title }}" width="{{ project.image.width }}" height="{{ project.image.height }}" loading="lazy" class="img-fade">
-                <div class="project-card-image-overlay">
-                    <span>Vezi studiul de caz →</span>
-                </div>
-            </a>
-            {% endif %}
-
-            <div class="project-card-body">
-                <div>
-                    {% if project.link and not project.image %}
-                    <span class="live-badge live-badge-inline"><span class="dot"></span>Live</span>
-                    {% endif %}
-                    {% if project.category == "continut_creativ" %}
-                    <p class="pl-featured-badge-label">Conținut creativ</p>
-                    {% endif %}
-                    <div class="project-card-bar"></div>
-                    <h3 class="project-card-title">
-                        {{ project.title }}
-                    </h3>
-
-                    {% if project.result_highlight %}
-                    <p class="project-highlight">
-                        {{ project.result_highlight }}
-                    </p>
-                    {% endif %}
-
-                    <p class="project-card-desc">
-                        {{ project.short_description }}
-                    </p>
-                </div>
-
-                <div class="project-card-footer">
-                    <a href="{% url 'project_detail' project.slug %}" class="project-link">
-                        Vezi proiectul <span>→</span>
-                    </a>
-
-                    {% if project.link %}
-                    <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="project-live-link">
-                        <span>Vezi live</span>
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
+<section class="sec first" style="padding-top:0;border-top:0">
+    <div class="wrap">
+        {% if featured_projects or projects %}
+        <div class="filters" id="pFilters" role="group" aria-label="Filtrează proiectele după direcție" hidden>
+            <button class="fbtn" type="button" data-filter="all" aria-pressed="true">Toate</button>
+            <button class="fbtn" type="button" data-filter="web" aria-pressed="false">Web &amp; produse digitale</button>
+            <button class="fbtn" type="button" data-filter="ai" aria-pressed="false">Automatizare AI</button>
+            <button class="fbtn" type="button" data-filter="creativ" aria-pressed="false">Design creativ</button>
         </div>
-        {% endfor %}
-
+        <div class="rows" id="pList">
+            {% for project in featured_projects %}{% include "partials/project_row.html" with project=project %}{% endfor %}
+            {% for project in projects %}{% include "partials/project_row.html" with project=project %}{% endfor %}
+        </div>
+        <p class="pr-empty" id="pEmpty" hidden>Nu sunt încă proiecte în această direcție.</p>
+        {% else %}
+        <div class="note">Portofoliul se completează. Până atunci, spune-mi ce ai nevoie și îți arăt exemple potrivite.</div>
+        <div class="btn-row" style="margin-top:24px"><a class="btn btn-primary" href="{% url 'start_project' %}">Cere o ofertă</a></div>
+        {% endif %}
     </div>
 </section>
 
-<section class="section section-lg">
-    <div class="container-lg home-cta-center">
-        <h2 class="h2-lg">Vrei ceva construit la fel de îngrijit pentru afacerea ta?</h2>
-        <a href="{% url 'start_project' %}" class="btn-primary home-cta-btn-sm">Hai să discutăm proiectul tău</a>
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Produse proprii</div>
+        <div class="stack-s">
+            <h2>Aplicații publice, construite din nevoi reale.</h2>
+            <p class="lead">Plannerul și trackerul de buget sunt produsele mele proprii, în early access.</p>
+            <div><a class="link" href="{% url 'products' %}">Vezi produsele proprii</a></div>
+        </div>
     </div>
 </section>
 
+{% include "partials/cta_band.html" %}
 {% endblock %}

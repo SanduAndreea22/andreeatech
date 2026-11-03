@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} | {% if project.category == "continut_creativ" %}Concept de conținut{% else %}Studiu de caz{% endif %}{% endblock %}
+{% block meta_description %}{{ project.short_description }}{% endblock %}
+{% block og_title %}{{ project.title }} | Andreea Sandu{% endblock %}
+{% block og_description %}{{ project.short_description }}{% endblock %}
+{% block twitter_title %}{{ project.title }} | Andreea Sandu{% endblock %}
+{% block twitter_description %}{{ project.short_description }}{% endblock %}
+{% block og_image %}{{ share_image_url }}{% endblock %}
+{% block twitter_image %}{{ share_image_url }}{% endblock %}
+
+{% block content %}
+<div class="read-progress"><div class="read-progress-bar" id="readProgressBar"></div></div>
+
+<section class="page-hero about-hero">
+    <div class="hero-glow"></div>
+
+    <div class="container-lg">
+
+        <a href="{% url 'projects' %}" class="pd-back">
+            <span>←</span> Înapoi la portofoliu
+        </a>
+
+        <header class="pd-header">
+            <h1 class="pd-title">
+                {{ project.title }}
+            </h1>
+            <p class="pd-desc">
+                {{ project.short_description }}
+            </p>
+            {% if project.result_highlight %}
+            <div class="pd-result-stat">
+                <span class="pd-result-stat-icon">📈</span>
+                <span class="pd-result-stat-text">{{ project.result_highlight }}</span>
+            </div>
+            {% endif %}
+            {% if project.link %}
+            <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="btn-primary pd-live-link">
+                <span>Vezi proiectul live</span>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+            {% endif %}
+            {% if project.portfolio_pdf %}
+            <a href="{{ project.portfolio_pdf.url }}" download class="btn-outline pd-live-link">
+                <span>Descarcă PDF-ul proiectului</span>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"></path></svg>
+            </a>
+            {% endif %}
+        </header>
+
+        {% if project.image %}
+        <div class="pd-image-wrap">
+            <div class="pd-image-frame">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" width="{{ project.image.width }}" height="{{ project.image.height }}" class="img-fade">
+                <div class="pd-image-fade"></div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="pd-blocks">
+
+            <div class="glass pd-block pd-block-problem">
+                <div class="pd-block-bar"></div>
+                <h2 class="pd-block-label">Provocarea</h2>
+                <div class="pd-block-body">
+                    {{ project.problem|safe }}
+                </div>
+            </div>
+
+            <div class="glass pd-block pd-block-solution">
+                <div class="pd-block-bar"></div>
+                <h2 class="pd-block-label">Soluția</h2>
+                <div class="pd-block-body">
+                    {{ project.solution|safe }}
+                </div>
+            </div>
+
+            <div class="glass pd-block pd-block-outcome">
+                <div class="pd-block-bar"></div>
+                <h2 class="pd-block-label">Rezultatul</h2>
+                <div class="pd-block-body">
+                    {{ project.outcome|safe }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="pd-footer">
+            {% if project.tech_list %}
+            <div>
+                <span class="pd-tech-label">
+                    Construit cu
+                </span>
+                <div class="pd-tech-list">
+                    {% for tech in project.tech_list %}
+                        <span class="pd-tech-pill">
+                            {{ tech }}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <a href="{% url 'start_project' %}" class="btn-primary pd-cta">
+                {% if project.category == "continut_creativ" %}Hai să discutăm un concept similar{% else %}Hai să construim ceva similar{% endif %}
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

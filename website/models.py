@@ -142,6 +142,16 @@ class Project(models.Model):
     class Meta:
         ordering = ["order", "-created_at", "pk"]
 
+    @property
+    def package_key(self):
+        """Key of the service package (packages.py) matching this project's
+        direction, used to preselect the package on the brief form."""
+        return {
+            self.DIRECTION_WEB: "produse_sisteme",
+            self.DIRECTION_AI: "ai_automatizare",
+            self.DIRECTION_CREATIV: "continut_digital",
+        }[self.direction]
+
     def tech_list(self):
         if not self.tech_stack:
             return []

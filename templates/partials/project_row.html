@@ -1,0 +1,14 @@
+<a class="prow{% if not project.image %} no-img{% endif %}" href="{% url 'project_detail' project.slug %}" data-direction="{{ project.direction }}">
+    {% if project.image %}
+    <div class="shot"><img src="{{ project.image.url }}" alt="" width="{{ project.image.width }}" height="{{ project.image.height }}" loading="lazy"></div>
+    {% endif %}
+    <div>
+        <h3>{{ project.title }}</h3>
+        <p>{{ project.short_description|truncatewords:28 }}</p>
+        {% if project.result_highlight %}<p class="prow-result">{{ project.result_highlight }}</p>{% endif %}
+    </div>
+    <div class="prow-meta">
+        {% include "partials/status_chip.html" with project=project %}
+        <span class="mono">{{ project.get_direction_display }}</span>
+    </div>
+</a>
