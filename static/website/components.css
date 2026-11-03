@@ -436,3 +436,5 @@ dialog.lightbox img { max-width: 94vw; max-height: 86vh; width: auto; height: au
     .portrait { max-width: 360px; }
     .three { grid-template-columns: minmax(0, 1fr); }
 }
+
+.two h3 { margin-bottom: 12px; }

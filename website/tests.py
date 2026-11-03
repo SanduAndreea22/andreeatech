@@ -780,3 +780,32 @@ class AboutRedesignTests(TestCase):
         body = self.client.get(reverse("about")).content.decode()
         inline = [s for s in body.split("<script")[1:] if "src=" not in s.split(">")[0]]
         self.assertEqual(inline, [])
+
+
+class TechnicalVersusCreativeTests(TestCase):
+    """Visual identity is a creative service, never a part of the technical side."""
+
+    def test_home_technologies_do_not_list_brand_identity(self):
+        body = self.client.get(reverse("home")).content.decode()
+        tech = body[body.index('class="tech"'):]
+        tech = tech[:tech.index("</dl>")]
+        self.assertNotIn("dentitate", tech)
+        self.assertIn("Arhitectură", tech)
+
+    def test_about_separates_the_technical_and_the_creative_parts(self):
+        response = self.client.get(reverse("about"))
+        self.assertContains(response, "Partea tehnică")
+        self.assertContains(response, "Partea creativă")
+        self.assertContains(response, "serviciu creativ separat")
+
+    def test_about_intro_does_not_tie_identity_to_the_technical_side(self):
+        body = self.client.get(reverse("about")).content.decode()
+        self.assertNotIn("identitate vizuală pentru antreprenori care vor să crească", body)
+
+    def test_creative_page_lists_exactly_the_creative_services(self):
+        response = self.client.get(reverse("service_detail", args=["creativ"]))
+        for item in ("Identitate vizuală și branding", "Design pentru social media",
+                     "Campanii și materiale vizuale", "Direcție creativă"):
+            with self.subTest(item=item):
+                self.assertContains(response, item)
+        self.assertContains(response, "serviciu creativ separat")
