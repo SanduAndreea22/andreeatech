@@ -762,3 +762,23 @@
     root.hidden = false;
     renderQuestion();
 })();
+
+/* Forms that came back from the server with errors: put the cursor in the first
+   field that needs fixing and tie each error text to its field, so the visitor is
+   not left on a reloaded page wondering what happened. The summary at the top of
+   the form is already in the page (rendered by the server). */
+(function () {
+    'use strict';
+    if (!document.querySelector('[data-form-errors]')) return;
+    var first = null;
+    document.querySelectorAll('.field .errorlist').forEach(function (list, i) {
+        var field = list.closest('.field');
+        var control = field && field.querySelector('input:not([type="hidden"]):not([type="checkbox"]), select, textarea');
+        if (!control) return;
+        if (!list.id) list.id = 'field-error-' + i;
+        control.setAttribute('aria-invalid', 'true');
+        control.setAttribute('aria-describedby', list.id);
+        if (!first) first = control;
+    });
+    if (first) first.focus();
+})();

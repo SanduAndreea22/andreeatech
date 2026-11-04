@@ -1,0 +1,4 @@
+{% if show %}<div class="form-msg err" role="alert" id="formErrors" data-form-errors>
+    <b>Formularul nu a fost trimis.</b>
+    {% if count == 1 %}Verifică câmpul marcat cu roșu și trimite din nou.{% elif count > 1 %}Verifică cele {{ count }} câmpuri marcate cu roșu și trimite din nou.{% else %}Verifică datele introduse și trimite din nou.{% endif %}
+</div>{% endif %}

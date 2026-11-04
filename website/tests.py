@@ -2595,3 +2595,109 @@ class GuidePageTests(TestCase):
         text = _re.sub(r"<[^>]+>", " ", self.get().content.decode()).lower()
         for word in ("garant", "statistic", "studiu", "mii de clienți"):
             self.assertNotIn(word, text)
+
+
+# ---------------------------------------------------------------------------
+# UX audit fixes: error summary, consultation note, privacy notes
+# ---------------------------------------------------------------------------
+class FormErrorSummaryTests(TestCase):
+
+    def bad_brief(self, **overrides):
+        data = {"name": "   ", "email": "a@b.ro", "industry": "   ", "selected_package": "",
+                "project_description": "   ", "hosting_info": "", "deadline_communication": "", "website": ""}
+        data.update(overrides)
+        return self.client.post(reverse("start_project"), data)
+
+    def test_failed_brief_shows_one_alert_with_the_number_of_fields_to_fix(self):
+        response = self.bad_brief()
+        body = response.content.decode()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(body.count("data-form-errors"), 1)
+        self.assertIn('role="alert"', body[body.index("data-form-errors") - 80:body.index("data-form-errors") + 20])
+        self.assertIn("Formularul nu a fost trimis.", body)
+        self.assertIn("Verifică cele 3 câmpuri marcate cu roșu", body)
+
+    def test_one_wrong_field_gets_the_singular_wording(self):
+        response = self.bad_brief(name="Ioana", industry="salon", project_description="Descriere")
+        self.assertEqual(response.status_code, 302)  # all good, so no summary at all
+        response = self.bad_brief(name="Ioana", industry="salon", project_description="Descriere", email="nu-e-email")
+        self.assertContains(response, "Verifică câmpul marcat cu roșu")
+
+    def test_summary_sits_before_the_fields_inside_the_form(self):
+        body = self.bad_brief().content.decode()
+        self.assertLess(body.index('id="formErrors"'), body.index('name="name"'))
+
+    def test_field_errors_are_still_shown_next_to_their_fields(self):
+        self.assertContains(self.bad_brief(), "errorlist")
+
+    def test_no_summary_on_a_fresh_form_or_after_success(self):
+        self.assertNotContains(self.client.get(reverse("start_project")), "data-form-errors")
+        self.assertNotContains(self.client.get(reverse("start_project") + "?sent=1"), "data-form-errors")
+        self.assertNotContains(self.client.get(reverse("contact")), "data-form-errors")
+        self.assertNotContains(self.client.get(reverse("reviews")), "data-form-errors")
+
+    def test_contact_and_reviews_forms_have_the_summary_too(self):
+        contact = self.client.post(reverse("contact"), {"name": "", "email": "x", "message": "", "website": ""})
+        self.assertContains(contact, "Verifică cele 3 câmpuri marcate cu roșu")
+        reviews = self.client.post(reverse("reviews"), {"name": "", "message": "", "rating": "", "website": ""})
+        self.assertContains(reviews, "data-form-errors")
+
+    def test_a_filled_honeypot_is_never_counted_or_shown(self):
+        response = self.client.post(reverse("contact"), {"name": "A", "email": "a@b.ro", "message": "Salut", "website": "http://spam"})
+        self.assertEqual(response.status_code, 302)
+
+    def test_the_script_focuses_the_first_wrong_field_and_links_the_message(self):
+        js = (_STATIC / "site.js").read_text()
+        block = js[js.index("Forms that came back from the server with errors"):]
+        for fragment in ("first.focus()", "aria-invalid", "aria-describedby", "data-form-errors"):
+            self.assertIn(fragment, block)
+        self.assertNotIn("innerHTML", block)
+
+    def test_the_summary_is_written_by_the_server_so_it_shows_without_javascript(self):
+        body = self.bad_brief().content.decode()
+        self.assertIn("Formularul nu a fost trimis.", body)
+
+
+class ConsultationNoteTests(TestCase):
+
+    def test_consultation_path_says_what_happens_next(self):
+        body = self.client.get(reverse("start_project") + "?pachet=not_sure").content.decode()
+        self.assertIn('id="consultNote"', body)
+        self.assertIn("Ai ales o consultație", body)
+        self.assertIn("pe email", body)
+
+    def test_the_note_promises_an_email_reply_not_a_call_or_a_booking(self):
+        body = self.client.get(reverse("start_project") + "?pachet=not_sure").content.decode()
+        note = body[body.index('id="consultNote"'):body.index("</p>", body.index('id="consultNote"'))]
+        for word in ("apel", "programare", "întâlnire", "telefon", "gratuit"):
+            self.assertNotIn(word, note.lower())
+
+    def test_other_packages_do_not_show_it(self):
+        for key in ("produse_sisteme", "ai_automatizare", "continut_digital", "automation_only"):
+            self.assertNotContains(self.client.get(reverse("start_project") + f"?pachet={key}"), "consultNote")
+        self.assertNotContains(self.client.get(reverse("start_project")), "consultNote")
+
+    def test_it_stays_after_a_failed_submission_of_that_path(self):
+        response = self.client.post(reverse("start_project"), {"name": "", "email": "a@b.ro", "industry": "", "selected_package": "not_sure",
+                                                                "project_description": "", "website": ""})
+        self.assertContains(response, "consultNote")
+
+
+class PrivacyNoteTests(TestCase):
+
+    def test_contact_form_links_the_privacy_policy_next_to_the_button(self):
+        body = self.client.get(reverse("contact")).content.decode()
+        form = body[body.index("<form"):body.index("</form>")]
+        self.assertIn(f'href="{reverse("privacy_policy")}"', form)
+        self.assertIn("ești de acord cu", form)
+
+    def test_reviews_form_says_the_details_are_published_and_links_the_policy(self):
+        body = self.client.get(reverse("reviews")).content.decode()
+        form = body[body.index("<form"):body.index("</form>")]
+        self.assertIn("împreună cu datele completate de tine", form)
+        self.assertIn(f'href="{reverse("privacy_policy")}"', form)
+
+    def test_the_policy_really_covers_the_three_forms(self):
+        body = self.client.get(reverse("privacy_policy")).content.decode()
+        for name in ("Contact", "Începe un proiect", "Recenzii"):
+            self.assertIn(name, body)

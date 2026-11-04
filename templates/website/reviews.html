@@ -1,4 +1,5 @@
 {% extends "base_v2.html" %}
+{% load form_helpers %}
 
 {% block title %}Ce spun clienții | Andreea Tech{% endblock %}
 {% block meta_description %}Recenzii despre site-urile, automatizările și proiectele creative construite de Andreea Tech, aprobate manual, cu numele firmei și linkul site-ului pentru verificare.{% endblock %}
@@ -52,6 +53,7 @@
             <div class="fcard">
                 <form method="POST" novalidate>
                     {% csrf_token %}
+                    {% error_summary form %}
                     {{ form.non_field_errors }}
                     <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
                     <div class="f-row">
@@ -68,7 +70,7 @@
                     </div>
                     <div class="field"><label for="{{ form.message.id_for_label }}">Mesajul tău</label>{{ form.message }}{{ form.message.errors }}</div>
                     <div class="btn-row"><button type="submit" class="btn btn-primary">Trimite recenzia</button></div>
-                    <p class="hint">Recenzia apare pe site după ce o aprob.</p>
+                    <p class="hint">Recenzia apare pe site după ce o aprob, împreună cu datele completate de tine mai sus. Apăsând „Trimite recenzia", ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a>.</p>
                 </form>
             </div>
         </div>

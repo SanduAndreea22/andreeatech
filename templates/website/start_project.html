@@ -1,4 +1,5 @@
 {% extends "base_v2.html" %}
+{% load form_helpers %}
 
 {% block title %}Începe un proiect | Andreea Tech{% endblock %}
 {% block meta_description %}Completează un brief de proiect ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
@@ -35,6 +36,8 @@
         <div class="fcard">
             <form method="POST" id="briefForm" novalidate>
                 {% csrf_token %}
+                {% error_summary form %}
+                {% if form.selected_package.value == "not_sure" %}<p class="note" id="consultNote">Ai ales o consultație. Completează câmpurile de mai jos, iar eu îți răspund în maximum 24 de ore, pe email, și stabilim împreună pasul următor.</p>{% endif %}
                 {{ form.non_field_errors }}
                 <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 

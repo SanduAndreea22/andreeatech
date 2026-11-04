@@ -1,4 +1,5 @@
 {% extends "base_v2.html" %}
+{% load form_helpers %}
 
 {% block title %}Contact | Andreea Tech{% endblock %}
 {% block meta_description %}Scrie-mi ca să vorbim despre proiectul tău: site sau aplicație, automatizare AI, identitate și conținut vizual. Răspund în maximum 24 de ore.{% endblock %}
@@ -33,6 +34,7 @@
             <div class="fcard">
                 <form method="POST" novalidate>
                     {% csrf_token %}
+                    {% error_summary form %}
                     {{ form.non_field_errors }}
                     <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
                     <div class="f-row">
@@ -50,6 +52,7 @@
                         {{ form.message }}{{ form.message.errors }}
                     </div>
                     <div class="btn-row"><button type="submit" class="btn btn-primary">Trimite mesajul</button></div>
+                    <p class="hint">Apăsând „Trimite mesajul", ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a>.</p>
                 </form>
             </div>
             <p class="hint" style="margin-top:20px">Preferi să scrii direct? Adresa mea este
