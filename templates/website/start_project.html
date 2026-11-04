@@ -16,24 +16,25 @@
     </div>
 </section>
 
-<section class="sec first" style="padding-top:0;border-top:0">
-    <div class="wrap" style="max-width:860px">
+<section class="sec first flush">
+    <div class="wrap">
+        <div class="narrow">
         {% if just_submitted %}
         <div class="fcard sp-thanks" role="status">
             <svg class="tick" width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true"><circle class="tick-ring" cx="28" cy="28" r="25"/><path class="tick-check" d="M17 29.5l7.5 7.5L39 20.5"/></svg>
-            <h2 style="font-size:1.9rem;margin-bottom:12px">Cerere primită.</h2>
-            <p class="lead" style="color:var(--ink)">Îți citesc mesajul și revin cu un răspuns în maximum 24 de ore.</p>
+            <h2 class="thanks-title">Cerere primită.</h2>
+            <p class="lead">Îți citesc mesajul și revin cu un răspuns în maximum 24 de ore.</p>
             <ol class="next" aria-label="Ce urmează">
                 <li><span class="n">01</span><span><b>Citesc personal ce mi-ai scris.</b> Nu trece printr-un intermediar și nu primești un răspuns automat.</span></li>
                 <li><span class="n">02</span><span><b>Revin în maximum 24 de ore</b> cu întrebări concrete despre afacerea ta.</span></li>
                 <li><span class="n">03</span><span><b>Primești oferta.</b> Cu preț fix, stabilit înainte să începem.</span></li>
             </ol>
             {% if submitted_email %}
-            <p class="muted" style="margin-top:20px">Îți voi răspunde la <strong id="sentEmail">{{ submitted_email }}</strong>. Dacă ai greșit adresa, scrie-mi direct la <span class="copy"><strong>andreea.tech@outlook.com</strong><button type="button" data-copy="andreea.tech@outlook.com" aria-label="Copiază adresa de email">Copiază</button></span>. Răspund personal la fiecare cerere, nu e un mesaj automat.</p>
+            <p class="muted mt-5">Îți voi răspunde la <strong id="sentEmail">{{ submitted_email }}</strong>. Dacă ai greșit adresa, scrie-mi direct la <span class="copy"><strong>andreea.tech@outlook.com</strong><button type="button" data-copy="andreea.tech@outlook.com" aria-label="Copiază adresa de email">Copiază</button></span>. Răspund personal la fiecare cerere, nu e un mesaj automat.</p>
             {% else %}
-            <p class="muted" style="margin-top:20px">Verifică-ți emailul în următoarele 24 de ore: răspund personal la fiecare cerere, nu e un mesaj automat. Dacă nu primești nimic, scrie-mi la <span class="copy"><strong>andreea.tech@outlook.com</strong><button type="button" data-copy="andreea.tech@outlook.com" aria-label="Copiază adresa de email">Copiază</button></span>.</p>
+            <p class="muted mt-5">Verifică-ți emailul în următoarele 24 de ore: răspund personal la fiecare cerere, nu e un mesaj automat. Dacă nu primești nimic, scrie-mi la <span class="copy"><strong>andreea.tech@outlook.com</strong><button type="button" data-copy="andreea.tech@outlook.com" aria-label="Copiază adresa de email">Copiază</button></span>.</p>
             {% endif %}
-            <div class="btn-row" style="margin-top:24px"><a class="btn btn-line" href="{% url 'home' %}">Înapoi acasă</a></div>
+            <div class="btn-row mt-5"><a class="btn btn-line" href="{% url 'home' %}">Înapoi acasă</a></div>
         </div>
         {% else %}
         {% include "partials/messages.html" %}
@@ -99,6 +100,7 @@
             </form>
         </div>
         {% endif %}
+        </div>
     </div>
 </section>
 {% endblock %}

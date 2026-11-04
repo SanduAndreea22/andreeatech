@@ -15,14 +15,14 @@
     </div>
 </section>
 
-<section class="sec first" style="padding-top:0;border-top:0">
+<section class="sec first flush">
     <div class="wrap">
         <div class="rows">
             {% for pkg in packages %}
             {% include "partials/service_row.html" with pkg=pkg %}
             {% endfor %}
         </div>
-        <p class="muted" style="margin-top:28px">Nu știi ce direcție ți se potrivește? <a class="link" href="{% url 'guide' %}">Răspunde la trei întrebări</a>.</p>
+        <p class="muted mt-6">Nu știi ce direcție ți se potrivește? <a class="link" href="{% url 'guide' %}">Răspunde la trei întrebări</a>.</p>
     </div>
 </section>
 
@@ -54,10 +54,10 @@
                         </fieldset>
                     </div>
                     <div class="est-out">
-                        <div><span class="sub" style="display:block">Estimare orientativă</span><strong id="estTotal">{% for pkg in packages %}{% if pkg.popular %}{{ pkg.price }}{% endif %}{% endfor %}</strong></div>
+                        <div><span class="sub">Estimare orientativă</span><strong id="estTotal">{% for pkg in packages %}{% if pkg.popular %}{{ pkg.price }}{% endif %}{% endfor %}</strong></div>
                         <a class="btn btn-primary" id="estCta" href="{% url 'start_project' %}">Cere o ofertă</a>
                     </div>
-                    <p class="muted" style="font-size:14.5px">Suma exactă se stabilește după ce îmi descrii proiectul, în funcție de ce alegi.</p>
+                    <p class="hint">Suma exactă se stabilește după ce îmi descrii proiectul, în funcție de ce alegi.</p>
                 </form>
             </div>
         </div>

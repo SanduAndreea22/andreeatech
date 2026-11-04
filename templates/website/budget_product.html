@@ -12,15 +12,15 @@
 <section class="phead">
     <div class="wrap">
         <a class="back" href="{% url 'products' %}">Toate produsele</a>
-        <div class="btn-row" style="gap:10px;margin-bottom:20px"><span class="chip s-produs">Produs propriu</span><span class="mono">Early access</span></div>
+        <div class="btn-row mb-5"><span class="chip s-produs">Produs propriu</span><span class="mono">Early access</span></div>
         <h1>Vezi exact unde se duc banii tăi, fără calcule complicate.</h1>
         <p class="lead">Un tracker financiar simplu, construit ca să-ți arate clar unde se duc banii și să te ajute să iei decizii mai calme, lună de lună.</p>
-        <div class="btn-row" style="margin-top:28px"><a class="btn btn-primary" href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer">Îmi organizez bugetul</a></div>
-        <p class="hero-note" style="margin-top:16px">Produs în early access, complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
+        <div class="btn-row mt-6"><a class="btn btn-primary" href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer">Îmi organizez bugetul</a></div>
+        <p class="hero-note mt-4">Produs în early access, complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
     </div>
 </section>
 
-<section class="sec first" style="padding-top:0;border-top:0">
+<section class="sec first flush">
     <div class="wrap"><div class="shot"><img src="{% static 'website/budget-preview.jpg' %}" alt="MyBudget, ecranul de start" width="1041" height="428"></div></div>
 </section>
 
@@ -68,12 +68,12 @@
                     <div class="btn-row"><button type="submit" class="btn btn-primary">Calculează</button></div>
                 </form>
                 <div class="demo-out" id="budgetOutput" aria-live="polite" hidden>
-                    <div class="balance"><span class="sub" style="margin:0">Îți rămâne</span><strong id="budgetBalance">€0</strong></div>
+                    <div class="balance"><span class="sub">Îți rămâne</span><strong id="budgetBalance">€0</strong></div>
                     <div class="bar-track"><div class="bar-fill" id="budgetBar"></div></div>
                     <p class="muted" id="budgetBarLabel">0% din venit cheltuit</p>
                     <p class="status" id="budgetStatus"></p>
                 </div>
-                <p class="muted" style="font-size:14.5px;margin-top:16px">Simulare: nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
+                <p class="hint mt-4">Simulare: nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
             </div>
         </div>
     </div>

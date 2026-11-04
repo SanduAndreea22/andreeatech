@@ -12,15 +12,15 @@
 <section class="phead">
     <div class="wrap">
         <a class="back" href="{% url 'products' %}">Toate produsele</a>
-        <div class="btn-row" style="gap:10px;margin-bottom:20px"><span class="chip s-produs">Produs propriu</span><span class="mono">Early access</span></div>
+        <div class="btn-row mb-5"><span class="chip s-produs">Produs propriu</span><span class="mono">Early access</span></div>
         <h1>Planifică-ți ziua fără să te lupți cu tine.</h1>
         <p class="lead">Plannerul zilnic care îți urmărește starea alături de task-uri, ca să-ți organizezi ziua fără să te forțezi să fii productiv(ă) în zilele grele.</p>
-        <div class="btn-row" style="margin-top:28px"><a class="btn btn-primary" href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer">Încearcă gratuit acum</a></div>
-        <p class="hero-note" style="margin-top:16px">Produs în early access, complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
+        <div class="btn-row mt-6"><a class="btn btn-primary" href="https://day-planner-e2sv.onrender.com" target="_blank" rel="noopener noreferrer">Încearcă gratuit acum</a></div>
+        <p class="hero-note mt-4">Produs în early access, complet gratuit acum. Prețul final va fi anunțat înainte de lansarea oficială.</p>
     </div>
 </section>
 
-<section class="sec first" style="padding-top:0;border-top:0">
+<section class="sec first flush">
     <div class="wrap"><div class="shot"><img src="{% static 'website/planner-preview.jpg' %}" alt="Emotional Planner, ecranul de start" width="1165" height="463"></div></div>
 </section>
 
@@ -77,7 +77,7 @@
                 <form id="plannerForm" novalidate>
                     <fieldset class="field">
                         <legend>Cum te simți azi?</legend>
-                        <div class="filters" id="plannerMood" role="group" aria-label="Cum te simți azi?" style="margin:6px 0 0">
+                        <div class="filters filters-demo" id="plannerMood" role="group" aria-label="Cum te simți azi?">
                             <button type="button" class="fbtn" data-mood="grea" aria-pressed="false">Grea</button>
                             <button type="button" class="fbtn" data-mood="ok" aria-pressed="true">Ok</button>
                             <button type="button" class="fbtn" data-mood="buna" aria-pressed="false">Bună</button>
@@ -87,7 +87,7 @@
                     <div class="btn-row"><button type="submit" class="btn btn-primary">Vezi planul de azi</button></div>
                 </form>
                 <div class="demo-out" id="plannerOutput" aria-live="polite" hidden></div>
-                <p class="muted" style="font-size:14.5px;margin-top:16px">Simulare: nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
+                <p class="hint mt-4">Simulare: nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
             </div>
         </div>
     </div>

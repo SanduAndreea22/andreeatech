@@ -35,6 +35,24 @@
     --ok-bg: #E4F1E8;
     --err: #B3261E;
 
+    /* Band (call-to-action block): colours that are the same in both themes */
+    --on-band: #FFFFFF;
+    --band-btn-text: #1F35B8;
+    --band-btn-hover: #E8ECFF;
+    --band-line: rgba(255, 255, 255, .7);
+    --band-hover: rgba(255, 255, 255, .14);
+    --band-dot: #7BE3A4;
+    --backdrop: rgba(10, 12, 30, .82);
+
+    /* Type scale for text (px). Headings keep their fluid clamp() sizes. */
+    --fs-label: 12px;   /* uppercase mono labels, chips */
+    --fs-small: 13px;   /* small sentence-case text */
+    --fs-note: 14px;    /* notes, captions */
+    --fs-ui: 15px;      /* hints, buttons, table text */
+    --fs-text: 16px;    /* secondary running text, form fields */
+    --fs-body: 17px;    /* body */
+    --fs-lead: 18px;    /* intro paragraphs */
+
     /* Type */
     --f-display: 'Fraunces', Georgia, 'Times New Roman', serif;
     --f-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;

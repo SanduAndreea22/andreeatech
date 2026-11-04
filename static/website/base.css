@@ -13,7 +13,7 @@ body {
     background: var(--paper);
     color: var(--ink);
     font-family: var(--f-body);
-    font-size: 17px;
+    font-size: var(--fs-body);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
 }
@@ -61,7 +61,7 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
 .measure { max-width: 62ch; }
 .mono {
     font-family: var(--f-mono);
-    font-size: 12.5px;
+    font-size: var(--fs-label);
     letter-spacing: .06em;
     text-transform: uppercase;
     color: var(--ink-2);
@@ -74,6 +74,13 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
     transition: border-color var(--transition);
 }
 .link:hover { border-bottom-width: 2px; }
+
+/* ---------- Spacing helpers (steps of the 4px scale, see tokens.css) ---------- */
+.mt-3 { margin-top: var(--sp-3); }
+.mt-4 { margin-top: var(--sp-4); }
+.mt-5 { margin-top: var(--sp-5); }
+.mt-6 { margin-top: var(--sp-6); }
+.mb-5 { margin-bottom: var(--sp-5); }
 
 /* ---------- Layout ---------- */
 .wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gut); }
@@ -124,7 +131,7 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
 
 .nav-links { display: flex; align-items: center; gap: clamp(16px, 3vw, 36px); }
 .nav-links a:not(.btn) {
-    font-size: 15.5px;
+    font-size: var(--fs-text);
     font-weight: 500;
     color: var(--ink-2);
     padding-block: 6px;
@@ -136,7 +143,7 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
 .nav-links a { white-space: nowrap; }
 @media (max-width: 1040px) { .nav-links { gap: 18px; } }
 .nav-links a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--cobalt); }
-.nav-links .btn { padding: 10px 18px; min-height: 40px; font-size: 14.5px; }
+.nav-links .btn { padding: 10px 18px; min-height: 40px; font-size: var(--fs-ui); }
 
 /* Mobile menu: native <details>, works without JavaScript */
 .menu { display: none; }
@@ -147,7 +154,7 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
     border-radius: var(--r-btn);
     padding: 9px 16px;
     font-weight: 600;
-    font-size: 14.5px;
+    font-size: var(--fs-ui);
     min-height: 40px;
     display: inline-flex;
     align-items: center;
@@ -172,11 +179,11 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
 .menu-panel a.menu-cta { color: var(--cobalt-text); font-weight: 600; }
 
 /* ---------- Footer ---------- */
-.foot { border-top: 1px solid var(--line); padding-block: 48px 40px; font-size: 15px; }
+.foot { border-top: 1px solid var(--line); padding-block: 48px 40px; font-size: var(--fs-ui); }
 .foot-g { display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
 .foot h2 {
     font-family: var(--f-mono);
-    font-size: 12px;
+    font-size: var(--fs-label);
     font-weight: 500;
     letter-spacing: .06em;
     text-transform: uppercase;
@@ -194,7 +201,7 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
     padding-top: 20px;
     border-top: 1px solid var(--line);
     color: var(--ink-2);
-    font-size: 14px;
+    font-size: var(--fs-note);
 }
 .copy { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .copy button {
@@ -202,7 +209,7 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
     border: 1px solid var(--border-ui);
     border-radius: var(--r-card);
     padding: 2px 8px;
-    font-size: 13px;
+    font-size: var(--fs-small);
     cursor: pointer;
     color: var(--ink-2);
     transition: color var(--transition), border-color var(--transition);

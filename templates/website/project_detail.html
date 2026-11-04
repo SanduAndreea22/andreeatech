@@ -19,17 +19,17 @@
 <section class="phead">
     <div class="wrap">
         <a class="back" href="{% url 'projects' %}">Înapoi la portofoliu</a>
-        <div class="btn-row" style="gap:10px;margin-bottom:20px">
+        <div class="btn-row mb-5">
             {% include "partials/status_chip.html" with project=project %}
             <span class="mono">{{ project.get_direction_display }}</span>
         </div>
         <h1>{{ project.title }}</h1>
         <p class="lead">{{ project.short_description }}</p>
-        {% if project.result_highlight %}<p class="note" style="margin-top:24px;max-width:58ch">{{ project.result_highlight }}</p>{% endif %}
+        {% if project.result_highlight %}<p class="note note-result">{{ project.result_highlight }}</p>{% endif %}
     </div>
 </section>
 
-<section class="sec first" style="padding-top:0;border-top:0">
+<section class="sec first flush">
     <div class="wrap detail">
         <div class="stack">
             {% if project.image %}
@@ -64,7 +64,7 @@
     </div>
 </section>
 
-<section class="sec" style="padding-block:40px">
+<section class="sec slim">
     <div class="wrap">
         <a class="link" href="{% url 'projects' %}">Toate proiectele</a>
     </div>

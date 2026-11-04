@@ -15,11 +15,11 @@
     </div>
 </section>
 
-<section class="sec first" style="padding-top:0;border-top:0">
+<section class="sec first flush">
     <div class="wrap">
         {# Without JavaScript the guide cannot run, so the three directions are listed instead. #}
         <div id="guideFallback">
-            <p class="note" style="margin-bottom:24px">Chestionarul are nevoie de JavaScript. Până atunci, iată cele trei direcții.</p>
+            <p class="note mb-5">Chestionarul are nevoie de JavaScript. Până atunci, iată cele trei direcții.</p>
             <div class="rows">
                 {% for pkg in packages %}
                 {% include "partials/service_row.html" with pkg=pkg %}
@@ -41,7 +41,7 @@
             <p class="vh" id="gdLive" role="status"></p>
         </div>
 
-        <details class="how" style="max-width:820px;margin-top:32px">
+        <details class="how mt-6">
             <summary>Cum aleg recomandarea</summary>
             <ul>{% for line in how_it_works %}<li>{{ line }}</li>{% endfor %}</ul>
         </details>

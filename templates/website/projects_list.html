@@ -21,7 +21,7 @@
     </div>
 </section>
 
-<section class="sec first" style="padding-top:0;border-top:0">
+<section class="sec first flush">
     <div class="wrap">
         {% if featured_projects or projects %}
         <div class="filters" id="pFilters" role="group" aria-label="Filtrează proiectele după direcție" hidden>
@@ -37,7 +37,7 @@
         <p class="pr-empty" id="pEmpty" hidden>Nu sunt încă proiecte în această direcție.</p>
         {% else %}
         <div class="note">Portofoliul se completează. Până atunci, spune-mi ce ai nevoie și îți arăt exemple potrivite.</div>
-        <div class="btn-row" style="margin-top:24px"><a class="btn btn-primary" href="{% url 'start_project' %}">Cere o ofertă</a></div>
+        <div class="btn-row mt-5"><a class="btn btn-primary" href="{% url 'start_project' %}">Cere o ofertă</a></div>
         {% endif %}
     </div>
 </section>

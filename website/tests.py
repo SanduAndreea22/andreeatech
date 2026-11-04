@@ -2887,13 +2887,20 @@ class NavAndTapAreaTests(TestCase):
 class TextSizeFloorTests(TestCase):
     """No text under 12px (uppercase labels) and no sentence-case text under 13px."""
 
+    def tokens(self):
+        return {name: float(value) for name, value in _re.findall(r"(--fs-[a-z]+):\s*([0-9.]+)px", (_STATIC / "tokens.css").read_text())}
+
     def rules(self):
         css = (_STATIC / "base.css").read_text() + (_STATIC / "components.css").read_text() + (_STATIC / "tokens.css").read_text()
         css = _re.sub(r"/\*.*?\*/", "", css, flags=_re.S)
+        tokens = self.tokens()
         for selector, body in _re.findall(r"([^{}]+)\{([^{}]*)\}", css):
             size = _re.search(r"font-size:\s*([0-9.]+)px", body)
+            token = _re.search(r"font-size:\s*var\((--fs-[a-z]+)\)", body)
             if size:
                 yield selector.strip(), float(size.group(1)), body
+            elif token:
+                yield selector.strip(), tokens[token.group(1)], body
 
     def test_nothing_is_smaller_than_12px_except_the_decorative_dots(self):
         for selector, size, body in self.rules():
@@ -2997,3 +3004,130 @@ class ProjectRowAlignmentTests(TestCase):
     def test_the_filter_still_works_on_tiles(self):
         make_project(title="Fără poză", direction="creativ")
         self.assertIn('data-direction="creativ"', self.client.get(reverse("projects")).content.decode())
+
+
+
+# ---------------------------------------------------------------------------
+# Design audit, optional items: one type scale, tokens for colours, no inline styles,
+# no shadows, form column aligned with its heading
+# ---------------------------------------------------------------------------
+import glob as _glob
+
+
+class TypeScaleTests(TestCase):
+
+    def css(self):
+        return (_STATIC / "base.css").read_text() + (_STATIC / "components.css").read_text()
+
+    def test_the_scale_has_seven_steps_from_12_to_18px(self):
+        tokens = {n: float(v) for n, v in _re.findall(r"(--fs-[a-z]+):\s*([0-9.]+)px", (_STATIC / "tokens.css").read_text())}
+        self.assertEqual(sorted(tokens.values()), [12, 13, 14, 15, 16, 17, 18])
+
+    def test_text_sizes_in_pixels_are_tokens_only(self):
+        left = sorted(set(_re.findall(r"font-size:\s*([0-9.]+)px", self.css())))
+        # 9px: the three decorative dots of the browser frame; 20px: the + / minus glyph of the FAQ
+        self.assertEqual(left, ["20", "9"])
+
+    def test_no_half_pixel_sizes_remain(self):
+        self.assertFalse(_re.search(r"font-size:\s*[0-9]+\.5px", self.css()))
+
+    def test_sub_heading_sizes_are_one_step_not_four(self):
+        sizes = set(_re.findall(r"font-size:\s*(1\.[0-9]+rem)", (_STATIC / "components.css").read_text()))
+        for near in ("1.35rem", "1.4rem", "1.45rem"):
+            self.assertNotIn(near, sizes)
+
+    def test_filter_chips_stay_at_14px_so_five_of_them_fit_on_one_row_on_a_tablet(self):
+        css = (_STATIC / "components.css").read_text()
+        block = css[css.index(".fbtn {"):css.index("}", css.index(".fbtn {"))]
+        self.assertIn("font-size: var(--fs-note)", block)
+
+    def test_the_body_and_the_lead_use_the_scale(self):
+        base = (_STATIC / "base.css").read_text()
+        self.assertIn("font-size: var(--fs-body)", base)
+        self.assertIn("font-size: var(--fs-lead)", self.css())
+
+
+class NoLiteralColoursTests(TestCase):
+
+    def test_colours_live_in_tokens_only(self):
+        for name in ("base.css", "components.css"):
+            text = _re.sub(r"/\*.*?\*/", "", (_STATIC / name).read_text(), flags=_re.S)
+            with self.subTest(file=name):
+                self.assertEqual(_re.findall(r"#[0-9A-Fa-f]{3,8}\b", text), [])
+                self.assertEqual(_re.findall(r"rgba?\(", text), [])
+
+    def test_the_band_colours_are_tokens(self):
+        tokens = (_STATIC / "tokens.css").read_text()
+        for name in ("--on-band", "--band-btn-text", "--band-btn-hover", "--band-line", "--band-hover", "--band-dot", "--backdrop"):
+            self.assertIn(name + ":", tokens)
+
+    def test_no_shadows_anywhere(self):
+        for name in ("base.css", "components.css", "tokens.css"):
+            self.assertNotIn("box-shadow", (_STATIC / name).read_text(), name)
+
+    def test_the_current_page_marker_in_contact_is_a_border_not_a_shadow(self):
+        css = (_STATIC / "components.css").read_text()
+        rule = css[css.index('.path[aria-current="page"]'):css.index("}", css.index('.path[aria-current="page"]'))]
+        self.assertIn("border-left: 3px solid var(--cobalt)", rule)
+        self.assertIn("padding-left: 11px", rule)   # 14px - 3px, so the text does not move
+
+    def test_the_token_file_has_no_unknown_colours_used_only_in_one_theme(self):
+        tokens = (_STATIC / "tokens.css").read_text()
+        root = tokens[tokens.index(":root {"):tokens.index("@media (prefers-color-scheme: dark)")]
+        for name in ("--on-band", "--band-btn-text", "--backdrop"):
+            self.assertIn(name, root)   # defined on bare :root, as the other tokens
+
+
+class NoInlineStylesTests(TestCase):
+
+    def test_templates_carry_no_style_attributes_except_a_value_computed_by_the_server(self):
+        offenders = []
+        for path in _glob.glob(str(Path(settings.BASE_DIR) / "templates" / "**" / "*.html"), recursive=True):
+            if "_legacy" in path:
+                continue
+            for number, line in enumerate(Path(path).read_text().splitlines(), 1):
+                for value in _re.findall(r'style="([^"]*)"', line):
+                    if "{{" not in value:
+                        offenders.append(f"{Path(path).name}:{number}: {value}")
+        self.assertEqual(offenders, [])
+
+    def test_the_named_classes_exist_in_the_css(self):
+        css = (_STATIC / "components.css").read_text() + (_STATIC / "base.css").read_text()
+        for selector in (".sec.flush", ".sec.flush-soft", ".sec.slim", ".narrow", ".note-result", ".thanks-title",
+                         ".mt-3", ".mt-4", ".mt-5", ".mt-6", ".mb-5", ".filters.filters-demo"):
+            self.assertIn(selector, css, selector)
+
+    def test_spacing_helpers_use_the_spacing_tokens(self):
+        base = (_STATIC / "base.css").read_text()
+        for step, token in ((3, "--sp-3"), (4, "--sp-4"), (5, "--sp-5"), (6, "--sp-6")):
+            self.assertIn(f".mt-{step} {{ margin-top: var({token}); }}", base)
+
+    def test_the_pages_that_used_the_inline_pattern_use_the_class(self):
+        for name in ("services", "projects", "contact", "start_project", "faq", "reviews", "guide", "calculator", "about", "privacy_policy"):
+            body = self.client.get(reverse(name)).content.decode()
+            with self.subTest(page=name):
+                self.assertRegex(body, r'class="sec first flush(-soft)?"')
+
+
+class FormColumnAlignmentTests(TestCase):
+
+    def test_the_brief_column_is_narrow_but_inside_the_normal_wrapper(self):
+        body = self.client.get(reverse("start_project")).content.decode()
+        self.assertNotIn("max-width:860px", body)
+        self.assertRegex(body, r'<div class="wrap">\s*<div class="narrow">')
+
+    def test_the_thank_you_panel_is_in_the_same_column(self):
+        body = self.client.get(reverse("start_project") + "?sent=1").content.decode()
+        self.assertRegex(body, r'<div class="narrow">\s*<div class="fcard sp-thanks"')
+
+    def test_the_wrapper_is_closed_properly(self):
+        for url in (reverse("start_project"), reverse("start_project") + "?sent=1"):
+            body = self.client.get(url).content.decode()
+            main = body[body.index('<main id="main">'):body.index("</main>")]
+            self.assertEqual(main.count("<div"), main.count("</div>"), url)
+            self.assertEqual(main.count("<section"), main.count("</section>"), url)
+
+    def test_long_notes_are_limited_to_a_readable_line(self):
+        css = (_STATIC / "components.css").read_text()
+        self.assertIn(".hint { max-width: 68ch; }", css)
+        self.assertIn(".review-by { max-width: 68ch; }", css)
