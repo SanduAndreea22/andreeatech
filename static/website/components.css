@@ -39,7 +39,7 @@
 .chip {
     display: inline-block;
     font-family: var(--f-mono);
-    font-size: 11.5px;
+    font-size: 12px;
     letter-spacing: .05em;
     text-transform: uppercase;
     padding: 3px 8px;
@@ -70,6 +70,20 @@
 /* ---------- Images ---------- */
 .shot { border: 1px solid var(--line); border-radius: var(--r-img); overflow: hidden; background: var(--paper-2); }
 .shot img { width: 100%; height: auto; }
+/* Stand-in for a missing screenshot: a quiet tile with the project's first letter,
+   so rows without an image still line up with the others. */
+.shot-ph {
+    aspect-ratio: 16 / 9;
+    display: grid;
+    place-items: center;
+    border-style: dashed;
+    border-color: var(--line-strong);
+    background: var(--paper-2);
+    color: var(--ink-2);
+    font-family: var(--f-display);
+    font-size: 2.4rem;
+    line-height: 1;
+}
 /* Browser frame for web projects: a bar with three dots above the screenshot. */
 .shot.frame::before {
     content: "\25CF \25CF \25CF";
@@ -344,7 +358,6 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
     border-bottom: 1px solid var(--line);
     transition: background var(--transition), padding var(--transition);
 }
-.prow.no-img { grid-template-columns: minmax(0, 1fr) auto; }
 .prow[hidden] { display: none; }
 .prow:hover { background: var(--paper-2); padding-inline: 16px; }
 .prow:hover .prow-title { color: var(--cobalt-text); }
@@ -373,8 +386,7 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
 }
 @media (max-width: 640px) {
     .legend { grid-template-columns: minmax(0, 1fr); }
-    .prow, .prow.no-img { grid-template-columns: 104px minmax(0, 1fr); align-items: start; }
-    .prow.no-img { grid-template-columns: minmax(0, 1fr); }
+    .prow { grid-template-columns: 104px minmax(0, 1fr); align-items: start; }
     .prow-meta { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: center; }
     .prow:hover { padding-inline: 0; background: none; }
 }
@@ -595,7 +607,7 @@ a.fbtn { display: inline-flex; align-items: center; }
     border-radius: 3px;
     padding: 4px 10px;
     font-family: var(--f-mono);
-    font-size: 11.5px;
+    font-size: 12px;
     letter-spacing: .05em;
     text-transform: uppercase;
     color: var(--ink-2);
@@ -620,7 +632,7 @@ a.fbtn { display: inline-flex; align-items: center; }
     font-size: 14.5px;
     background: var(--paper);
 }
-.bk-slot small { font-family: var(--f-body); font-size: 11.5px; color: var(--ink-2); }
+.bk-slot small { font-family: var(--f-body); font-size: 13px; color: var(--ink-2); }
 .bk-slot input:hover + span { border-color: var(--ink); }
 .bk-slot input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .bk-slot input:checked + span small { color: var(--paper); }
@@ -659,7 +671,7 @@ a.fbtn { display: inline-flex; align-items: center; }
     border-bottom: 1px solid var(--line);
     font-family: var(--f-mono);
     font-weight: 500;
-    font-size: 11.5px;
+    font-size: 12px;
     letter-spacing: .06em;
     text-transform: uppercase;
     color: var(--ink-2);
@@ -668,7 +680,7 @@ a.fbtn { display: inline-flex; align-items: center; }
 .bk-tbl td { padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: baseline; }
 .bk-tbl td.t { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .bk-tbl tr.is-new td { background: var(--paper-2); }
-.bk-ex { margin-left: 6px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+.bk-ex { margin-left: 6px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
 .chip.st-new { border-style: dashed; color: var(--ink-2); }
 .chip.st-new::before { background: none; border: 1.5px dashed var(--ink-2); box-sizing: border-box; width: 8px; height: 8px; }
 .bk-log { list-style: none; margin: 0; padding: 0 16px 6px; border-top: 1px solid var(--line); }
@@ -710,7 +722,7 @@ details.how p { margin-top: 10px; font-size: 15px; color: var(--ink-2); }
     .bk-tbl th, .bk-tbl td { padding-inline: 5px; }
     .bk-tbl th:first-child, .bk-tbl td:first-child { padding-left: 12px; }
     .bk-tbl th:last-child, .bk-tbl td:last-child { padding-right: 12px; }
-    .bk-tbl .chip { font-size: 10.5px; padding: 3px 6px; }
+    .bk-tbl .chip { font-size: 12px; padding: 3px 6px; letter-spacing: .02em; }
     .bk-tbl .chip::before { margin-right: 5px; }
 }
 
@@ -769,3 +781,25 @@ fieldset.gd-q legend:focus { outline: none; }
 .gd-why li { padding: 12px 0; border-bottom: 1px solid var(--line); }
 .gd-also { border: 1px dashed var(--border-ui); border-radius: var(--r-card); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
 .gd-copied { font-size: 14.5px; color: var(--ok); font-weight: 600; }
+
+
+/* =========================================
+   TOUCH: small links and buttons get a tap area of at least 44px high on phones,
+   tablets and touch screens. Underlined text links keep their look; the extra
+   area is invisible and sits above and below the text.
+========================================= */
+@media (max-width: 900px), (pointer: coarse) {
+    .brand { display: inline-flex; align-items: center; min-height: 44px; }
+    .foot ul { gap: 0; }
+    .foot li > a, .foot-b a { display: inline-flex; align-items: center; min-height: 44px; }
+    .copy button { min-height: 44px; padding-inline: 14px; }
+    .link:not(p .link, li .link, .hint .link, .rich .link, .note .link, .muted .link),
+    .back, .band .alt, .bk-reset, .gd-link { position: relative; }
+    .link:not(p .link, li .link, .hint .link, .rich .link, .note .link, .muted .link)::after,
+    .back::after, .band .alt::after, .bk-reset::after, .gd-link::after {
+        content: "";
+        position: absolute;
+        inset: -12px -6px;
+    }
+    details.how summary { padding-block: 10px; }
+}

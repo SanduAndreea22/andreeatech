@@ -2879,3 +2879,121 @@ class NavAndTapAreaTests(TestCase):
         body = self.client.get(reverse("contact")).content.decode()
         self.assertIn("<b>Hai să discutăm</b>", body)
         self.assertIn("fără formularul de proiect", body)
+
+
+# ---------------------------------------------------------------------------
+# Design audit, urgent items: legible text, tap areas, aligned project rows
+# ---------------------------------------------------------------------------
+class TextSizeFloorTests(TestCase):
+    """No text under 12px (uppercase labels) and no sentence-case text under 13px."""
+
+    def rules(self):
+        css = (_STATIC / "base.css").read_text() + (_STATIC / "components.css").read_text() + (_STATIC / "tokens.css").read_text()
+        css = _re.sub(r"/\*.*?\*/", "", css, flags=_re.S)
+        for selector, body in _re.findall(r"([^{}]+)\{([^{}]*)\}", css):
+            size = _re.search(r"font-size:\s*([0-9.]+)px", body)
+            if size:
+                yield selector.strip(), float(size.group(1)), body
+
+    def test_nothing_is_smaller_than_12px_except_the_decorative_dots(self):
+        for selector, size, body in self.rules():
+            if ".shot.frame::before" in selector:      # three decorative dots, not text
+                continue
+            with self.subTest(selector=selector):
+                self.assertGreaterEqual(size, 12, selector)
+
+    def test_sentence_case_text_is_at_least_13px(self):
+        rules = list(self.rules())
+        # classes whose own rule sets uppercase (a compound selector such as ".qgroup h2.sub" inherits it)
+        upper = set()
+        for selector, _, body in rules:
+            if "text-transform: uppercase" in body:
+                upper.update(_re.findall(r"\.[A-Za-z0-9_-]+", selector))
+        pseudo_labels = {".log li::before", ".bk-log li::before", ".gd-opt input:checked + span::before"}   # the literal text "OK" or a tick
+        for selector, size, body in rules:
+            if ".shot.frame::before" in selector or size >= 13 or selector in pseudo_labels:
+                continue
+            with self.subTest(selector=selector):
+                self.assertTrue("text-transform: uppercase" in body or set(_re.findall(r"\.[A-Za-z0-9_-]+", selector)) & upper, selector)
+
+    def test_the_smallest_sizes_that_were_flagged_are_gone(self):
+        css = (_STATIC / "components.css").read_text()
+        for old in ("font-size: 10.5px", "font-size: 11.5px"):
+            self.assertNotIn(old, css)
+
+
+class TapAreaTests(TestCase):
+
+    def block(self):
+        css = (_STATIC / "components.css").read_text()
+        start = css.index("@media (max-width: 900px), (pointer: coarse) {")
+        return css[start:]
+
+    def test_the_rules_apply_on_phones_tablets_and_touch_screens(self):
+        self.assertIn("(max-width: 900px), (pointer: coarse)", self.block())
+
+    def test_footer_links_brand_and_copy_buttons_are_44px_high(self):
+        block = self.block()
+        for selector in (".brand", ".foot li > a, .foot-b a", ".copy button"):
+            self.assertIn(selector, block)
+        self.assertGreaterEqual(block.count("min-height: 44px"), 3)
+
+    def test_underlined_links_get_an_invisible_extra_area_not_a_new_look(self):
+        block = self.block()
+        for selector in (".back::after", ".band .alt::after", ".bk-reset::after", ".gd-link::after"):
+            self.assertIn(selector, block)
+        self.assertIn("inset: -12px -6px", block)
+        self.assertIn("position: relative", block)
+
+    def test_links_inside_running_text_are_left_alone(self):
+        block = self.block()
+        for exempt in ("p .link", "li .link", ".hint .link", ".rich .link", ".note .link", ".muted .link"):
+            self.assertIn(exempt, block)
+
+    def test_mouse_users_on_desktop_keep_the_compact_footer(self):
+        css = (_STATIC / "components.css").read_text()
+        outside = css[:css.index("@media (max-width: 900px), (pointer: coarse) {")]
+        self.assertNotIn(".foot li > a", outside)
+
+
+class ProjectRowAlignmentTests(TestCase):
+
+    def test_a_project_without_a_screenshot_gets_a_tile_with_its_first_letter(self):
+        make_project(title="concept de brand", direction="creativ", status="concept")
+        body = self.client.get(reverse("projects")).content.decode()
+        self.assertIn('class="shot shot-ph" aria-hidden="true"><span>C</span>', body)
+
+    def test_a_project_with_a_screenshot_keeps_the_screenshot(self):
+        make_project(title="Cu poză", image=make_test_png())
+        body = self.client.get(reverse("projects")).content.decode()
+        self.assertNotIn("shot-ph", body)
+        self.assertIn('<div class="shot"><img', body)
+
+    def test_every_row_has_exactly_one_image_slot(self):
+        make_project(title="Unu", image=make_test_png())
+        make_project(title="Doi")
+        make_project(title="Trei", direction="ai")
+        body = self.client.get(reverse("projects")).content.decode()
+        rows = body.count('class="prow"')
+        self.assertEqual(rows, 3)
+        self.assertEqual(body.count('class="shot'), rows)
+
+    def test_the_old_two_column_variant_is_gone(self):
+        css = (_STATIC / "components.css").read_text()
+        self.assertNotIn("no-img", css)
+        self.assertNotIn("no-img", self.client.get(reverse("projects")).content.decode())
+
+    def test_the_tile_is_not_read_aloud_and_adds_no_text_a_visitor_could_mistake_for_content(self):
+        make_project(title="Fără poză")
+        body = self.client.get(reverse("projects")).content.decode()
+        self.assertIn('<div class="shot shot-ph" aria-hidden="true"><span>F</span></div>', body)
+
+    def test_the_tile_keeps_the_same_shape_as_a_screenshot_and_is_dashed_like_the_concept_label(self):
+        css = (_STATIC / "components.css").read_text()
+        block = css[css.index(".shot-ph {"):css.index("}", css.index(".shot-ph {"))]
+        self.assertIn("aspect-ratio: 16 / 9", block)
+        self.assertIn("border-style: dashed", block)
+
+    def test_the_filter_still_works_on_tiles(self):
+        make_project(title="Fără poză", direction="creativ")
+        self.assertIn('data-direction="creativ"', self.client.get(reverse("projects")).content.decode())

@@ -1,6 +1,8 @@
-<a class="prow{% if not project.image %} no-img{% endif %}" href="{% url 'project_detail' project.slug %}" data-direction="{{ project.direction }}">
+<a class="prow" href="{% url 'project_detail' project.slug %}" data-direction="{{ project.direction }}">
     {% if project.image %}
     <div class="shot"><img src="{{ project.image.url }}" alt="" width="{{ project.image.width }}" height="{{ project.image.height }}" loading="lazy"></div>
+    {% else %}
+    <div class="shot shot-ph" aria-hidden="true"><span>{{ project.title|first|upper }}</span></div>
     {% endif %}
     <div>
         <h2 class="prow-title">{{ project.title }}</h2>
