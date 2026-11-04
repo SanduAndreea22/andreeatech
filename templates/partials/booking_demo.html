@@ -1,0 +1,62 @@
+{# Two-screen booking demo. First state rendered here; static/website/site.js takes over. All data is invented and labelled as such. #}
+<section class="sec" aria-labelledby="bk-title">
+    <div class="wrap mg">
+        <div class="mg-l mono">Demo</div>
+        <div class="stack">
+            <h2 id="bk-title">Aceeași programare, văzută din ambele părți.</h2>
+            <p class="lead">Alege o oră în stânga, ca un client. În dreapta vezi ce se întâmplă în panoul tău: cererea apare, intervalul se blochează, confirmarea pleacă singură.</p>
+            <span class="demo-tag">Demo · date fictive · nimic nu se trimite și nu se salvează</span>
+
+            <div class="bk" id="bkDemo" data-demo="{{ demo_json }}">
+                <div class="bk-screen">
+                    <div class="bk-h"><span class="mono">Ecranul clientului</span><span class="mono">Salon, azi</span></div>
+                    <form class="bk-b" id="bkForm" novalidate>
+                        <div class="field"><label for="bkName">Numele tău</label><input type="text" id="bkName" maxlength="40" autocomplete="off" placeholder="ex. Maria"></div>
+                        <div class="field"><label for="bkService">Serviciu</label>
+                            <select id="bkService">{% for s in demo_services %}<option>{{ s }}</option>{% endfor %}</select>
+                        </div>
+                        <fieldset class="field"><legend>Ora de azi</legend>
+                            <div class="bk-slots" id="bkSlots">
+                                {% for t in demo_slots %}
+                                <label class="bk-slot"><input type="radio" name="slot" value="{{ t }}"{% if t in demo_taken %} disabled{% endif %}><span>{{ t }}<small>{% if t in demo_taken %}ocupat{% else %}liber{% endif %}</small></span></label>
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+                        <p class="bk-msg" id="bkMsg" role="alert"></p>
+                        <button class="btn btn-primary" type="submit" id="bkGo" disabled>Trimite cererea</button>
+                        <p class="bk-nojs" id="bkNoJs">Demo-ul are nevoie de JavaScript. Fără el vezi doar starea de început.</p>
+                        <p class="muted" id="bkWait" hidden>Se trimite cererea…</p>
+                        <div class="bk-sent" id="bkSent" hidden role="status">
+                            <span class="bk-tick" aria-hidden="true">✓</span>
+                            <div><b>Programare confirmată</b><span class="muted" id="bkSentD"></span></div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="bk-screen">
+                    <div class="bk-h"><span class="mono">Panoul tău</span><span class="mono">Programări azi</span></div>
+                    <div class="bk-stats">
+                        <div><span class="mono">Programări</span><strong id="bkStBk">{{ demo_rows|length }}</strong></div>
+                        <div><span class="mono">Confirmări trimise</span><strong id="bkStOk">{{ demo_rows|length }}</strong></div>
+                    </div>
+                    <div class="bk-scroll">
+                        <table class="bk-tbl">
+                            <thead><tr><th scope="col">Ora</th><th scope="col">Client</th><th scope="col">Serviciu</th><th scope="col">Stare</th></tr></thead>
+                            <tbody id="bkRows">
+                                {% for r in demo_rows %}
+                                <tr><td class="t">{{ r.time }}</td><td>{{ r.name }}<span class="bk-ex">exemplu</span></td><td>{{ r.service }}</td><td><span class="chip">Confirmată</span></td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <ol class="bk-log" id="bkLog" aria-live="polite"></ol>
+                    <div class="bk-f">
+                        <span class="muted">Rândurile marcate „exemplu” sunt fictive.</span>
+                        <button class="bk-reset" type="button" id="bkReset" hidden>De la capăt</button>
+                    </div>
+                </div>
+            </div>
+            <div><a class="link" href="{% url 'calculator' %}">Cât te costă programările la care clientul nu mai vine? Calculează</a></div>
+        </div>
+    </div>
+</section>

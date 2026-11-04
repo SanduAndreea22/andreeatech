@@ -32,6 +32,7 @@
 
     /* Feedback (always paired with text) */
     --ok: #1F6B3A;
+    --ok-bg: #E4F1E8;
     --err: #B3261E;
 
     /* Type */
@@ -78,6 +79,7 @@
         --cobalt-text: #93A6FF;
         --band: #2B43C4;
         --ok: #6FCF97;
+        --ok-bg: #16301F;
         --err: #FF8A80;
     }
 }
@@ -96,6 +98,7 @@
     --cobalt-text: #93A6FF;
     --band: #2B43C4;
     --ok: #6FCF97;
+    --ok-bg: #16301F;
     --err: #FF8A80;
 }
 

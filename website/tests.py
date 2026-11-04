@@ -1003,6 +1003,7 @@ class SeoTestBase(TestCase):
             reverse("home"), reverse("services"),
             *[reverse("service_detail", args=[s]) for s in ("web", "ai", "creativ")],
             reverse("projects"), reverse("project_detail", args=[self.project.slug]),
+            reverse("calculator"),
             reverse("products"), reverse("planner_product"), reverse("budget_product"),
             reverse("about"), reverse("contact"), reverse("start_project"),
             reverse("faq"), reverse("reviews"), reverse("privacy_policy"),
@@ -1956,3 +1957,208 @@ class NoGradientsOrShadowsTests(TestCase):
         css = _css()
         self.assertNotIn("linear-gradient", css)
         self.assertNotIn("radial-gradient", css)
+
+
+# ---------------------------------------------------------------------------
+# Ideas 1 and 2 (long list): two-screen booking demo and the calculator
+# ---------------------------------------------------------------------------
+import json as _json
+
+from . import booking_demo as _bd
+from . import calculator as _calc
+
+
+class CalculatorArithmeticTests(TestCase):
+
+    def test_starting_values_give_the_figures_shown_in_the_approved_mock(self):
+        d = _calc.display(**_calc.DEFAULTS)
+        self.assertEqual(d["month"], "2.598")
+        self.assertEqual(d["year"], "31.176")
+        self.assertEqual(d["lost"], "17")
+        self.assertEqual(d["total"], "173")
+        self.assertEqual(d["kept"], "156")
+        self.assertEqual(d["one_saved"], "650")
+
+    def test_starting_values_are_the_ones_the_user_approved(self):
+        self.assertEqual(_calc.DEFAULTS, {"per_week": 40, "no_show_pct": 10, "value": 150})
+
+    def test_negative_input_counts_as_zero_and_percentage_is_capped(self):
+        r = _calc.estimate(-5, 250, -10)
+        self.assertEqual((r["total"], r["month"], r["lost_pct"]), (0, 0, 100.0))
+        self.assertEqual(_calc.estimate(40, -3, 150)["month"], 0)
+
+    def test_zero_input_gives_zero_everywhere(self):
+        self.assertEqual(_calc.display(0, 0, 0)["month"], "0")
+
+    def test_year_is_twelve_months_and_nothing_else_is_added(self):
+        r = _calc.estimate(10, 20, 100)
+        self.assertAlmostEqual(r["year"], r["month"] * 12)
+        self.assertAlmostEqual(r["month"], 10 * _calc.WEEKS_PER_MONTH * 0.2 * 100)
+
+    def test_halves_round_up_like_javascript(self):
+        self.assertEqual(_calc.format_number(649.5), "650")
+        self.assertEqual(_calc.format_number(0.5), "1")
+        self.assertEqual(_calc.format_number(2.5), "3")
+
+    def test_thousands_use_dots(self):
+        self.assertEqual(_calc.format_number(1234567), "1.234.567")
+        self.assertEqual(_calc.format_number(999), "999")
+
+    def test_the_script_uses_the_same_constant_and_formula(self):
+        js = (_STATIC / "site.js").read_text()
+        self.assertIn(f"|| {_calc.WEEKS_PER_MONTH}", js)
+        for fragment in ("total = perWeek * weeks", "lost = total * pct / 100", "month = lost * value",
+                         "month * 12", "weeks * value"):
+            self.assertIn(fragment, js)
+
+
+class CalculatorPageTests(TestCase):
+
+    def get(self):
+        return self.client.get(reverse("calculator"))
+
+    def test_page_exists_and_has_one_h1(self):
+        response = self.get()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(_re.findall(r"<h1[ >]", response.content.decode())), 1)
+
+    def test_url_is_calculator(self):
+        self.assertEqual(reverse("calculator"), "/calculator/")
+
+    def test_fields_start_with_the_approved_example_values(self):
+        body = self.get().content.decode()
+        for field_id, value in (("cA", 40), ("cP", 10), ("cV", 150)):
+            self.assertRegex(body, rf'id="{field_id}"[^>]*value="{value}"')
+
+    def test_first_result_is_rendered_by_the_server_not_left_empty(self):
+        body = self.get().content.decode()
+        self.assertIn("2.598 lei", body)
+        self.assertIn("31.176 lei", body)
+
+    def test_formula_is_shown_in_full(self):
+        body = self.get().content.decode()
+        self.assertIn("Cum calculez", body)
+        self.assertIn("4,33", body)
+        self.assertIn("Nimic altceva nu intră în calcul", body)
+
+    def test_it_says_plainly_that_this_is_an_estimate_not_a_promise(self):
+        self.assertIn("nu o promisiune de rezultat", self.get().content.decode())
+
+    def test_it_makes_no_claim_about_savings_or_reductions(self):
+        text = _re.sub(r"<[^>]+>", " ", self.get().content.decode()).lower()
+        for word in ("reduce neprezent", "economis", "garant", "% mai puțin", "studiu", "statistic"):
+            self.assertNotIn(word, text)
+
+    def test_form_sends_nothing_anywhere(self):
+        body = self.get().content.decode()
+        form = _re.search(r'<form id="calcForm"[^>]*>', body).group(0)
+        self.assertNotIn("action=", form)
+        self.assertNotIn("method=", form.lower())
+        self.assertNotIn("csrfmiddlewaretoken", body[body.index('id="calcForm"'):body.index("</form>", body.index('id="calcForm"'))])
+
+    def test_buttons_go_to_the_ai_page_and_to_the_brief_with_the_package_preselected(self):
+        body = self.get().content.decode()
+        self.assertIn(f'href="{reverse("service_detail", args=["ai"])}"', body)
+        self.assertIn(f'href="{reverse("start_project")}?pachet=ai_automatizare"', body)
+
+    def test_the_page_is_in_the_sitemap(self):
+        self.assertIn("/calculator/", self.client.get("/sitemap.xml").content.decode())
+
+    def test_linked_from_home_and_from_the_ai_page_only(self):
+        link = f'href="{reverse("calculator")}"'
+        self.assertContains(self.client.get(reverse("home")), link)
+        self.assertContains(self.client.get(reverse("service_detail", args=["ai"])), link)
+        self.assertNotContains(self.client.get(reverse("service_detail", args=["web"])), link)
+        self.assertNotContains(self.client.get(reverse("service_detail", args=["creativ"])), link)
+
+    def test_no_inline_script_and_the_site_script_is_still_a_file(self):
+        body = self.get().content.decode()
+        inline = [x for x in body.split("<script")[1:] if "src=" not in x.split(">")[0] and "ld+json" not in x.split(">")[0]]
+        self.assertEqual(inline, [])
+
+    def test_numbers_in_attributes_are_not_written_with_a_decimal_comma(self):
+        # Django localises floats for Romanian ("4,33"); script and CSS need a dot.
+        body = self.get().content.decode()
+        self.assertIn('data-weeks="4.33"', body)
+        self.assertRegex(body, r'style="width:90(\.0)?%"')
+        self.assertRegex(body, r'style="width:10(\.0)?%"')
+        self.assertNotRegex(body, r'style="width:[0-9]+,[0-9]')
+
+    def test_screen_readers_get_a_summary_that_is_not_read_on_every_keystroke(self):
+        js = (_STATIC / "site.js").read_text()
+        self.assertIn("addEventListener('change'", js)
+        self.assertIn('id="oLive"', self.get().content.decode())
+
+
+class BookingDemoTests(TestCase):
+
+    def home(self):
+        return self.client.get(reverse("home")).content.decode()
+
+    def test_demo_sits_between_services_and_featured_projects(self):
+        make_project(is_featured=True)
+        body = self.home()
+        self.assertLess(body.index('id="servicii"'), body.index('id="bkDemo"'))
+        self.assertLess(body.index('id="bkDemo"'), body.index("Proiecte alese"))
+
+    def test_it_is_labelled_as_a_demo_with_invented_data(self):
+        body = self.home()
+        self.assertIn("Demo · date fictive · nimic nu se trimite și nu se salvează", body)
+        self.assertEqual(body.count('class="bk-ex">exemplu</span>'), 2)
+
+    def test_starting_state_is_rendered_by_the_server(self):
+        body = self.home()
+        self.assertEqual(len(_re.findall(r'<input type="radio" name="slot"', body)), len(_bd.SLOTS))
+        self.assertEqual(len(_re.findall(r'name="slot" value="[0-9:]+" disabled', body)), len(_bd.SEED_ROWS))
+        self.assertIn('id="bkStBk">2<', body)
+
+    def test_script_data_is_the_same_data_as_the_page(self):
+        body = self.home()
+        raw = _re.search(r'data-demo="(.*?)"', body).group(1)
+        import html as _html
+        data = _json.loads(_html.unescape(raw))
+        self.assertEqual(data["slots"], _bd.SLOTS)
+        self.assertEqual(data["rows"], _bd.SEED_ROWS)
+
+    def test_seed_rows_use_slots_that_exist(self):
+        for row in _bd.SEED_ROWS:
+            self.assertIn(row["time"], _bd.SLOTS)
+        self.assertLess(len(_bd.SEED_ROWS), len(_bd.SLOTS))  # at least one free slot
+
+    def test_nothing_is_posted_anywhere(self):
+        body = self.home()
+        form = _re.search(r'<form class="bk-b" id="bkForm"[^>]*>', body).group(0)
+        self.assertNotIn("action=", form)
+        self.assertNotIn("method=", form.lower())
+
+    def test_submit_waits_for_javascript_and_the_page_says_so(self):
+        body = self.home()
+        self.assertRegex(body, r'id="bkGo" disabled')
+        self.assertIn("Demo-ul are nevoie de JavaScript", body)
+
+    def test_name_field_is_length_limited(self):
+        self.assertRegex(self.home(), r'id="bkName" maxlength="40"')
+
+    def test_visitor_text_never_goes_in_as_html(self):
+        js = (_STATIC / "site.js").read_text()
+        block = js[js.index("two-screen booking demo"):js.index("Calculator: live result")]
+        self.assertNotIn("innerHTML", block)
+        self.assertNotIn("insertAdjacentHTML", block)
+        self.assertNotIn("document.write", block)
+
+    def test_motion_is_skipped_for_reduced_motion(self):
+        js = (_STATIC / "site.js").read_text()
+        block = js[js.index("two-screen booking demo"):js.index("Calculator: live result")]
+        self.assertIn("prefers-reduced-motion: reduce", block)
+
+    def test_existing_simulation_on_the_ai_page_is_untouched(self):
+        body = self.client.get(reverse("service_detail", args=["ai"])).content.decode()
+        self.assertIn('id="demoForm"', body)
+        self.assertNotIn('id="bkDemo"', body)
+
+    def test_demo_is_only_on_the_home_page(self):
+        for name in ("services", "projects", "about", "contact", "faq"):
+            self.assertNotContains(self.client.get(reverse(name)), 'id="bkDemo"', msg_prefix=name)
+
+    def test_the_calculator_link_under_the_demo(self):
+        self.assertIn(f'href="{reverse("calculator")}">Cât te costă', self.home())

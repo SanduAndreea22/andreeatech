@@ -1,0 +1,61 @@
+{% extends "base_v2.html" %}
+{% load l10n %}
+
+{% block title %}Cât te costă programările ratate? | Andreea Tech{% endblock %}
+{% block meta_description %}Calculează cât pierzi pe lună din programările la care clientul nu se mai prezintă. Folosește doar cifrele tale, iar formula se vede complet.{% endblock %}
+{% block og_title %}Cât te costă programările ratate? | Andreea Tech{% endblock %}
+{% block twitter_title %}Cât te costă programările ratate? | Andreea Tech{% endblock %}
+{% block og_description %}Calculează cât pierzi pe lună din programările la care clientul nu se mai prezintă. Folosește doar cifrele tale, iar formula se vede complet.{% endblock %}
+{% block twitter_description %}Calculează cât pierzi pe lună din programările la care clientul nu se mai prezintă. Folosește doar cifrele tale, iar formula se vede complet.{% endblock %}
+
+{% block content %}
+<section class="phead">
+    <div class="wrap">
+        <h1>Cât te costă programările la care clientul nu mai vine?</h1>
+        <p class="lead">Pune cifrele afacerii tale. Calculul e simplu și îl vezi complet mai jos. Valorile din câmpuri sunt doar un exemplu de pornire.</p>
+    </div>
+</section>
+
+<section class="sec first" style="padding-top:0;border-top:0">
+    <div class="wrap">
+        <div class="calc" id="calcRoot" data-weeks="{{ weeks|unlocalize }}">
+            <div class="fcard">
+                <form id="calcForm" novalidate>
+                    <div class="field"><label for="cA">Câte programări ai pe săptămână?</label>
+                        <div class="unit"><input type="number" id="cA" inputmode="numeric" min="0" step="1" value="{{ start.per_week }}"><span>/ săptămână</span></div></div>
+                    <div class="field"><label for="cP">Din ele, câte procente nu se mai prezintă?</label>
+                        <div class="unit"><input type="number" id="cP" inputmode="decimal" min="0" max="100" step="1" value="{{ start.no_show_pct }}"><span>%</span></div>
+                        <p class="hint">Uită-te la ultimele luni în agenda ta. Dacă nu știi, pune o estimare prudentă.</p></div>
+                    <div class="field"><label for="cV">Cât aduce, în medie, o programare?</label>
+                        <div class="unit"><input type="number" id="cV" inputmode="numeric" min="0" step="10" value="{{ start.value }}"><span>lei</span></div></div>
+                    <p class="note">Este o estimare făcută din cifrele tale, nu o promisiune de rezultat.</p>
+                </form>
+            </div>
+
+            <div class="fcard calc-out">
+                <span class="mono">Pierdere estimată</span>
+                <div><div class="calc-big" id="oMonth">{{ result.month }} lei</div><p class="muted">pe lună</p></div>
+                <div>
+                    <div class="calc-bar" role="img" id="oBar" aria-label="{{ result.lost }} din {{ result.total }} programări lunare sunt ratate"><i class="kept" id="oKept" style="width:{{ result.kept_pct|unlocalize }}%"></i><i class="lost" id="oLost" style="width:{{ result.lost_pct|unlocalize }}%"></i></div>
+                    <div class="calc-bar-l"><span id="oKeptL">{{ result.kept }} programări onorate</span><span id="oLostL">{{ result.lost }} ratate</span></div>
+                </div>
+                <div>
+                    <div class="out-row"><span>Pe an</span><b id="oYear">{{ result.year }} lei</b></div>
+                    <div class="out-row"><span>Programări ratate pe lună</span><b id="oCount">{{ result.lost }}</b></div>
+                    <div class="out-row"><span>O programare salvată pe săptămână aduce</span><b id="oOne">{{ result.one_saved }} lei / lună</b></div>
+                </div>
+                <details class="how"><summary>Cum calculez</summary>
+                    <p>Programări ratate pe lună = programări pe săptămână × {{ weeks_text }} × procentul care nu se prezintă. Pierderea pe lună = programări ratate × valoarea medie a unei programări. Pierderea pe an = de 12 ori pierderea pe lună. O programare salvată pe săptămână aduce {{ weeks_text }} × valoarea medie, pe lună. Nimic altceva nu intră în calcul.</p>
+                </details>
+                <div class="btn-row">
+                    <a class="btn btn-primary" href="{% url 'service_detail' 'ai' %}">Vezi cum elimin neprezentările</a>
+                    <a class="btn btn-line" href="{% url 'start_project' %}?pachet=ai_automatizare">Cere o ofertă</a>
+                </div>
+                <p class="vh" id="oLive" role="status"></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include "partials/cta_band.html" %}
+{% endblock %}

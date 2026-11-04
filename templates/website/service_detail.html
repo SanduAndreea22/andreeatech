@@ -56,6 +56,7 @@
                 <a class="btn btn-primary" href="{% url 'start_project' %}?pachet={{ package.key }}">{{ service.cta }}</a>
                 <a class="btn btn-line" href="{% url 'projects' %}">{{ service.cta_secondary }}</a>
             </div>
+            {% if slug == "ai" %}<p class="muted">Nu știi cât pierzi acum? <a class="link" href="{% url 'calculator' %}">Calculează cât te costă programările ratate</a>.</p>{% endif %}
         </div>
     </div>
 </section>

@@ -389,3 +389,203 @@
         if (wrap) wrap.classList.add('rv-in');
     });
 })();
+
+/* Home: two-screen booking demo. Simulation only: nothing is sent or saved. The
+   first state is rendered by the template; the data comes from data-demo, so the
+   page and this script share one source. All visitor text goes in with
+   textContent, never as HTML. */
+(function () {
+    'use strict';
+    var root = document.getElementById('bkDemo');
+    if (!root) return;
+    var data;
+    try { data = JSON.parse(root.getAttribute('data-demo')); } catch (e) { return; }
+
+    var form = document.getElementById('bkForm');
+    var slotsBox = document.getElementById('bkSlots');
+    var tbody = document.getElementById('bkRows');
+    var log = document.getElementById('bkLog');
+    var msg = document.getElementById('bkMsg');
+    var go = document.getElementById('bkGo');
+    var wait = document.getElementById('bkWait');
+    var sent = document.getElementById('bkSent');
+    var sentD = document.getElementById('bkSentD');
+    var reset = document.getElementById('bkReset');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var seed = data.rows.map(function (r) { return { time: r.time, name: r.name, service: r.service, example: true, status: 'ok' }; });
+    var rows = seed.slice();
+    var confirmed = seed.length;
+    var busy = false;
+    var timers = [];
+
+    function cell(tag, text, cls) {
+        var td = document.createElement(tag);
+        if (cls) td.className = cls;
+        td.textContent = text;
+        return td;
+    }
+    function renderSlots(keep) {
+        var taken = rows.map(function (r) { return r.time; });
+        slotsBox.textContent = '';
+        data.slots.forEach(function (t) {
+            var isTaken = taken.indexOf(t) !== -1;
+            var label = document.createElement('label');
+            label.className = 'bk-slot';
+            var input = document.createElement('input');
+            input.type = 'radio';
+            input.name = 'slot';
+            input.value = t;
+            input.disabled = isTaken || busy;
+            if (keep === t && !isTaken) input.checked = true;
+            var span = document.createElement('span');
+            span.appendChild(document.createTextNode(t));
+            var small = document.createElement('small');
+            small.textContent = isTaken ? 'ocupat' : 'liber';
+            span.appendChild(small);
+            label.appendChild(input);
+            label.appendChild(span);
+            slotsBox.appendChild(label);
+        });
+    }
+    function renderRows(freshTime) {
+        tbody.textContent = '';
+        rows.slice().sort(function (a, b) { return a.time < b.time ? -1 : 1; }).forEach(function (r) {
+            var tr = document.createElement('tr');
+            if (r.time === freshTime) tr.className = 'is-new';
+            tr.appendChild(cell('td', r.time, 't'));
+            var who = cell('td', r.name);
+            if (r.example) {
+                var tag = document.createElement('span');
+                tag.className = 'bk-ex';
+                tag.textContent = 'exemplu';
+                who.appendChild(tag);
+            }
+            tr.appendChild(who);
+            tr.appendChild(cell('td', r.service));
+            var state = document.createElement('td');
+            var chip = document.createElement('span');
+            chip.className = 'chip' + (r.status === 'new' ? ' st-new' : '');
+            chip.textContent = r.status === 'new' ? 'Nouă' : 'Confirmată';
+            state.appendChild(chip);
+            tr.appendChild(state);
+            tbody.appendChild(tr);
+        });
+        document.getElementById('bkStBk').textContent = rows.length;
+        document.getElementById('bkStOk').textContent = confirmed;
+    }
+    function step(text) {
+        var li = document.createElement('li');
+        li.textContent = text;
+        log.appendChild(li);
+    }
+    function later(fn, ms) {
+        if (reduce) { fn(); return; }
+        timers.push(window.setTimeout(fn, ms));
+    }
+    function restart() {
+        timers.forEach(window.clearTimeout);
+        timers = [];
+        rows = seed.slice();
+        confirmed = seed.length;
+        busy = false;
+        log.textContent = '';
+        sent.hidden = true;
+        wait.hidden = true;
+        msg.textContent = '';
+        go.disabled = false;
+        document.getElementById('bkName').value = '';
+        renderSlots();
+        renderRows();
+    }
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (busy) return;
+        var nameField = document.getElementById('bkName');
+        var name = nameField.value.trim();
+        var picked = slotsBox.querySelector('input[name="slot"]:checked');
+        msg.textContent = '';
+        if (!name) { msg.textContent = 'Scrie numele tău ca să trimiți cererea.'; nameField.focus(); return; }
+        if (!picked) { msg.textContent = 'Alege o oră liberă.'; return; }
+        var time = picked.value;
+        var service = document.getElementById('bkService').value;
+        busy = true;
+        go.disabled = true;
+        sent.hidden = true;
+        wait.hidden = false;
+        log.textContent = '';
+        renderSlots(time);
+        rows.push({ time: time, name: name, service: service, status: 'new' });
+        renderRows(time);
+        step('Cerere primită de la ' + name + ', ora ' + time + '.');
+        later(function () { step('Disponibilitatea a fost verificată în calendar.'); }, 700);
+        later(function () {
+            step('Confirmare trimisă clientului.');
+            rows.forEach(function (r) { if (r.time === time) r.status = 'ok'; });
+            confirmed += 1;
+            renderRows(time);
+            wait.hidden = true;
+            sent.hidden = false;
+            sentD.textContent = ' ' + service + ', azi la ' + time + ', pe numele ' + name + '.';
+        }, 1500);
+        later(function () {
+            step('Intervalul ' + time + ' a fost blocat pentru alți clienți.');
+            busy = false;
+            go.disabled = false;
+            renderSlots();
+        }, 2200);
+    });
+    reset.addEventListener('click', restart);
+
+    /* Ready: enable the controls that need JavaScript and hide the notice. */
+    document.getElementById('bkNoJs').hidden = true;
+    go.disabled = false;
+    reset.hidden = false;
+    renderSlots();
+    renderRows();
+})();
+
+/* Calculator: live result from the three fields. The same arithmetic as
+   website/calculator.py (a test keeps them in step). Nothing is sent or saved. */
+(function () {
+    'use strict';
+    var root = document.getElementById('calcRoot');
+    if (!root) return;
+    var weeks = parseFloat(String(root.getAttribute('data-weeks')).replace(',', '.')) || 4.33;
+    var form = document.getElementById('calcForm');
+    var live = document.getElementById('oLive');
+    var byId = function (id) { return document.getElementById(id); };
+
+    function read(id, max) {
+        var v = parseFloat(String(byId(id).value).replace(',', '.'));
+        if (!isFinite(v) || v < 0) v = 0;
+        if (max !== undefined && v > max) v = max;
+        return v;
+    }
+    function fmt(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+
+    function update() {
+        var perWeek = read('cA'), pct = read('cP', 100), value = read('cV');
+        var total = perWeek * weeks;
+        var lost = total * pct / 100;
+        var month = lost * value;
+        byId('oMonth').textContent = fmt(month) + ' lei';
+        byId('oYear').textContent = fmt(month * 12) + ' lei';
+        byId('oCount').textContent = fmt(lost);
+        byId('oOne').textContent = fmt(weeks * value) + ' lei / lună';
+        byId('oLost').style.width = pct + '%';
+        byId('oKept').style.width = (100 - pct) + '%';
+        byId('oKeptL').textContent = fmt(total - lost) + ' programări onorate';
+        byId('oLostL').textContent = fmt(lost) + ' ratate';
+        byId('oBar').setAttribute('aria-label', fmt(lost) + ' din ' + fmt(total) + ' programări lunare sunt ratate');
+        return fmt(month);
+    }
+    form.addEventListener('input', update);
+    /* Screen readers hear the result once the visitor leaves a field, not on every keystroke. */
+    form.addEventListener('change', function () {
+        live.textContent = 'Pierdere estimată: ' + update() + ' lei pe lună.';
+    });
+    form.addEventListener('submit', function (event) { event.preventDefault(); });
+    update();
+})();

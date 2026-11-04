@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.templatetags.static import static
 from django.urls import reverse
 
+from . import booking_demo, calculator as calc
 from .forms import ContactForm, ReviewForm, StartProjectForm
 from .models import Certification, ContactMessage, Project, Review
 from .packages import ADDONS, PACKAGES
@@ -79,6 +80,16 @@ def home(request):
     return render(request, 'website/home.html', {
         "packages": PACKAGES,
         "featured_projects": featured_projects,
+        **booking_demo.context(),
+    })
+
+
+def calculator(request):
+    return render(request, "website/calculator.html", {
+        "weeks": calc.WEEKS_PER_MONTH,
+        "weeks_text": calc.WEEKS_TEXT,
+        "start": calc.DEFAULTS,
+        "result": calc.display(**calc.DEFAULTS),
     })
 
 
