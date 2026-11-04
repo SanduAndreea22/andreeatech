@@ -1263,7 +1263,7 @@ class StaticReferencesTests(TestCase):
     """Every {% static '...' %} written in a live template must point at a real file."""
 
     def live_templates(self):
-        return [p for p in (ROOT / "templates").rglob("*.html") if "_legacy" not in p.parts]
+        return list((ROOT / "templates").rglob("*.html"))
 
     def test_every_static_reference_in_the_live_templates_exists(self):
         pattern = re.compile(r"""\{%\s*static\s+['"]([^'"]+)['"]\s*%\}""")
@@ -3083,8 +3083,6 @@ class NoInlineStylesTests(TestCase):
     def test_templates_carry_no_style_attributes_except_a_value_computed_by_the_server(self):
         offenders = []
         for path in _glob.glob(str(Path(settings.BASE_DIR) / "templates" / "**" / "*.html"), recursive=True):
-            if "_legacy" in path:
-                continue
             for number, line in enumerate(Path(path).read_text().splitlines(), 1):
                 for value in _re.findall(r'style="([^"]*)"', line):
                     if "{{" not in value:
@@ -3248,3 +3246,103 @@ class BrandInThePagesTests(TestCase):
         project = make_project(title="Fără insignă")
         with _mock.patch("website.share_card.Image.open", side_effect=OSError("missing")):
             self.assertEqual(_sc._paste_badge(_sc.Image.new("RGB", (1200, 630)), 64, 44, 54), 64)
+
+
+
+# ---------------------------------------------------------------------------
+# Clean-up: the old templates and stylesheet are gone and nothing depends on them
+# ---------------------------------------------------------------------------
+import importlib.util as _importlib_util
+
+
+class CleanupTests(TestCase):
+
+    ROOT_DIR = Path(settings.BASE_DIR)
+
+    def test_the_old_templates_stylesheet_and_logo_files_are_gone(self):
+        for relative in ("templates/_legacy", "templates/base.html", "static/website/style.css",
+                         "static/website/logo.png", "static/website/favicon.png"):
+            with self.subTest(path=relative):
+                self.assertFalse((self.ROOT_DIR / relative).exists(), relative)
+
+    def test_the_files_that_must_stay_are_still_there(self):
+        for relative in ("templates/base_v2.html", "templates/404.html", "templates/500.html", "templates/partials/nav.html",
+                         "static/website/tokens.css", "static/website/base.css", "static/website/components.css",
+                         "static/website/poza_me.JPG", "static/website/brand/logo-original.png", "media/projects"):
+            with self.subTest(path=relative):
+                self.assertTrue((self.ROOT_DIR / relative).exists(), relative)
+
+    def test_no_template_extends_the_old_base(self):
+        for path in (self.ROOT_DIR / "templates").rglob("*.html"):
+            self.assertNotIn('extends "base.html"', path.read_text(), path.name)
+
+    def test_nothing_refers_to_the_old_stylesheet_or_logo_files_any_more(self):
+        needles = ("website/style.css", "website/logo.png", "website/favicon.png")
+        searched = list((self.ROOT_DIR / "templates").rglob("*.html")) + list((self.ROOT_DIR / "static" / "website").glob("*.css")) \
+            + list((self.ROOT_DIR / "static" / "website").glob("*.js")) + list((self.ROOT_DIR / "website").glob("*.py")) \
+            + list((self.ROOT_DIR / "scripts").glob("*.py")) + list((self.ROOT_DIR / "config").glob("*.py"))
+        for path in searched:
+            if path.name == "tests.py":
+                continue
+            text = path.read_text(errors="ignore")
+            for needle in needles:
+                self.assertNotIn(needle, text, f"{path.name} still mentions {needle}")
+
+    def test_the_original_photo_is_still_kept_and_still_not_published_on_a_page(self):
+        self.assertTrue((self.ROOT_DIR / "static" / "website" / "poza_me.JPG").exists())
+        self.assertNotIn("poza_me.JPG", self.client.get(reverse("about")).content.decode())
+
+    def test_the_media_screenshot_is_untouched_until_the_owner_has_checked_the_admin(self):
+        self.assertTrue((self.ROOT_DIR / "media" / "projects" / "Screenshot_2026-02-23_223303.png").exists())
+
+    def test_the_category_field_is_untouched(self):
+        self.assertIn("category", [f.name for f in Project._meta.get_fields()])
+
+
+class ContrastScriptTests(TestCase):
+    """scripts/check_contrast.py must check the colours the site really uses (tokens.css), in both themes."""
+
+    def load(self):
+        spec = _importlib_util.spec_from_file_location("check_contrast", Path(settings.BASE_DIR) / "scripts" / "check_contrast.py")
+        module = _importlib_util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def test_it_reads_tokens_css_not_the_removed_stylesheet(self):
+        module = self.load()
+        self.assertEqual(module.CSS_PATH.name, "tokens.css")
+        self.assertTrue(module.CSS_PATH.exists())
+
+    def test_every_pair_passes_wcag_aa_in_both_themes(self):
+        module = self.load()
+        rows = module.check(module.CSS_PATH.read_text())
+        failed = [f"{r[0]} / {r[1]}: {r[2]:.2f}" for r in rows if not r[-1]]
+        self.assertEqual(failed, [])
+
+    def test_both_themes_are_checked_with_the_same_pairs(self):
+        module = self.load()
+        rows = module.check(module.CSS_PATH.read_text())
+        themes = {r[0] for r in rows}
+        self.assertEqual(themes, {"luminoasă", "întunecată"})
+        self.assertEqual(len(rows), 2 * len(module.PAIRS))
+
+    def test_the_dark_palette_really_differs_from_the_light_one(self):
+        module = self.load()
+        palettes = module.palettes(module.CSS_PATH.read_text())
+        self.assertNotEqual(palettes["luminoasă"]["--paper"], palettes["întunecată"]["--paper"])
+
+    def test_the_ratio_arithmetic_is_right(self):
+        module = self.load()
+        self.assertAlmostEqual(module.contrast_ratio("#000000", "#FFFFFF"), 21.0, places=1)
+        self.assertAlmostEqual(module.contrast_ratio("#777777", "#777777"), 1.0, places=2)
+
+    def test_it_fails_a_pair_that_is_too_weak(self):
+        module = self.load()
+        weak = ":root { --ink: #CCCCCC; --paper: #FFFFFF; }"
+        self.assertLess(module.contrast_ratio("#CCCCCC", "#FFFFFF"), 4.5)
+        self.assertEqual(module.block(weak, ":root")["--ink"], "#CCCCCC")
+
+    def test_the_script_exits_zero_when_all_pass(self):
+        import subprocess, sys as _sys
+        done = subprocess.run([_sys.executable, str(Path(settings.BASE_DIR) / "scripts" / "check_contrast.py")], capture_output=True, text=True)
+        self.assertEqual(done.returncode, 0, done.stdout[-400:])

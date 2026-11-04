@@ -1,37 +1,62 @@
 #!/usr/bin/env python3
-"""Check WCAG contrast ratios for the color pairs actually used on the site.
+"""Check WCAG contrast ratios for the colour pairs the site actually uses.
 
-Run after touching the :root palette in static/website/style.css:
+Run after touching the colours in static/website/tokens.css:
 
     python scripts/check_contrast.py
 
-Reads the hex values straight out of style.css, so it never drifts out of
-sync with what's actually shipped. Exits non-zero if anything fails its
-WCAG AA threshold (4.5:1 for normal text, 3:1 for large text / UI).
+It reads the hex values straight out of tokens.css (the light palette from :root and
+the dark palette from :root[data-theme="dark"]), so it never drifts out of sync with
+what is shipped. Exits non-zero if a pair falls below WCAG AA: 4.5:1 for normal text,
+3:1 for large text and for interface parts such as borders and focus rings.
+
+Pairs that use a transparent colour (the hover tint on the call-to-action band) are
+not listed: they cannot be checked from two hex values.
 """
 import re
 import sys
 from pathlib import Path
 
-CSS_PATH = Path(__file__).parent.parent / "static" / "website" / "style.css"
+CSS_PATH = Path(__file__).resolve().parent.parent / "static" / "website" / "tokens.css"
 
-# (label, foreground var, background var, "normal" or "large")
-# "large" also covers UI components / graphical objects (WCAG 1.4.11), used
-# here for solid-fill buttons where the fill itself is the checked pair.
+NORMAL, UI = 4.5, 3.0
+
+# (what it is, foreground token, background token, minimum ratio)
 PAIRS = [
-    ("Text principal (ink pe paper)", "--ink", "--paper", "normal"),
-    ("Text de corp (ink-soft pe paper)", "--ink-soft", "--paper", "normal"),
-    ("Eyebrow/etichete (ink-faint pe paper)", "--ink-faint", "--paper", "normal"),
-    ("Accent/linkuri (blue-mid pe paper)", "--blue-mid", "--paper", "normal"),
-    ("Buton primar (paper pe blue-mid)", "--paper", "--blue-mid", "large"),
+    ("Text principal pe fundal", "--ink", "--paper", NORMAL),
+    ("Text principal pe fundal secundar", "--ink", "--paper-2", NORMAL),
+    ("Text principal pe card", "--ink", "--raised", NORMAL),
+    ("Text secundar pe fundal", "--ink-2", "--paper", NORMAL),
+    ("Text secundar pe fundal secundar", "--ink-2", "--paper-2", NORMAL),
+    ("Text secundar pe card", "--ink-2", "--raised", NORMAL),
+    ("Linkuri și accente pe fundal", "--cobalt-text", "--paper", NORMAL),
+    ("Linkuri și accente pe fundal secundar", "--cobalt-text", "--paper-2", NORMAL),
+    ("Linkuri și accente pe card", "--cobalt-text", "--raised", NORMAL),
+    ("Text pe butonul principal", "--on-cobalt", "--cobalt", NORMAL),
+    ("Text pe butonul principal la hover", "--paper", "--cobalt-text", NORMAL),
+    ("Element ales (filtru, oră): fundal pe ink", "--paper", "--ink", NORMAL),
+    ("Confirmare (text verde) pe card", "--ok", "--raised", NORMAL),
+    ("Confirmare (text verde) pe fundalul confirmării", "--ok", "--ok-bg", NORMAL),
+    ("Text obișnuit pe fundalul confirmării", "--ink", "--ok-bg", NORMAL),
+    ("Eroare pe fundal", "--err", "--paper", NORMAL),
+    ("Eroare pe card", "--err", "--raised", NORMAL),
+    ("Chenar de câmp pe fundal", "--border-ui", "--paper", UI),
+    ("Chenar de câmp pe card", "--border-ui", "--raised", UI),
+    ("Contur de focus pe fundal", "--cobalt-text", "--paper", UI),
+    ("Banda: text pe fundalul benzii", "--on-band", "--band", NORMAL),
+    ("Banda: text secundar pe fundalul benzii", "--on-band-2", "--band", NORMAL),
+    ("Banda: textul butonului alb", "--band-btn-text", "--on-band", NORMAL),
+    ("Banda: textul butonului alb la hover", "--band-btn-text", "--band-btn-hover", NORMAL),
 ]
 
 
-def parse_root_vars(css_text: str) -> dict[str, str]:
-    root_match = re.search(r":root\s*\{([^}]*)\}", css_text)
-    if not root_match:
-        raise SystemExit("Couldn't find a :root {...} block in style.css")
-    return dict(re.findall(r"(--[\w-]+)\s*:\s*(#[0-9a-fA-F]{3,8})", root_match.group(1)))
+def block(css: str, selector: str) -> dict[str, str]:
+    """Hex values of the custom properties in the first rule whose selector is exactly `selector`."""
+    pattern = re.escape(selector) + r"\s*\{([^}]*)\}"
+    match = re.search(pattern, css)
+    if not match:
+        raise SystemExit(f"Nu găsesc blocul {selector} în tokens.css")
+    return dict(re.findall(r"(--[\w-]+)\s*:\s*(#[0-9a-fA-F]{3,8})\b", match.group(1)))
 
 
 def hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
@@ -57,33 +82,42 @@ def contrast_ratio(hex_a: str, hex_b: str) -> float:
     return (lighter + 0.05) / (darker + 0.05)
 
 
-def resolve(token: str, variables: dict[str, str]) -> str:
-    return variables[token] if token.startswith("--") else token
+def palettes(css: str) -> dict[str, dict[str, str]]:
+    light = block(css, ":root")
+    dark = {**light, **block(css, ':root[data-theme="dark"]')}   # dark overrides, the rest is shared
+    return {"luminoasă": light, "întunecată": dark}
+
+
+def check(css: str) -> list[tuple[str, str, float, float, str, str, bool]]:
+    """One row per theme and pair: (theme, label, ratio, minimum, fg, bg, passed)."""
+    rows = []
+    for theme, variables in palettes(css).items():
+        for label, fg_token, bg_token, minimum in PAIRS:
+            fg, bg = variables[fg_token], variables[bg_token]
+            ratio = contrast_ratio(fg, bg)
+            rows.append((theme, label, ratio, minimum, fg, bg, ratio >= minimum))
+    return rows
 
 
 def main() -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 
-    variables = parse_root_vars(CSS_PATH.read_text(encoding="utf-8"))
-    all_passed = True
+    rows = check(CSS_PATH.read_text(encoding="utf-8"))
+    print(f"Verific culorile din {CSS_PATH}\n")
+    current = None
+    for theme, label, ratio, minimum, fg, bg, passed in rows:
+        if theme != current:
+            print(f"Tema {theme}")
+            current = theme
+        print(f"  [{'PASS' if passed else 'FAIL'}] {label}: {ratio:.2f}:1 (minim {minimum}:1, {fg} pe {bg})")
 
-    print(f"Checking against {CSS_PATH}\n")
-    for label, fg_token, bg_token, size in PAIRS:
-        fg = resolve(fg_token, variables)
-        bg = resolve(bg_token, variables)
-        ratio = contrast_ratio(fg, bg)
-        threshold = 3.0 if size == "large" else 4.5
-        passed = ratio >= threshold
-        all_passed &= passed
-        status = "PASS" if passed else "FAIL"
-        print(f"[{status}] {label}: {ratio:.2f}:1 (min {threshold}:1, {fg} pe {bg})")
-
+    failed = [r for r in rows if not r[-1]]
     print()
-    if not all_passed:
-        print("Cel puțin o combinație pică pragul WCAG AA.")
+    if failed:
+        print(f"{len(failed)} combinații pică pragul WCAG AA.")
         return 1
-    print("Toate combinațiile verificate trec WCAG AA.")
+    print(f"Toate cele {len(rows)} combinații trec WCAG AA.")
     return 0
 
 
