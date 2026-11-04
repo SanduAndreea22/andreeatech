@@ -49,11 +49,11 @@ PACKAGES = [
         "name": "Automatizare AI",
         "price": "de la €250",
         "price_value": 250,
-        "tagline": "Agenți și automatizări care preiau munca repetitivă.",
+        "tagline": "Asistenți AI și automatizări care preiau munca repetitivă.",
         "features": [
-            "Asistenți și agenți AI pentru conversații și conținut",
+            "Asistenți AI pentru conversații și conținut",
             "Automatizarea sarcinilor repetitive",
-            "Confirmări și remindere pentru clienți",
+            "Confirmări și mesaje de reamintire pentru clienți",
             "Integrări prin API cu serviciile pe care le folosești",
         ],
         "description": "Preiei timpul pierdut pe sarcini repetitive și-l pui înapoi în partea din business care chiar contează.",
@@ -86,5 +86,5 @@ NOT_SURE_LABEL = "Nu sunt sigur/ă, hai să discutăm"
 # quick price estimate on the Services page.
 ADDONS = [
     {"key": "automation", "name": "Automatizare simplă", "price_value": 15},
-    {"key": "agent", "name": "Agent AI", "price_value": 25},
+    {"key": "agent", "name": "Asistent AI", "price_value": 25},
 ]

@@ -187,7 +187,7 @@ class ContactMessage(models.Model):
     PACKAGE_CHOICES = [
         (p["key"], f'{p["name"]}, {p["price"]}') for p in PACKAGES
     ] + [
-        ("automation_only", "Doar automatizare / agent AI (am deja un website)"),
+        ("automation_only", "Doar automatizare / asistent AI (am deja un site)"),
         (NOT_SURE_KEY, NOT_SURE_LABEL),
     ]
 

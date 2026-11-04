@@ -59,8 +59,8 @@
                         <div class="field"><label for="{{ form.email.id_for_label }}">Adresa de email</label>{{ form.email }}{{ form.email.errors }}</div>
                     </div>
                     <div class="f-row">
-                        <div class="field"><label for="{{ form.industry.id_for_label }}">Domeniul afacerii tale</label>{{ form.industry }}{{ form.industry.errors }}</div>
-                        <div class="field"><label for="{{ form.selected_package.id_for_label }}">Direcția aleasă (opțional)</label>{{ form.selected_package }}{{ form.selected_package.errors }}</div>
+                        <div class="field"><label for="{{ form.industry.id_for_label }}">Cu ce se ocupă afacerea ta?</label>{{ form.industry }}{{ form.industry.errors }}</div>
+                        <div class="field"><label for="{{ form.selected_package.id_for_label }}">Direcția care te interesează (opțional)</label>{{ form.selected_package }}{{ form.selected_package.errors }}</div>
                     </div>
                 </fieldset>
 
@@ -95,7 +95,7 @@
 
                 <div class="stack-s">
                     <div class="btn-row"><button type="submit" class="btn btn-primary">Trimite proiectul</button></div>
-                    <p class="hint">Apăsând „Trimite proiectul", ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a> și primești un răspuns în maximum 24 de ore.</p>
+                    <p class="hint">Apăsând „Trimite proiectul”, ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a>. Îți răspund în maximum 24 de ore.</p>
                 </div>
             </form>
         </div>

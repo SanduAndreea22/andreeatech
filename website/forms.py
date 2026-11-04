@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import MaxLengthValidator
 
 from .models import ContactMessage, ContactMessageSimple, Review
 
@@ -9,7 +10,26 @@ class HoneypotFormMixin(forms.Form):
     website = forms.CharField(required=False, widget=forms.HiddenInput())
 
 
-class StartProjectForm(HoneypotFormMixin, forms.ModelForm):
+class FriendlyErrorsMixin:
+    """Server-side validation messages in the same informal voice as the rest of the site
+    (Django's Romanian defaults are formal: "Introduceți o adresă…")."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            if isinstance(field, forms.EmailField):
+                field.error_messages["invalid"] = "Adresa de email nu pare validă. Verifică-o și încearcă din nou."
+            elif isinstance(field, forms.URLField):
+                field.error_messages["invalid"] = "Adresa site-ului nu pare validă. Începe cu https://"
+            elif isinstance(field, (forms.ChoiceField, forms.MultipleChoiceField)):
+                field.error_messages["invalid_choice"] = "Alege una dintre opțiunile din listă."
+            field.error_messages["required"] = "Completează acest câmp."
+            for validator in field.validators:
+                if isinstance(validator, MaxLengthValidator):
+                    validator.message = "Textul e prea lung: poți folosi cel mult %(limit_value)d de caractere."
+
+
+class StartProjectForm(FriendlyErrorsMixin, HoneypotFormMixin, forms.ModelForm):
 
     FEATURE_CHOICES = [
         ("content", "Conținut & postări social media"),
@@ -17,7 +37,7 @@ class StartProjectForm(HoneypotFormMixin, forms.ModelForm):
         ("dashboard", "Dashboard de administrare"),
         ("website", "Website de prezentare"),
         ("automation", "Automatizare simplă (confirmări, mesaje de reamintire)"),
-        ("ai_agent", "Agent AI (telefon/WhatsApp, conversații)"),
+        ("ai_agent", "Asistent AI care răspunde clienților (telefon, WhatsApp)"),
     ]
 
     required_features = forms.MultipleChoiceField(
@@ -30,7 +50,7 @@ class StartProjectForm(HoneypotFormMixin, forms.ModelForm):
     # "---------" empty option for a real label — ContactMessage.selected_package
     # is a plain CharField (not a FK), so ModelForm can't infer a better one.
     selected_package = forms.ChoiceField(
-        choices=[("", "Alege un pachet")] + ContactMessage.PACKAGE_CHOICES,
+        choices=[("", "Alege o direcție")] + ContactMessage.PACKAGE_CHOICES,
         required=False,
     )
 
@@ -51,7 +71,7 @@ class StartProjectForm(HoneypotFormMixin, forms.ModelForm):
         }
 
 
-class ContactForm(HoneypotFormMixin, forms.ModelForm):
+class ContactForm(FriendlyErrorsMixin, HoneypotFormMixin, forms.ModelForm):
     class Meta:
         model = ContactMessageSimple
         fields = ["name", "email", "message"]
@@ -71,7 +91,7 @@ class PlaceholderSelect(forms.Select):
         return option
 
 
-class ReviewForm(HoneypotFormMixin, forms.ModelForm):
+class ReviewForm(FriendlyErrorsMixin, HoneypotFormMixin, forms.ModelForm):
     class Meta:
         model = Review
         fields = ["name", "role", "company", "business_url", "project_note", "rating", "message"]

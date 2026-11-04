@@ -249,7 +249,7 @@
                 if (field.validity.valueMissing) {
                     field.setCustomValidity('Acest câmp este obligatoriu.');
                 } else if (field.validity.typeMismatch && field.type === 'email') {
-                    field.setCustomValidity('Adresa de email nu pare validă. Verific-o și mai încearcă o dată.');
+                    field.setCustomValidity('Adresa de email nu pare validă. Verifică-o și încearcă din nou.');
                 } else if (field.validity.tooShort || field.validity.tooLong || field.validity.patternMismatch) {
                     field.setCustomValidity('Verifică ce ai completat aici: nu pare în formatul așteptat.');
                 } else {
@@ -345,7 +345,7 @@
     function sync() {
         var dark = isDark();
         button.setAttribute('aria-pressed', dark ? 'true' : 'false');
-        button.setAttribute('aria-label', dark ? 'Schimbă tema: luminos' : 'Schimbă tema: întunecat');
+        button.setAttribute('aria-label', dark ? 'Comută la tema luminoasă' : 'Comută la tema întunecată');
     }
     button.hidden = false;
     sync();

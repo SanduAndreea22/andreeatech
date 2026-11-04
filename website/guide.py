@@ -18,7 +18,7 @@ from .packages import ADDONS, PACKAGES
 # Which package each direction points to (the package `key`s are stored on
 # existing briefs, so they never change).
 PACKAGE_FOR = {"web": "produse_sisteme", "ai": "ai_automatizare", "creativ": "continut_digital"}
-AUTOMATION_ONLY_KEY = "automation_only"   # the existing "Doar automatizare / agent AI (am deja un website)" choice in the brief
+AUTOMATION_ONLY_KEY = "automation_only"   # the existing "Doar automatizare / asistent AI (am deja un site)" choice in the brief
 
 _ADDON_PRICE = {a["key"]: a["price_value"] for a in ADDONS}
 
@@ -82,7 +82,7 @@ ALSO_RULES = [
         "dir": "ai",
         "note": (f"Pentru cererile care vin pe telefon, confirmările și reminderele automate se potrivesc bine lângă site. "
                  f"Ca extra la un proiect web, automatizările simple pornesc de la €{_ADDON_PRICE['automation']}, "
-                 f"iar un agent AI de la €{_ADDON_PRICE['agent']}."),
+                 f"iar un asistent AI de la €{_ADDON_PRICE['agent']}."),
     },
     {
         "if": {"dir": ["web"], "q2": ["nimic"]},

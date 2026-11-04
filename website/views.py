@@ -183,7 +183,7 @@ def start_project(request):
         if form.is_valid():
             spam_response = _reject_spam_submission(
                 request, form, "start_project",
-                "Ai trimis mai multe cereri într-un timp scurt. Te rog încearcă din nou peste puțin timp.",
+                "Ai trimis mai multe cereri într-un timp scurt. Te rog să încerci din nou peste puțin timp.",
             )
             if spam_response:
                 return spam_response
@@ -238,7 +238,7 @@ def contact(request):
         if form.is_valid():
             spam_response = _reject_spam_submission(
                 request, form, "contact",
-                "Ai trimis mai multe mesaje într-un timp scurt. Te rog încearcă din nou peste puțin timp.",
+                "Ai trimis mai multe mesaje într-un timp scurt. Te rog să încerci din nou peste puțin timp.",
             )
             if spam_response:
                 return spam_response
@@ -248,7 +248,7 @@ def contact(request):
                 "New contact message — andreeatech",
                 f"From: {obj.name} ({obj.email})\n\n{obj.message}"
             )
-            messages.success(request, "Mesajul tău a ajuns la mine — răspund cât pot de repede.")
+            messages.success(request, "Mesajul tău a ajuns la mine. Îți răspund în maximum 24 de ore.")
             return redirect("contact")
     else:
         form = ContactForm()
@@ -284,7 +284,7 @@ def reviews(request):
         if form.is_valid():
             spam_response = _reject_spam_submission(
                 request, form, "reviews",
-                "Ai trimis mai multe recenzii într-un timp scurt. Te rog încearcă din nou peste puțin timp.",
+                "Ai trimis mai multe recenzii într-un timp scurt. Te rog să încerci din nou peste puțin timp.",
             )
             if spam_response:
                 return spam_response

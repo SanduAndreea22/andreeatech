@@ -584,7 +584,7 @@ class ServicesViewTests(TestCase):
     def test_hub_has_the_price_estimate_with_the_extras(self):
         response = self.client.get(reverse("services"))
         self.assertContains(response, 'id="est"')
-        self.assertContains(response, "Agent AI, de la €25")
+        self.assertContains(response, "Asistent AI, de la €25")
 
     def test_service_pages_are_in_the_sitemap(self):
         body = self.client.get("/sitemap.xml").content.decode()
@@ -815,7 +815,7 @@ class TechnicalVersusCreativeTests(TestCase):
 class FaqRedesignTests(TestCase):
     def test_answers_are_in_the_html_not_hidden_in_javascript(self):
         body = self.client.get(reverse("faq")).content.decode()
-        self.assertIn("7 zile de stabilizare gratuită", body)
+        self.assertIn("7 zile de ajustări gratuite", body)
         self.assertIn("Django e stabil", body)
         self.assertGreaterEqual(body.count('<details class="qa">'), 20)
 
@@ -3346,3 +3346,73 @@ class ContrastScriptTests(TestCase):
         import subprocess, sys as _sys
         done = subprocess.run([_sys.executable, str(Path(settings.BASE_DIR) / "scripts" / "check_contrast.py")], capture_output=True, text=True)
         self.assertEqual(done.returncode, 0, done.stdout[-400:])
+
+
+class CopyFixesTests(TestCase):
+    """The urgent fixes from the text audit: one voice, no contradictions, no jargon."""
+
+    PAGES = ["/", "/servicii/", "/servicii/ai/", "/about/", "/faq/", "/contact/", "/start-project/", "/reviews/", "/calculator/", "/ghid/"]
+
+    def body(self, path):
+        return unescape(self.client.get(path).content.decode())
+
+    def test_the_visitor_copy_uses_assistant_not_agent(self):
+        for path in self.PAGES:
+            text = re.sub(r"<[^>]+>", " ", self.body(path))
+            self.assertNotRegex(text, r"(?i)\bagen(t|ți|tul)\b", path)
+
+    def test_the_free_period_is_called_adjustments_everywhere(self):
+        for path in ("/", "/faq/"):
+            self.assertNotIn("stabiliz", self.body(path).lower(), path)
+        self.assertIn("Livrare și ajustări", self.body("/"))
+
+    def test_the_theme_toggle_has_a_clear_label(self):
+        self.assertIn('aria-label="Comută la tema întunecată"', self.body("/"))
+        js = (Path(settings.BASE_DIR) / "static" / "website" / "site.js").read_text(encoding="utf-8")
+        self.assertIn("Comută la tema luminoasă", js)
+        self.assertNotIn("Verific-o", js)
+
+    def test_the_form_hints_close_the_quote_properly(self):
+        for path, label in (("/contact/", "Trimite mesajul"), ("/start-project/", "Trimite proiectul"), ("/reviews/", "Trimite recenzia")):
+            self.assertIn(f"„{label}”", self.body(path), path)
+
+    def test_the_brief_asks_in_plain_words(self):
+        body = self.body("/start-project/")
+        self.assertIn("Cu ce se ocupă afacerea ta?", body)
+        self.assertIn("Direcția care te interesează (opțional)", body)
+        self.assertIn("Alege o direcție", body)
+        self.assertIn("Îți răspund în maximum 24 de ore.", body)
+
+    def test_the_contact_success_message_matches_the_promise(self):
+        cache.clear()
+        response = self.client.post("/contact/", {"name": "Ana", "email": "ana@example.com", "message": "Salut, vreau o ofertă."}, follow=True)
+        self.assertContains(response, "Îți răspund în maximum 24 de ore.")
+
+    def test_server_side_errors_speak_informally(self):
+        from .forms import ContactForm, ReviewForm, StartProjectForm
+        form = ContactForm({"name": "Ana", "email": "nu-e-email", "message": "x"})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors["email"], ["Adresa de email nu pare validă. Verifică-o și încearcă din nou."])
+        review = ReviewForm({"name": "Ana", "business_url": "nu-e-url", "rating": "9", "message": "ok"})
+        self.assertFalse(review.is_valid())
+        self.assertEqual(review.errors["business_url"], ["Adresa site-ului nu pare validă. Începe cu https://"])
+        self.assertEqual(review.errors["rating"], ["Alege una dintre opțiunile din listă."])
+        brief = StartProjectForm({"selected_package": "nu-exista"})
+        self.assertFalse(brief.is_valid())
+        self.assertEqual(brief.errors["selected_package"], ["Alege una dintre opțiunile din listă."])
+        long = ContactForm({"name": "Ana", "email": "a@b.ro", "message": "x" * 3001})
+        self.assertFalse(long.is_valid())
+        self.assertIn("prea lung", long.errors["message"][0])
+
+    def test_no_formal_django_default_survives(self):
+        from .forms import ContactForm
+        form = ContactForm({"name": "", "email": "", "message": ""})
+        self.assertFalse(form.is_valid())
+        for errors in form.errors.values():
+            for message in errors:
+                self.assertNotIn("Introduceți", message)
+                self.assertNotIn("obligatoriu", message)
+
+    def test_the_package_label_matches_the_model_state(self):
+        labels = dict(ContactMessage.PACKAGE_CHOICES)
+        self.assertEqual(labels["automation_only"], "Doar automatizare / asistent AI (am deja un site)")

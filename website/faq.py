@@ -16,9 +16,9 @@ FAQ_GROUPS = [('colaborare',
    ('Cum arată colaborarea, pas cu pas?',
     'Pornim cu un call inițial în care clarificăm exact ce ai nevoie. Pe parcursul proiectului comunicăm '
     'prin mesaje: îți arăt progresul și iau feedback fără să fie nevoie de call-uri programate. La final ai '
-    '7 zile de stabilizare gratuită după livrare.'),
+    '7 zile de ajustări gratuite după livrare.'),
    ('Ce se întâmplă dacă dispari după ce livrezi proiectul?',
-    'Fiecare proiect are 7 zile de stabilizare gratuită după livrare: orice bug găsești în perioada asta, îl '
+    'Fiecare proiect are 7 zile de ajustări gratuite după livrare: orice bug găsești în perioada asta, îl '
     'repar fără cost suplimentar. Rămân contactabilă și după. Dacă apare o problemă mai târziu sau vrei '
     'mentenanță continuă, discutăm separat, dar nu dispar odată ce ai plătit.'),
    ('Nu știu exact de ce am nevoie. De unde pornim?',
@@ -29,7 +29,7 @@ FAQ_GROUPS = [('colaborare',
     'Îmi dai contextul afacerii tale, fluxul de lucru actual, obiectivele și orice materiale existente. '
     'Transform asta într-un plan clar, cu termen de livrare stabilit.'),
    ('Oferi suport după lansare?',
-    'Da. Ai 7 zile de stabilizare gratuită după livrare: orice bug apare în perioada asta, îl repar fără '
+    'Da. Ai 7 zile de ajustări gratuite după livrare: orice bug apare în perioada asta, îl repar fără '
     'cost suplimentar. Mentenanța continuă, dincolo de bug-uri, se poate stabili separat, atunci când e '
     'nevoie.')]),
  ('pret',
@@ -64,24 +64,24 @@ FAQ_GROUPS = [('colaborare',
  ('ai',
   'Automatizare AI',
   [('Ce face mai exact automatizarea AI?',
-    'Un agent AI poate prelua telefonul și WhatsApp-ul afacerii tale: răspunde la întrebări despre servicii, '
+    'Un asistent AI poate prelua telefonul și WhatsApp-ul afacerii tale: răspunde la întrebări despre servicii, '
     'prețuri și program, preia rezervări sau programări și le confirmă automat, non-stop.'),
    ('Îmi înlocuiește complet telefonul?',
-    'Nu. Preia partea repetitivă, ca tu să nu ridici telefonul între doi clienți. Rămâi disponibilă pentru '
+    'Nu. Preia partea repetitivă, ca să nu mai ridici tu telefonul între doi clienți. Tu rămâi disponibil(ă) doar pentru '
     'situațiile care chiar au nevoie de tine, iar sistemul se integrează cu calendarul din proiectul ales.'),
    ('De ce există un cost lunar separat?',
-    'Configurarea e o singură dată: de la €15 pentru o automatizare simplă și de la €25 pentru un agent AI '
+    'Configurarea e o singură dată: de la €15 pentru o automatizare simplă și de la €25 pentru un asistent AI '
     'care preia și sortează cererile, ca extra la un proiect. Pe lângă asta, mai există un cost separat de '
     'utilizare, de câțiva euro până la câteva zeci de euro lunar, în funcție de volum, plătit direct '
     'firmelor care oferă tehnologia din spate, nu mie. Mentenanța lunară e opțională și separată.'),
    ('Se adaugă peste orice proiect?',
-    'Da. Poți adăuga o automatizare simplă sau un agent AI peste un proiect web, sau o poți cere separat, ca '
+    'Da. Poți adăuga o automatizare simplă sau un asistent AI peste un proiect web, sau o poți cere separat, ca '
     'direcție de sine stătătoare, de la €250.')]),
  ('creativ',
   'Design creativ',
   [('Care e diferența dintre partea tehnică și partea creativă?',
     'Partea tehnică înseamnă web development (Django, Python, aplicații web, sisteme de rezervări), '
-    'automatizare AI (agenți, automatizări, integrări API) și arhitectura produsului, adică felul în care '
+    'automatizare AI (asistenți AI, automatizări, integrări API) și arhitectura produsului, adică felul în care '
     'funcționează în spate. Partea creativă înseamnă identitate vizuală și branding, design pentru social '
     'media, campanii și materiale vizuale, direcție creativă. Identitatea vizuală este un serviciu creativ '
     'separat, nu o componentă a dezvoltării tehnice, iar cele două se pot combina într-un singur proiect.'),

@@ -22,7 +22,7 @@
             <div class="sub">De ce ai nevoie?</div>
             <nav class="paths" aria-label="Tipul solicitării">
                 <a class="path" href="{% url 'start_project' %}?pachet=produse_sisteme"><b>Un site sau o aplicație</b><span>Site, sistem de rezervări, aplicație web</span></a>
-                <a class="path" href="{% url 'start_project' %}?pachet=ai_automatizare"><b>O automatizare sau un agent AI</b><span>Confirmări, remindere, agenți, fluxuri</span></a>
+                <a class="path" href="{% url 'start_project' %}?pachet=ai_automatizare"><b>O automatizare sau un asistent AI</b><span>Confirmări, mesaje de reamintire, răspunsuri automate</span></a>
                 <a class="path" href="{% url 'start_project' %}?pachet=continut_digital"><b>Identitate și conținut vizual</b><span>Brand, postări, campanii, materiale</span></a>
                 <a class="path" href="{% url 'start_project' %}?pachet=not_sure"><b>Hai să discutăm</b><span>Vrei să ne lămurim înainte să-mi descrii proiectul</span></a>
                 <a class="path" href="{% url 'contact' %}" aria-current="page"><b>Doar o întrebare rapidă</b><span>Un mesaj scurt, fără formularul de proiect</span></a>
@@ -52,7 +52,7 @@
                         {{ form.message }}{{ form.message.errors }}
                     </div>
                     <div class="btn-row"><button type="submit" class="btn btn-primary">Trimite mesajul</button></div>
-                    <p class="hint">Apăsând „Trimite mesajul", ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a>.</p>
+                    <p class="hint">Apăsând „Trimite mesajul”, ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a>.</p>
                 </form>
             </div>
             <p class="hint mt-5">Preferi să scrii direct? Adresa mea este
