@@ -4,12 +4,12 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.cache import cache
 from django.core.mail import send_mail
-from django.http import Http404, HttpResponse
+from django.http import FileResponse, Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.templatetags.static import static
 from django.urls import reverse
 
-from . import booking_demo, calculator as calc
+from . import booking_demo, calculator as calc, guide as guide_data, share_card
 from .forms import ContactForm, ReviewForm, StartProjectForm
 from .models import Certification, ContactMessage, Project, Review
 from .packages import ADDONS, PACKAGES
@@ -84,6 +84,10 @@ def home(request):
     })
 
 
+def guide(request):
+    return render(request, "website/guide.html", {"packages": PACKAGES, **guide_data.context()})
+
+
 def calculator(request):
     return render(request, "website/calculator.html", {
         "weeks": calc.WEEKS_PER_MONTH,
@@ -148,11 +152,29 @@ def projects_list(request):
 
 def project_detail(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    image_path = project.image.url if project.image else static("website/og-default.jpg")
+    # The share image is this project's own card. The version in the URL changes
+    # whenever anything shown on the card changes, so LinkedIn and Facebook fetch
+    # a fresh image instead of keeping an old one in their cache.
+    version = share_card.card_version(project, request.get_host())
+    card_url = reverse("project_card", args=[project.slug]) + f"?v={version}"
     return render(request, "website/project_detail.html", {
         "project": project,
-        "share_image_url": request.build_absolute_uri(image_path),
+        "share_image_url": request.build_absolute_uri(card_url),
     })
+
+
+def project_card(request, slug):
+    """The share card (JPEG) of one project, drawn on first request and kept on disk."""
+    project = get_object_or_404(Project, slug=slug)
+    try:
+        path = share_card.ensure_card(project, request.get_host())
+    except Exception:
+        # A broken card must never break a shared link: fall back to the brand card.
+        logger.exception("Share card failed for project %s", project.pk)
+        return HttpResponseRedirect(static("website/og-default.jpg"))
+    response = FileResponse(open(path, "rb"), content_type="image/jpeg")
+    response["Cache-Control"] = "public, max-age=86400"
+    return response
 
 
 def start_project(request):

@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('servicii/', views.services, name='services'),
     path('servicii/<slug:slug>/', views.service_detail, name='service_detail'),
+    path('ghid/', views.guide, name='guide'),
     path('calculator/', views.calculator, name='calculator'),
     path('products/', views.products, name='products'),
     path('products/planner/', views.planner_product, name='planner_product'),
@@ -16,6 +17,7 @@ urlpatterns = [
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
     path('reviews/', views.reviews, name='reviews'),
     path("projects/", views.projects_list, name="projects"),
+    path("projects/<slug:slug>/card.jpg", views.project_card, name="project_card"),
     path("projects/<slug:slug>/", views.project_detail, name="project_detail"),
 
 ]

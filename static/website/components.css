@@ -710,3 +710,59 @@ details.how p { margin-top: 10px; font-size: 15px; color: var(--ink-2); }
     .bk-tbl .chip { font-size: 10.5px; padding: 3px 6px; }
     .bk-tbl .chip::before { margin-right: 5px; }
 }
+
+/* =========================================
+   GUIDE (/ghid/): "Ce pachet ți se potrivește?"
+========================================= */
+.gd {
+    max-width: 820px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-card);
+    background: var(--raised);
+    padding: clamp(20px, 3.5vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.gd[hidden] { display: none; }
+.gd-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.gd-prog { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.gd-prog[hidden] { display: none; }
+.gd-prog i { display: block; height: 4px; background: var(--line); border-radius: 2px; }
+.gd-prog i.on { background: var(--cobalt); }
+.gd-link { background: none; border: 0; padding: 0; font: inherit; font-weight: 600; color: var(--cobalt-text); border-bottom: 1px solid currentColor; cursor: pointer; }
+.gd-link:hover { border-bottom-width: 2px; }
+.gd-link[hidden] { display: none; }
+fieldset.gd-q { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+fieldset.gd-q legend { font-family: var(--f-display); font-size: clamp(1.35rem, 1.2vw + 1rem, 1.8rem); line-height: 1.2; padding: 0; margin-bottom: 14px; }
+fieldset.gd-q legend:focus { outline: none; }
+.gd-opt { position: relative; display: block; }
+.gd-opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.gd-opt span { display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; min-height: 56px; border: 1px solid var(--border-ui); border-radius: var(--r-card); background: var(--paper); }
+.gd-opt span::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 3px; border: 2px solid var(--border-ui); border-radius: 50%; background: var(--paper); }
+.gd-opt input:hover + span { border-color: var(--ink); }
+.gd-opt input:checked + span { border-color: var(--cobalt-text); background: var(--raised); outline: 1px solid var(--cobalt-text); }
+.gd-opt input:checked + span::before {
+    content: "\2713";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: var(--cobalt-text);
+    background: var(--cobalt-text);
+    color: var(--raised);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+}
+.gd-opt input:focus-visible + span { outline: 2px solid var(--cobalt-text); outline-offset: 2px; }
+.gd-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+.gd-nav[hidden] { display: none; }
+.gd-res { display: flex; flex-direction: column; gap: 22px; }
+.gd-res[hidden] { display: none; }
+.gd-res:focus { outline: none; }
+.gd-res h2 { font-size: clamp(1.9rem, 2.5vw + 1rem, 2.7rem); line-height: 1.1; }
+.gd-facts { display: flex; flex-wrap: wrap; gap: 10px 24px; font-family: var(--f-mono); font-size: 14px; }
+.gd-why { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-strong); }
+.gd-why li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.gd-also { border: 1px dashed var(--border-ui); border-radius: var(--r-card); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.gd-copied { font-size: 14.5px; color: var(--ok); font-weight: 600; }

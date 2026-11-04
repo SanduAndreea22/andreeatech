@@ -589,3 +589,176 @@
     form.addEventListener('submit', function (event) { event.preventDefault(); });
     update();
 })();
+
+/* Guide (/ghid/): three questions, one recommendation. The questions, the
+   wording and the rules come from website/guide.py as JSON (data-guide), so this
+   script only shows a question, collects an answer and applies the first rule
+   that matches. Nothing is sent or saved. All text goes in with textContent. */
+(function () {
+    'use strict';
+    var root = document.getElementById('guide');
+    if (!root) return;
+    var data;
+    try { data = JSON.parse(root.getAttribute('data-guide')); } catch (e) { return; }
+
+    var byId = function (id) { return document.getElementById(id); };
+    var body = byId('gdBody'), next = byId('gdNext'), back = byId('gdBack'), res = byId('gdRes');
+    var nav = byId('gdNav'), prog = byId('gdProg'), count = byId('gdCount'), restart = byId('gdRestart');
+    var step = 0, answers = {};
+
+    function option(qid, value) {
+        for (var i = 0; i < data.questions.length; i++) {
+            if (data.questions[i].id !== qid) continue;
+            for (var j = 0; j < data.questions[i].options.length; j++) {
+                if (data.questions[i].options[j].value === value) return data.questions[i].options[j];
+            }
+        }
+        return null;
+    }
+    function matches(cond, ctx) {
+        for (var field in cond) {
+            if (Object.prototype.hasOwnProperty.call(cond, field) && cond[field].indexOf(ctx[field]) === -1) return false;
+        }
+        return true;
+    }
+    function recommend() {
+        var q1 = option('q1', answers.q1), q2 = option('q2', answers.q2), q3 = option('q3', answers.q3);
+        var dir = q1.dir, pkg = data.packages[dir];
+        var ctx = { dir: dir, q1: q1.value, q2: q2.value, q3: q3.value };
+        var key = pkg.key, heading = pkg.name, q2why = q2.why, also = null, i;
+        for (i = 0; i < data.key_rules.length; i++) {
+            if (matches(data.key_rules[i]['if'], ctx)) {
+                key = data.key_rules[i].key; heading = data.key_rules[i].heading; q2why = data.key_rules[i].why; break;
+            }
+        }
+        for (i = 0; i < data.also_rules.length; i++) {
+            if (matches(data.also_rules[i]['if'], ctx)) { also = data.also_rules[i]; break; }
+        }
+        var summary = data.summary.replace('{q1}', q1.label).replace('{q2}', q2.short).replace('{q3}', q3.short)
+            .replace('{name}', pkg.name).replace('{price}', pkg.price);
+        return { pkg: pkg, key: key, heading: heading, whys: [q1.why, q2why, q3.why], also: also, summary: summary };
+    }
+
+    function renderQuestion() {
+        var q = data.questions[step];
+        body.textContent = '';
+        var fs = document.createElement('fieldset');
+        fs.className = 'gd-q';
+        var lg = document.createElement('legend');
+        lg.id = 'gdLegend';
+        lg.tabIndex = -1;
+        lg.textContent = q.text;
+        fs.appendChild(lg);
+        q.options.forEach(function (o, i) {
+            var label = document.createElement('label');
+            label.className = 'gd-opt';
+            var input = document.createElement('input');
+            input.type = 'radio';
+            input.name = q.id;
+            input.value = o.value;
+            input.id = q.id + '-' + i;
+            if (answers[q.id] === o.value) input.checked = true;
+            var span = document.createElement('span');
+            span.textContent = o.label;
+            label.appendChild(input);
+            label.appendChild(span);
+            fs.appendChild(label);
+        });
+        body.appendChild(fs);
+        count.textContent = 'Întrebarea ' + (step + 1) + ' din ' + data.questions.length;
+        Array.prototype.forEach.call(prog.children, function (seg, i) { seg.className = i <= step ? 'on' : ''; });
+        back.hidden = step === 0;
+        next.textContent = step === data.questions.length - 1 ? 'Vezi recomandarea' : 'Continuă';
+        next.disabled = !answers[q.id];
+    }
+
+    function el(parent, tag, cls, text) {
+        var node = document.createElement(tag);
+        if (cls) node.className = cls;
+        if (text) node.textContent = text;
+        parent.appendChild(node);
+        return node;
+    }
+    function link(parent, cls, text, href) {
+        var a = el(parent, 'a', cls, text);
+        a.setAttribute('href', href);
+        return a;
+    }
+
+    function showResult() {
+        var r = recommend();
+        var briefHref = data.brief_url + '?pachet=' + encodeURIComponent(r.key);
+        res.textContent = '';
+        el(res, 'span', 'mono', 'Recomandarea mea');
+        el(res, 'h2', '', r.heading);
+        var facts = el(res, 'div', 'gd-facts');
+        el(facts, 'span', '', r.pkg.price);
+        el(facts, 'span', '', r.pkg.duration);
+        var why = el(res, 'ul', 'gd-why');
+        r.whys.forEach(function (w) { el(why, 'li', '', w); });
+        if (r.also) {
+            var box = el(res, 'div', 'gd-also');
+            el(box, 'span', 'mono', 'Se potrivește și: ' + data.packages[r.also.dir].name);
+            el(box, 'p', '', r.also.note);
+        }
+        var row = el(res, 'div', 'btn-row');
+        link(row, 'btn btn-primary', 'Completează brief-ul cu acest pachet', briefHref);
+        link(row, 'btn btn-line', 'Vezi detaliile serviciului', r.pkg.service_url);
+        link(row, 'link', 'Mai bine discutăm întâi', data.brief_url + '?pachet=not_sure');
+
+        var copyRow = el(res, 'div', 'btn-row');
+        var copyBtn = el(copyRow, 'button', 'gd-link', 'Copiază rezumatul pentru brief');
+        copyBtn.type = 'button';
+        var copied = el(copyRow, 'span', 'gd-copied');
+        copied.hidden = true;
+        var summary = el(res, 'p', 'muted', r.summary);
+        summary.style.fontSize = '14.5px';
+        copyBtn.addEventListener('click', function () {
+            function done(t) { copied.hidden = false; copied.textContent = t; }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(r.summary).then(function () { done('Copiat'); }, function () { done('Selectează manual textul de mai jos'); });
+            } else { done('Selectează manual textul de mai jos'); }
+        });
+        el(res, 'p', 'note', 'Este o orientare, nu o ofertă. Prețul final se stabilește după brief.');
+
+        body.hidden = true;
+        nav.hidden = true;
+        prog.hidden = true;
+        count.textContent = 'Rezultat';
+        restart.hidden = false;
+        res.hidden = false;
+        res.focus();
+        byId('gdLive').textContent = 'Recomandare: ' + r.heading + ', ' + r.pkg.price + '.';
+    }
+
+    body.addEventListener('change', function (e) {
+        if (!e.target.name) return;
+        answers[e.target.name] = e.target.value;
+        next.disabled = false;
+    });
+    back.addEventListener('click', function () { step -= 1; renderQuestion(); byId('gdLegend').focus(); });
+    byId('gdForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!answers[data.questions[step].id]) return;
+        if (step < data.questions.length - 1) { step += 1; renderQuestion(); byId('gdLegend').focus(); return; }
+        showResult();
+    });
+    restart.addEventListener('click', function () {
+        answers = {};
+        step = 0;
+        res.hidden = true;
+        res.textContent = '';
+        body.hidden = false;
+        nav.hidden = false;
+        prog.hidden = false;
+        restart.hidden = true;
+        byId('gdLive').textContent = '';
+        renderQuestion();
+        byId('gdLegend').focus();
+    });
+
+    /* Ready: show the guide and hide the list that stands in for it without JavaScript. */
+    byId('guideFallback').hidden = true;
+    root.hidden = false;
+    renderQuestion();
+})();

@@ -268,10 +268,10 @@ class ProjectDetailViewTests(TestCase):
         response = self.client.get(reverse("project_detail", args=["does-not-exist"]))
         self.assertEqual(response.status_code, 404)
 
-    def test_og_image_falls_back_to_the_brand_image_never_the_personal_photo(self):
+    def test_og_image_without_a_screenshot_is_still_the_projects_own_card_never_the_personal_photo(self):
         project = make_project(title="No Image Project")
         response = self.client.get(reverse("project_detail", args=[project.slug]))
-        self.assertContains(response, "og-default.jpg")
+        self.assertContains(response, f"/projects/{project.slug}/card.jpg?v=")
         self.assertNotContains(response, "poza_me")
 
     def test_download_button_shown_when_pdf_attached(self):
@@ -1003,7 +1003,7 @@ class SeoTestBase(TestCase):
             reverse("home"), reverse("services"),
             *[reverse("service_detail", args=[s]) for s in ("web", "ai", "creativ")],
             reverse("projects"), reverse("project_detail", args=[self.project.slug]),
-            reverse("calculator"),
+            reverse("calculator"), reverse("guide"),
             reverse("products"), reverse("planner_product"), reverse("budget_product"),
             reverse("about"), reverse("contact"), reverse("start_project"),
             reverse("faq"), reverse("reviews"), reverse("privacy_policy"),
@@ -1079,7 +1079,11 @@ class TitlesAndDescriptionsTests(SeoTestBase):
 
 class ShareImageTests(SeoTestBase):
     def test_default_share_image_is_the_brand_card_not_the_personal_photo(self):
+        # Every page except a project page, which has its own card (ProjectShareCardTests).
+        project_page = reverse("project_detail", args=[self.project.slug])
         for url in self.public_urls():
+            if url == project_page:
+                continue
             with self.subTest(url=url):
                 body = self.client.get(url).content.decode()
                 head = body[:body.index("</head>")]
@@ -1089,10 +1093,12 @@ class ShareImageTests(SeoTestBase):
                 self.assertEqual(_meta(head, "property", "og:image:height"), "630")
                 self.assertTrue(_meta(head, "property", "og:image:alt"))
 
-    def test_project_with_its_own_image_shares_that_image(self):
+    def test_project_page_shares_its_own_card_not_the_raw_screenshot(self):
         body = self.client.get(reverse("project_detail", args=[self.with_image.slug])).content.decode()
         head = body[:body.index("</head>")]
-        self.assertIn(self.with_image.image.url, _meta(head, "property", "og:image"))
+        og = _meta(head, "property", "og:image")
+        self.assertIn(f"/projects/{self.with_image.slug}/card.jpg?v=", og)
+        self.assertNotIn(self.with_image.image.url, og)
         self.assertNotIn("poza_me", head)
         self.assertIn(self.with_image.title, _meta(head, "property", "og:image:alt"))
 
@@ -2162,3 +2168,430 @@ class BookingDemoTests(TestCase):
 
     def test_the_calculator_link_under_the_demo(self):
         self.assertIn(f'href="{reverse("calculator")}">Cât te costă', self.home())
+
+
+# ---------------------------------------------------------------------------
+# Share cards, one per project (website/share_card.py)
+# ---------------------------------------------------------------------------
+import shutil as _shutil
+import tempfile as _tempfile
+from unittest import mock as _mock
+
+from django.test import override_settings as _override
+
+from . import share_card as _sc
+
+
+def _card_image(response):
+    from PIL import Image as _Image
+    return _Image.open(io.BytesIO(b"".join(response.streaming_content)))
+
+
+class ShareCardRenderingTests(TestCase):
+
+    def project(self, **kw):
+        defaults = {"title": "Al Noir", "direction": "web", "status": "demo", "tech_stack": "Django, Stripe, PostgreSQL"}
+        defaults.update(kw)
+        return make_project(**defaults)
+
+    def test_card_has_the_standard_size_and_mode(self):
+        image = _sc.render_card(self.project(), "example.test")
+        self.assertEqual(image.size, (1200, 630))
+        self.assertEqual(image.mode, "RGB")
+
+    def test_every_direction_and_status_renders(self):
+        for direction in ("web", "ai", "creativ"):
+            for status in ("demo", "produs", "instrument", "concept"):
+                with self.subTest(direction=direction, status=status):
+                    self.assertEqual(_sc.render_card(self.project(title=f"{direction}-{status}", direction=direction, status=status), "h").size, (1200, 630))
+
+    def test_card_with_a_screenshot_differs_from_the_one_without(self):
+        plain = _sc.render_card(self.project(title="Same"), "h")
+        with_shot = _sc.render_card(self.project(title="Same", image=make_oversized_png(1400, 800)), "h")
+        self.assertNotEqual(plain.tobytes(), with_shot.tobytes())
+
+    def test_romanian_letters_are_drawn_not_replaced(self):
+        with_diacritics = _sc.render_card(self.project(title="ăâîșț"), "h").tobytes()
+        without = _sc.render_card(self.project(title="aaist"), "h").tobytes()
+        self.assertNotEqual(with_diacritics, without)
+
+    def test_a_very_long_title_still_fits_in_the_card(self):
+        image = _sc.render_card(self.project(title="Cuvânt " * 80), "h")
+        self.assertEqual(image.size, (1200, 630))
+
+    def test_a_very_long_single_word_does_not_break_drawing(self):
+        self.assertEqual(_sc.render_card(self.project(title="A" * 300), "h").size, (1200, 630))
+
+    def test_characters_the_fonts_cannot_draw_are_dropped_not_fatal(self):
+        self.assertEqual(_sc._clean("Proiect \U0001F680 \u202eînapoi\u200b"), "Proiect înapoi")
+        self.assertEqual(_sc.render_card(self.project(title="\U0001F680\U0001F680"), "h").size, (1200, 630))
+
+    def test_empty_title_text_gets_a_neutral_placeholder(self):
+        self.assertEqual(_sc.render_card(self.project(title="\U0001F680"), "h").size, (1200, 630))
+
+    def test_a_missing_screenshot_file_gives_a_card_without_it(self):
+        project = self.project(title="Gone", image=make_oversized_png(1400, 800))
+        Path(project.image.path).unlink()
+        with self.assertLogs("website.share_card", level="WARNING"):
+            self.assertEqual(_sc.render_card(project, "h").size, (1200, 630))
+
+    def test_a_damaged_screenshot_file_gives_a_card_without_it(self):
+        project = self.project(title="Broken", image=make_oversized_png(1400, 800))
+        Path(project.image.path).write_bytes(b"not an image")
+        with self.assertLogs("website.share_card", level="WARNING"):
+            self.assertEqual(_sc.render_card(project, "h").size, (1200, 630))
+
+    def test_the_card_never_adds_anything_the_page_does_not_show(self):
+        # Texts drawn: wordmark, direction, title, status, stack, host. No invented claims.
+        source = Path(_sc.__file__).read_text()
+        for forbidden in ("clienți", "rezultat", "garant", "premiu", "recomand"):
+            self.assertNotIn(forbidden, source.lower())
+
+
+class ShareCardVersionTests(TestCase):
+
+    def test_same_project_same_version(self):
+        project = make_project(title="Same", tech_stack="Django")
+        self.assertEqual(_sc.card_version(project, "h"), _sc.card_version(project, "h"))
+
+    def test_everything_shown_on_the_card_changes_the_version(self):
+        project = make_project(title="Base", direction="web", status="demo", tech_stack="Django")
+        base = _sc.card_version(project, "h")
+        for field, value in (("title", "Other"), ("direction", "ai"), ("status", "concept"), ("tech_stack", "Python")):
+            with self.subTest(field=field):
+                changed = make_project(title=f"Base-{field}", direction="web", status="demo", tech_stack="Django")
+                setattr(changed, field, value)
+                changed.slug = project.slug
+                self.assertNotEqual(_sc.card_version(changed, "h"), base)
+        self.assertNotEqual(_sc.card_version(project, "other-host"), base)
+
+    def test_text_not_shown_on_the_card_does_not_change_the_version(self):
+        project = make_project(title="Quiet")
+        before = _sc.card_version(project, "h")
+        project.short_description = "Changed"
+        project.problem = "<p>changed</p>"
+        project.order = 5
+        self.assertEqual(_sc.card_version(project, "h"), before)
+
+    def test_replacing_the_screenshot_changes_the_version(self):
+        project = make_project(title="Shot", image=make_oversized_png(1400, 800))
+        before = _sc.card_version(project, "h")
+        Path(project.image.path).write_bytes(Path(project.image.path).read_bytes() + b"\0")
+        self.assertNotEqual(_sc.card_version(project, "h"), before)
+
+
+class ShareCardViewTests(TestCase):
+
+    def setUp(self):
+        self.project = make_project(title="Al Noir", direction="web", status="demo", image=make_oversized_png(1400, 800))
+        self.url = reverse("project_card", args=[self.project.slug])
+        self.cache = Path(settings.MEDIA_ROOT) / "share_cards"
+        if self.cache.exists():
+            _shutil.rmtree(self.cache)
+
+    def tearDown(self):
+        if self.cache.exists():
+            _shutil.rmtree(self.cache)
+
+    def test_returns_a_1200_by_630_jpeg(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "image/jpeg")
+        image = _card_image(response)
+        self.assertEqual((image.format, image.size), ("JPEG", (1200, 630)))
+
+    def test_stays_small_enough_for_social_networks(self):
+        body = b"".join(self.client.get(self.url).streaming_content)
+        self.assertLess(len(body), 300 * 1024)
+
+    def test_the_url_is_the_one_shown_on_the_card_site(self):
+        self.assertEqual(self.url, f"/projects/{self.project.slug}/card.jpg")
+
+    def test_is_drawn_once_then_served_from_disk(self):
+        with _mock.patch("website.share_card.render_card", wraps=_sc.render_card) as spy:
+            self.client.get(self.url)
+            self.client.get(self.url)
+            self.client.get(self.url + "?v=whatever")
+        self.assertEqual(spy.call_count, 1)
+        self.assertEqual(len(list(self.cache.glob("*.jpg"))), 1)
+
+    def test_a_changed_project_gets_a_new_file_and_the_old_one_is_removed(self):
+        self.client.get(self.url)
+        first = {p.name for p in self.cache.glob("*.jpg")}
+        self.project.status = "concept"
+        self.project.save()
+        self.client.get(self.url)
+        second = {p.name for p in self.cache.glob("*.jpg")}
+        self.assertEqual(len(second), 1)
+        self.assertNotEqual(first, second)
+
+    def test_removing_old_versions_never_touches_another_projects_card(self):
+        other = make_project(title="Al Noir Bis", slug=self.project.slug + "-bis")
+        self.client.get(reverse("project_card", args=[other.slug]))
+        self.client.get(self.url)
+        self.project.status = "concept"
+        self.project.save()
+        self.client.get(self.url)
+        names = sorted(p.name for p in self.cache.glob("*.jpg"))
+        self.assertEqual(len(names), 2)
+        self.assertTrue(any(n.startswith(other.slug + "-") for n in names))
+
+    def test_unknown_project_is_404(self):
+        self.assertEqual(self.client.get(reverse("project_card", args=["nu-exista"])).status_code, 404)
+
+    def test_has_a_cache_header(self):
+        self.assertIn("max-age=", self.client.get(self.url)["Cache-Control"])
+
+    def test_works_for_a_project_without_a_screenshot(self):
+        plain = make_project(title="Plain")
+        response = self.client.get(reverse("project_card", args=[plain.slug]))
+        self.assertEqual(_card_image(response).size, (1200, 630))
+
+    def test_a_failure_falls_back_to_the_brand_card_instead_of_an_error(self):
+        with _mock.patch("website.share_card.render_card", side_effect=RuntimeError("boom")), self.assertLogs("website.views", level="ERROR"):
+            response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.assertIn("og-default.jpg", response["Location"])
+
+    def test_no_half_written_file_is_left_after_a_failure(self):
+        with _mock.patch("website.share_card.render_card", side_effect=RuntimeError("boom")), self.assertLogs("website.views", level="ERROR"):
+            self.client.get(self.url)
+        self.assertEqual(list(self.cache.glob("*")) if self.cache.exists() else [], [])
+
+    def test_a_slug_cannot_escape_the_cache_folder(self):
+        # slug converter only accepts letters, digits, - and _
+        response = self.client.get("/projects/..%2f..%2fetc/card.jpg")
+        self.assertEqual(response.status_code, 404)
+
+    def test_nothing_is_stored_in_the_database(self):
+        before = Project.objects.count()
+        self.client.get(self.url)
+        self.assertEqual(Project.objects.count(), before)
+
+
+class ProjectShareCardTagsTests(TestCase):
+
+    def head(self, project):
+        body = self.client.get(reverse("project_detail", args=[project.slug])).content.decode()
+        return body[:body.index("</head>")]
+
+    def test_og_and_twitter_images_are_the_same_absolute_card_url_with_a_version(self):
+        project = make_project(title="Tagged")
+        head = self.head(project)
+        og, tw = _meta(head, "property", "og:image"), _meta(head, "name", "twitter:image")
+        self.assertEqual(og, tw)
+        self.assertRegex(og, rf"^http://testserver/projects/{project.slug}/card\.jpg\?v=[0-9a-f]{{12}}$")
+
+    def test_size_and_alt_describe_the_card(self):
+        project = make_project(title="Tagged Alt")
+        head = self.head(project)
+        self.assertEqual(_meta(head, "property", "og:image:width"), "1200")
+        self.assertEqual(_meta(head, "property", "og:image:height"), "630")
+        self.assertIn("Tagged Alt", _meta(head, "property", "og:image:alt"))
+        self.assertIn("Tagged Alt", _meta(head, "name", "twitter:image:alt"))
+
+    def test_the_version_in_the_url_changes_when_the_project_changes(self):
+        project = make_project(title="Versioned", status="demo")
+        before = _meta(self.head(project), "property", "og:image")
+        project.status = "concept"
+        project.save()
+        self.assertNotEqual(_meta(self.head(project), "property", "og:image"), before)
+
+    def test_the_url_in_the_tag_serves_an_image(self):
+        project = make_project(title="Roundtrip")
+        og = _meta(self.head(project), "property", "og:image").replace("http://testserver", "")
+        response = self.client.get(og)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(_card_image(response).size, (1200, 630))
+        _shutil.rmtree(Path(settings.MEDIA_ROOT) / "share_cards", ignore_errors=True)
+
+    def test_other_pages_keep_the_brand_card(self):
+        for name in ("home", "services", "projects", "about"):
+            head = self.client.get(reverse(name)).content.decode()
+            head = head[:head.index("</head>")]
+            self.assertIn("og-default.jpg", _meta(head, "property", "og:image"), name)
+
+    def test_the_fonts_the_cards_need_are_in_the_project(self):
+        for stem in ("fraunces", "hanken-grotesk", "dm-mono-500"):
+            for subset in ("latin", "latin-ext"):
+                self.assertTrue((Path(_sc.FONT_DIR) / f"{stem}-{subset}.ttf").exists(), f"{stem}-{subset}")
+        self.assertTrue((Path(_sc.FONT_DIR) / "README.txt").exists())
+
+
+# ---------------------------------------------------------------------------
+# The guide "Ce pachet ți se potrivește?" (/ghid/, website/guide.py)
+# ---------------------------------------------------------------------------
+import itertools as _it
+import html as _htmllib
+
+from . import guide as _guide
+from .packages import ADDONS as _ADDONS, PACKAGES as _PACKAGES
+
+
+def _all_answers():
+    values = [[o["value"] for o in q["options"]] for q in _guide.QUESTIONS]
+    for combo in _it.product(*values):
+        yield dict(zip(("q1", "q2", "q3"), combo))
+
+
+class GuideDataTests(TestCase):
+
+    def test_there_are_three_questions_and_forty_eight_combinations(self):
+        self.assertEqual(len(_guide.QUESTIONS), 3)
+        self.assertEqual(len(list(_all_answers())), 4 * 4 * 3)
+
+    def test_every_combination_gets_a_valid_recommendation(self):
+        valid_keys = {p["key"] for p in _PACKAGES} | {"automation_only"}
+        choices = {value for value, _ in ContactMessage.PACKAGE_CHOICES}
+        for answers in _all_answers():
+            with self.subTest(answers=answers):
+                r = _guide.recommend(answers)
+                self.assertIn(r["key"], valid_keys)
+                self.assertIn(r["key"], choices)          # the brief accepts it
+                self.assertEqual(r["package"]["key"], _guide.PACKAGE_FOR[r["direction"]])
+                self.assertEqual(len(r["whys"]), 3)
+                self.assertTrue(all(r["whys"]))
+                self.assertIn(r["package"]["price"], r["summary"])
+
+    def test_the_direction_always_follows_question_one(self):
+        for answers in _all_answers():
+            q1 = next(o for o in _guide.QUESTIONS[0]["options"] if o["value"] == answers["q1"])
+            self.assertEqual(_guide.recommend(answers)["direction"], q1["dir"])
+
+    def test_automation_only_only_when_ai_is_wanted_and_a_site_exists(self):
+        for answers in _all_answers():
+            r = _guide.recommend(answers)
+            expected = answers["q1"] == "timp" and answers["q2"] in ("site", "ambele")
+            self.assertEqual(r["key"] == "automation_only", expected, answers)
+
+    def test_the_second_suggestion_is_never_the_same_direction(self):
+        for answers in _all_answers():
+            r = _guide.recommend(answers)
+            if r["also"]:
+                self.assertNotEqual(r["also"]["dir"], r["direction"], answers)
+
+    def test_the_price_comes_from_packages_not_from_the_guide(self):
+        r = _guide.recommend({"q1": "gasit", "q2": "nimic", "q3": "inca"})
+        self.assertEqual(r["package"]["price"], next(p for p in _PACKAGES if p["slug"] == "web")["price"])
+        source = Path(_guide.__file__).read_text()
+        for p in _PACKAGES:
+            self.assertNotIn(p["price"], source)
+
+    def test_the_extra_prices_in_the_note_come_from_the_addons(self):
+        note = next(r["note"] for r in _guide.ALSO_RULES if r["dir"] == "ai")
+        for addon in _ADDONS:
+            self.assertIn(f"€{addon['price_value']}", note)
+
+    def test_an_unknown_answer_is_rejected(self):
+        with self.assertRaises(ValueError):
+            _guide.recommend({"q1": "nope", "q2": "nimic", "q3": "inca"})
+
+    def test_the_guide_promises_no_results(self):
+        text = _json.dumps(_guide.QUESTIONS, ensure_ascii=False).lower() + " ".join(r["note"] for r in _guide.ALSO_RULES).lower()
+        for word in ("garant", "dublu", "crește", "cresc", "% ", "economis"):
+            self.assertNotIn(word, text)
+
+    def test_the_summary_template_has_every_placeholder(self):
+        for token in ("{q1}", "{q2}", "{q3}", "{name}", "{price}"):
+            self.assertIn(token, _guide.SUMMARY_TEMPLATE)
+
+
+class GuidePageTests(TestCase):
+
+    def get(self):
+        return self.client.get(reverse("guide"))
+
+    def test_page_exists_with_one_h1_and_the_planned_url(self):
+        response = self.get()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(reverse("guide"), "/ghid/")
+        self.assertEqual(len(_re.findall(r"<h1[ >]", response.content.decode())), 1)
+
+    def test_the_data_for_the_script_is_the_data_of_the_module(self):
+        body = self.get().content.decode()
+        raw = _re.search(r'data-guide="(.*?)"', body, _re.S).group(1)
+        data = _json.loads(_htmllib.unescape(raw))
+        self.assertEqual(data["questions"], _guide.QUESTIONS)
+        self.assertEqual(data["key_rules"], _guide.KEY_RULES)
+        self.assertEqual(data["also_rules"], _guide.ALSO_RULES)
+        self.assertEqual(data["summary"], _guide.SUMMARY_TEMPLATE)
+        self.assertEqual(data["brief_url"], reverse("start_project"))
+
+    def test_prices_and_durations_in_the_data_are_the_real_ones(self):
+        raw = _re.search(r'data-guide="(.*?)"', self.get().content.decode(), _re.S).group(1)
+        data = _json.loads(_htmllib.unescape(raw))
+        for direction, key in _guide.PACKAGE_FOR.items():
+            package = next(p for p in _PACKAGES if p["key"] == key)
+            self.assertEqual(data["packages"][direction]["price"], package["price"])
+            self.assertEqual(data["packages"][direction]["duration"], package["duration"])
+            self.assertEqual(data["packages"][direction]["service_url"], reverse("service_detail", args=[package["slug"]]))
+
+    def test_without_javascript_the_three_directions_are_listed_and_the_guide_is_hidden(self):
+        body = self.get().content.decode()
+        self.assertIn('id="guideFallback"', body)
+        for package in _PACKAGES:
+            self.assertIn(_htmllib.escape(package["name"], quote=False), body[body.index('id="guideFallback"'):body.index('id="guide"')])
+        self.assertRegex(body, r'id="guide"[^>]*\shidden')
+
+    def test_it_says_it_is_an_orientation_not_an_offer(self):
+        body = self.get().content.decode() + " ".join(_guide.HOW_IT_WORKS)
+        self.assertIn("orientare, nu o ofertă", body)
+
+    def test_the_how_it_works_text_matches_the_rules(self):
+        self.assertEqual(len(_guide.KEY_RULES), 1)
+        self.assertTrue(any("doar automatizarea" in line for line in _guide.HOW_IT_WORKS))
+        body = self.get().content.decode()
+        for line in _guide.HOW_IT_WORKS:
+            self.assertIn(_htmllib.escape(line, quote=False), body)
+
+    def test_every_recommended_key_opens_the_brief_with_that_package_selected(self):
+        keys = {_guide.recommend(a)["key"] for a in _all_answers()}
+        self.assertEqual(keys, {"produse_sisteme", "ai_automatizare", "continut_digital", "automation_only"})
+        for key in keys:
+            response = self.client.get(reverse("start_project") + f"?pachet={key}")
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.context["form"].initial["selected_package"], key)
+
+    def test_automation_only_also_ticks_the_matching_features_in_the_brief(self):
+        response = self.client.get(reverse("start_project") + "?pachet=automation_only")
+        self.assertEqual(response.context["form"].initial["required_features"], ["automation", "ai_agent"])
+
+    def test_the_page_is_in_the_sitemap_and_linked_from_home_and_services(self):
+        self.assertIn("/ghid/", self.client.get("/sitemap.xml").content.decode())
+        for name in ("home", "services"):
+            self.assertContains(self.client.get(reverse(name)), f'href="{reverse("guide")}"', msg_prefix=name)
+
+    def test_no_inline_script(self):
+        body = self.get().content.decode()
+        inline = [x for x in body.split("<script")[1:] if "src=" not in x.split(">")[0] and "ld+json" not in x.split(">")[0]]
+        self.assertEqual(inline, [])
+
+    def test_nothing_is_posted_anywhere(self):
+        body = self.get().content.decode()
+        form = _re.search(r'<form id="gdForm"[^>]*>', body).group(0)
+        for attribute in ("action=", "method="):
+            self.assertNotIn(attribute, form.lower())
+        self.assertNotIn("csrfmiddlewaretoken", body[body.index('id="gdForm"'):body.index("</form>", body.index('id="gdForm"'))])
+
+    def test_visitor_choices_never_go_in_as_html(self):
+        js = (_STATIC / "site.js").read_text()
+        block = js[js.index("Guide (/ghid/)"):]
+        self.assertNotIn("innerHTML", block)
+        self.assertNotIn("insertAdjacentHTML", block)
+
+    def test_the_summary_is_built_by_replacing_the_same_placeholders(self):
+        js = (_STATIC / "site.js").read_text()
+        block = js[js.index("Guide (/ghid/)"):]
+        for token in ("{q1}", "{q2}", "{q3}", "{name}", "{price}"):
+            self.assertIn(f"replace('{token}'", block)
+
+    def test_the_script_uses_the_data_not_its_own_copy_of_the_wording(self):
+        js = (_STATIC / "site.js").read_text()
+        block = js[js.index("Guide (/ghid/)"):]
+        for sentence in ("Ai spus că", "Doar automatizare", "Pornești de la zero"):
+            self.assertNotIn(sentence, block)
+
+    def test_the_page_makes_no_claim_about_results(self):
+        text = _re.sub(r"<[^>]+>", " ", self.get().content.decode()).lower()
+        for word in ("garant", "statistic", "studiu", "mii de clienți"):
+            self.assertNotIn(word, text)

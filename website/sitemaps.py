@@ -12,6 +12,7 @@ class StaticViewSitemap(Sitemap):
         return [
             "home",
             "services",
+            "guide",
             "calculator",
             "about",
             "products",

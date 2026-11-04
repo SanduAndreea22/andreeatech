@@ -25,3 +25,5 @@ CLAUDE.md
 andreeatech-site-context.md
 audit-*.md
 digital-products-experiences.md
+# Share cards drawn on demand (website/share_card.py); safe to delete, they are redrawn when needed
+media/share_cards/

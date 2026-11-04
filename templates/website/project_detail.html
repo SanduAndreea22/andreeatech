@@ -9,10 +9,10 @@
 {% block twitter_description %}{{ project.short_description|truncatechars:160 }}{% endblock %}
 {% block og_image %}{{ share_image_url }}{% endblock %}
 {% block twitter_image %}{{ share_image_url }}{% endblock %}
-{% block og_image_meta %}{% if project.image %}<meta property="og:image:width" content="{{ project.image.width }}">
-    <meta property="og:image:height" content="{{ project.image.height }}">
-    <meta property="og:image:alt" content="Captură din proiectul {{ project.title }}">
-    <meta name="twitter:image:alt" content="Captură din proiectul {{ project.title }}">{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block og_image_meta %}<meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Card de partajare pentru proiectul {{ project.title }}">
+    <meta name="twitter:image:alt" content="Card de partajare pentru proiectul {{ project.title }}">{% endblock %}
 {% block jsonld %}{% project_jsonld project %}{% endblock %}
 
 {% block content %}
