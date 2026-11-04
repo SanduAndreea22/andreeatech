@@ -34,7 +34,7 @@ class StartProjectForm(FriendlyErrorsMixin, HoneypotFormMixin, forms.ModelForm):
     FEATURE_CHOICES = [
         ("content", "Conținut & postări social media"),
         ("booking", "Sistem de rezervări / programări"),
-        ("dashboard", "Dashboard de administrare"),
+        ("dashboard", "Panou de administrare"),
         ("website", "Website de prezentare"),
         ("automation", "Automatizare simplă (confirmări, mesaje de reamintire)"),
         ("ai_agent", "Asistent AI care răspunde clienților (telefon, WhatsApp)"),

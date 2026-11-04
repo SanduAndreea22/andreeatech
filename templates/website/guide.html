@@ -1,17 +1,17 @@
 {% extends "base_v2.html" %}
 
-{% block title %}Ce pachet ți se potrivește? | Andreea Tech{% endblock %}
+{% block title %}Ce direcție ți se potrivește? | Andreea Tech{% endblock %}
 {% block meta_description %}Trei întrebări scurte care te duc la direcția potrivită: site, automatizare sau design creativ, cu prețul de pornire. Este o orientare, nu o ofertă.{% endblock %}
-{% block og_title %}Ce pachet ți se potrivește? | Andreea Tech{% endblock %}
-{% block twitter_title %}Ce pachet ți se potrivește? | Andreea Tech{% endblock %}
+{% block og_title %}Ce direcție ți se potrivește? | Andreea Tech{% endblock %}
+{% block twitter_title %}Ce direcție ți se potrivește? | Andreea Tech{% endblock %}
 {% block og_description %}Trei întrebări scurte care te duc la direcția potrivită: site, automatizare sau design creativ, cu prețul de pornire. Este o orientare, nu o ofertă.{% endblock %}
 {% block twitter_description %}Trei întrebări scurte care te duc la direcția potrivită: site, automatizare sau design creativ, cu prețul de pornire. Este o orientare, nu o ofertă.{% endblock %}
 
 {% block content %}
 <section class="phead">
     <div class="wrap">
-        <h1>Ce pachet ți se potrivește?</h1>
-        <p class="lead">Trei întrebări scurte. La sfârșit primești direcția care se potrivește, motivele, prețul de pornire și un buton care deschide formularul cu pachetul deja ales.</p>
+        <h1>Ce direcție ți se potrivește?</h1>
+        <p class="lead">Trei întrebări scurte. La sfârșit primești direcția care se potrivește, motivele, prețul de pornire și un buton care deschide formularul cu direcția deja aleasă.</p>
     </div>
 </section>
 
@@ -19,7 +19,7 @@
     <div class="wrap">
         {# Without JavaScript the guide cannot run, so the three directions are listed instead. #}
         <div id="guideFallback">
-            <p class="note mb-5">Chestionarul are nevoie de JavaScript. Până atunci, iată cele trei direcții.</p>
+            <p class="note mb-5">Chestionarul funcționează doar cu JavaScript activat. Până atunci, iată cele trei direcții.</p>
             <div class="rows">
                 {% for pkg in packages %}
                 {% include "partials/service_row.html" with pkg=pkg %}

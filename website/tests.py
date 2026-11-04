@@ -683,7 +683,7 @@ class ProductPagesTests(TestCase):
         self.assertContains(response, "MyBudget")
         self.assertContains(response, reverse("planner_product"))
         self.assertContains(response, reverse("budget_product"))
-        self.assertContains(response, "Early access")
+        self.assertContains(response, "În testare")
 
     def test_planner_page_keeps_the_app_link_and_the_demo(self):
         response = self.client.get(reverse("planner_product"))
@@ -816,7 +816,7 @@ class FaqRedesignTests(TestCase):
     def test_answers_are_in_the_html_not_hidden_in_javascript(self):
         body = self.client.get(reverse("faq")).content.decode()
         self.assertIn("7 zile de ajustări gratuite", body)
-        self.assertIn("Django e stabil", body)
+        self.assertIn("cu tehnologii stabile și verificate", body)
         self.assertGreaterEqual(body.count('<details class="qa">'), 20)
 
     def test_faq_has_no_inline_scripts(self):
@@ -2140,7 +2140,7 @@ class BookingDemoTests(TestCase):
     def test_submit_waits_for_javascript_and_the_page_says_so(self):
         body = self.home()
         self.assertRegex(body, r'id="bkGo" disabled')
-        self.assertIn("Demo-ul are nevoie de JavaScript", body)
+        self.assertIn("Demo-ul funcționează doar cu JavaScript activat", body)
 
     def test_name_field_is_length_limited(self):
         self.assertRegex(self.home(), r'id="bkName" maxlength="40"')
@@ -3416,3 +3416,42 @@ class CopyFixesTests(TestCase):
     def test_the_package_label_matches_the_model_state(self):
         labels = dict(ContactMessage.PACKAGE_CHOICES)
         self.assertEqual(labels["automation_only"], "Doar automatizare / asistent AI (am deja un site)")
+
+
+class PlainWordsTests(TestCase):
+    """The optional copy improvements: everyday words instead of anglicisms and jargon."""
+
+    PAGES = ["/", "/servicii/", "/servicii/web/", "/servicii/ai/", "/about/", "/faq/", "/products/", "/products/planner/",
+             "/products/budget/", "/projects/", "/ghid/", "/start-project/"]
+    OLD = [r"early access", r"\btask(-uri)?\b", r"\bcall(-uri)?\b", r"\bbug(-uri)?\b", r"account manager",
+           r"web development", r"\bscreenshot\b", r"\bmockup\b", r"\bremindere?\b", r"\bdashboard\b", r"integrări (prin )?API"]
+
+    def text(self, path):
+        html = self.client.get(path).content.decode()
+        html = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", html, flags=re.S)
+        return unescape(re.sub(r"<[^>]+>", " ", html))
+
+    def test_no_anglicism_is_left_in_visitor_copy(self):
+        for path in self.PAGES:
+            text = self.text(path)
+            for pattern in self.OLD:
+                self.assertIsNone(re.search(pattern, text, re.I), f"{path}: {pattern}")
+
+    def test_one_word_for_the_choice_the_visitor_makes(self):
+        self.assertIn("Ce direcție ți se potrivește?", self.text("/ghid/"))
+        self.assertNotIn("Ce pachet ți se potrivește", self.text("/ghid/"))
+
+    def test_the_home_page_speaks_in_first_person(self):
+        self.assertIn("Construiesc produse digitale pentru afaceri", self.text("/"))
+        self.assertNotIn("Andreea Tech construiește", self.text("/"))
+
+    def test_titles_and_labels_say_what_they_mean(self):
+        self.assertIn("<title>Despre Andreea | Andreea Tech</title>", self.client.get("/about/").content.decode())
+        self.assertIn("Exemple etichetate onest", self.text("/"))
+        self.assertIn("Despre tine", self.text("/start-project/"))
+        self.assertIn("Poți adăuga, opțional", self.text("/servicii/"))
+
+    def test_the_price_factors_are_in_everyday_words(self):
+        web = self.text("/servicii/web/")
+        self.assertIn("cine îl folosește", web)
+        self.assertNotIn("roluri de utilizator", web)

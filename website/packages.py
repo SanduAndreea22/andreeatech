@@ -35,7 +35,7 @@ PACKAGES = [
         "features": [
             "Website de prezentare",
             "Sistem de rezervări sau programări",
-            "Aplicație web la comandă, în Django și Python",
+            "Aplicație web făcută la comandă",
             "Panou de administrare",
             "Plăți online cu Stripe, acolo unde au sens",
         ],
@@ -54,7 +54,7 @@ PACKAGES = [
             "Asistenți AI pentru conversații și conținut",
             "Automatizarea sarcinilor repetitive",
             "Confirmări și mesaje de reamintire pentru clienți",
-            "Integrări prin API cu serviciile pe care le folosești",
+            "Legături cu programele pe care le folosești (calendar, email, WhatsApp)",
         ],
         "description": "Preiei timpul pierdut pe sarcini repetitive și-l pui înapoi în partea din business care chiar contează.",
         "duration": "de la 14 zile",

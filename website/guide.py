@@ -1,4 +1,4 @@
-"""The guide "Ce pachet ți se potrivește?" (/ghid/): three questions, one recommendation.
+"""The guide "Ce direcție ți se potrivește?" (/ghid/): three questions, one recommendation.
 
 The questions, the answers' wording and the recommendation rules live here, as
 data, in one place. The page hands the same data to static/website/site.js, which
@@ -30,7 +30,7 @@ QUESTIONS = [
             {"value": "gasit", "label": "Clienții nu mă găsesc sau nu mă iau în serios online", "dir": "web",
              "why": "Ai spus că vrei să fii găsit și luat în serios online. Asta începe cu un site construit pe felul în care lucrezi."},
             {"value": "timp", "label": "Pierd timp cu rezervări, confirmări și mesaje care se repetă", "dir": "ai",
-             "why": "Ai spus că pierzi timp cu sarcini care se repetă. Confirmările, reminderele și răspunsurile pot fi automatizate."},
+             "why": "Ai spus că pierzi timp cu sarcini care se repetă. Confirmările, mesajele de reamintire și răspunsurile pot fi automatizate."},
             {"value": "unitar", "label": "Nu arăt unitar: logo, postări și materiale diferite peste tot", "dir": "creativ",
              "why": "Ai spus că nu arăți unitar. O identitate vizuală clară pune ordine în logo, postări și materiale."},
             {"value": "app", "label": "Am nevoie de o aplicație sau de un sistem care nu există încă", "dir": "web",
@@ -80,7 +80,7 @@ ALSO_RULES = [
     {
         "if": {"dir": ["web"], "q3": ["telefon"]},
         "dir": "ai",
-        "note": (f"Pentru cererile care vin pe telefon, confirmările și reminderele automate se potrivesc bine lângă site. "
+        "note": (f"Pentru cererile care vin pe telefon, confirmările și mesajele de reamintire automate se potrivesc bine lângă site. "
                  f"Ca extra la un proiect web, automatizările simple pornesc de la €{_ADDON_PRICE['automation']}, "
                  f"iar un asistent AI de la €{_ADDON_PRICE['agent']}."),
     },
@@ -107,7 +107,7 @@ SUMMARY_TEMPLATE = ("Rezumat din ghid: vreau să rezolv „{q1}”; am deja {q2}
 HOW_IT_WORKS = [
     "Prima întrebare stabilește direcția: site sau aplicație, automatizare ori identitate vizuală.",
     "A doua schimbă recomandarea doar într-un caz: dacă vrei automatizare și ai deja un site, recomand doar automatizarea, fără site nou.",
-    "A doua și a treia pot adăuga o direcție care se potrivește și ea, dar nu schimbă prețul pachetului principal.",
+    "A doua și a treia pot adăuga o direcție care se potrivește și ea, dar nu schimbă prețul direcției principale.",
     "Prețurile și duratele sunt cele din pagina Servicii. Este o orientare, nu o ofertă.",
 ]
 

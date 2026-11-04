@@ -10,15 +10,15 @@ Each group is (anchor id, title, [(question, answer), ...]).
 FAQ_GROUPS = [('colaborare',
   'Colaborare',
   [('De ce să te aleg pe tine și nu o agenție?',
-    'Lucrezi direct cu mine, de la primul mesaj până la livrare, fără un account manager care transmite mai '
+    'Lucrezi direct cu mine, de la primul mesaj până la livrare, fără un intermediar care transmite mai '
     'departe unei echipe. Eu construiesc, eu răspund la mesaje și eu știu în ce stadiu e proiectul tău în '
     'orice moment.'),
    ('Cum arată colaborarea, pas cu pas?',
-    'Pornim cu un call inițial în care clarificăm exact ce ai nevoie. Pe parcursul proiectului comunicăm '
-    'prin mesaje: îți arăt progresul și iau feedback fără să fie nevoie de call-uri programate. La final ai '
+    'Pornim cu o discuție inițială în care clarificăm exact ce ai nevoie. Pe parcursul proiectului comunicăm '
+    'prin mesaje: îți arăt progresul și iau feedback fără să fie nevoie de întâlniri programate. La final ai '
     '7 zile de ajustări gratuite după livrare.'),
    ('Ce se întâmplă dacă dispari după ce livrezi proiectul?',
-    'Fiecare proiect are 7 zile de ajustări gratuite după livrare: orice bug găsești în perioada asta, îl '
+    'Fiecare proiect are 7 zile de ajustări gratuite după livrare: orice problemă găsești în perioada asta, îl '
     'repar fără cost suplimentar. Rămân contactabilă și după. Dacă apare o problemă mai târziu sau vrei '
     'mentenanță continuă, discutăm separat, dar nu dispar odată ce ai plătit.'),
    ('Nu știu exact de ce am nevoie. De unde pornim?',
@@ -29,8 +29,8 @@ FAQ_GROUPS = [('colaborare',
     'Îmi dai contextul afacerii tale, fluxul de lucru actual, obiectivele și orice materiale existente. '
     'Transform asta într-un plan clar, cu termen de livrare stabilit.'),
    ('Oferi suport după lansare?',
-    'Da. Ai 7 zile de ajustări gratuite după livrare: orice bug apare în perioada asta, îl repar fără '
-    'cost suplimentar. Mentenanța continuă, dincolo de bug-uri, se poate stabili separat, atunci când e '
+    'Da. Ai 7 zile de ajustări gratuite după livrare: orice problemă apare în perioada asta, îl repar fără '
+    'cost suplimentar. Mentenanța continuă, dincolo de aceste probleme, se poate stabili separat, atunci când e '
     'nevoie.')]),
  ('pret',
   'Preț și termene',
@@ -50,17 +50,17 @@ FAQ_GROUPS = [('colaborare',
   [('Construiești sisteme de rezervări?',
     'Da. Fluxurile de rezervări pot fi construite în jurul serviciilor tale, al regulilor de disponibilitate '
     'și al modului în care lucrează echipa ta.'),
-   ('De ce Django și nu un website builder (Wix, Shopify etc.)?',
-    'Django e stabil și verificat pe proiecte mari: nu se blochează când ai mai mulți vizitatori sau mai '
+   ('De ce un site făcut la comandă și nu unul pe Wix sau Shopify?',
+    'Un site făcut la comandă, cu tehnologii stabile și verificate pe proiecte mari, nu se blochează când ai mai mulți vizitatori sau mai '
     'multe cereri deodată. Îmi permite să construiesc exact fluxul afacerii tale, nu să te forțez într-un '
-    'șablon generic, ca la un website builder.'),
+    'șablon generic, ca la un constructor de site-uri.'),
    ('Pot cere funcționalități personalizate?',
     'Absolut. Fiecare proiect poate fi construit în jurul procesului real al afacerii tale, nu forțat '
     'într-un instrument generic.'),
    ('Care e diferența dintre Portofoliu și Produse?',
     'Proiectele din Portofoliu sunt exemple din ce pot construi, fiecare cu eticheta ei: demo funcțional, '
     'produs propriu, instrument propriu sau concept. Nu sunt produse de vânzare. Plannerul de echilibru '
-    'personal și trackerul de buget, din Produse, sunt produsele mele proprii, oferite direct.')]),
+    'personal și aplicația de buget, din Produse, sunt produsele mele proprii, oferite direct.')]),
  ('ai',
   'Automatizare AI',
   [('Ce face mai exact automatizarea AI?',
@@ -80,9 +80,8 @@ FAQ_GROUPS = [('colaborare',
  ('creativ',
   'Design creativ',
   [('Care e diferența dintre partea tehnică și partea creativă?',
-    'Partea tehnică înseamnă web development (Django, Python, aplicații web, sisteme de rezervări), '
-    'automatizare AI (asistenți AI, automatizări, integrări API) și arhitectura produsului, adică felul în care '
-    'funcționează în spate. Partea creativă înseamnă identitate vizuală și branding, design pentru social '
+    'Partea tehnică înseamnă site-uri, aplicații web și sisteme de rezervări, plus automatizări și asistenți AI, '
+    'adică tot ce funcționează în spate. Partea creativă înseamnă identitate vizuală și branding, design pentru social '
     'media, campanii și materiale vizuale, direcție creativă. Identitatea vizuală este un serviciu creativ '
     'separat, nu o componentă a dezvoltării tehnice, iar cele două se pot combina într-un singur proiect.'),
    ('Ce înseamnă direcție creativă?',

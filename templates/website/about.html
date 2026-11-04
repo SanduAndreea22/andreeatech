@@ -1,12 +1,12 @@
 {% extends "base_v2.html" %}
 {% load static %}
 
-{% block title %}Despre | Andreea Tech{% endblock %}
+{% block title %}Despre Andreea | Andreea Tech{% endblock %}
 {% block meta_description %}Sunt Andreea și construiesc site-uri, automatizări și identitate vizuală pentru antreprenori. Lucrez singură, deci vorbești direct cu cea care construiește.{% endblock %}
 {% block twitter_description %}Sunt Andreea și construiesc site-uri, automatizări și identitate vizuală pentru antreprenori. Lucrez singură, deci vorbești direct cu cea care construiește.{% endblock %}
 {% block og_description %}Sunt Andreea și construiesc site-uri, automatizări și identitate vizuală pentru antreprenori. Lucrez singură, deci vorbești direct cu cea care construiește.{% endblock %}
-{% block og_title %}Despre | Andreea Tech{% endblock %}
-{% block twitter_title %}Despre | Andreea Tech{% endblock %}
+{% block og_title %}Despre Andreea | Andreea Tech{% endblock %}
+{% block twitter_title %}Despre Andreea | Andreea Tech{% endblock %}
 
 {% block content %}
 <section class="phead">
@@ -25,8 +25,8 @@
         </div>
         <div class="prose">
             <p class="lead about-lead">Construiesc site-uri, sisteme de rezervări și automatizări pentru antreprenori care vor să crească fără să se mai lupte cu partea tehnică. Pe partea creativă, fac identitate vizuală, design pentru social media și materiale de campanie.</p>
-            <p class="rich">Îmi pasă de același lucru la fiecare proiect: să reziste când încep să-l folosească clienți reali, nu să fie un demo care arată bine doar într-un screenshot. Lucrez singură, deci vorbești direct cu cea care scrie codul și ia deciziile de design.</p>
-            <p class="rich">La majoritatea ofertelor de pe piață, primești un site și atât. Eu am construit și folosesc deja un asistent AI intern, SM Writer (Social Media Writer), care îmi scrie postările de social media zilnic, fără să-l ating. Nu e un concept, e ceva ce rulează acum. Plannerul de echilibru personal și trackerul de buget (vezi <a class="link" href="{% url 'products' %}">Produse</a>) sunt aceeași filozofie: construiesc lucruri care chiar rezolvă o problemă, nu doar arată bine într-un portofoliu.</p>
+            <p class="rich">Îmi pasă de același lucru la fiecare proiect: să reziste când încep să-l folosească clienți reali, nu să fie un demo care arată bine doar într-o captură de ecran. Lucrez singură, deci vorbești direct cu cea care scrie codul și ia deciziile de design.</p>
+            <p class="rich">La majoritatea ofertelor de pe piață, primești un site și atât. Eu am construit și folosesc deja un asistent AI intern, SM Writer (Social Media Writer), care îmi scrie postările de social media zilnic, fără să-l ating. Nu e un concept, e ceva ce rulează acum. Plannerul de echilibru personal și aplicația de buget (vezi <a class="link" href="{% url 'products' %}">Produse</a>) sunt aceeași filozofie: construiesc lucruri care chiar rezolvă o problemă, nu doar arată bine într-un portofoliu.</p>
             <div class="btn-row"><a class="btn btn-primary" href="{% url 'start_project' %}">Cere o ofertă</a><a class="btn btn-line" href="{% url 'projects' %}">Vezi proiectele</a></div>
         </div>
     </div>
@@ -41,8 +41,8 @@
                 <div>
                     <h3>Partea tehnică</h3>
                     <ul class="flist">
-                        <li>Web development: Django, Python, aplicații web, sisteme de rezervări</li>
-                        <li>Automatizare AI: asistenți AI, automatizări, integrări API</li>
+                        <li>Dezvoltare web: Django, Python, aplicații web, sisteme de rezervări</li>
+                        <li>Automatizare AI: asistenți AI, automatizări, legături cu alte programe</li>
                         <li>Arhitectură și funcționalitate: cum funcționează produsul în spate</li>
                     </ul>
                 </div>
@@ -68,7 +68,7 @@
         <div class="stack">
             <div class="stack-s">
                 <h2>Cursuri și certificări finalizate pe parcurs.</h2>
-                <p class="lead">Continui să învăț. Certificările sunt partea formală a asta, iar restul se vede în <a class="link" href="{% url 'projects' %}">Portofoliu</a>.</p>
+                <p class="lead">Continui să învăț. Certificările sunt partea formală a acestui drum, iar restul se vede în <a class="link" href="{% url 'projects' %}">Portofoliu</a>.</p>
             </div>
             {% if certifications %}
             <div class="certs">
