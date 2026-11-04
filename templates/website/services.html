@@ -11,7 +11,7 @@
 <section class="phead">
     <div class="wrap">
         <h1>Ce construiesc, pe direcții.</h1>
-        <p class="lead">Trei direcții de lucru. Prețurile sunt puncte de plecare: după brief primești o ofertă personalizată.</p>
+        <p class="lead">Trei direcții de lucru. Prețurile sunt puncte de plecare: după ce îmi descrii proiectul primești o ofertă personalizată.</p>
     </div>
 </section>
 
@@ -55,9 +55,9 @@
                     </div>
                     <div class="est-out">
                         <div><span class="sub" style="display:block">Estimare orientativă</span><strong id="estTotal">{% for pkg in packages %}{% if pkg.popular %}{{ pkg.price }}{% endif %}{% endfor %}</strong></div>
-                        <a class="btn btn-primary" id="estCta" href="{% url 'start_project' %}">Cere oferta personalizată</a>
+                        <a class="btn btn-primary" id="estCta" href="{% url 'start_project' %}">Cere o ofertă</a>
                     </div>
-                    <p class="muted" style="font-size:14.5px">Suma exactă se stabilește după brief, în funcție de ce alegi.</p>
+                    <p class="muted" style="font-size:14.5px">Suma exactă se stabilește după ce îmi descrii proiectul, în funcție de ce alegi.</p>
                 </form>
             </div>
         </div>
@@ -70,7 +70,7 @@
         <div class="stack-s">
             <h2>Ai nevoie de ceva care combină mai multe direcții?</h2>
             <p class="lead">Un site cu rezervări și un agent care confirmă programările, de exemplu. Descrie-mi situația și îți propun un pachet construit pentru ea, cu preț stabilit înainte de start.</p>
-            <div class="btn-row"><a class="btn btn-primary" href="{% url 'start_project' %}?pachet=not_sure">Cere o consultație</a></div>
+            <div class="btn-row"><a class="btn btn-primary" href="{% url 'start_project' %}?pachet=not_sure">Hai să discutăm</a></div>
         </div>
     </div>
 </section>

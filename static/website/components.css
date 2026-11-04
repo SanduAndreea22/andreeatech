@@ -125,7 +125,8 @@ dl.spec dt {
 .hero-note { font-size: 14.5px; color: var(--ink-2); max-width: 52ch; }
 /* The brand line is a full sentence, so the hero title is one step smaller than the display scale. */
 .hero h1 { font-size: clamp(2.1rem, 3.6vw + .9rem, 3.7rem); line-height: 1.08; }
-.hero-services { font-family: var(--f-display); font-size: clamp(1.25rem, 1vw + 1rem, 1.55rem); line-height: 1.25; color: var(--ink); }
+/* One line, above the headline, that says plainly what is built. */
+.hero-eyebrow { font-family: var(--f-mono); font-size: 14px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--cobalt-text); margin-bottom: -12px; }
 
 /* ---------- Index rows (services) ---------- */
 .rows { border-top: 1px solid var(--line-strong); }
@@ -432,6 +433,8 @@ fieldset.step legend .n { font-family: var(--f-mono); font-size: 14px; color: va
 }
 @media (max-width: 640px) {
     .checks > div { grid-template-columns: minmax(0, 1fr); }
+    /* Whole row is the tap target: at least 44px high, as the other fields. */
+    .checks label, .opt { min-height: 44px; align-items: center; }
 }
 
 /* =========================================

@@ -6,7 +6,7 @@
             <nav class="nav-links" aria-label="Principal">
                 <a href="{% url 'services' %}"{% if current == 'services' or current == 'service_detail' %} aria-current="page"{% endif %}>Servicii</a>
                 <a href="{% url 'projects' %}"{% if current == 'projects' or current == 'project_detail' %} aria-current="page"{% endif %}>Portofoliu</a>
-                <a href="{% url 'products' %}"{% if current == 'products' or current == 'planner_product' or current == 'budget_product' %} aria-current="page"{% endif %}>Produse</a>
+                <a href="{% url 'products' %}"{% if current == 'products' or current == 'planner_product' or current == 'budget_product' %} aria-current="page"{% endif %}>Produse proprii</a>
                 <a href="{% url 'about' %}"{% if current == 'about' %} aria-current="page"{% endif %}>Despre</a>
                 <a href="{% url 'contact' %}"{% if current == 'contact' %} aria-current="page"{% endif %}>Contact</a>
                 <a class="btn btn-primary" href="{% url 'start_project' %}">Cere o ofertă</a>
@@ -21,7 +21,7 @@
                     <a href="{% url 'home' %}"{% if current == 'home' %} aria-current="page"{% endif %}>Acasă</a>
                     <a href="{% url 'services' %}"{% if current == 'services' or current == 'service_detail' %} aria-current="page"{% endif %}>Servicii</a>
                     <a href="{% url 'projects' %}"{% if current == 'projects' or current == 'project_detail' %} aria-current="page"{% endif %}>Portofoliu</a>
-                    <a href="{% url 'products' %}"{% if current == 'products' or current == 'planner_product' or current == 'budget_product' %} aria-current="page"{% endif %}>Produse</a>
+                    <a href="{% url 'products' %}"{% if current == 'products' or current == 'planner_product' or current == 'budget_product' %} aria-current="page"{% endif %}>Produse proprii</a>
                     <a href="{% url 'about' %}"{% if current == 'about' %} aria-current="page"{% endif %}>Despre</a>
                     <a href="{% url 'contact' %}"{% if current == 'contact' %} aria-current="page"{% endif %}>Contact</a>
                     <a class="menu-cta" href="{% url 'start_project' %}">Cere o ofertă</a>

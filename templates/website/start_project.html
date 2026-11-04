@@ -2,9 +2,9 @@
 {% load form_helpers %}
 
 {% block title %}Începe un proiect | Andreea Tech{% endblock %}
-{% block meta_description %}Completează un brief de proiect ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
-{% block twitter_description %}Completează un brief de proiect ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
-{% block og_description %}Completează un brief de proiect ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
+{% block meta_description %}Descrie-mi proiectul tău ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
+{% block twitter_description %}Descrie-mi proiectul tău ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
+{% block og_description %}Descrie-mi proiectul tău ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
 {% block og_title %}Începe un proiect | Andreea Tech{% endblock %}
 {% block twitter_title %}Începe un proiect | Andreea Tech{% endblock %}
 
@@ -12,7 +12,7 @@
 <section class="phead">
     <div class="wrap">
         <h1>Hai să construim ce ai nevoie.</h1>
-        <p class="lead">Spune-mi despre afacerea ta și despre ce vrei să funcționeze mai bine. Completează brief-ul de mai jos ca să putem începe.</p>
+        <p class="lead">Spune-mi despre afacerea ta și despre ce vrei să funcționeze mai bine. Completează formularul de mai jos ca să putem începe.</p>
     </div>
 </section>
 
@@ -22,13 +22,17 @@
         <div class="fcard sp-thanks" role="status">
             <svg class="tick" width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true"><circle class="tick-ring" cx="28" cy="28" r="25"/><path class="tick-check" d="M17 29.5l7.5 7.5L39 20.5"/></svg>
             <h2 style="font-size:1.9rem;margin-bottom:12px">Cerere primită.</h2>
-            <p class="lead" style="color:var(--ink)">Îți analizez brief-ul și revin cu un răspuns în maximum 24 de ore.</p>
+            <p class="lead" style="color:var(--ink)">Îți citesc mesajul și revin cu un răspuns în maximum 24 de ore.</p>
             <ol class="next" aria-label="Ce urmează">
-                <li><span class="n">01</span><span><b>Citesc brief-ul personal.</b> Nu trece printr-un intermediar și nu primești un răspuns automat.</span></li>
+                <li><span class="n">01</span><span><b>Citesc personal ce mi-ai scris.</b> Nu trece printr-un intermediar și nu primești un răspuns automat.</span></li>
                 <li><span class="n">02</span><span><b>Revin în maximum 24 de ore</b> cu întrebări concrete despre afacerea ta.</span></li>
                 <li><span class="n">03</span><span><b>Primești oferta.</b> Cu preț fix, stabilit înainte să începem.</span></li>
             </ol>
-            <p class="muted" style="margin-top:20px">Verifică-ți emailul în următoarele 24 de ore: răspund personal la fiecare brief, nu e un mesaj automat.</p>
+            {% if submitted_email %}
+            <p class="muted" style="margin-top:20px">Îți voi răspunde la <strong id="sentEmail">{{ submitted_email }}</strong>. Dacă ai greșit adresa, scrie-mi direct la <span class="copy"><strong>andreea.tech@outlook.com</strong><button type="button" data-copy="andreea.tech@outlook.com" aria-label="Copiază adresa de email">Copiază</button></span>. Răspund personal la fiecare cerere, nu e un mesaj automat.</p>
+            {% else %}
+            <p class="muted" style="margin-top:20px">Verifică-ți emailul în următoarele 24 de ore: răspund personal la fiecare cerere, nu e un mesaj automat. Dacă nu primești nimic, scrie-mi la <span class="copy"><strong>andreea.tech@outlook.com</strong><button type="button" data-copy="andreea.tech@outlook.com" aria-label="Copiază adresa de email">Copiază</button></span>.</p>
+            {% endif %}
             <div class="btn-row" style="margin-top:24px"><a class="btn btn-line" href="{% url 'home' %}">Înapoi acasă</a></div>
         </div>
         {% else %}
@@ -37,7 +41,7 @@
             <form method="POST" id="briefForm" novalidate>
                 {% csrf_token %}
                 {% error_summary form %}
-                {% if form.selected_package.value == "not_sure" %}<p class="note" id="consultNote">Ai ales o consultație. Completează câmpurile de mai jos, iar eu îți răspund în maximum 24 de ore, pe email, și stabilim împreună pasul următor.</p>{% endif %}
+                {% if form.selected_package.value == "not_sure" %}<p class="note" id="consultNote">Ai ales să discutăm mai întâi. Completează câmpurile de mai jos, iar eu îți răspund în maximum 24 de ore, pe email, și stabilim împreună pasul următor.</p>{% endif %}
                 {{ form.non_field_errors }}
                 <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
@@ -90,7 +94,7 @@
 
                 <div class="stack-s">
                     <div class="btn-row"><button type="submit" class="btn btn-primary">Trimite proiectul</button></div>
-                    <p class="hint">Apăsând „Trimite proiectul", ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a> și primești un răspuns despre brief în maximum 24 de ore.</p>
+                    <p class="hint">Apăsând „Trimite proiectul", ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a> și primești un răspuns în maximum 24 de ore.</p>
                 </div>
             </form>
         </div>

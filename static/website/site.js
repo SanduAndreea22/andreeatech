@@ -702,12 +702,12 @@
             el(box, 'p', '', r.also.note);
         }
         var row = el(res, 'div', 'btn-row');
-        link(row, 'btn btn-primary', 'Completează brief-ul cu acest pachet', briefHref);
+        link(row, 'btn btn-primary', 'Cere o ofertă pentru acest pachet', briefHref);
         link(row, 'btn btn-line', 'Vezi detaliile serviciului', r.pkg.service_url);
         link(row, 'link', 'Mai bine discutăm întâi', data.brief_url + '?pachet=not_sure');
 
         var copyRow = el(res, 'div', 'btn-row');
-        var copyBtn = el(copyRow, 'button', 'gd-link', 'Copiază rezumatul pentru brief');
+        var copyBtn = el(copyRow, 'button', 'gd-link', 'Copiază rezumatul pentru formular');
         copyBtn.type = 'button';
         var copied = el(copyRow, 'span', 'gd-copied');
         copied.hidden = true;
@@ -719,7 +719,7 @@
                 navigator.clipboard.writeText(r.summary).then(function () { done('Copiat'); }, function () { done('Selectează manual textul de mai jos'); });
             } else { done('Selectează manual textul de mai jos'); }
         });
-        el(res, 'p', 'note', 'Este o orientare, nu o ofertă. Prețul final se stabilește după brief.');
+        el(res, 'p', 'note', 'Este o orientare, nu o ofertă. Prețul final se stabilește după ce îmi descrii proiectul.');
 
         body.hidden = true;
         nav.hidden = true;

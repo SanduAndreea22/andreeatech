@@ -195,6 +195,10 @@ def start_project(request):
             obj.required_features = ", ".join(features)
 
             obj.save()
+            # Remembered only so the thank-you page can show where the answer will
+            # go (a typo in the address would otherwise go unnoticed). It is kept in
+            # the session, never in the URL, and dropped on the next visit.
+            request.session["brief_email"] = obj.email
             _notify_admin(
                 "New project brief — andreeatech",
                 f"Name: {obj.name}\nEmail: {obj.email}\nIndustry: {obj.industry}\nPachet: {obj.get_selected_package_display() if obj.selected_package else 'nespecificat'}\n\n{obj.project_description}"
@@ -214,9 +218,17 @@ def start_project(request):
                 initial["required_features"] = ["automation", "ai_agent"]
         form = StartProjectForm(initial=initial)
 
+    just_submitted = request.GET.get("sent") == "1"
+    if just_submitted:
+        submitted_email = request.session.get("brief_email")
+    else:
+        submitted_email = None
+        request.session.pop("brief_email", None)
+
     return render(request, "website/start_project.html", {
         "form": form,
-        "just_submitted": request.GET.get("sent") == "1",
+        "just_submitted": just_submitted,
+        "submitted_email": submitted_email,
     })
 
 

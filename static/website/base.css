@@ -132,6 +132,9 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
     transition: color var(--transition);
 }
 .nav-links a:not(.btn):hover { color: var(--ink); }
+/* Labels never break onto a second line; on medium widths the gaps shrink instead. */
+.nav-links a { white-space: nowrap; }
+@media (max-width: 1040px) { .nav-links { gap: 18px; } }
 .nav-links a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--cobalt); }
 .nav-links .btn { padding: 10px 18px; min-height: 40px; font-size: 14.5px; }
 

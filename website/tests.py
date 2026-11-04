@@ -2663,7 +2663,7 @@ class ConsultationNoteTests(TestCase):
     def test_consultation_path_says_what_happens_next(self):
         body = self.client.get(reverse("start_project") + "?pachet=not_sure").content.decode()
         self.assertIn('id="consultNote"', body)
-        self.assertIn("Ai ales o consultație", body)
+        self.assertIn("Ai ales să discutăm mai întâi", body)
         self.assertIn("pe email", body)
 
     def test_the_note_promises_an_email_reply_not_a_call_or_a_booking(self):
@@ -2701,3 +2701,181 @@ class PrivacyNoteTests(TestCase):
         body = self.client.get(reverse("privacy_policy")).content.decode()
         for name in ("Contact", "Începe un proiect", "Recenzii"):
             self.assertIn(name, body)
+
+
+# ---------------------------------------------------------------------------
+# Optional UX improvements: hero line, one set of labels, plain words, thank-you
+# email, footer link, tap areas, nav label
+# ---------------------------------------------------------------------------
+class HeroLineTests(TestCase):
+
+    def body(self):
+        return self.client.get(reverse("home")).content.decode()
+
+    def test_the_line_that_says_what_is_built_comes_before_the_headline(self):
+        body = self.body()
+        self.assertLess(body.index("Site-uri, automatizări și identitate vizuală</p>"), body.index("<h1>"))
+
+    def test_the_headline_itself_is_unchanged(self):
+        self.assertIn("<h1>De la o interacțiune obișnuită, la o experiență de care oamenii își amintesc.</h1>", self.body())
+
+    def test_the_line_appears_once_in_the_hero(self):
+        body = self.body()
+        hero = body[body.index('<div class="wrap hero'):body.index("</section>", body.index('<div class="wrap hero'))]
+        self.assertEqual(hero.count("Site-uri, automatizări și identitate vizuală"), 1)
+        self.assertNotIn("hero-services", body)
+
+
+class VocabularyTests(TestCase):
+
+    def public_urls(self):
+        return [reverse(n) for n in ("home", "services", "projects", "products", "planner_product", "budget_product",
+                                       "about", "contact", "start_project", "faq", "reviews", "guide", "calculator")] + [
+            reverse("service_detail", args=[s]) for s in ("web", "ai", "creativ")]
+
+    def test_the_word_brief_is_not_shown_to_visitors(self):
+        # The privacy policy is legal text and is left as it was.
+        for url in self.public_urls():
+            body = self.client.get(url).content.decode()
+            text = _re.sub(r"<[^>]+>", " ", body).lower()
+            description = (_meta(body, "name", "description") or "").lower()
+            with self.subTest(url=url):
+                self.assertNotIn("brief", text)
+                self.assertNotIn("brief", description)
+
+    def test_the_guide_script_does_not_use_it_either(self):
+        js = (_STATIC / "site.js").read_text()
+        block = js[js.index("Guide (/ghid/)"):]
+        # Only the texts shown to visitors (string literals), not variable names such as brief_url.
+        for literal in _re.findall(r"'([^'\\\n]*)'", block):
+            self.assertNotIn("brief", literal.lower(), literal)
+
+    def test_the_call_to_action_band_has_one_primary_and_one_secondary_label(self):
+        body = self.client.get(reverse("home")).content.decode()
+        band = body[body.index('class="band"'):body.index("</section>", body.index('class="band"'))]
+        self.assertIn(">Cere o ofertă</a>", band)
+        self.assertIn(">Hai să discutăm</a>", band)
+        self.assertNotIn("Completează brief-ul", band)
+        self.assertNotIn("Cere o consultație", band)
+
+    def test_the_old_labels_are_gone_from_every_page(self):
+        for url in self.public_urls():
+            body = self.client.get(url).content.decode()
+            with self.subTest(url=url):
+                for old in ("Completează brief-ul", "Cere o consultație", "Cere oferta personalizată"):
+                    self.assertNotIn(old, body)
+
+    def test_both_labels_still_lead_to_the_right_place(self):
+        body = self.client.get(reverse("home")).content.decode()
+        band = body[body.index('class="band"'):]
+        self.assertIn(f'href="{reverse("start_project")}">Cere o ofertă</a>', band)
+        self.assertIn(f'href="{reverse("start_project")}?pachet=not_sure">Hai să discutăm</a>', band)
+
+    def test_the_form_page_speaks_plainly(self):
+        body = self.client.get(reverse("start_project")).content.decode()
+        self.assertIn("Completează formularul de mai jos", body)
+
+    def test_the_process_first_step_is_described_without_jargon(self):
+        body = self.client.get(reverse("home")).content.decode()
+        self.assertIn("<b>Descrii proiectul</b>", body)
+
+    def test_the_script_uses_the_plain_labels(self):
+        js = (_STATIC / "site.js").read_text()
+        self.assertIn("'Cere o ofertă pentru acest pachet'", js)
+        self.assertIn("'Copiază rezumatul pentru formular'", js)
+
+
+class ThankYouEmailTests(TestCase):
+
+    def setUp(self):
+        cache.clear()   # the submission limit is per address and lives in memory
+
+    def submit(self, email="ioana@exemplu.ro"):
+        return self.client.post(reverse("start_project"), {
+            "name": "Ioana", "email": email, "industry": "salon", "selected_package": "",
+            "project_description": "Vreau programări.", "hosting_info": "", "deadline_communication": "", "website": ""})
+
+    def test_the_address_is_shown_after_a_successful_submission(self):
+        response = self.submit()
+        self.assertEqual(response["Location"], reverse("start_project") + "?sent=1")   # nothing personal in the URL
+        body = self.client.get(response["Location"]).content.decode()
+        self.assertIn("Îți voi răspunde la", body)
+        self.assertIn("ioana@exemplu.ro", body)
+        self.assertIn("andreea.tech@outlook.com", body)
+
+    def test_a_refresh_still_shows_it(self):
+        url = self.submit()["Location"]
+        self.client.get(url)
+        self.assertContains(self.client.get(url), "ioana@exemplu.ro")
+
+    def test_it_is_dropped_when_the_form_is_opened_again(self):
+        url = self.submit()["Location"]
+        self.client.get(reverse("start_project"))
+        self.assertNotContains(self.client.get(url), "ioana@exemplu.ro")
+
+    def test_a_visitor_who_did_not_submit_sees_the_general_text(self):
+        body = self.client.get(reverse("start_project") + "?sent=1").content.decode()
+        self.assertNotIn("Îți voi răspunde la", body)
+        self.assertIn("Dacă nu primești nimic, scrie-mi la", body)
+
+    def test_another_visitor_never_sees_it(self):
+        url = self.submit()["Location"]
+        from django.test import Client
+        self.assertNotContains(Client().get(url), "ioana@exemplu.ro")
+
+    def test_the_address_is_escaped(self):
+        self.submit(email='"<b>x</b>"@exemplu.ro')
+        body = self.client.get(reverse("start_project") + "?sent=1").content.decode()
+        self.assertNotIn("<b>x</b>", body)
+
+    def test_a_dropped_honeypot_submission_stores_nothing(self):
+        self.client.post(reverse("start_project"), {"name": "Bot", "email": "bot@exemplu.ro", "industry": "x", "selected_package": "",
+                                                    "project_description": "x", "hosting_info": "", "deadline_communication": "", "website": "http://spam"})
+        self.assertNotContains(self.client.get(reverse("start_project") + "?sent=1"), "bot@exemplu.ro")
+
+
+class FooterReviewsLinkTests(TestCase):
+
+    def link(self):
+        return f'href="{reverse("reviews")}"'
+
+    def test_hidden_while_there_is_no_approved_review(self):
+        self.assertNotContains(self.client.get(reverse("home")), self.link())
+        Review.objects.create(name="A", message="x", rating=5, is_approved=False)
+        self.assertNotContains(self.client.get(reverse("home")), self.link())
+
+    def test_shown_once_a_review_is_approved(self):
+        Review.objects.create(name="A", message="x", rating=5, is_approved=True)
+        for name in ("home", "services", "about", "contact"):
+            self.assertContains(self.client.get(reverse(name)), self.link(), msg_prefix=name)
+
+    def test_the_page_itself_keeps_working_and_stays_in_the_sitemap(self):
+        self.assertEqual(self.client.get(reverse("reviews")).status_code, 200)
+        self.assertIn("/reviews/", self.client.get("/sitemap.xml").content.decode())
+
+    def test_a_missing_table_does_not_break_the_footer(self):
+        from django.db import OperationalError
+        with _mock.patch("website.templatetags.site_notices.Review.objects") as manager:
+            manager.filter.side_effect = OperationalError("no such table")
+            self.assertEqual(self.client.get(reverse("home")).status_code, 200)
+
+
+class NavAndTapAreaTests(TestCase):
+
+    def test_the_menu_says_what_the_products_are_in_both_menus(self):
+        body = self.client.get(reverse("home")).content.decode()
+        self.assertEqual(body.count(">Produse proprii</a>"), 2 + 1)   # desktop menu, phone menu, footer
+        self.assertNotIn(">Produse</a>", body)
+        self.assertEqual(body.count(f'href="{reverse("products")}"'), 3)
+
+    def test_checkbox_rows_are_at_least_44px_high_on_phones(self):
+        css = (_STATIC / "components.css").read_text()
+        block = css[css.index("@media (max-width: 640px) {\n    .checks > div"):]
+        block = block[:block.index("}\n}") + 3]
+        self.assertIn(".checks label", block)
+        self.assertIn("min-height: 44px", block)
+
+    def test_contact_paths_use_the_new_wording(self):
+        body = self.client.get(reverse("contact")).content.decode()
+        self.assertIn("<b>Hai să discutăm</b>", body)
+        self.assertIn("fără formularul de proiect", body)

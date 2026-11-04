@@ -11,7 +11,7 @@ SERVICES = {
     "web": {
         "direction": Project.DIRECTION_WEB,
         "package_key": "produse_sisteme",
-        "meta_description": "Site-uri, sisteme de rezervări și aplicații web la comandă, construite pe felul în care lucrează afacerea ta. Preț de la €850, ofertă personalizată după brief.",
+        "meta_description": "Site-uri, sisteme de rezervări și aplicații web la comandă, construite pe felul în care lucrează afacerea ta. Preț de la €850, ofertă personalizată pe cerere.",
         "title": "Site-uri și sisteme de rezervări construite pe felul în care lucrezi tu.",
         "lead": "Pentru restaurante, saloane, clinici, afaceri cu programări și startup-uri care au nevoie de un produs funcțional, nu de un șablon.",
         "benefits": [
@@ -30,7 +30,7 @@ SERVICES = {
     "ai": {
         "direction": Project.DIRECTION_AI,
         "package_key": "ai_automatizare",
-        "meta_description": "Agenți AI și automatizări care preiau sarcinile repetitive: răspunsuri, confirmări, remindere, conținut. Preț de la €250, ofertă personalizată după brief.",
+        "meta_description": "Agenți AI și automatizări care preiau sarcinile repetitive: răspunsuri, confirmări, remindere, conținut. Preț de la €250, ofertă personalizată pe cerere.",
         "title": "Automatizări care preiau sarcinile care se repetă, ca tu să te ocupi de clienți.",
         "lead": "Pentru afaceri care pierd ore pe sarcini care se repetă identic și vor ca timpul acela să se întoarcă în relația cu clienții.",
         "benefits": [
@@ -48,7 +48,7 @@ SERVICES = {
     "creativ": {
         "direction": Project.DIRECTION_CREATIV,
         "package_key": "continut_digital",
-        "meta_description": "Identitate vizuală și branding, design pentru social media, campanii și materiale vizuale, direcție creativă. Preț de la €150, ofertă personalizată după brief.",
+        "meta_description": "Identitate vizuală și branding, design pentru social media, campanii și materiale vizuale, direcție creativă. Preț de la €150, ofertă personalizată pe cerere.",
         "title": "Identitate vizuală și materiale care arată coerent, de la prima postare la campanie.",
         "lead": "Pentru branduri care vor o prezență online care arată și sună ca ele. Este un serviciu creativ separat de partea tehnică: se poate combina cu un site sau un sistem într-un singur proiect, dar nu depinde de ele. Textele sunt incluse în proiecte, nu se vând separat.",
         "benefits": [

@@ -2,7 +2,7 @@
 from django import template
 from django.db import DatabaseError
 
-from website.models import SiteSettings
+from website.models import Review, SiteSettings
 
 register = template.Library()
 
@@ -21,3 +21,14 @@ def availability_text():
     if settings_row is None or not settings_row.show_availability:
         return ""
     return settings_row.availability_text.strip()
+
+
+@register.simple_tag
+def has_approved_reviews():
+    """True once at least one review has been approved. Used to show the footer link
+    to the reviews page only when there is something to read there. A database
+    error (table not there yet) simply means "no"."""
+    try:
+        return Review.objects.filter(is_approved=True).exists()
+    except DatabaseError:
+        return False

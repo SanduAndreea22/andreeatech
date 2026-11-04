@@ -1,4 +1,4 @@
-<footer class="foot">
+{% load site_notices %}<footer class="foot">
     <div class="wrap">
         <div class="foot-g">
             <div class="stack-s">
@@ -19,7 +19,7 @@
                     <li><a href="{% url 'projects' %}">Portofoliu</a></li>
                     <li><a href="{% url 'products' %}">Produse proprii</a></li>
                     <li><a href="{% url 'about' %}">Despre</a></li>
-                    <li><a href="{% url 'reviews' %}">Ce spun clienții</a></li>
+                    {% has_approved_reviews as show_reviews %}{% if show_reviews %}<li><a href="{% url 'reviews' %}">Ce spun clienții</a></li>{% endif %}
                     <li><a href="{% url 'faq' %}">Întrebări frecvente</a></li>
                     <li><a href="{% url 'contact' %}">Contact</a></li>
                 </ul>
