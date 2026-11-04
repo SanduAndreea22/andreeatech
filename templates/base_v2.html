@@ -9,6 +9,7 @@
     <title>{% block title %}Andreea Tech | Site-uri, automatizări și identitate vizuală{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Site-uri, sisteme de rezervări, automatizări AI și identitate vizuală pentru antreprenori. Prețuri de la €150, răspuns în maximum 24 de ore.{% endblock %}">
 
+    <script src="{% static 'website/theme.js' %}"></script>
     <link rel="icon" type="image/png" href="{% static 'website/favicon.png' %}">
 
     {% block canonical_tag %}<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">{% endblock %}

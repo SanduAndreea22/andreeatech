@@ -1,8 +1,10 @@
+{% load site_notices %}{% availability_text as avail %}
 <section class="band" aria-labelledby="cta-title">
     <div class="wrap">
         <div>
             <h2 id="cta-title">Spune-mi ce vrei să construiești.</h2>
             <p>Răspund în maximum 24 de ore, cu întrebări concrete și, după brief, o ofertă cu preț fix.</p>
+            {% if avail %}<p class="avail avail-on-band"><span class="avail-dot" aria-hidden="true"></span>{{ avail }}</p>{% endif %}
         </div>
         <div class="stack-s">
             <a class="btn btn-w" href="{% url 'start_project' %}">Completează brief-ul</a>

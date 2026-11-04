@@ -206,9 +206,52 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
 }
 .copy button:hover { color: var(--ink); border-color: var(--ink); }
 
+/* ---------- Theme toggle (revealed by site.js) ---------- */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border: 1px solid var(--border-ui);
+    border-radius: var(--r-btn);
+    background: none;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: color var(--transition), border-color var(--transition);
+}
+.theme-toggle[hidden] { display: none; }
+.theme-toggle:hover { color: var(--ink); border-color: var(--ink); }
+/* Light shows the moon (switch to dark); dark shows the sun (switch to light). */
+.theme-toggle .i-sun { display: none; }
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle .i-moon { display: none; }
+    :root:not([data-theme="light"]) .theme-toggle .i-sun { display: block; }
+}
+:root[data-theme="dark"] .theme-toggle .i-moon { display: none; }
+:root[data-theme="dark"] .theme-toggle .i-sun { display: block; }
+
+/* ---------- Motion (only for visitors who have not asked for less) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+    /* Page-to-page navigation fades instead of jumping. The navigation bar keeps
+       its own layer so it stays put. Browsers without support ignore these rules. */
+    @view-transition { navigation: auto; }
+    .nav { view-transition-name: site-nav; }
+    ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .2s; }
+
+    /* Sections below the fold fade in once, when they are scrolled to. site.js
+       adds .rv only to sections that start off-screen, so without JavaScript
+       (or for anything already visible) the content is simply there. */
+    .rv { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .rv.rv-in { opacity: 1; transform: none; }
+}
+@media print { .rv { opacity: 1 !important; transform: none !important; } }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
     .nav-links { display: none; }
+    .theme-toggle { margin-left: auto; }
     .menu { display: block; }
     .mg { grid-template-columns: minmax(0, 1fr); gap: 16px; }
     .mg-l { padding-top: 0; }

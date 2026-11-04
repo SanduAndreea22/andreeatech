@@ -291,3 +291,31 @@ class Certification(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class SiteSettings(models.Model):
+    """Small, optional notices editable from the admin. There is only ever one row.
+
+    Today it holds the availability notice shown on the home page and in the
+    call-to-action band. Nothing is shown until `show_availability` is ticked,
+    so the site never claims availability that nobody has confirmed.
+    """
+
+    show_availability = models.BooleanField(
+        "Afișează disponibilitatea",
+        default=False,
+        help_text="Bifează doar când textul de mai jos este adevărat. Debifat, nu apare nimic pe site.",
+    )
+    availability_text = models.CharField(
+        "Text disponibilitate",
+        max_length=100,
+        blank=True,
+        help_text="Scurt și adevărat, ex. „Primesc proiecte noi din decembrie”. Apare lângă un punct verde.",
+    )
+
+    class Meta:
+        verbose_name = "Setări site"
+        verbose_name_plural = "Setări site"
+
+    def __str__(self):
+        return "Setări site"

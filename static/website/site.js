@@ -45,12 +45,36 @@
     if (!form) return;
     var total = document.getElementById('estTotal');
     var cta = document.getElementById('estCta');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var shown = null;   // the number currently on screen
+    var frame = 0;
+    /* The total counts up (or down) to the new value instead of jumping.
+       Visitors who prefer reduced motion, and the first paint, get it at once. */
+    function show(target) {
+        window.cancelAnimationFrame(frame);
+        if (shown === null || reduce || shown === target) {
+            shown = target;
+            total.textContent = 'de la €' + target;
+            return;
+        }
+        var from = shown;
+        var start = null;
+        function step(now) {
+            if (start === null) start = now;
+            var t = Math.min(1, (now - start) / 350);
+            var eased = 1 - Math.pow(1 - t, 3);
+            shown = Math.round(from + (target - from) * eased);
+            total.textContent = 'de la €' + shown;
+            if (t < 1) frame = window.requestAnimationFrame(step);
+        }
+        frame = window.requestAnimationFrame(step);
+    }
     function update() {
         var choice = form.querySelector('input[name="direction"]:checked');
         if (!choice) return;
         var sum = Number(choice.value);
         form.querySelectorAll('input.addon:checked').forEach(function (box) { sum += Number(box.value); });
-        total.textContent = 'de la €' + sum;
+        show(sum);
         cta.setAttribute('href', choice.dataset.url);
     }
     form.addEventListener('change', update);
@@ -303,4 +327,65 @@
     });
     dialog.addEventListener('click', function () { dialog.close(); });
     dialog.addEventListener('close', function () { img.removeAttribute('src'); });
+})();
+
+/* Theme: a manual switch next to the system setting. The saved choice is
+   applied before first paint by theme.js; this only drives the button. The
+   button stays hidden without JavaScript, because it could not work. */
+(function () {
+    'use strict';
+    var button = document.getElementById('themeToggle');
+    if (!button) return;
+    var root = document.documentElement;
+    var query = window.matchMedia('(prefers-color-scheme: dark)');
+    function isDark() {
+        var set = root.getAttribute('data-theme');
+        return set ? set === 'dark' : query.matches;
+    }
+    function sync() {
+        var dark = isDark();
+        button.setAttribute('aria-pressed', dark ? 'true' : 'false');
+        button.setAttribute('aria-label', dark ? 'Schimbă tema: luminos' : 'Schimbă tema: întunecat');
+    }
+    button.hidden = false;
+    sync();
+    button.addEventListener('click', function () {
+        var next = isDark() ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('at-theme', next); } catch (e) { /* not saved, still applied */ }
+        sync();
+    });
+    if (query.addEventListener) query.addEventListener('change', sync);
+})();
+
+/* Sections that start below the fold fade in once, when scrolled to. Anything
+   already on screen is left alone, and nothing is hidden for visitors who
+   prefer reduced motion or whose browser lacks IntersectionObserver. */
+(function () {
+    'use strict';
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var limit = window.innerHeight * 0.92;
+    var targets = [];
+    document.querySelectorAll('main .sec:not(.first) > .wrap').forEach(function (el) {
+        if (el.getBoundingClientRect().top < limit) return;
+        el.classList.add('rv');
+        targets.push(el);
+    });
+    if (!targets.length) return;
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('rv-in');
+            observer.unobserve(entry.target);
+        });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    targets.forEach(function (el) { observer.observe(el); });
+    /* Safety net: a link to #section, or a restored scroll position, must never
+       leave a section invisible. */
+    window.addEventListener('hashchange', function () {
+        var hit = document.querySelector(location.hash || '#__none__');
+        var wrap = hit && (hit.classList.contains('rv') ? hit : hit.querySelector('.rv'));
+        if (wrap) wrap.classList.add('rv-in');
+    });
 })();

@@ -33,7 +33,7 @@
     <div class="wrap detail">
         <div class="stack">
             {% if project.image %}
-            <div class="shot"><img src="{{ project.image.url }}" alt="Captură din proiectul {{ project.title }}" width="{{ project.image.width }}" height="{{ project.image.height }}"></div>
+            <div class="shot{% if project.direction == 'web' %} frame{% endif %}"><img src="{{ project.image.url }}" alt="Captură din proiectul {{ project.title }}" width="{{ project.image.width }}" height="{{ project.image.height }}"></div>
             {% endif %}
             <div class="prose">
                 <div><h2>Contextul</h2><div class="rich">{{ project.problem|sanitize_html }}</div></div>

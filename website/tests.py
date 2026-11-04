@@ -1755,3 +1755,204 @@ class AuditRichTextCommandTests(TestCase):
 
     def test_works_with_no_projects(self):
         self.assertIn("Projects: 0", self.run_command())
+
+
+# ---------------------------------------------------------------------------
+# Quick wins for a more attractive site (ideas 1-9)
+# ---------------------------------------------------------------------------
+import re as _re
+from pathlib import Path as _Path
+
+from django.contrib import admin as _admin
+from django.contrib.auth.models import User as _User
+
+from .models import SiteSettings
+
+_STATIC = _Path(__file__).resolve().parent.parent / "static" / "website"
+
+
+def _css():
+    return "".join((_STATIC / name).read_text() for name in ("base.css", "components.css"))
+
+
+class MotionAndThemeFilesTests(TestCase):
+    """Ideas 1, 2, 5, 7: page transitions, reveal on scroll, count-up, theme switch."""
+
+    def test_page_transitions_only_for_visitors_without_reduced_motion(self):
+        css = (_STATIC / "base.css").read_text()
+        block = css[css.index("@media (prefers-reduced-motion: no-preference)"):]
+        self.assertIn("@view-transition", block.split("@media print")[0])
+        # The rule must not appear outside that media query.
+        self.assertEqual(css.count("@view-transition"), 1)
+
+    def test_reveal_class_is_added_by_script_never_written_in_templates(self):
+        for name in ("home", "services", "projects", "about", "faq"):
+            body = self.client.get(reverse(name)).content.decode()
+            self.assertNotIn('class="rv', body, name)
+            self.assertNotIn(" rv ", body, name)
+
+    def test_reveal_is_visible_in_print_and_off_without_motion(self):
+        css = (_STATIC / "base.css").read_text()
+        self.assertIn("@media print { .rv { opacity: 1 !important", css)
+        js = (_STATIC / "site.js").read_text()
+        self.assertIn("prefers-reduced-motion: reduce", js)
+        self.assertIn("IntersectionObserver", js)
+
+    def test_theme_script_is_an_external_file_loaded_before_the_stylesheets(self):
+        body = self.client.get(reverse("home")).content.decode()
+        self.assertEqual(len(_re.findall(r'<script src="/static/website/theme\.js"></script>', body)), 1)
+        self.assertLess(body.index("theme.js"), body.index("tokens.css"))
+
+    def test_theme_script_only_accepts_the_two_known_values(self):
+        js = (_STATIC / "theme.js").read_text()
+        self.assertIn("'light'", js)
+        self.assertIn("'dark'", js)
+        self.assertIn("try", js)  # blocked storage must not break the page
+
+    def test_toggle_button_is_hidden_until_javascript_reveals_it(self):
+        body = self.client.get(reverse("home")).content.decode()
+        button = _re.search(r'<button class="theme-toggle"[^>]*>', body).group(0)
+        self.assertIn(" hidden", button)
+        self.assertIn('aria-label="', button)
+        self.assertIn('aria-pressed="', button)
+
+    def test_toggle_is_on_every_public_page(self):
+        for name in ("home", "services", "projects", "products", "about", "contact", "start_project", "faq", "reviews"):
+            self.assertContains(self.client.get(reverse(name)), 'id="themeToggle"', msg_prefix=name)
+
+    def test_estimator_counts_to_the_exact_value_and_respects_reduced_motion(self):
+        js = (_STATIC / "site.js").read_text()
+        self.assertIn("requestAnimationFrame", js)
+        self.assertIn("cancelAnimationFrame", js)
+        self.assertIn("reduce", js)
+        # The last frame always shows the real target, not a rounded intermediate.
+        self.assertIn("Math.min(1,", js)
+
+
+class StatusChipMarkerTests(TestCase):
+    """Idea 4: each status has its own marker."""
+
+    def test_all_four_statuses_have_a_marker_rule(self):
+        css = (_STATIC / "components.css").read_text()
+        for selector in (".chip::before", ".chip.s-produs::before", ".chip.s-instrument::before", ".chip.s-concept::before"):
+            self.assertIn(selector, css)
+
+    def test_markers_differ_in_shape_not_only_in_colour(self):
+        css = (_STATIC / "components.css").read_text()
+        self.assertIn("border-radius: 1px", css)          # instrument: square
+        self.assertIn("dashed var(--ink-2)", css)         # concept: dashed ring
+
+    def test_markers_add_no_extra_text_for_screen_readers(self):
+        make_project(status="concept")
+        body = self.client.get(reverse("projects")).content.decode()
+        self.assertEqual(body.count('class="chip s-concept">Concept</span>') >= 1, True)
+
+
+class BrowserFrameTests(TestCase):
+    """Idea 8: web screenshots get a browser frame, other directions do not."""
+
+    def _project(self, direction):
+        return make_project(title=f"P {direction}", direction=direction, image=make_test_png())
+
+    def test_detail_page_frames_only_web_projects(self):
+        web = self._project("web")
+        creativ = self._project("creativ")
+        ai = self._project("ai")
+        self.assertContains(self.client.get(reverse("project_detail", args=[web.slug])), 'class="shot frame"')
+        self.assertNotContains(self.client.get(reverse("project_detail", args=[creativ.slug])), "shot frame")
+        self.assertNotContains(self.client.get(reverse("project_detail", args=[ai.slug])), "shot frame")
+
+    def test_home_frames_only_web_projects(self):
+        self._project("web")
+        self.assertContains(self.client.get(reverse("home")), "shot frame")
+        Project.objects.all().delete()
+        self._project("creativ")
+        self.assertNotContains(self.client.get(reverse("home")), "shot frame")
+
+    def test_zoom_on_hover_is_limited_to_visitors_without_reduced_motion(self):
+        css = (_STATIC / "components.css").read_text()
+        block = css[css.index("@media (prefers-reduced-motion: no-preference) {\n    /* Slow zoom"):]
+        self.assertIn(".prow:hover .shot img", block.split("}\n}")[0] + "}")
+
+
+class AvailabilityNoticeTests(TestCase):
+    """Idea 9: availability shown only when the owner switched it on."""
+
+    def _row(self, **kw):
+        return SiteSettings.objects.create(**kw)
+
+    def test_nothing_is_shown_without_a_settings_row(self):
+        for name in ("home", "services", "contact"):
+            self.assertNotContains(self.client.get(reverse(name)), "avail-dot", msg_prefix=name)
+
+    def test_nothing_is_shown_while_the_box_is_unticked(self):
+        self._row(show_availability=False, availability_text="Primesc proiecte noi")
+        self.assertNotContains(self.client.get(reverse("home")), "Primesc proiecte noi")
+
+    def test_ticked_box_with_empty_text_shows_nothing(self):
+        self._row(show_availability=True, availability_text="   ")
+        self.assertNotContains(self.client.get(reverse("home")), "avail-dot")
+
+    def test_shown_on_home_and_in_the_band_when_switched_on(self):
+        self._row(show_availability=True, availability_text="Primesc proiecte noi din decembrie")
+        home = self.client.get(reverse("home")).content.decode()
+        self.assertEqual(home.count("Primesc proiecte noi din decembrie"), 2)  # hero + band
+        self.assertContains(self.client.get(reverse("services")), "Primesc proiecte noi din decembrie")
+
+    def test_text_is_escaped(self):
+        self._row(show_availability=True, availability_text='<script>alert(1)</script>')
+        body = self.client.get(reverse("home")).content.decode()
+        self.assertNotIn("<script>alert(1)</script>", body)
+        self.assertIn("&lt;script&gt;", body)
+
+    def test_a_missing_table_does_not_break_the_page(self):
+        from unittest import mock
+        from django.db import OperationalError
+        with mock.patch("website.templatetags.site_notices.SiteSettings.objects") as manager:
+            manager.only.side_effect = OperationalError("no such table")
+            response = self.client.get(reverse("home"))
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "avail-dot")
+
+    def test_admin_allows_one_row_and_no_delete(self):
+        model_admin = _admin.site._registry[SiteSettings]
+        request = RequestFactory().get("/")
+        request.user = _User.objects.create_superuser("boss", "b@example.com", "pw-12345-xyz")
+        self.assertTrue(model_admin.has_add_permission(request))
+        self._row(show_availability=False)
+        self.assertFalse(model_admin.has_add_permission(request))
+        self.assertFalse(model_admin.has_delete_permission(request))
+
+
+class ConfirmationTests(TestCase):
+    """Idea 6: visual confirmation after the brief and contact forms."""
+
+    def test_brief_thank_you_has_tick_and_three_honest_steps(self):
+        body = self.client.get(reverse("start_project") + "?sent=1").content.decode()
+        self.assertIn('class="tick"', body)
+        self.assertEqual(body.count('<li><span class="n">0'), 3)
+        self.assertIn("maximum 24 de ore", body)
+        self.assertIn("preț fix", body)
+        # Existing promise kept: the answer is personal, not automatic.
+        self.assertIn("nu e un mesaj automat", body)
+
+    def test_tick_is_decorative_for_screen_readers(self):
+        body = self.client.get(reverse("start_project") + "?sent=1").content.decode()
+        self.assertRegex(body, r'<svg class="tick"[^>]*aria-hidden="true"')
+
+    def test_success_message_gets_a_tick_in_css_not_extra_markup(self):
+        self.assertIn(".form-msg.ok::before", (_STATIC / "components.css").read_text())
+
+    def test_animations_respect_reduced_motion(self):
+        css = (_STATIC / "components.css").read_text()
+        before = css[:css.index("animation: tickDraw")]
+        self.assertTrue(before.rstrip().endswith("{") or "prefers-reduced-motion: no-preference" in before[-400:])
+
+
+class NoGradientsOrShadowsTests(TestCase):
+    """The design system has no gradients or shadows; the new code keeps it so."""
+
+    def test_new_styles_add_none(self):
+        css = _css()
+        self.assertNotIn("linear-gradient", css)
+        self.assertNotIn("radial-gradient", css)

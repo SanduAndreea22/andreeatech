@@ -51,10 +51,42 @@
 }
 .chip.s-concept { border-style: dashed; color: var(--ink-2); }
 .chip.s-produs, .chip.s-instrument { border-color: var(--cobalt-text); color: var(--cobalt-text); }
+/* A small marker before the label. Each status differs in shape as well as
+   colour, so the meaning never depends on colour alone. */
+.chip::before {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 7px;
+    vertical-align: 1px;
+    background: var(--ok);                         /* Demo: solid green circle */
+    border-radius: 50%;
+}
+.chip.s-produs::before { background: var(--cobalt-text); border-radius: 50%; }        /* Produs: solid cobalt circle */
+.chip.s-instrument::before { background: var(--cobalt-text); border-radius: 1px; }    /* Instrument: cobalt square */
+.chip.s-concept::before { background: none; border: 1.5px dashed var(--ink-2); width: 8px; height: 8px; box-sizing: border-box; }  /* Concept: dashed ring */
 
 /* ---------- Images ---------- */
 .shot { border: 1px solid var(--line); border-radius: var(--r-img); overflow: hidden; background: var(--paper-2); }
 .shot img { width: 100%; height: auto; }
+/* Browser frame for web projects: a bar with three dots above the screenshot. */
+.shot.frame::before {
+    content: "\25CF \25CF \25CF";
+    display: block;
+    padding: 5px 12px 4px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    line-height: 1.6;
+    color: var(--line-strong);
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line);
+}
+@media (prefers-reduced-motion: no-preference) {
+    /* Slow zoom on the screenshot while its row or card is hovered. */
+    .shot img { transition: transform .6s ease; }
+    .prow:hover .shot img, .frow:hover .shot img, .frow.on .shot img, .sheet:hover .shot img { transform: scale(1.04); }
+}
 
 /* ---------- Spec sheet ---------- */
 .sheet { border: 1px solid var(--line-strong); background: var(--raised); border-radius: var(--r-card); }
@@ -495,3 +527,55 @@ a.fbtn { display: inline-flex; align-items: center; }
 @media (max-width: 900px) {
     .pol { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* =========================================
+   SMALL DETAILS: availability, confirmations
+========================================= */
+.avail { display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; }
+.avail-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); flex: none; }
+.avail-on-band { color: #fff; }
+.avail-on-band .avail-dot { background: #7BE3A4; }
+@media (prefers-reduced-motion: no-preference) {
+    .avail-dot { animation: availPulse 2.4s ease-out infinite; }
+}
+@keyframes availPulse {
+    0% { opacity: 1; }
+    50% { opacity: .35; }
+    100% { opacity: 1; }
+}
+
+/* Brief confirmation: animated tick + what happens next */
+.sp-thanks .tick { margin-bottom: 20px; }
+.tick-ring, .tick-check { stroke: var(--ok); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+@media (prefers-reduced-motion: no-preference) {
+    .tick-ring { stroke-dasharray: 160; stroke-dashoffset: 160; animation: tickDraw .55s ease-out forwards; }
+    .tick-check { stroke-dasharray: 40; stroke-dashoffset: 40; animation: tickDraw .35s .45s ease-out forwards; }
+}
+@keyframes tickDraw { to { stroke-dashoffset: 0; } }
+.next { list-style: none; margin: 24px 0 0; padding: 0; border-top: 1px solid var(--line-strong); }
+.next li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.next .n { font-family: var(--f-mono); font-size: 14px; color: var(--cobalt-text); font-variant-numeric: tabular-nums; }
+.next b { font-weight: 600; }
+
+/* Confirmation messages (contact, reviews): a drawn tick before the text */
+.form-msg.ok { display: flex; align-items: flex-start; gap: 12px; }
+.form-msg.ok::before {
+    content: "\2713";
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    border: 2px solid var(--ok);
+    border-radius: 50%;
+    color: var(--ok);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+    .form-msg.ok { animation: msgIn .45s ease-out both; }
+}
+@keyframes msgIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }

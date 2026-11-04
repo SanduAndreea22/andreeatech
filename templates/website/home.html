@@ -1,5 +1,5 @@
 {% extends "base_v2.html" %}
-{% load static %}
+{% load static site_notices %}
 
 {% block title %}Andreea Tech | Site-uri, automatizări și identitate vizuală{% endblock %}
 {% block meta_description %}Site-uri, sisteme de rezervări, automatizări AI și identitate vizuală pentru antreprenori. Prețuri de la €150, răspuns în maximum 24 de ore.{% endblock %}
@@ -22,13 +22,14 @@
                 <a class="btn btn-line" href="{% url 'projects' %}">Vezi proiectele</a>
             </div>
             <p class="hero-note">Răspund în maximum 24 de ore.</p>
+            {% availability_text as avail %}{% if avail %}<p class="avail"><span class="avail-dot" aria-hidden="true"></span>{{ avail }}</p>{% endif %}
         </div>
         {% if featured_projects %}
         {% with hero=featured_projects.0 %}
         <aside class="sheet" aria-label="Proiect ales">
             <div class="sheet-h"><span class="mono">Proiect ales</span>{% include "partials/status_chip.html" with project=hero %}</div>
             {% if hero.image %}
-            <div class="sheet-img"><div class="shot"><img src="{{ hero.image.url }}" alt="Captură din proiectul {{ hero.title }}" width="{{ hero.image.width }}" height="{{ hero.image.height }}"></div></div>
+            <div class="sheet-img"><div class="shot{% if hero.direction == 'web' %} frame{% endif %}"><img src="{{ hero.image.url }}" alt="Captură din proiectul {{ hero.title }}" width="{{ hero.image.width }}" height="{{ hero.image.height }}"></div></div>
             {% endif %}
             <dl class="spec">
                 <dt>Proiect</dt><dd>{{ hero.title }}</dd>
@@ -103,7 +104,7 @@
                     <div class="sheet fpanel-item" id="fp-{{ p.pk }}"{% if not forloop.first %} hidden{% endif %}>
                         <div class="sheet-h"><span class="mono">{{ p.get_direction_display }}</span>{% include "partials/status_chip.html" with project=p %}</div>
                         {% if p.image %}
-                        <div class="sheet-img"><div class="shot"><img src="{{ p.image.url }}" alt="Captură din proiectul {{ p.title }}" width="{{ p.image.width }}" height="{{ p.image.height }}" loading="lazy"></div></div>
+                        <div class="sheet-img"><div class="shot{% if p.direction == 'web' %} frame{% endif %}"><img src="{{ p.image.url }}" alt="Captură din proiectul {{ p.title }}" width="{{ p.image.width }}" height="{{ p.image.height }}" loading="lazy"></div></div>
                         {% endif %}
                         <dl class="spec">
                             <dt>Proiect</dt><dd>{{ p.title }}</dd>

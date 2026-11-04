@@ -19,9 +19,15 @@
     <div class="wrap" style="max-width:860px">
         {% if just_submitted %}
         <div class="fcard sp-thanks" role="status">
+            <svg class="tick" width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true"><circle class="tick-ring" cx="28" cy="28" r="25"/><path class="tick-check" d="M17 29.5l7.5 7.5L39 20.5"/></svg>
             <h2 style="font-size:1.9rem;margin-bottom:12px">Cerere primită.</h2>
             <p class="lead" style="color:var(--ink)">Îți analizez brief-ul și revin cu un răspuns în maximum 24 de ore.</p>
-            <p class="muted" style="margin-top:12px">Verifică-ți emailul în următoarele 24 de ore: răspund personal la fiecare brief, nu e un mesaj automat.</p>
+            <ol class="next" aria-label="Ce urmează">
+                <li><span class="n">01</span><span><b>Citesc brief-ul personal.</b> Nu trece printr-un intermediar și nu primești un răspuns automat.</span></li>
+                <li><span class="n">02</span><span><b>Revin în maximum 24 de ore</b> cu întrebări concrete despre afacerea ta.</span></li>
+                <li><span class="n">03</span><span><b>Primești oferta.</b> Cu preț fix, stabilit înainte să începem.</span></li>
+            </ol>
+            <p class="muted" style="margin-top:20px">Verifică-ți emailul în următoarele 24 de ore: răspund personal la fiecare brief, nu e un mesaj automat.</p>
             <div class="btn-row" style="margin-top:24px"><a class="btn btn-line" href="{% url 'home' %}">Înapoi acasă</a></div>
         </div>
         {% else %}
