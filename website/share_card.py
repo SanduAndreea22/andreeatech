@@ -32,7 +32,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 logger = logging.getLogger(__name__)
 
-CARD_FORMAT_VERSION = "1"   # bump when the design changes, to redraw every card
+CARD_FORMAT_VERSION = "2"   # bump when the design changes, to redraw every card
 WIDTH, HEIGHT = 1200, 630
 FONT_DIR = Path(__file__).resolve().parent / "share_fonts"
 
@@ -215,6 +215,19 @@ def _open_screenshot(project):
         return None
 
 
+def _paste_badge(image, x, y, size):
+    """The logo badge (the black tile) before the name. Returns where the name starts.
+    If the file is missing the card is simply drawn without it."""
+    path = Path(settings.BASE_DIR) / "static" / "website" / "icon-192.png"
+    try:
+        with Image.open(path) as source:
+            badge = source.convert("RGBA").resize((size, size), Image.LANCZOS)
+    except (OSError, ValueError):
+        return x
+    image.paste(badge, (x, y), badge)
+    return x + size + 14
+
+
 def render_card(project, host):
     shot = _open_screenshot(project)
     has_image = shot is not None
@@ -232,7 +245,8 @@ def render_card(project, host):
 
     if not has_image:
         draw.rectangle((0, 0, 20, HEIGHT), fill=COBALT)
-    x = wordmark.draw(draw, (left, 52), "Andreea ", INK)
+    word_x = _paste_badge(image, left, 44, 54)
+    x = wordmark.draw(draw, (word_x, 52), "Andreea ", INK)
     wordmark.draw(draw, (x, 52), "Tech", COBALT)
     mono.draw(draw, (left, 156), _clean("PORTOFOLIU · " + project.get_direction_display()).upper(), INK_2, spacing=1.4)
 

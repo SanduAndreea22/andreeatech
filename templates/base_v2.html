@@ -10,7 +10,10 @@
     <meta name="description" content="{% block meta_description %}Site-uri, sisteme de rezervări, automatizări AI și identitate vizuală pentru antreprenori. Prețuri de la €150, răspuns în maximum 24 de ore.{% endblock %}">
 
     <script src="{% static 'website/theme.js' %}"></script>
-    <link rel="icon" type="image/png" href="{% static 'website/favicon.png' %}">
+    <link rel="icon" href="{% static 'website/favicon.ico' %}" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'website/favicon-32.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'website/icon-192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'website/apple-touch-icon.png' %}">
 
     {% block canonical_tag %}<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">{% endblock %}
     {% block robots %}{% endblock %}

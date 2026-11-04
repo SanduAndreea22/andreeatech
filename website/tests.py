@@ -3131,3 +3131,120 @@ class FormColumnAlignmentTests(TestCase):
         css = (_STATIC / "components.css").read_text()
         self.assertIn(".hint { max-width: 68ch; }", css)
         self.assertIn(".review-by { max-width: 68ch; }", css)
+
+
+# ---------------------------------------------------------------------------
+# The logo: original kept untouched, icons and badge generated from it
+# ---------------------------------------------------------------------------
+_BRAND = _STATIC / "brand"
+_LOGO_SHA256 = "8ffbb5dec4e3306c2785c42d777619d963035f127a8689b42c4b3fb1cae92f78"
+
+
+class BrandAssetsTests(TestCase):
+
+    def image(self, path):
+        from PIL import Image as _Image
+        return _Image.open(path)
+
+    def test_the_original_logo_is_kept_byte_for_byte(self):
+        import hashlib
+        self.assertEqual(hashlib.sha256((_BRAND / "logo-original.png").read_bytes()).hexdigest(), _LOGO_SHA256)
+
+    def test_the_original_is_the_full_square_image(self):
+        with self.image(_BRAND / "logo-original.png") as im:
+            self.assertEqual(im.size, (1254, 1254))
+
+    def test_icons_have_the_right_sizes(self):
+        for name, size in (("favicon-32.png", 32), ("favicon-48.png", 48), ("icon-192.png", 192), ("apple-touch-icon.png", 180)):
+            with self.subTest(file=name), self.image(_STATIC / name) as im:
+                self.assertEqual(im.size, (size, size))
+
+    def test_the_iphone_icon_is_a_plain_square_without_transparency(self):
+        with self.image(_STATIC / "apple-touch-icon.png") as im:
+            self.assertNotIn("A", im.getbands())
+
+    def test_the_other_icons_have_rounded_transparent_corners(self):
+        with self.image(_STATIC / "icon-192.png") as im:
+            self.assertEqual(im.convert("RGBA").getpixel((0, 0))[3], 0)
+
+    def test_the_ico_file_holds_16_32_and_48(self):
+        with self.image(_STATIC / "favicon.ico") as im:
+            self.assertEqual(sorted(im.info["sizes"]), [(16, 16), (32, 32), (48, 48)])
+
+    def test_the_share_card_is_the_logo_on_black_at_the_standard_size_and_stays_small(self):
+        path = _STATIC / "og-default.jpg"
+        with self.image(path) as im:
+            self.assertEqual(im.size, (1200, 630))
+            self.assertLess(sum(im.convert("RGB").getpixel((5, 5))), 12)   # black at the edge: no visible seam
+        self.assertLess(path.stat().st_size, 150 * 1024)
+
+    def test_the_menu_badge_is_drawn_at_twice_its_size(self):
+        with self.image(_BRAND / "mark-80.png") as im:
+            self.assertEqual(im.size, (80, 80))
+
+    def test_the_build_script_never_writes_to_the_original(self):
+        source = (Path(settings.BASE_DIR) / "scripts" / "build_brand_assets.py").read_text()
+        self.assertIn("Image.open(SOURCE)", source)
+        self.assertNotRegex(source, r"\.save\(\s*SOURCE")
+
+
+class BrandInThePagesTests(TestCase):
+
+    def head(self, name="home"):
+        body = self.client.get(reverse(name)).content.decode()
+        return body[:body.index("</head>")]
+
+    def test_every_page_declares_the_icons(self):
+        for name in ("home", "services", "contact", "projects", "guide"):
+            head = self.head(name)
+            with self.subTest(page=name):
+                self.assertIn("website/favicon.ico", head)
+                self.assertIn('sizes="32x32"', head)
+                self.assertIn('sizes="192x192"', head)
+                self.assertIn('rel="apple-touch-icon"', head)
+                self.assertNotIn("favicon.png", head)
+
+    def test_the_declared_icon_files_exist(self):
+        for name in ("favicon.ico", "favicon-32.png", "icon-192.png", "apple-touch-icon.png"):
+            self.assertTrue((_STATIC / name).exists(), name)
+
+    def test_the_menu_shows_the_badge_before_the_name_and_keeps_the_text(self):
+        body = self.client.get(reverse("home")).content.decode()
+        nav = body[body.index('<header class="nav">'):body.index("</header>")]
+        self.assertRegex(nav, r'<a class="brand"[^>]*aria-label="Andreea Tech, acasă"><img class="brand-mark"[^>]*width="40" height="40" alt="">')
+        self.assertIn("<span>Andreea <i>Tech</i></span>", nav)
+
+    def test_the_badge_is_decorative_for_screen_readers(self):
+        body = self.client.get(reverse("home")).content.decode()
+        for tag in _re.findall(r'<img class="brand-mark"[^>]*>', body):
+            self.assertIn('alt=""', tag)
+
+    def test_the_footer_has_the_badge_too(self):
+        body = self.client.get(reverse("home")).content.decode()
+        footer = body[body.index('<footer class="foot">'):]
+        self.assertIn('class="brand-mark"', footer)
+
+    def test_the_error_page_keeps_the_badge_and_stays_standalone(self):
+        text = (Path(settings.BASE_DIR) / "templates" / "500.html").read_text()
+        self.assertIn("brand-mark", text)
+        self.assertNotRegex(text, r"\{%\s*url\s+['\"]")      # no reverse() calls: this page must work while the site is failing
+
+    def test_the_badge_style_is_a_tile_with_a_line_so_it_shows_on_both_themes(self):
+        css = (_STATIC / "base.css").read_text()
+        block = css[css.index(".brand-mark {"):css.index("}", css.index(".brand-mark {"))]
+        self.assertIn("border: 1px solid var(--line-strong)", block)
+        self.assertIn("flex: none", block)
+
+    def test_project_cards_carry_the_badge_and_are_redrawn_with_the_new_design(self):
+        self.assertEqual(_sc.CARD_FORMAT_VERSION, "2")
+        project = make_project(title="Cu insigna")
+        with_badge = _sc.render_card(project, "h")
+        with _mock.patch("website.share_card.Image.open", side_effect=OSError("missing")):
+            without = _sc._paste_badge(with_badge.copy(), 64, 44, 54)
+        self.assertEqual(without, 64)                     # nothing drawn, the name stays where it was
+        self.assertEqual(_sc._paste_badge(with_badge.copy(), 64, 44, 54), 64 + 54 + 14)
+
+    def test_a_missing_badge_file_never_breaks_a_card(self):
+        project = make_project(title="Fără insignă")
+        with _mock.patch("website.share_card.Image.open", side_effect=OSError("missing")):
+            self.assertEqual(_sc._paste_badge(_sc.Image.new("RGB", (1200, 630)), 64, 44, 54), 64)
