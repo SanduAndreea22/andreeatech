@@ -33,7 +33,7 @@
             </div>
 
             <div class="fcard calc-out">
-                <span class="mono">Pierdere estimată</span>
+                <span class="mono" id="oLabel" data-edited="Pierdere estimată">Exemplu, cu cifrele de pornire</span>
                 <div><div class="calc-big" id="oMonth">{{ result.month }} lei</div><p class="muted">pe lună</p></div>
                 <div>
                     <div class="calc-bar" role="img" id="oBar" aria-label="{{ result.lost }} din {{ result.total }} programări lunare sunt ratate"><i class="kept" id="oKept" style="width:{{ result.kept_pct|unlocalize }}%"></i><i class="lost" id="oLost" style="width:{{ result.lost_pct|unlocalize }}%"></i></div>

@@ -19,13 +19,14 @@
 <section class="sec first flush">
     <div class="wrap cform">
         <div>
-            <div class="sub">De ce ai nevoie?</div>
+            <div class="sub">Ai un proiect? Alege tipul</div>
+            <p class="hint">Te duc la formularul de ofertă, cu direcția deja aleasă. Pentru o întrebare scurtă, scrie direct în formularul de mesaj.</p>
             <nav class="paths" aria-label="Tipul solicitării">
                 <a class="path" href="{% url 'start_project' %}?pachet=produse_sisteme"><b>Un site sau o aplicație</b><span>Site, sistem de rezervări, aplicație web</span></a>
                 <a class="path" href="{% url 'start_project' %}?pachet=ai_automatizare"><b>O automatizare sau un asistent AI</b><span>Confirmări, mesaje de reamintire, răspunsuri automate</span></a>
                 <a class="path" href="{% url 'start_project' %}?pachet=continut_digital"><b>Identitate și conținut vizual</b><span>Brand, postări, campanii, materiale</span></a>
-                <a class="path" href="{% url 'start_project' %}?pachet=not_sure"><b>Hai să discutăm</b><span>Vrei să ne lămurim înainte să-mi descrii proiectul</span></a>
-                <a class="path" href="{% url 'contact' %}" aria-current="page"><b>Doar o întrebare rapidă</b><span>Un mesaj scurt, fără formularul de proiect</span></a>
+                <a class="path" href="{% url 'start_project' %}?pachet=not_sure"><b>Hai să discutăm</b><span>Nu știi încă ce ți se potrivește: formularul de ofertă, cu mențiunea că vrei să discutăm întâi</span></a>
+                <a class="path" href="{% url 'contact' %}" aria-current="page"><b>Doar o întrebare rapidă</b><span>Ești deja în locul potrivit: scrie un mesaj scurt în formular</span></a>
             </nav>
         </div>
 

@@ -25,7 +25,7 @@ SERVICES = {
         ],
         "price_factors": "Câte funcții are, cine îl folosește (de exemplu tu și echipa ta), dacă are plăți online sau legături cu alte servicii, dacă designul se face de la zero și cât de repede îl vrei.",
         "cta": "Cere o ofertă pentru web",
-        "cta_secondary": "Vezi proiectele web",
+        "cta_secondary": "Vezi portofoliul web",
     },
     "ai": {
         "direction": Project.DIRECTION_AI,
@@ -42,7 +42,7 @@ SERVICES = {
         ],
         "price_factors": "Câți pași are procesul pe care îl automatizăm, cu ce programe trebuie legat și cât de mult trebuie adaptat la felul tău de a lucra.",
         "cta": "Cere o ofertă pentru automatizare",
-        "cta_secondary": "Vezi proiectele de automatizare",
+        "cta_secondary": "Vezi portofoliul de automatizare",
         "has_demo": True,
     },
     "creativ": {
@@ -59,6 +59,6 @@ SERVICES = {
         ],
         "price_factors": "Volumul de materiale, numărul de formate și dacă brandul are deja o identitate sau pornim de la zero.",
         "cta": "Cere o ofertă creativă",
-        "cta_secondary": "Vezi proiectele creative",
+        "cta_secondary": "Vezi portofoliul creativ",
     },
 }

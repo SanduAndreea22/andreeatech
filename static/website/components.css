@@ -444,6 +444,8 @@ fieldset.step legend .n { font-family: var(--f-mono); font-size: var(--fs-note);
 
 @media (max-width: 900px) {
     .cform { grid-template-columns: minmax(0, 1fr); }
+    /* On phones the short message form comes first; the project paths follow. */
+    .cform > div:first-child { order: 2; }
 }
 @media (max-width: 640px) {
     .checks > div { grid-template-columns: minmax(0, 1fr); }

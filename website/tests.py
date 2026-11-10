@@ -584,7 +584,7 @@ class ServicesViewTests(TestCase):
     def test_hub_has_the_price_estimate_with_the_extras(self):
         response = self.client.get(reverse("services"))
         self.assertContains(response, 'id="est"')
-        self.assertContains(response, "Asistent AI, de la €25")
+        self.assertContains(response, "Asistent AI, configurare o singură dată, de la €25")
 
     def test_service_pages_are_in_the_sitemap(self):
         body = self.client.get("/sitemap.xml").content.decode()
@@ -2167,7 +2167,9 @@ class BookingDemoTests(TestCase):
             self.assertNotContains(self.client.get(reverse(name)), 'id="bkDemo"', msg_prefix=name)
 
     def test_the_calculator_link_under_the_demo(self):
-        self.assertIn(f'href="{reverse("calculator")}">Cât te costă', self.home())
+        home = self.home()
+        self.assertIn('Cât te costă programările la care clientul nu mai vine?', home)
+        self.assertIn(f'<a class="btn btn-line" href="{reverse("calculator")}">Calculează</a>', home)
 
 
 # ---------------------------------------------------------------------------
@@ -2878,7 +2880,8 @@ class NavAndTapAreaTests(TestCase):
     def test_contact_paths_use_the_new_wording(self):
         body = self.client.get(reverse("contact")).content.decode()
         self.assertIn("<b>Hai să discutăm</b>", body)
-        self.assertIn("fără formularul de proiect", body)
+        self.assertIn("Ești deja în locul potrivit", body)
+        self.assertIn("cu direcția deja aleasă", body)
 
 
 # ---------------------------------------------------------------------------
@@ -3375,6 +3378,32 @@ class CopyFixesTests(TestCase):
     def test_the_form_hints_close_the_quote_properly(self):
         for path, label in (("/contact/", "Trimite mesajul"), ("/start-project/", "Cere o ofertă"), ("/reviews/", "Trimite recenzia")):
             self.assertIn(f"„{label}”", self.body(path), path)
+
+    def test_the_menu_reaches_how_i_work_and_the_faq(self):
+        body = self.body("/")
+        nav = body[body.index('aria-label="Principal"'):body.index("</nav>", body.index('aria-label="Principal"'))]
+        self.assertIn(f'href="{reverse("faq")}">Întrebări</a>', nav)
+        self.assertIn('id="proces"', body)
+        phone = body[body.index('aria-label="Meniu mobil"'):]
+        phone = phone[:phone.index("</nav>")]
+        self.assertIn("Întrebări frecvente", phone)
+        self.assertIn('href="/#proces">Cum lucrez</a>', phone)
+        self.assertIn('class="i-burger"', body)
+
+    def test_guide_and_calculator_are_buttons_not_loose_text_links(self):
+        for path in ("/", "/servicii/"):
+            self.assertIn(f'<a class="btn btn-line" href="{reverse("guide")}">Răspunde la 3 întrebări</a>', self.body(path), path)
+
+    def test_service_pages_link_to_the_portfolio_filtered_by_direction(self):
+        body = self.body("/servicii/web/")
+        self.assertIn(f'href="{reverse("projects")}?directie=web">Vezi portofoliul web</a>', body)
+        js = (Path(settings.BASE_DIR) / "static" / "website" / "site.js").read_text(encoding="utf-8")
+        self.assertIn("get('directie')", js)
+
+    def test_the_calculator_marks_its_starting_numbers_as_an_example(self):
+        body = self.body("/calculator/")
+        self.assertIn("Exemplu, cu cifrele de pornire", body)
+        self.assertIn('data-edited="Pierdere estimată"', body)
 
     def test_the_brief_says_which_fields_are_required_and_which_package_was_chosen(self):
         body = self.body("/start-project/")

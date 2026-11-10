@@ -22,7 +22,7 @@
             {% include "partials/service_row.html" with pkg=pkg %}
             {% endfor %}
         </div>
-        <p class="muted mt-6">Nu știi ce direcție ți se potrivește? <a class="link" href="{% url 'guide' %}">Răspunde la trei întrebări</a>.</p>
+        <div class="btn-row mt-6"><span class="muted">Nu știi ce direcție ți se potrivește?</span><a class="btn btn-line" href="{% url 'guide' %}">Răspunde la 3 întrebări</a></div>
     </div>
 </section>
 
@@ -48,7 +48,7 @@
                             {% for addon in addons %}
                             <label class="opt" for="est-addon-{{ addon.key }}">
                                 <input type="checkbox" class="addon" id="est-addon-{{ addon.key }}" value="{{ addon.price_value }}">
-                                {{ addon.name }}, de la €{{ addon.price_value }}
+                                {{ addon.name }}, configurare o singură dată, de la €{{ addon.price_value }}
                             </label>
                             {% endfor %}
                         </fieldset>
@@ -57,7 +57,7 @@
                         <div><span class="sub">Estimare orientativă</span><strong id="estTotal">{% for pkg in packages %}{% if pkg.popular %}{{ pkg.price }}{% endif %}{% endfor %}</strong></div>
                         <a class="btn btn-primary" id="estCta" href="{% url 'start_project' %}">Cere o ofertă</a>
                     </div>
-                    <p class="hint">Suma exactă se stabilește după ce îmi descrii proiectul, în funcție de ce alegi.</p>
+                    <p class="hint">Suma exactă se stabilește după ce îmi descrii proiectul, în funcție de ce alegi. Costurile lunare ale tehnologiei din spate (la AI) se plătesc separat și sunt explicate în <a class="link" href="{% url 'faq' %}">întrebările frecvente</a>.</p>
                 </form>
             </div>
         </div>

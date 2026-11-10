@@ -161,6 +161,7 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
     min-height: 40px;
     display: inline-flex;
     align-items: center;
+    gap: 8px;
 }
 .menu summary::-webkit-details-marker { display: none; }
 .menu[open] summary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
@@ -262,13 +263,21 @@ h3 { font-size: 1.5rem; line-height: 1.2; }
 @media print { .rv { opacity: 1 !important; transform: none !important; } }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 900px) {
+@media (max-width: 1160px) {
     .nav-links { display: none; }
     .theme-toggle { margin-left: auto; }
     .menu { display: block; }
+}
+@media (max-width: 900px) {
     .mg { grid-template-columns: minmax(0, 1fr); gap: 16px; }
     .mg-l { padding-top: 0; }
     .foot-g { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+    /* Keep logo, theme toggle and menu button inside the 16px gutters on small phones. */
+    .nav-in { gap: 8px; }
+    .menu summary { padding: 9px 12px; gap: 6px; }
+    .nav .brand { font-size: 1.15rem; gap: 8px; }
 }
 @media (max-width: 640px) {
     .foot-g { grid-template-columns: minmax(0, 1fr); }

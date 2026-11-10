@@ -156,6 +156,12 @@
         });
         if (empty) empty.hidden = shown !== 0;
     });
+    /* /projects/?directie=web arrives with that filter already applied. */
+    var wantedDirection = new URLSearchParams(window.location.search).get('directie');
+    if (wantedDirection) {
+        var preset = group.querySelector('[data-filter="' + wantedDirection.replace(/[^a-z]/g, '') + '"]');
+        if (preset) preset.click();
+    }
 })();
 
 /* Products: Emotional Planner demo. Simulation only, nothing is saved. */
@@ -581,7 +587,11 @@
         byId('oBar').setAttribute('aria-label', fmt(lost) + ' din ' + fmt(total) + ' programări lunare sunt ratate');
         return fmt(month);
     }
-    form.addEventListener('input', update);
+    form.addEventListener('input', function () {
+        var label = byId('oLabel');
+        if (label && label.dataset.edited) label.textContent = label.dataset.edited;
+        update();
+    });
     /* Screen readers hear the result once the visitor leaves a field, not on every keystroke. */
     form.addEventListener('change', function () {
         live.textContent = 'Pierdere estimată: ' + update() + ' lei pe lună.';
