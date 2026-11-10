@@ -703,7 +703,7 @@ class ProductPagesTests(TestCase):
             self.assertTrue((Path(settings.BASE_DIR) / "static" / "website" / shot).exists(), shot)
         self.assertIn("date de exemplu", body)
         for benefit in ("Știi cât mai poți cheltui luna aceasta", "Vezi unde depășești bugetul",
-                        "Compari cheltuielile între luni", "Îți urmărești obiectivele de economisire"):
+                        "Compari cheltuielile între luni", "Îți urmărești economiile"):
             self.assertIn(benefit, body)
         features_end = body.index("RON, EUR, USD sau GBP")
         self.assertIn("Testează MyBudget gratuit", body[features_end:body.index("Cum funcționează")])
