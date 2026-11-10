@@ -2754,7 +2754,7 @@ class VocabularyTests(TestCase):
         body = self.client.get(reverse("home")).content.decode()
         band = body[body.index('class="band"'):body.index("</section>", body.index('class="band"'))]
         self.assertIn(">Cere o ofertă</a>", band)
-        self.assertIn(">Hai să discutăm</a>", band)
+        self.assertIn(">Scrie-mi o întrebare</a>", band)
         self.assertNotIn("Completează brief-ul", band)
         self.assertNotIn("Cere o consultație", band)
 
@@ -2769,7 +2769,7 @@ class VocabularyTests(TestCase):
         body = self.client.get(reverse("home")).content.decode()
         band = body[body.index('class="band"'):]
         self.assertIn(f'href="{reverse("start_project")}">Cere o ofertă</a>', band)
-        self.assertIn(f'href="{reverse("start_project")}?pachet=not_sure">Hai să discutăm</a>', band)
+        self.assertIn(f'href="{reverse("contact")}">Scrie-mi o întrebare</a>', band)
 
     def test_the_form_page_speaks_plainly(self):
         body = self.client.get(reverse("start_project")).content.decode()
@@ -3373,8 +3373,28 @@ class CopyFixesTests(TestCase):
         self.assertNotIn("Verific-o", js)
 
     def test_the_form_hints_close_the_quote_properly(self):
-        for path, label in (("/contact/", "Trimite mesajul"), ("/start-project/", "Trimite proiectul"), ("/reviews/", "Trimite recenzia")):
+        for path, label in (("/contact/", "Trimite mesajul"), ("/start-project/", "Cere o ofertă"), ("/reviews/", "Trimite recenzia")):
             self.assertIn(f"„{label}”", self.body(path), path)
+
+    def test_the_brief_says_which_fields_are_required_and_which_package_was_chosen(self):
+        body = self.body("/start-project/")
+        self.assertIn("Sunt obligatorii doar patru câmpuri", body)
+        self.assertNotIn('id="packageNote"', body)
+        chosen = self.body("/start-project/?pachet=ai_automatizare")
+        self.assertIn('id="packageNote"', chosen)
+        self.assertIn("Automatizare AI, de la €250", chosen)
+        self.assertNotIn('id="packageNote"', self.body("/start-project/?pachet=not_sure"))
+
+    def test_the_home_hero_says_what_is_offered_and_hides_the_tech_stack(self):
+        from .models import Project
+        Project.objects.create(title="Demo X", short_description="Rezervări online pentru un restaurant.",
+                               problem="<p>p</p>", solution="<p>s</p>", outcome="<p>o</p>",
+                               tech_stack="Django, PostgreSQL", is_featured=True)
+        hero = self.body("/")
+        hero = hero[hero.index('class="hero-copy"'):hero.index("</aside>")]
+        self.assertIn("sisteme de rezervări și automatizări care preiau munca repetitivă", hero)
+        self.assertIn("Rezervări online pentru un restaurant.", hero)
+        self.assertNotIn("Django", hero)
 
     def test_the_brief_asks_in_plain_words(self):
         body = self.body("/start-project/")

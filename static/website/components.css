@@ -430,6 +430,8 @@ fieldset.step legend { font-family: var(--f-display); font-size: 1.3rem; padding
 fieldset.step legend .n { font-family: var(--f-mono); font-size: var(--fs-note); color: var(--cobalt-text); margin-right: 12px; }
 
 .progress { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.progress-item { display: grid; gap: 6px; }
+.progress-cap { font-size: var(--fs-ui); color: var(--ink-2); }
 .progress-seg { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
 .progress-fill { height: 100%; width: 0; background: var(--cobalt); }
 

@@ -225,8 +225,15 @@ def start_project(request):
         submitted_email = None
         request.session.pop("brief_email", None)
 
+    chosen_package = form["selected_package"].value()
+    chosen_package_label = (
+        dict(ContactMessage.PACKAGE_CHOICES).get(chosen_package)
+        if chosen_package and chosen_package != "not_sure" else None
+    )
+
     return render(request, "website/start_project.html", {
         "form": form,
+        "chosen_package_label": chosen_package_label,
         "just_submitted": just_submitted,
         "submitted_email": submitted_email,
     })

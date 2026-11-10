@@ -1,18 +1,18 @@
 {% extends "base_v2.html" %}
 {% load form_helpers %}
 
-{% block title %}Începe un proiect | Andreea Tech{% endblock %}
+{% block title %}Cere o ofertă | Andreea Tech{% endblock %}
 {% block meta_description %}Descrie-mi proiectul tău ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
 {% block twitter_description %}Descrie-mi proiectul tău ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
 {% block og_description %}Descrie-mi proiectul tău ca să începem să construim site-ul, sistemul, automatizarea sau identitatea vizuală de care are nevoie afacerea ta.{% endblock %}
-{% block og_title %}Începe un proiect | Andreea Tech{% endblock %}
-{% block twitter_title %}Începe un proiect | Andreea Tech{% endblock %}
+{% block og_title %}Cere o ofertă | Andreea Tech{% endblock %}
+{% block twitter_title %}Cere o ofertă | Andreea Tech{% endblock %}
 
 {% block content %}
 <section class="phead">
     <div class="wrap">
         <h1>Hai să construim ce ai nevoie.</h1>
-        <p class="lead">Spune-mi despre afacerea ta și despre ce vrei să funcționeze mai bine. Completează formularul de mai jos ca să putem începe.</p>
+        <p class="lead">Spune-mi despre afacerea ta și despre ce vrei să funcționeze mai bine. Completează formularul de mai jos ca să putem începe. Sunt obligatorii doar patru câmpuri: nume, email, domeniul afacerii și descrierea proiectului. Restul poți lăsa goale.</p>
     </div>
 </section>
 
@@ -42,14 +42,15 @@
             <form method="POST" id="briefForm" novalidate>
                 {% csrf_token %}
                 {% error_summary form %}
+                {% if chosen_package_label %}<p class="note" id="packageNote">Ai ales: <b>{{ chosen_package_label }}</b>. Poți schimba direcția mai jos.</p>{% endif %}
                 {% if form.selected_package.value == "not_sure" %}<p class="note" id="consultNote">Ai ales să discutăm mai întâi. Completează câmpurile de mai jos, iar eu îți răspund în maximum 24 de ore, pe email, și stabilim împreună pasul următor.</p>{% endif %}
                 {{ form.non_field_errors }}
                 <div class="honeypot-field" aria-hidden="true">{{ form.website }}</div>
 
                 <div class="progress" id="briefProgress" aria-hidden="true">
-                    <div class="progress-seg"><div class="progress-fill"></div></div>
-                    <div class="progress-seg"><div class="progress-fill"></div></div>
-                    <div class="progress-seg"><div class="progress-fill"></div></div>
+                    <div class="progress-item"><div class="progress-seg"><div class="progress-fill"></div></div><span class="progress-cap">1 · Despre tine</span></div>
+                    <div class="progress-item"><div class="progress-seg"><div class="progress-fill"></div></div><span class="progress-cap">2 · Proiectul</span></div>
+                    <div class="progress-item"><div class="progress-seg"><div class="progress-fill"></div></div><span class="progress-cap">3 · Detalii</span></div>
                 </div>
 
                 <fieldset class="step" data-step>
@@ -69,7 +70,7 @@
                     <div class="field">
                         <label for="{{ form.project_description.id_for_label }}">Descrierea proiectului și obiective</label>
                         {{ form.project_description }}{{ form.project_description.errors }}
-                        <p class="hint">Descrie site-ul, fluxul de rezervări, automatizarea, identitatea sau procesul intern de care ai nevoie.</p>
+                        <p class="hint">Câteva propoziții sunt de ajuns: ce faci acum, ce te încurcă și ce vrei să se schimbe.</p>
                     </div>
                 </fieldset>
 
@@ -79,7 +80,7 @@
                         <div class="field">
                             <label for="{{ form.hosting_info.id_for_label }}">Domeniu și hosting (opțional)</label>
                             {{ form.hosting_info }}{{ form.hosting_info.errors }}
-                            <p class="hint">Domeniul e adresa site-ului tău (ex. numeletau.ro), iar hosting-ul e serviciul care îl ține activ online. Scrie aici dacă le ai deja sau vrei să ți le configurez eu. Costul e separat de pachet, iar suma exactă o stabilim la consultație.</p>
+                            <p class="hint">Domeniul e adresa site-ului (ex. numeletau.ro), iar hosting-ul e serviciul care îl ține online. Costul lor e separat de pachet. Dacă nu știi, lasă gol.</p>
                         </div>
                         <div class="field">
                             <label for="{{ form.deadline_communication.id_for_label }}">Termen sau urgență (opțional)</label>
@@ -88,14 +89,15 @@
                     </div>
                     <div class="field">
                         <span class="label-like" id="featuresLabel">Funcționalități necesare (opțional)</span>
+                        <p class="hint">Bifează ce ți se potrivește. Nu trebuie să știi exact: îți propun eu ce are sens.</p>
                         <div class="checks" role="group" aria-labelledby="featuresLabel">{{ form.required_features }}</div>
                         {{ form.required_features.errors }}
                     </div>
                 </fieldset>
 
                 <div class="stack-s">
-                    <div class="btn-row"><button type="submit" class="btn btn-primary">Trimite proiectul</button></div>
-                    <p class="hint">Apăsând „Trimite proiectul”, ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a>. Îți răspund în maximum 24 de ore.</p>
+                    <div class="btn-row"><button type="submit" class="btn btn-primary">Cere o ofertă</button></div>
+                    <p class="hint">Apăsând „Cere o ofertă”, ești de acord cu <a class="link" href="{% url 'privacy_policy' %}">Politica de confidențialitate</a>. Îți răspund în maximum 24 de ore.</p>
                 </div>
             </form>
         </div>

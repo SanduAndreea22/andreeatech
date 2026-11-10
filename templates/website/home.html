@@ -16,7 +16,7 @@
         <div class="hero-copy">
             <p class="hero-eyebrow">Site-uri, automatizări și identitate vizuală</p>
             <h1>De la o interacțiune obișnuită, la o experiență de care oamenii își amintesc.</h1>
-            <p class="lead">Pentru antreprenorii care vor să-și ducă business-ul la următorul nivel.</p>
+            <p class="lead">Construiesc site-uri, sisteme de rezervări și automatizări care preiau munca repetitivă din afacerea ta. Preț fix, stabilit înainte să începem.</p>
             <div class="btn-row">
                 <a class="btn btn-primary" href="{% url 'start_project' %}">Cere o ofertă</a>
                 <a class="btn btn-line" href="{% url 'projects' %}">Vezi proiectele</a>
@@ -35,9 +35,9 @@
                 <dt>Proiect</dt><dd>{{ hero.title }}</dd>
                 <dt>Direcție</dt><dd>{{ hero.get_direction_display }}</dd>
                 <dt>Stare</dt><dd>{{ hero.get_status_display }}</dd>
-                {% if hero.tech_stack %}<dt>Stack</dt><dd>{{ hero.tech_stack }}</dd>{% endif %}
+                {% if hero.short_description %}<dt>Ce face</dt><dd>{{ hero.short_description }}</dd>{% endif %}
             </dl>
-            <div class="sheet-f"><a class="link" href="{% url 'project_detail' hero.slug %}">Deschide proiectul</a></div>
+            <div class="sheet-f"><a class="link" href="{% url 'project_detail' hero.slug %}">Citește despre proiect</a></div>
         </aside>
         {% endwith %}
         {% endif %}

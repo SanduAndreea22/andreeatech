@@ -34,8 +34,8 @@ class StartProjectForm(FriendlyErrorsMixin, HoneypotFormMixin, forms.ModelForm):
     FEATURE_CHOICES = [
         ("content", "Conținut & postări social media"),
         ("booking", "Sistem de rezervări / programări"),
-        ("dashboard", "Panou de administrare"),
-        ("website", "Website de prezentare"),
+        ("dashboard", "Panou de administrare (unde îți gestionezi singur rezervările, clienții sau conținutul)"),
+        ("website", "Website de prezentare (pagini despre afacerea ta, fără rezervări)"),
         ("automation", "Automatizare simplă (confirmări, mesaje de reamintire)"),
         ("ai_agent", "Asistent AI care răspunde clienților (telefon, WhatsApp)"),
     ]
@@ -68,6 +68,12 @@ class StartProjectForm(FriendlyErrorsMixin, HoneypotFormMixin, forms.ModelForm):
         ]
         widgets = {
             "industry": forms.TextInput(attrs={"placeholder": "ex. restaurant, clinică, salon..."}),
+            "project_description": forms.Textarea(attrs={
+                "rows": 6,
+                "placeholder": "ex. Am o clinică cu trei cabinete. Programările se fac pe telefon și multe rămân neconfirmate. Vreau programări online cu confirmare automată.",
+            }),
+            "hosting_info": forms.TextInput(attrs={"placeholder": "ex. am domeniul, caut hosting / nu am nimic"}),
+            "deadline_communication": forms.TextInput(attrs={"placeholder": "ex. până în martie / nu e urgent"}),
         }
 
 
