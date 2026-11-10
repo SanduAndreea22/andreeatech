@@ -30,6 +30,14 @@
     --band: #2F4BDB;
     --on-band-2: #DCE2FF;
 
+    /* Warm accent: used sparingly (at most 2-3 places per screen) next to the
+       cobalt. --warm is a fill (always with --on-warm text, which stays dark in
+       both themes); --warm-text is for coloured text such as numerals. */
+    --warm: #FF8A6B;
+    --warm-text: #B4432B;
+    --on-warm: #11142A;
+    --tint: #E6EBFF;          /* soft cobalt wash for highlighted areas */
+
     /* Feedback (always paired with text) */
     --ok: #1F6B3A;
     --ok-bg: #E4F1E8;
@@ -99,6 +107,8 @@
         --ok: #6FCF97;
         --ok-bg: #16301F;
         --err: #FF8A80;
+        --warm-text: #FF9A7F;
+        --tint: #1B2250;
     }
 }
 
@@ -118,6 +128,8 @@
     --ok: #6FCF97;
     --ok-bg: #16301F;
     --err: #FF8A80;
+    --warm-text: #FF9A7F;
+    --tint: #1B2250;
 }
 
 :root[data-theme="light"] {
