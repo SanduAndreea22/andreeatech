@@ -711,6 +711,12 @@ class ProductPagesTests(TestCase):
         self.assertIn("evită să introduci parole bancare", body)
         self.assertIn("https://my-budget-or3r.onrender.com/auth/register", body)
 
+    def test_the_products_card_uses_the_real_budget_screenshot(self):
+        body = self.client.get(reverse("products")).content.decode()
+        self.assertIn("budget-card.jpg", body)
+        self.assertNotIn("budget-preview.jpg", body)
+        self.assertTrue((Path(settings.BASE_DIR) / "static" / "website" / "budget-card.jpg").exists())
+
     def test_external_app_links_open_safely_in_a_new_tab(self):
         for name, url in (("planner_product", self.PLANNER_APP), ("budget_product", self.BUDGET_APP)):
             with self.subTest(page=name):
