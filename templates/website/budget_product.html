@@ -1,38 +1,81 @@
 {% extends "base_v2.html" %}
 {% load static %}
 
-{% block title %}MyBudget | Andreea Tech{% endblock %}
-{% block meta_description %}MyBudget: o aplicație de buget și finanțe, construit ca să-ți dea o imagine clară și simplă asupra veniturilor, cheltuielilor și economiilor tale.{% endblock %}
-{% block twitter_description %}MyBudget: o aplicație de buget și finanțe, construit ca să-ți dea o imagine clară și simplă asupra veniturilor, cheltuielilor și economiilor tale.{% endblock %}
-{% block og_description %}MyBudget: o aplicație de buget și finanțe, construit ca să-ți dea o imagine clară și simplă asupra veniturilor, cheltuielilor și economiilor tale.{% endblock %}
-{% block og_title %}MyBudget | Andreea Tech{% endblock %}
-{% block twitter_title %}MyBudget | Andreea Tech{% endblock %}
+{% block title %}MyBudget, aplicația de buget | Andreea Tech{% endblock %}
+{% block meta_description %}MyBudget: vezi unde se duc banii înainte să te surprindă luna. Portofele, categorii, limite lunare și facturi recurente într-un singur loc. Gratuit cât timp e în testare.{% endblock %}
+{% block twitter_description %}MyBudget: vezi unde se duc banii înainte să te surprindă luna. Portofele, categorii, limite lunare și facturi recurente într-un singur loc. Gratuit cât timp e în testare.{% endblock %}
+{% block og_description %}MyBudget: vezi unde se duc banii înainte să te surprindă luna. Portofele, categorii, limite lunare și facturi recurente într-un singur loc. Gratuit cât timp e în testare.{% endblock %}
+{% block og_title %}MyBudget, aplicația de buget | Andreea Tech{% endblock %}
+{% block twitter_title %}MyBudget, aplicația de buget | Andreea Tech{% endblock %}
 
 {% block content %}
 <section class="phead">
     <div class="wrap">
         <a class="back" href="{% url 'products' %}">Toate produsele</a>
-        <div class="btn-row mb-5"><span class="chip s-produs">Produs propriu</span><span class="mono">În testare</span></div>
-        <h1>Vezi exact unde se duc banii tăi, fără calcule complicate.</h1>
-        <p class="lead">O aplicație simplă de buget, construită ca să-ți arate clar unde se duc banii și să te ajute să iei decizii mai calme, lună de lună.</p>
-        <div class="btn-row mt-6"><a class="btn btn-primary" href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer">Îmi organizez bugetul</a></div>
-        <p class="hero-note mt-4">Produs în testare, complet gratuit deocamdată. Prețul final va fi anunțat înainte de lansarea oficială.</p>
+        <div class="btn-row mb-5"><span class="chip s-produs">Produs propriu</span><span class="mono">În testare, gratuit</span></div>
+        <h1>Vezi unde se duc banii, înainte să te surprindă luna.</h1>
+        <p class="lead">MyBudget ține într-un singur loc fiecare portofel, categorie și factură recurentă. Știi cât a intrat, cât a ieșit și cât ți-a rămas, în clipa în care deschizi aplicația.</p>
+        <div class="btn-row mt-6">
+            <a class="btn btn-primary" href="https://my-budget-or3r.onrender.com/auth/register" target="_blank" rel="noopener noreferrer">Creează un cont gratuit</a>
+            <a class="btn btn-line" href="#cum-arata">Vezi cum arată</a>
+        </div>
+        <p class="hero-note mt-4">Gratuit cât timp e în testare, fără card. Aplicația rulează pe hosting gratuit, deci prima deschidere după o pauză poate dura 30-50 de secunde.</p>
     </div>
 </section>
 
 <section class="sec first flush">
-    <div class="wrap"><div class="shot"><img src="{% static 'website/budget-preview.jpg' %}" alt="MyBudget, ecranul de start" width="1041" height="428"></div></div>
+    <div class="wrap">
+        <ol class="steps">
+            <li><span class="n">01</span><b>Acum</b><span class="d">Banii tăi sunt împrăștiați între aplicația băncii, un teanc de cash și o notiță în minte despre abonamentul pe care ai uitat să-l anulezi.</span></li>
+            <li><span class="n">02</span><b>Dacă aștepți</b><span class="d">Afli că ai depășit bugetul abia după ce s-a întâmplat, uitându-te la un sold care nu mai are sens.</span></li>
+            <li><span class="n">03</span><b>Cu MyBudget</b><span class="d">Ai un singur loc cu toate portofelele, categoriile și facturile recurente. Primești avertisment înainte să depășești o limită, nu după.</span></li>
+        </ol>
+    </div>
 </section>
 
 <section class="sec">
     <div class="wrap mg">
-        <div class="mg-l mono">Mai multă claritate</div>
-        <div class="stack-s">
-            <h2>Un buget n-ar trebui să te facă să te simți vinovat(ă).</h2>
-            <div class="rich measure">
-                <p>Când nu vezi imaginea completă, fiecare cheltuială pare o surpriză. Iar un Excel complicat sau o listă de cifre greu de urmărit ajunge abandonată după câteva zile.</p>
-                <p>Tracker Inteligent de Buget &amp; Finanțe îți aduce veniturile, cheltuielile și obiectivele într-un singur loc. Vezi dintr-o privire ce se întâmplă cu banii tăi, fără formule complicate și fără să verifici aplicații diferite.</p>
-                <p>În loc să te întrebi unde s-au dus toți banii, începi să-ți observi obiceiurile, să planifici luna următoare și să faci loc pentru lucrurile care contează pentru tine.</p>
+        <div class="mg-l mono">Ce câștigi</div>
+        <div class="stack">
+            <h2>Patru lucruri pe care le știi după prima lună.</h2>
+            <div class="why">
+                <div><h3>Știi cât mai poți cheltui luna aceasta</h3><p>Fiecare categorie îți arată cât ai cheltuit din limita ei, deci vezi cât a mai rămas înainte să faci următoarea achiziție.</p></div>
+                <div><h3>Vezi unde depășești bugetul</h3><p>Categoriile care au trecut de limită se marchează în roșu, iar cele aproape de limită în galben, fără să fie nevoie să calculezi nimic.</p></div>
+                <div><h3>Compari cheltuielile între luni</h3><p>Vezi dacă luna aceasta a fost mai scumpă decât cea trecută și la ce categorie s-a schimbat diferența.</p></div>
+                <div><h3>Îți urmărești obiectivele de economisire</h3><p>Pui o țintă, adaugi bani când poți și vezi cât ți-a mai rămas până o atingi.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="sec" id="cum-arata">
+    <div class="wrap mg">
+        <div class="mg-l mono">Cum arată</div>
+        <div class="stack">
+            <h2>Capturi reale din aplicație, cu date de exemplu.</h2>
+
+            <div class="pfeat">
+                <div class="pfeat-t">
+                    <h3>Luna ta, dintr-o privire</h3>
+                    <p>Venituri, cheltuieli și sold imediat ce intri, ultimele tranzacții cu iconițe pe categorii și un grafic cu locul unde au plecat banii luna aceasta. Avertismentele de buget apar chiar aici, înainte să depășești limita.</p>
+                </div>
+                <figure class="pfeat-s shot"><img src="{% static 'website/budget-dashboard.jpg' %}" alt="MyBudget, panoul principal: venituri, cheltuieli și sold, două avertismente de buget, ultimele tranzacții și un grafic inel cu cheltuielile lunii." width="1296" height="1331" loading="lazy"></figure>
+            </div>
+
+            <div class="pfeat pfeat-flip">
+                <div class="pfeat-t">
+                    <h3>O limită pentru fiecare categorie</h3>
+                    <p>Hotărăști cât vrei să cheltui lunar pe mâncare, transport sau cumpărături. Bara se umple pe măsură ce cheltuiești, devine galbenă aproape de limită și roșie când o depășești. Limita nu te blochează: doar te avertizează.</p>
+                </div>
+                <figure class="pfeat-s shot"><img src="{% static 'website/budget-budgets.jpg' %}" alt="MyBudget, pagina Bugete: o bară de progres pentru fiecare categorie, una marcată aproape de limită și una depășită." width="1296" height="1631" loading="lazy"></figure>
+            </div>
+
+            <div class="pfeat">
+                <div class="pfeat-t">
+                    <h3>Economisești pentru ceva real</h3>
+                    <p>Pui o țintă, adaugi bani când poți și urmărești bara cum avansează. Când ajungi la țintă, obiectivul se marchează ca atins.</p>
+                </div>
+                <figure class="pfeat-s shot"><img src="{% static 'website/budget-goals.jpg' %}" alt="MyBudget, obiective de economisire: trei obiective cu bare de progres, unul atins." width="1296" height="1073" loading="lazy"></figure>
             </div>
         </div>
     </div>
@@ -42,12 +85,57 @@
     <div class="wrap mg">
         <div class="mg-l mono">Ce primești</div>
         <div class="stack">
-            <h2>Un panou pentru decizii mai simple.</h2>
+            <h2>Tot ce ai nevoie ca să nu mai fii surprins(ă) de lună.</h2>
             <div class="why">
-                <div><h3>Venituri și cheltuieli într-un singur loc</h3><p>Adaugi tranzacții rapid și ții la zi imaginea lunii curente.</p></div>
-                <div><h3>Categorii care dezvăluie tipare</h3><p>Înțelegi ce categorii îți consumă cel mai mult din buget și unde poți ajusta.</p></div>
-                <div><h3>Obiective financiare vizibile</h3><p>Urmărești economiile și progresul spre obiectivele care contează pentru tine.</p></div>
-                <div><h3>Claritate, nu perfecțiune</h3><p>Aplicația e aici ca să te ajute să observi și să alegi mai bine, nu să te judece.</p></div>
+                <div><h3>Portofele separate</h3><p>Card, cash, economii, fiecare cu soldul lui curent.</p></div>
+                <div><h3>Categorii ale tale</h3><p>Venituri și cheltuieli sortate în categorii pe care le definești, cu iconiță și culoare.</p></div>
+                <div><h3>Limite lunare pe categorie</h3><p>Primești avertisment înainte să depășești, nu după.</p></div>
+                <div><h3>Facturi și venituri recurente</h3><p>Chiria, salariul, abonamentele se înregistrează singure în fiecare lună.</p></div>
+                <div><h3>Comparații lună cu lună</h3><p>Grafice și comparații pe luni și pe ani, ca să se vadă tiparele.</p></div>
+                <div><h3>Istoric complet</h3><p>Fiecare tranzacție, într-o listă în care poți căuta și filtra.</p></div>
+                <div><h3>Export în CSV, Excel sau PDF</h3><p>Orice listă filtrată, pentru tine, pentru contabil sau pentru oricine ai nevoie.</p></div>
+                <div><h3>RON, EUR, USD sau GBP</h3><p>Alegi moneda contului, iar ea apare la fiecare sumă, grafic și export.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Testează</div>
+        <div class="stack-s">
+            <h2>Acum știi ce poate face. Încearcă-l cu cifrele tale.</h2>
+            <p class="lead">Contul se creează în câteva secunde și e gratuit cât timp aplicația e în testare.</p>
+            <div class="btn-row">
+                <a class="btn btn-primary" href="https://my-budget-or3r.onrender.com/auth/register" target="_blank" rel="noopener noreferrer">Testează MyBudget gratuit</a>
+                <a class="btn btn-line" href="#cum-arata">Vezi din nou capturile</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Cum funcționează</div>
+        <div class="stack">
+            <h2>Trei pași, fără nimic de configurat înainte.</h2>
+            <ol class="steps">
+                <li><span class="n">01</span><b>Îți creezi contul</b><span class="d">Email și parolă. Contul pornește cu un portofel Cash și cu categoriile uzuale, deci nu ai nimic de pregătit.</span></li>
+                <li><span class="n">02</span><b>Adaugi prima tranzacție</b><span class="d">Alegi venit sau cheltuială, scrii suma și salvezi. Data de azi e deja completată.</span></li>
+                <li><span class="n">03</span><b>Vezi unde se duc banii</b><span class="d">Panoul, graficele și bugetele se actualizează pe parcurs, iar facturile și salariul recurente se înregistrează singure.</span></li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Datele tale</div>
+        <div class="stack-s">
+            <h2>Ce poți aștepta de la o versiune de testare.</h2>
+            <div class="rich measure">
+                <p>Fiecare cont vede doar propriile date. Aplicația nu are reclame, trackere sau scripturi de la terți, iar datele le poți exporta oricând.</p>
+                <p>MyBudget e încă în dezvoltare activă. Poți să-l încerci cu cifre reale, dar evită să introduci parole bancare sau informații foarte sensibile deocamdată.</p>
             </div>
         </div>
     </div>
@@ -57,7 +145,7 @@
     <div class="wrap mg">
         <div class="mg-l mono">Încearcă chiar tu</div>
         <div class="stack">
-            <h2>Vezi cât îți rămâne, dintr-o privire.</h2>
+            <h2>Un calcul rapid, fără cont.</h2>
             <div class="fcard">
                 <form id="budgetForm" novalidate>
                     <div class="f-row">
@@ -73,8 +161,23 @@
                     <p class="muted" id="budgetBarLabel">0% din venit cheltuit</p>
                     <p class="status" id="budgetStatus"></p>
                 </div>
-                <p class="hint mt-4">Simulare: nimic nu se salvează, doar îți arăt cum ar arăta în aplicație.</p>
+                <p class="hint mt-4">Simulare: nimic nu se salvează. În aplicație, același calcul se face automat din tranzacțiile tale.</p>
             </div>
+        </div>
+    </div>
+</section>
+
+<section class="sec">
+    <div class="wrap mg">
+        <div class="mg-l mono">Întrebări</div>
+        <div class="stack-s measure">
+            <h2>Înainte să-ți faci cont.</h2>
+            <details class="qa"><summary>Este gratuit?</summary><p>Da, cât timp aplicația e în testare, fără card. Aplicația se poate schimba până să iasă din testare.</p></details>
+            <details class="qa"><summary>Bugetele mă opresc din cheltuit?</summary><p>Nu. Te avertizează: bara devine galbenă aproape de limită și roșie când ai depășit-o, iar panoul îți arată o alertă.</p></details>
+            <details class="qa"><summary>Cum funcționează facturile recurente?</summary><p>Adaugi o dată salariul sau un abonament, alegi ziua din lună, iar el se înregistrează singur în fiecare lună.</p></details>
+            <details class="qa"><summary>Merge pe telefon?</summary><p>Da. MyBudget rulează în browserul telefonului, deci nu ai nimic de instalat.</p></details>
+            <details class="qa"><summary>Îmi pot lua datele cu mine?</summary><p>Da. Exporți orice listă de tranzacții, cu filtrele aplicate, în CSV, Excel sau PDF.</p></details>
+            <details class="qa"><summary>Ce fac dacă uit parola?</summary><p>Deocamdată nu există resetare automată a parolei, cât timp aplicația e în testare. Păstrează parola într-un loc sigur.</p></details>
         </div>
     </div>
 </section>
@@ -83,10 +186,13 @@
     <div class="wrap mg">
         <div class="mg-l mono">Începe</div>
         <div class="stack-s">
-            <h2>Fă din bani un subiect mai clar, mai calm.</h2>
-            <p class="lead">Începe cu o privire de ansamblu și construiește un sistem financiar care te susține.</p>
-            <div class="btn-row"><a class="btn btn-primary" href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer">Îmi organizez bugetul</a></div>
-            <p class="muted">Ai o afacere, nu doar nevoi personale? <a class="link" href="{% url 'services' %}">Vezi ce pot construi pentru tine</a></p>
+            <h2>Vezi unde se duc banii luna aceasta.</h2>
+            <p class="lead">Creezi contul în câteva secunde și adaugi prima tranzacție. Gratuit cât timp e în testare.</p>
+            <div class="btn-row">
+                <a class="btn btn-primary" href="https://my-budget-or3r.onrender.com/auth/register" target="_blank" rel="noopener noreferrer">Creează un cont gratuit</a>
+                <a class="btn btn-line" href="https://my-budget-or3r.onrender.com" target="_blank" rel="noopener noreferrer">Deschide aplicația</a>
+            </div>
+            <p class="muted">Ai o afacere, nu doar nevoi personale? MyBudget e construit de la zero de mine, la fel ca ce construiesc pentru clienți. <a class="link" href="{% url 'services' %}">Vezi ce pot construi pentru tine</a> sau <a class="link" href="{% url 'projects' %}">vezi portofoliul</a>.</p>
         </div>
     </div>
 </section>

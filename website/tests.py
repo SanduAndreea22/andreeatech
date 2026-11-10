@@ -696,6 +696,21 @@ class ProductPagesTests(TestCase):
         self.assertContains(response, self.BUDGET_APP)
         self.assertContains(response, 'id="budgetForm"')
 
+    def test_budget_page_shows_real_screenshots_and_honest_notes(self):
+        body = self.client.get(reverse("budget_product")).content.decode()
+        for shot in ("budget-dashboard.jpg", "budget-budgets.jpg", "budget-goals.jpg"):
+            self.assertIn(shot, body)
+            self.assertTrue((Path(settings.BASE_DIR) / "static" / "website" / shot).exists(), shot)
+        self.assertIn("date de exemplu", body)
+        for benefit in ("Știi cât mai poți cheltui luna aceasta", "Vezi unde depășești bugetul",
+                        "Compari cheltuielile între luni", "Îți urmărești obiectivele de economisire"):
+            self.assertIn(benefit, body)
+        features_end = body.index("RON, EUR, USD sau GBP")
+        self.assertIn("Testează MyBudget gratuit", body[features_end:body.index("Cum funcționează")])
+        self.assertIn("30-50 de secunde", body)
+        self.assertIn("evită să introduci parole bancare", body)
+        self.assertIn("https://my-budget-or3r.onrender.com/auth/register", body)
+
     def test_external_app_links_open_safely_in_a_new_tab(self):
         for name, url in (("planner_product", self.PLANNER_APP), ("budget_product", self.BUDGET_APP)):
             with self.subTest(page=name):
